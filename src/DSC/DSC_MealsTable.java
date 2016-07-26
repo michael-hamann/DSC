@@ -48,7 +48,7 @@ public class DSC_MealsTable extends javax.swing.JFrame {
         pnlHeading.setBackground(new java.awt.Color(255, 255, 255));
 
         lblLogo.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DSC/DSC.png"))); // NOI18N
+        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/DSC.png"))); // NOI18N
 
         lblName.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         lblName.setText("DOORSTEP CHEF");
