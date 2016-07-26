@@ -80,42 +80,33 @@ public class DSC_DriverTable extends javax.swing.JFrame {
 
         pnlIndent.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
-        tblDriver.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Driver ID", "Driver Name", "Driver Surname", "Contact Number", "Vehicle Reg"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Short.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, driverTbList, tblDriver);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${driverID}"));
         columnBinding.setColumnName("Driver ID");
         columnBinding.setColumnClass(Short.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${driverName}"));
         columnBinding.setColumnName("Driver Name");
         columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${driverSurame}"));
-        columnBinding.setColumnName("Driver Surame");
+        columnBinding.setColumnName("Driver Surname");
         columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${contactNumber}"));
         columnBinding.setColumnName("Contact Number");
         columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${vehicleReg}"));
         columnBinding.setColumnName("Vehicle Reg");
         columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         jScrollPane2.setViewportView(tblDriver);
+        if (tblDriver.getColumnModel().getColumnCount() > 0) {
+            tblDriver.getColumnModel().getColumn(0).setPreferredWidth(20);
+        }
 
         javax.swing.GroupLayout pnlIndentLayout = new javax.swing.GroupLayout(pnlIndent);
         pnlIndent.setLayout(pnlIndentLayout);
