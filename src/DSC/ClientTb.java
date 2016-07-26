@@ -28,13 +28,13 @@ import javax.persistence.Transient;
     @NamedQuery(name = "ClientTb.findByClientID", query = "SELECT c FROM ClientTb c WHERE c.clientID = :clientID"),
     @NamedQuery(name = "ClientTb.findByName", query = "SELECT c FROM ClientTb c WHERE c.name = :name"),
     @NamedQuery(name = "ClientTb.findBySurname", query = "SELECT c FROM ClientTb c WHERE c.surname = :surname"),
-    @NamedQuery(name = "ClientTb.findBySuburb", query = "SELECT c FROM ClientTb c WHERE c.suburb = :suburb"),
     @NamedQuery(name = "ClientTb.findByAddress", query = "SELECT c FROM ClientTb c WHERE c.address = :address"),
     @NamedQuery(name = "ClientTb.findByAdditionalInfo", query = "SELECT c FROM ClientTb c WHERE c.additionalInfo = :additionalInfo"),
     @NamedQuery(name = "ClientTb.findByContactNumber", query = "SELECT c FROM ClientTb c WHERE c.contactNumber = :contactNumber"),
     @NamedQuery(name = "ClientTb.findByAlternativeNumber", query = "SELECT c FROM ClientTb c WHERE c.alternativeNumber = :alternativeNumber"),
     @NamedQuery(name = "ClientTb.findByEmail", query = "SELECT c FROM ClientTb c WHERE c.email = :email"),
-    @NamedQuery(name = "ClientTb.findByOrderID", query = "SELECT c FROM ClientTb c WHERE c.orderID = :orderID")})
+    @NamedQuery(name = "ClientTb.findByOrderID", query = "SELECT c FROM ClientTb c WHERE c.orderID = :orderID"),
+    @NamedQuery(name = "ClientTb.findBySuburbID", query = "SELECT c FROM ClientTb c WHERE c.suburbID = :suburbID")})
 public class ClientTb implements Serializable {
 
     @Transient
@@ -49,9 +49,6 @@ public class ClientTb implements Serializable {
     private String name;
     @Column(name = "Surname")
     private String surname;
-    @Basic(optional = false)
-    @Column(name = "Suburb")
-    private String suburb;
     @Basic(optional = false)
     @Column(name = "Address")
     private String address;
@@ -70,6 +67,8 @@ public class ClientTb implements Serializable {
     @Basic(optional = false)
     @Column(name = "OrderID")
     private short orderID;
+    @Column(name = "SuburbID")
+    private Short suburbID;
 
     public ClientTb() {
     }
@@ -78,9 +77,8 @@ public class ClientTb implements Serializable {
         this.clientID = clientID;
     }
 
-    public ClientTb(Short clientID, String suburb, String address, String additionalInfo, String contactNumber, String alternativeNumber, String email, short orderID) {
+    public ClientTb(Short clientID, String address, String additionalInfo, String contactNumber, String alternativeNumber, String email, short orderID) {
         this.clientID = clientID;
-        this.suburb = suburb;
         this.address = address;
         this.additionalInfo = additionalInfo;
         this.contactNumber = contactNumber;
@@ -117,16 +115,6 @@ public class ClientTb implements Serializable {
         String oldSurname = this.surname;
         this.surname = surname;
         changeSupport.firePropertyChange("surname", oldSurname, surname);
-    }
-
-    public String getSuburb() {
-        return suburb;
-    }
-
-    public void setSuburb(String suburb) {
-        String oldSuburb = this.suburb;
-        this.suburb = suburb;
-        changeSupport.firePropertyChange("suburb", oldSuburb, suburb);
     }
 
     public String getAddress() {
@@ -187,6 +175,16 @@ public class ClientTb implements Serializable {
         short oldOrderID = this.orderID;
         this.orderID = orderID;
         changeSupport.firePropertyChange("orderID", oldOrderID, orderID);
+    }
+
+    public Short getSuburbID() {
+        return suburbID;
+    }
+
+    public void setSuburbID(Short suburbID) {
+        Short oldSuburbID = this.suburbID;
+        this.suburbID = suburbID;
+        changeSupport.firePropertyChange("suburbID", oldSuburbID, suburbID);
     }
 
     @Override

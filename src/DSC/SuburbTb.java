@@ -26,51 +26,41 @@ import javax.persistence.Transient;
 @NamedQueries({
     @NamedQuery(name = "SuburbTb.findAll", query = "SELECT s FROM SuburbTb s"),
     @NamedQuery(name = "SuburbTb.findBySuburb", query = "SELECT s FROM SuburbTb s WHERE s.suburb = :suburb"),
-    @NamedQuery(name = "SuburbTb.findByPostalCode", query = "SELECT s FROM SuburbTb s WHERE s.postalCode = :postalCode"),
     @NamedQuery(name = "SuburbTb.findBySubLocation", query = "SELECT s FROM SuburbTb s WHERE s.subLocation = :subLocation"),
-    @NamedQuery(name = "SuburbTb.findByRouteIDAfternoon", query = "SELECT s FROM SuburbTb s WHERE s.routeIDAfternoon = :routeIDAfternoon"),
-    @NamedQuery(name = "SuburbTb.findByRouteIDLateAfternoon", query = "SELECT s FROM SuburbTb s WHERE s.routeIDLateAfternoon = :routeIDLateAfternoon"),
-    @NamedQuery(name = "SuburbTb.findByRouteIDEvening", query = "SELECT s FROM SuburbTb s WHERE s.routeIDEvening = :routeIDEvening")})
+    @NamedQuery(name = "SuburbTb.findByRouteID", query = "SELECT s FROM SuburbTb s WHERE s.routeID = :routeID"),
+    @NamedQuery(name = "SuburbTb.findBySuburbID", query = "SELECT s FROM SuburbTb s WHERE s.suburbID = :suburbID")})
 public class SuburbTb implements Serializable {
 
     @Transient
     private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
 
     private static final long serialVersionUID = 1L;
-    @Id
     @Basic(optional = false)
     @Column(name = "Suburb")
     private String suburb;
     @Basic(optional = false)
-    @Column(name = "PostalCode")
-    private String postalCode;
-    @Basic(optional = false)
     @Column(name = "Sub_Location")
     private String subLocation;
     @Basic(optional = false)
-    @Column(name = "RouteID_Afternoon")
-    private short routeIDAfternoon;
+    @Column(name = "Route_ID")
+    private short routeID;
+    @Id
     @Basic(optional = false)
-    @Column(name = "RouteID_LateAfternoon")
-    private short routeIDLateAfternoon;
-    @Basic(optional = false)
-    @Column(name = "RouteID_Evening")
-    private short routeIDEvening;
+    @Column(name = "SuburbID")
+    private Short suburbID;
 
     public SuburbTb() {
     }
 
-    public SuburbTb(String suburb) {
-        this.suburb = suburb;
+    public SuburbTb(Short suburbID) {
+        this.suburbID = suburbID;
     }
 
-    public SuburbTb(String suburb, String postalCode, String subLocation, short routeIDAfternoon, short routeIDLateAfternoon, short routeIDEvening) {
+    public SuburbTb(Short suburbID, String suburb, String subLocation, short routeID) {
+        this.suburbID = suburbID;
         this.suburb = suburb;
-        this.postalCode = postalCode;
         this.subLocation = subLocation;
-        this.routeIDAfternoon = routeIDAfternoon;
-        this.routeIDLateAfternoon = routeIDLateAfternoon;
-        this.routeIDEvening = routeIDEvening;
+        this.routeID = routeID;
     }
 
     public String getSuburb() {
@@ -83,16 +73,6 @@ public class SuburbTb implements Serializable {
         changeSupport.firePropertyChange("suburb", oldSuburb, suburb);
     }
 
-    public String getPostalCode() {
-        return postalCode;
-    }
-
-    public void setPostalCode(String postalCode) {
-        String oldPostalCode = this.postalCode;
-        this.postalCode = postalCode;
-        changeSupport.firePropertyChange("postalCode", oldPostalCode, postalCode);
-    }
-
     public String getSubLocation() {
         return subLocation;
     }
@@ -103,40 +83,30 @@ public class SuburbTb implements Serializable {
         changeSupport.firePropertyChange("subLocation", oldSubLocation, subLocation);
     }
 
-    public short getRouteIDAfternoon() {
-        return routeIDAfternoon;
+    public short getRouteID() {
+        return routeID;
     }
 
-    public void setRouteIDAfternoon(short routeIDAfternoon) {
-        short oldRouteIDAfternoon = this.routeIDAfternoon;
-        this.routeIDAfternoon = routeIDAfternoon;
-        changeSupport.firePropertyChange("routeIDAfternoon", oldRouteIDAfternoon, routeIDAfternoon);
+    public void setRouteID(short routeID) {
+        short oldRouteID = this.routeID;
+        this.routeID = routeID;
+        changeSupport.firePropertyChange("routeID", oldRouteID, routeID);
     }
 
-    public short getRouteIDLateAfternoon() {
-        return routeIDLateAfternoon;
+    public Short getSuburbID() {
+        return suburbID;
     }
 
-    public void setRouteIDLateAfternoon(short routeIDLateAfternoon) {
-        short oldRouteIDLateAfternoon = this.routeIDLateAfternoon;
-        this.routeIDLateAfternoon = routeIDLateAfternoon;
-        changeSupport.firePropertyChange("routeIDLateAfternoon", oldRouteIDLateAfternoon, routeIDLateAfternoon);
-    }
-
-    public short getRouteIDEvening() {
-        return routeIDEvening;
-    }
-
-    public void setRouteIDEvening(short routeIDEvening) {
-        short oldRouteIDEvening = this.routeIDEvening;
-        this.routeIDEvening = routeIDEvening;
-        changeSupport.firePropertyChange("routeIDEvening", oldRouteIDEvening, routeIDEvening);
+    public void setSuburbID(Short suburbID) {
+        Short oldSuburbID = this.suburbID;
+        this.suburbID = suburbID;
+        changeSupport.firePropertyChange("suburbID", oldSuburbID, suburbID);
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (suburb != null ? suburb.hashCode() : 0);
+        hash += (suburbID != null ? suburbID.hashCode() : 0);
         return hash;
     }
 
@@ -147,7 +117,7 @@ public class SuburbTb implements Serializable {
             return false;
         }
         SuburbTb other = (SuburbTb) object;
-        if ((this.suburb == null && other.suburb != null) || (this.suburb != null && !this.suburb.equals(other.suburb))) {
+        if ((this.suburbID == null && other.suburbID != null) || (this.suburbID != null && !this.suburbID.equals(other.suburbID))) {
             return false;
         }
         return true;
@@ -155,7 +125,7 @@ public class SuburbTb implements Serializable {
 
     @Override
     public String toString() {
-        return "DSC.SuburbTb[ suburb=" + suburb + " ]";
+        return "DSC.SuburbTb[ suburbID=" + suburbID + " ]";
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {

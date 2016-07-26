@@ -246,17 +246,35 @@
                       </Properties>
                       <BindingProperties>
                         <BindingProperty name="elements" source="clientTbList" target="tblClientTable" targetPath="elements" updateStrategy="0" immediately="true">
-                          <Subbinding sourcePath="${clientID}">
+                          <Subbinding sourcePath="${suburbID}">
                             <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Short.class"/>
                           </Subbinding>
-                          <Subbinding sourcePath="${name}">
+                          <Subbinding sourcePath="${orderID}">
+                            <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Short.class"/>
+                          </Subbinding>
+                          <Subbinding sourcePath="${email}">
+                            <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+                          </Subbinding>
+                          <Subbinding sourcePath="${alternativeNumber}">
+                            <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+                          </Subbinding>
+                          <Subbinding sourcePath="${contactNumber}">
+                            <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+                          </Subbinding>
+                          <Subbinding sourcePath="${additionalInfo}">
+                            <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+                          </Subbinding>
+                          <Subbinding sourcePath="${address}">
                             <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
                           </Subbinding>
                           <Subbinding sourcePath="${surname}">
                             <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
                           </Subbinding>
-                          <Subbinding sourcePath="${contactNumber}">
+                          <Subbinding sourcePath="${name}">
                             <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+                          </Subbinding>
+                          <Subbinding sourcePath="${clientID}">
+                            <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Short.class"/>
                           </Subbinding>
                         </BindingProperty>
                       </BindingProperties>

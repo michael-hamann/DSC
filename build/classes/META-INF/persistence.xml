@@ -5,8 +5,8 @@
     <class>dsc.DriverTb</class>
     <class>DSC.MealTb</class>
     <class>DSC.DriverTb</class>
-    <class>DSC.ClientTb</class>
     <class>DSC.SuburbTb</class>
+    <class>DSC.ClientTb</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://22.153.255.61:3306/doorstepchef?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
