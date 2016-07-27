@@ -19,14 +19,13 @@ import javax.persistence.Transient;
 
 /**
  *
- * @author Aliens_Michael
+ * @author Amina
  */
 @Entity
 @Table(name = "suburb_tb", catalog = "doorstepchef", schema = "")
 @NamedQueries({
     @NamedQuery(name = "SuburbTb.findAll", query = "SELECT s FROM SuburbTb s"),
     @NamedQuery(name = "SuburbTb.findBySuburb", query = "SELECT s FROM SuburbTb s WHERE s.suburb = :suburb"),
-    @NamedQuery(name = "SuburbTb.findBySubLocation", query = "SELECT s FROM SuburbTb s WHERE s.subLocation = :subLocation"),
     @NamedQuery(name = "SuburbTb.findByRouteID", query = "SELECT s FROM SuburbTb s WHERE s.routeID = :routeID"),
     @NamedQuery(name = "SuburbTb.findBySuburbID", query = "SELECT s FROM SuburbTb s WHERE s.suburbID = :suburbID")})
 public class SuburbTb implements Serializable {
@@ -38,9 +37,6 @@ public class SuburbTb implements Serializable {
     @Basic(optional = false)
     @Column(name = "Suburb")
     private String suburb;
-    @Basic(optional = false)
-    @Column(name = "Sub_Location")
-    private String subLocation;
     @Basic(optional = false)
     @Column(name = "Route_ID")
     private short routeID;
@@ -56,10 +52,9 @@ public class SuburbTb implements Serializable {
         this.suburbID = suburbID;
     }
 
-    public SuburbTb(Short suburbID, String suburb, String subLocation, short routeID) {
+    public SuburbTb(Short suburbID, String suburb, short routeID) {
         this.suburbID = suburbID;
         this.suburb = suburb;
-        this.subLocation = subLocation;
         this.routeID = routeID;
     }
 
@@ -71,16 +66,6 @@ public class SuburbTb implements Serializable {
         String oldSuburb = this.suburb;
         this.suburb = suburb;
         changeSupport.firePropertyChange("suburb", oldSuburb, suburb);
-    }
-
-    public String getSubLocation() {
-        return subLocation;
-    }
-
-    public void setSubLocation(String subLocation) {
-        String oldSubLocation = this.subLocation;
-        this.subLocation = subLocation;
-        changeSupport.firePropertyChange("subLocation", oldSubLocation, subLocation);
     }
 
     public short getRouteID() {

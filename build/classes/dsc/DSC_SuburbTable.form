@@ -252,9 +252,6 @@
                           <Subbinding sourcePath="${routeID}">
                             <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Short.class"/>
                           </Subbinding>
-                          <Subbinding sourcePath="${subLocation}">
-                            <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
-                          </Subbinding>
                           <Subbinding sourcePath="${suburb}">
                             <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
                           </Subbinding>
