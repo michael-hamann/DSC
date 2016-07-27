@@ -430,6 +430,8 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         switch(answer){
             case JOptionPane.YES_OPTION:
                 JOptionPane.showMessageDialog(this, name+" will be deleted", "Delete Notification", JOptionPane.INFORMATION_MESSAGE);
+                //Deletes person from database
+                
                 break;
                 
             case JOptionPane.NO_OPTION:
