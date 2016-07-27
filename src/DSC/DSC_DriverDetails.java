@@ -1,6 +1,8 @@
 
 package DSC;
 
+import java.sql.Connection;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
 
 /**
@@ -392,10 +394,17 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
             String newAddress = txfAddress.getText().trim();
             String newVehicleReg = txfVehicleReg.getText().trim();
 
-            String statement = "INSERT INTO doorstepchef.driver_tb (`DriverID`, `DriverName`, `ContactNumber`, `Address`, `VehicleReg`, `DriverSurname`) \n"
+            String query = "INSERT INTO doorstepchef.driver_tb (`DriverID`, `DriverName`, `ContactNumber`, `Address`, `VehicleReg`, `DriverSurname`) \n"
                     + "	VALUES (" + newID + ", '" + newName + "', '" + newContactNo + "', '" + newAddress + "', '" + newVehicleReg + "', '" + newSurname + "');";
             
-            
+            try{
+                Connection c = DBClass.getConnection();
+                Statement stmt = c.createStatement();
+                stmt.executeUpdate(query);
+                JOptionPane.showMessageDialog(this, "Saved");
+            } catch (Exception e){
+                JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
         disableFields();
         btnSave.setVisible(false);
