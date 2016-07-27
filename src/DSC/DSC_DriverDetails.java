@@ -1,4 +1,3 @@
-
 package DSC;
 
 import java.sql.Connection;
@@ -373,6 +372,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        boolean back = false;
         if (btnSave.getText().equals("Save")) {
             /*
                 short newID = Short.parseShort(txfDriverID.getText().trim());
@@ -385,31 +385,52 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
              */
 
             //Commit to database
+            back = true;
         } else if (btnSave.getText().equals("Add")) {
             //Add to database
-            short newID = Short.parseShort(txfDriverID.getText().trim());
-            String newName = txfDriverName.getText().trim();
-            String newSurname = txfDriverSurname.getText().trim();
-            String newContactNo = txfContactNo.getText().trim();
-            String newAddress = txfAddress.getText().trim();
-            String newVehicleReg = txfVehicleReg.getText().trim();
+            boolean empty = checkEmpty();
+            if (empty) {
+                JOptionPane.showMessageDialog(this, "Please fill in all fields", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                short newID = Short.parseShort(txfDriverID.getText().trim());
+                String newName = txfDriverName.getText().trim();
+                String newSurname = txfDriverSurname.getText().trim();
+                String newContactNo = txfContactNo.getText().trim();
+                String newAddress = txfAddress.getText().trim();
+                String newVehicleReg = txfVehicleReg.getText().trim();
 
-            String query = "INSERT INTO doorstepchef.driver_tb (`DriverID`, `DriverName`, `ContactNumber`, `Address`, `VehicleReg`, `DriverSurname`) \n"
-                    + "	VALUES (" + newID + ", '" + newName + "', '" + newContactNo + "', '" + newAddress + "', '" + newVehicleReg + "', '" + newSurname + "');";
-            
-            try{
-                Connection c = DBClass.getConnection();
-                Statement stmt = c.createStatement();
-                stmt.executeUpdate(query);
-                JOptionPane.showMessageDialog(this, "Saved");
-            } catch (Exception e){
-                JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
+                String query = "INSERT INTO doorstepchef.driver_tb ('DriverID', 'DriverName', 'ContactNumber', 'Address', 'VehicleReg', 'DriverSurname') \n"
+                        + "	VALUES (" + newID + ", '" + newName + "', '" + newContactNo + "', '" + newAddress + "', '" + newVehicleReg + "', '" + newSurname + "');";
+
+                try {
+                    Connection c = DBClass.getConnection();
+                    Statement stmt = c.createStatement();
+                    stmt.executeUpdate(query);
+                    JOptionPane.showMessageDialog(this, "Saved");
+                    back = true;
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         }
-        disableFields();
-        btnSave.setVisible(false);
-        btnEdit.setEnabled(true);
+
+        if (back) {
+            disableFields();
+            btnSave.setVisible(false);
+            btnEdit.setEnabled(true);
+        }
+
     }//GEN-LAST:event_btnSaveActionPerformed
+
+    private boolean checkEmpty() {
+        boolean empty = false;
+
+        if (txfDriverName.getText().isEmpty() && txfDriverSurname.getText().isEmpty() && txfContactNo.getText().isEmpty() && txfAddress.getText().isEmpty() && txfVehicleReg.getText().isEmpty()) {
+            empty = true;
+        }
+
+        return empty;
+    }
 
     private void btnAddDriverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDriverActionPerformed
         clearFields();
@@ -419,25 +440,39 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         btnSave.setVisible(true);
         editClicked = true;
         
-        //int num = (SQL query to count number of drivers) + 1;
-        //txfDriverID.setText("DSC_");
+/*
+        String query = "SELECT COUNT('DriverID') FROM doorstepchef.driver_tb;";
+        ResultSet rs;
+        int numRows = 0;
+        try {
+            Connection c = DBClass.getConnection();
+            Statement stmt = c.createStatement();
+            rs = stmt.executeQuery(query);
+            rs.next();
+            numRows = rs.getInt(1);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        numRows += 1;
+        txfDriverID.setText(numRows + "");
+*/
     }//GEN-LAST:event_btnAddDriverActionPerformed
 
     private void btnDeleteDriverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteDriverActionPerformed
-        String name = txfDriverName.getText() +" "+ txfDriverSurname.getText();       
-        String message = "Are you sure you want to delete "+name+"?";
+        String name = txfDriverName.getText() + " " + txfDriverSurname.getText();
+        String message = "Are you sure you want to delete " + name + "?";
         int answer = JOptionPane.showConfirmDialog(this, message, "Confirm", JOptionPane.INFORMATION_MESSAGE);
-        switch(answer){
+        switch (answer) {
             case JOptionPane.YES_OPTION:
-                JOptionPane.showMessageDialog(this, name+" will be deleted", "Delete Notification", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, name + " will be deleted", "Delete Notification", JOptionPane.INFORMATION_MESSAGE);
                 break;
-                
+
             case JOptionPane.NO_OPTION:
-                JOptionPane.showMessageDialog(this, name+" will not be deleted", "Delete Notification", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, name + " will not be deleted", "Delete Notification", JOptionPane.INFORMATION_MESSAGE);
                 break;
-                
+
             case JOptionPane.CANCEL_OPTION:
-                
+
                 break;
         }
     }//GEN-LAST:event_btnDeleteDriverActionPerformed
