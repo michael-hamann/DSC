@@ -1,6 +1,7 @@
 package DSC;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 
@@ -399,7 +400,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                 String newAddress = txfAddress.getText().trim();
                 String newVehicleReg = txfVehicleReg.getText().trim();
 
-                String query = "INSERT INTO doorstepchef.driver_tb ('DriverID', 'DriverName', 'ContactNumber', 'Address', 'VehicleReg', 'DriverSurname') \n"
+                String query = "INSERT INTO doorstepchef.driver_tb (`DriverID`, `DriverName`, `ContactNumber`, `Address`, `VehicleReg`, `DriverSurname`) \n"
                         + "	VALUES (" + newID + ", '" + newName + "', '" + newContactNo + "', '" + newAddress + "', '" + newVehicleReg + "', '" + newSurname + "');";
 
                 try {
@@ -418,6 +419,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
             disableFields();
             btnSave.setVisible(false);
             btnEdit.setEnabled(true);
+            editClicked = false;
         }
 
     }//GEN-LAST:event_btnSaveActionPerformed
@@ -439,8 +441,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         btnSave.setText("Add");
         btnSave.setVisible(true);
         editClicked = true;
-        
-/*
+
         String query = "SELECT COUNT('DriverID') FROM doorstepchef.driver_tb;";
         ResultSet rs;
         int numRows = 0;
@@ -455,7 +456,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         }
         numRows += 1;
         txfDriverID.setText(numRows + "");
-*/
+         
     }//GEN-LAST:event_btnAddDriverActionPerformed
 
     private void btnDeleteDriverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteDriverActionPerformed
