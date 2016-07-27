@@ -443,7 +443,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         btnSave.setVisible(true);
         editClicked = true;
 
-        String query = "SELECT COUNT('DriverID') FROM doorstepchef.driver_tb;";
+        String query = "SELECT MAX(DriverID) FROM doorstepchef.driver_tb;";
         ResultSet rs;
         int numRows = 0;
         try {
