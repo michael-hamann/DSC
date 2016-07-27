@@ -427,7 +427,8 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     private boolean checkEmpty() {
         boolean empty = false;
 
-        if (txfDriverName.getText().isEmpty() && txfDriverSurname.getText().isEmpty() && txfContactNo.getText().isEmpty() && txfAddress.getText().isEmpty() && txfVehicleReg.getText().isEmpty()) {
+        if (txfDriverName.getText().isEmpty() && txfDriverSurname.getText().isEmpty() && txfContactNo.getText().isEmpty() 
+                && txfAddress.getText().isEmpty() && txfVehicleReg.getText().isEmpty()) {
             empty = true;
         }
 
