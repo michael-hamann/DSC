@@ -61,8 +61,8 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        entityManager0 = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("doorstepchef?zeroDateTimeBehavior=convertToNullPU").createEntityManager();
-        driverTbQuery = java.beans.Beans.isDesignTime() ? null : entityManager0.createQuery("SELECT d FROM DriverTb d");
+        entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("doorstepchef?zeroDateTimeBehavior=convertToNullPU").createEntityManager();
+        driverTbQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT d FROM DriverTb d");
         driverTbList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : driverTbQuery.getResultList();
         pnlBackground = new javax.swing.JPanel();
         pnlDrivers = new javax.swing.JPanel();
@@ -545,7 +545,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     private javax.swing.JButton btnSave;
     private java.util.List<DSC.DriverTb> driverTbList;
     private javax.persistence.Query driverTbQuery;
-    private javax.persistence.EntityManager entityManager0;
+    private javax.persistence.EntityManager entityManager;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAddress;
     private javax.swing.JLabel lblContactNo;
