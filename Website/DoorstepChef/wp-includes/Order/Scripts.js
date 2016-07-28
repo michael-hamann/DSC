@@ -53,11 +53,47 @@ function listSuburbs(suburbDropdown) {
 }
 
 
-function timeSlotAdj(){
+function timeSlotAdj() {
     var selectedSuburb = document.getElementById("Suburb").options[document.getElementById("Suburb").selectedIndex].text;
     var url = "/DoorstepChef/wp-includes/Order/TimeSlotChange.php";
-    
-    jQuery().ajax();//------------------------------------------------*
+
+    jQuery.ajax({
+        type: 'get',
+        url: url,
+        data: {suburb: selectedSuburb},
+        dataType: "text",
+        success: function (data, textStatus, jqXHR) {
+            var responseData = data;
+            var responseText = new Array(5);
+            responseText[0] = "<labelB>";
+            responseText[1] = "";
+            responseText[2] = "";
+            responseText[3] = "";
+            responseText[4] = "</labelB> <br><br>";
+            var responses = responseData.split(", ");
+            var firstIterate;
+            for (var i = 0; i < responses.length - 1; i++) {
+
+                if (i == 0) {
+                    firstIterate = 'checked="checked" ';
+                } else {
+                    firstIterate = '';
+                }
+
+                if (responses[i] == "Afternoon") {
+                    responseText[1] = '<input id="rbnAfternoon" ' + firstIterate + ' name="time" type="radio" value="frame1" />      Between 11:00 and 13:00 <br>';
+                } else if (responses[i] == "Late Afternoon") {
+                    responseText[2] = '<input id="rbnLateAfternoon" ' + firstIterate + ' name="time" type="radio" value="frame2" />      Between 14:00 and 16:00<br>';
+                } else if (responses[i] == "Evening") {
+                    responseText[3] = '<input id="rbnEvening" ' + firstIterate + ' name="time" type="radio" value="frame3" />      Between 17:00 and 19:00<br>'
+                }
+            }
+            document.getElementById("TimeSlots").innerHTML = responseText[0] + responseText[1] + responseText[2] + responseText[3] + responseText[4];
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert("Something happned: " + errorThrown);
+        }
+    });
 }
 
 
@@ -88,13 +124,25 @@ function submitData() {
 
     var familySize = document.getElementById("fam1").selectedIndex;
     var timeSlot = "";
-    if (document.getElementById("rbnAfternoon").checked) {
-        timeSlot = "Afternoon";
-    } else if (document.getElementById("rbnLateAfternoon").checked) {
-        timeSlot = "Late Afternoon";
-    } else {
-        timeSlot = "Evening";
+    if (document.getElementById("rbnAfternoon") != null) {
+        if (document.getElementById("rbnAfternoon").checked) {
+            timeSlot = "Afternoon";
+            alert(timeSlot);
+        }
     }
+    if (document.getElementById("rbnLateAfternoon") != null) {
+        if (document.getElementById("rbnLateAfternoon").checked) {
+            timeSlot = "Late Afternoon";
+            alert(timeSlot);
+        }
+    }
+    if (document.getElementById("rbnEvening") != null) {
+        if (document.getElementById("rbnEvening").checked) {
+            timeSlot = "Evening";
+            alert(timeSlot);
+        }
+    }
+
     var startingDate = new Date(document.getElementById("startDate").options[document.getElementById("startDate").selectedIndex].text);
     var orderDuration = "";
     if (document.getElementById("rbnMonThur").checked) {

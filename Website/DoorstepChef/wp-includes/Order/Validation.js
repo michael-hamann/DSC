@@ -5,48 +5,99 @@ var mealSize = 0 ;
 var mealCount = 0;
 var spinnerResult;
 var addMealsComponent = false;
+var sum = 0;
+ var substraction = 0;
+ 
+var familyCheckSuccess =false;
+
+
+
+function checkTotal(){
+	
+	 checkFamilySize();
+	 
+	 if(familyCheckSuccess){
+		 
+	 resetSpinner();
+	 
+	 }else{
+	 
+	 substraction = mealCount - document.getElementById("totalMeals").value;
+	 
+	 alert("subtraction = "+subtraction)
+	 
+	 document.getElementById("totalMeals").value = subtraction ;
+	 
+	 }
+	 
+}
+
+function checkFamilySize(){
+	
+	if(!changed){
+		
+	alert("please choose a family size.");
+		
+	document.getElementById("fam1").focus();	
+	
+	familyCheckSuccess =true;
+	
+	}
+	
+}
+
+
+function resetSpinner(){
+	
+	document.getElementById('orderAmount_0').value = 1;
+	
+	
+	
+}
+
+
+
 
 function addOrder() {
 
-	alert("addMealsComponent = "+addMealsComponent);
+//var mealCount = 0;
 
-	if(addMealsComponent){ 
+var sum = 0;
+
+	sum = 0;
 	
-	
-	var elementName = "orderAmount_";
-		
-	spinnerResult = parseInt(document.getElementById(elementName+counter).value);
-		
-	}else if(addMealsComponent!=true){
-			
-    spinnerResult = parseInt(document.getElementById("orderAmount_0").value);
-		
-    }
+	spinnerResult = parseInt(document.getElementById('orderAmount_'+(counter-1)).value);
 		
     var val = document.getElementById("fam1");
 
     var option = val.options[val.selectedIndex].text;
 
-	var numberOfMealsCheck = parseInt(document.getElementById("totalMeals").value);
+	var numberOfMealsCheck = parseInt(document.getElementById("totalMeals").value);		
 	
 	var calculation = numberOfMealsCheck + spinnerResult;
 	
-	alert("spinner = "+spinnerResult);
-	alert("numberOfMealsCheck = "+numberOfMealsCheck);
-	alert("mealSize = "+mealSize);
+	//var counterVar = counter -1 ;
 	
-	alert("calculation = "+calculation);
+	for(iterate = 0; iterate < counter ; iterate++){
+		
+		sum += parseInt(document.getElementById('orderAmount_'+(counter-1)).value);
+		
+		
+	}
 	
-	alert(changed);
+	alert("sum = "+sum);
 	
-	if( numberOfMealsCheck + spinnerResult <= mealSize && changed == true ){
+	//document.getElementById("totalMeals").value = mealCount - sum  ;
+	
+	
+	if( numberOfMealsCheck - spinnerResult <= mealSize && changed == true && sum < mealSize){
 	
 	
     if (counter <= 5) {
 
         var newdiv = document.createElement('div');
 
-        newdiv.innerHTML =  '<labelA style = "margin-right: 51px" > </labelA> <input type="number" name="Orderamount" id="orderAmount_' + counter + '" + min="1" max="6" step="1" value="1" style="width:2.5em; height:1em" ><select name="size" id="mealTypeSelector_' + counter + '"><option value="Standard" id = 1>Standard</option><option value="Low Carb" id = 1 >Low Carb</option><option value="Kiddies" id = 1>Kiddies</option></select> <input type = "text" id = "orderAll_' + counter + '" style="height:0.5em"><input type = "text" id = "orderExc_' + counter + '" style="height:0.5em"><input type="Deletebutton" value="-" onclick="removeOrder(this)" style="height:0.5px">';
+        newdiv.innerHTML =  '<labelA style = "margin-right: 51px" > </labelA> <input type="number" name="Orderamount" onChange= "checkTotal()" id="orderAmount_' + counter + ' min="1" max="6" step="1" value="1" style="width:2.5em; height:1em" ><select name="size" id="mealTypeSelector_' + counter + '"><option value="Standard" id = 1>Standard</option><option value="Low Carb" id = 1 >Low Carb</option><option value="Kiddies" id = 1>Kiddies</option></select> <input type = "text" id = "orderAll_' + counter + '" style="height:0.5em"><input type = "text" id = "orderExc_' + counter + '" style="height:0.5em"><input type="Deletebutton" value="-" onclick="removeOrder(this)" style="height:0.5px">';
 
         document.getElementById('order').appendChild(newdiv);
 		
@@ -54,9 +105,9 @@ function addOrder() {
 		
 		var changeTotalMeals = document.getElementById("totalMeals").value;
 		
-		var thisChange = changeTotalMeals - 1;
+		var thisChange = changeTotalMeals - spinnerResult;
 		
-		document.getElementById("totalMeals").value = thisChange ;
+		//document.getElementById("totalMeals").value = thisChange ;
 		
 		alert("changeTotalMeals = "+thisChange);
 		
@@ -70,8 +121,17 @@ function addOrder() {
 	
 	}else{
 		
+		if(changed){
+			
 		alert("Meal Limit Reached!");
 		
+		}else{
+			
+			alert("please choose a family size.");
+		
+		document.getElementById("fam1").focus();
+			
+		}
 	}
 	
 	document.getElementById("addOrderID").blur();
@@ -92,9 +152,9 @@ function removeOrder(div) {
 	
     document.getElementById('order').removeChild(div.parentNode);
 
-	var changeTotalMeals = document.getElementById("totalMeals").value;
+	var changeTotalMeals = parseInt(document.getElementById("totalMeals").value);
 		
-	var thisChange = parseInt(changeTotalMeals + 1) ;
+	var thisChange = parseInt(changeTotalMeals + spinnerResult) ;
 		
 	document.getElementById("totalMeals").value = thisChange ;
 	
@@ -242,6 +302,7 @@ function checkMeals(){
 	
 	
 	var numberOfMeals = parseInt(document.getElementById("fam1").value);
+	//var numberOfMeals = document.getElementById("fam1").value;
 	
 	
 	document.getElementById("order").innerHTML = "";
@@ -253,6 +314,7 @@ function checkMeals(){
                            '<div id = "OrderAmount">';
 	
 	
+	
 	switch(numberOfMeals){
 		
 		case 0:
@@ -261,11 +323,15 @@ function checkMeals(){
 		
 		changed = true;
 		
+		mealCount = 1 ;
+		
 		document.getElementById("totalMeals").value = 0;
 		
 		break;
 		
 		case 1:
+		
+		mealCount = 2 ;
 		
 		mealSize = 2;
 		
@@ -277,6 +343,8 @@ function checkMeals(){
 		
 		case 2:
 		
+		mealCount = 3 ;
+		
 		mealSize = 3;
 		
 		changed = true;
@@ -287,6 +355,8 @@ function checkMeals(){
 		
 		case 3:
 		
+		mealCount = 4 ;
+		
 		mealSize = 4;
 		
 		changed = true;
@@ -296,6 +366,8 @@ function checkMeals(){
 		break;
 		
 		case 4:
+		
+		mealCount = 5 ;
 		
 		mealSize = 5;
 		
@@ -309,17 +381,14 @@ function checkMeals(){
 		
 		mealSize = 6;
 		
+		mealCount = 6 ;
+		
 		changed = true;
 		
 		document.getElementById("totalMeals").value  = 5;
 		
 		break;
 		
-		default:
-		
-		alert("please choose a family size.");
-		
-		document.getElementById("fam1").focus();
 		
 		
 	}
