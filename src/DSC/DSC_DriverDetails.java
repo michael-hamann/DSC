@@ -446,6 +446,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         String query = "SELECT MAX(DriverID) FROM doorstepchef.driver_tb;";
         ResultSet rs;
         int numRows = 0;
+        
         try {
             Connection c = DBClass.getConnection();
             Statement stmt = c.createStatement();
@@ -457,7 +458,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         }
         numRows += 1;
         txfDriverID.setText(numRows + "");
-         
+        
     }//GEN-LAST:event_btnAddDriverActionPerformed
 
     private void btnDeleteDriverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteDriverActionPerformed
