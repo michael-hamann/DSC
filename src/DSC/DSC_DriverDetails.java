@@ -2,6 +2,7 @@
 package DSC;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 
@@ -424,14 +425,35 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddDriverActionPerformed
 
     private void btnDeleteDriverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteDriverActionPerformed
-        String name = txfDriverName.getText() +" "+ txfDriverSurname.getText();       
+        String name = txfDriverName.getText() +" "+ txfDriverSurname.getText();
+        
+        int driverID = Integer.parseInt(txfDriverID.getText());
+        int elementIndex =lstDrivers.getSelectedIndex();
+        
         String message = "Are you sure you want to delete "+name+"?";
         int answer = JOptionPane.showConfirmDialog(this, message, "Confirm", JOptionPane.INFORMATION_MESSAGE);
+        
         switch(answer){
             case JOptionPane.YES_OPTION:
                 JOptionPane.showMessageDialog(this, name+" will be deleted", "Delete Notification", JOptionPane.INFORMATION_MESSAGE);
-                //Deletes person from database
                 
+                try{
+                    Connection c = DBClass.getConnection();
+                    Statement stmt = c.createStatement();
+                                     
+                    String update = "UPDATE route_tb SET DriverID = 0 WHERE DriverID = '"+ driverID+"'";
+                    stmt.executeUpdate(update);
+                     
+                    String deleteDriver = "DELETE FROM doorstepchef.driver_tb WHERE DriverID LIKE '" + driverID +"'" ;
+                    stmt.executeUpdate(deleteDriver);
+                    
+                    JOptionPane.showMessageDialog(this, "Driver has been deleted. \n Please note removing this driver has affected"
+                            + " route schedules leaving routes without an assigned driver.");
+                    
+                } catch (Exception e){
+                    JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                      
                 break;
                 
             case JOptionPane.NO_OPTION:
