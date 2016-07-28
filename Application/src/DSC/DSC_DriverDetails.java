@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 public class DSC_DriverDetails extends javax.swing.JFrame {
 
     boolean editClicked = false;
+    int listIndex = 0;
 
     /**
      * Creates new form DSC_DriverDetails
@@ -21,11 +22,11 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         disableFields();
         btnSave.setText("Save");
         btnSave.setVisible(false);
+        txfDriverID.setEnabled(false);
         lstDrivers.setSelectedIndex(0);
     }
 
     public final void enableFields() {
-        txfDriverID.setEnabled(true);
         txfDriverName.setEnabled(true);
         txfDriverSurname.setEnabled(true);
         txfContactNo.setEnabled(true);
@@ -34,7 +35,6 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     }
 
     public final void disableFields() {
-        txfDriverID.setEnabled(false);
         txfDriverName.setEnabled(false);
         txfDriverSurname.setEnabled(false);
         txfContactNo.setEnabled(false);
@@ -345,6 +345,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        listIndex = lstDrivers.getSelectedIndex();
         enableFields();
         btnEdit.setEnabled(false);
         btnSave.setVisible(true);
@@ -359,6 +360,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                     btnSave.setVisible(false);
                     btnEdit.setEnabled(true);
                     disableFields();
+                    lstDrivers.setSelectedIndex(listIndex);
                     editClicked = false;
                     break;
                 case JOptionPane.NO_OPTION:
@@ -376,7 +378,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         boolean back = false;
         if (btnSave.getText().equals("Save")) {
             /*
-                short newID = Short.parseShort(txfDriverID.getText().trim());
+                short ID = Short.parseShort(txfDriverID.getText().trim());
                 String newName = txfDriverName.getText().trim();
                 String newSurname = txfDriverSurname.getText().trim();
                 String newContactNo = txfContactNo.getText().trim();
