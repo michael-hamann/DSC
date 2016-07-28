@@ -49,17 +49,17 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="pnlBackground" alignment="0" max="32767" attributes="0"/>
+          <Component id="pnlBackgroundClient" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="pnlBackground" alignment="0" max="32767" attributes="0"/>
+          <Component id="pnlBackgroundClient" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JPanel" name="pnlBackground">
+    <Container class="javax.swing.JPanel" name="pnlBackgroundClient">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="0" green="99" red="0" type="rgb"/>
@@ -71,9 +71,9 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="pnlDrivers" min="-2" max="-2" attributes="0"/>
+                  <Component id="pnlClients" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="pnlDetails" max="32767" attributes="0"/>
+                  <Component id="pnlDetailsClient" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -83,8 +83,8 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="pnlDrivers" max="32767" attributes="0"/>
-                      <Component id="pnlDetails" max="32767" attributes="0"/>
+                      <Component id="pnlClients" max="32767" attributes="0"/>
+                      <Component id="pnlDetailsClient" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -92,7 +92,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Container class="javax.swing.JPanel" name="pnlDrivers">
+        <Container class="javax.swing.JPanel" name="pnlClients">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="33" green="cc" red="0" type="rgb"/>
@@ -112,11 +112,11 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jScrollPane1" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <Component id="lblDrivers" min="-2" pref="118" max="-2" attributes="0"/>
+                              <Component id="lblClients" min="-2" pref="118" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="btnAddDriver" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnAddClient" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="btnDeleteDriver" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnDeleteClient" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -129,9 +129,9 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblDrivers" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="btnAddDriver" alignment="3" max="32767" attributes="0"/>
-                          <Component id="btnDeleteDriver" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblClients" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="btnAddClient" alignment="3" max="32767" attributes="0"/>
+                          <Component id="btnDeleteClient" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane1" max="32767" attributes="0"/>
@@ -141,12 +141,12 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="lblDrivers">
+            <Component class="javax.swing.JLabel" name="lblClients">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Drivers:"/>
+                <Property name="text" type="java.lang.String" value="Clients:"/>
               </Properties>
             </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPane1">
@@ -156,7 +156,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JList" name="lstDrivers">
+                <Component class="javax.swing.JList" name="lstClient">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="12" style="0"/>
@@ -164,7 +164,7 @@
                     <Property name="selectionMode" type="int" value="0"/>
                   </Properties>
                   <BindingProperties>
-                    <BindingProperty name="elements" source="driverTbList" target="lstDrivers" targetPath="elements" updateStrategy="0" immediately="false"/>
+                    <BindingProperty name="elements" source="driverTbList" target="lstClient" targetPath="elements" updateStrategy="0" immediately="false"/>
                   </BindingProperties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -172,7 +172,7 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JButton" name="btnAddDriver">
+            <Component class="javax.swing.JButton" name="btnAddClient">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/PICS/Add.png"/>
@@ -180,10 +180,10 @@
                 <Property name="text" type="java.lang.String" value=" Add"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddDriverActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddClientActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btnDeleteDriver">
+            <Component class="javax.swing.JButton" name="btnDeleteClient">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/PICS/Bin.png"/>
@@ -191,12 +191,12 @@
                 <Property name="text" type="java.lang.String" value="Delete"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeleteDriverActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeleteClientActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="pnlDetails">
+        <Container class="javax.swing.JPanel" name="pnlDetailsClient">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="33" green="cc" red="0" type="rgb"/>
@@ -211,35 +211,61 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblDriversDetails" alignment="0" max="32767" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="lblVehicleReg" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="lblAddress" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="lblContactNo" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="lblDriverSurname" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="lblDriverName" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="lblDriverID" alignment="0" max="32767" attributes="0"/>
+                          <Component id="lblClientDetails" alignment="0" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="lblVehicleReg" alignment="0" pref="164" max="32767" attributes="0"/>
+                                      <Component id="lblClientSurname" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="lblClientName" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="lblClientID" alignment="0" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Component id="lblClientAddress" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="txfDriverID" max="32767" attributes="0"/>
-                                  <Component id="txfDriverName" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="txfDriverSurname" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="txfContactNo" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="txfAddress" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="txfVehicleReg" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="txfClientID" max="32767" attributes="0"/>
+                                  <Component id="txfClientrName" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="txfClientSurname" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="txfAddInfo" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="txfClientAddress" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="btnEdit" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="93" max="32767" attributes="0"/>
-                              <Component id="btnSave" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="btnEditClient" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace pref="89" max="32767" attributes="0"/>
+                              <Component id="btnSaveClient" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="btnBack" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="lblClientContactNo" min="-2" pref="111" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
+                              <Component id="txfClientContactNo" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="lblAltNum" pref="164" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="txfAltNum" min="-2" pref="130" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="lblEmail" min="-2" pref="111" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
+                              <Component id="txfClientEmail" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="lblOrderID" pref="164" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="txfOrderID" min="-2" pref="130" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="lblSuburbID" pref="164" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="txfSuburbID" min="-2" pref="130" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -250,41 +276,61 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="lblDriversDetails" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="lblClientDetails" min="-2" pref="30" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblDriverID" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txfDriverID" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblClientID" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txfClientID" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblDriverName" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txfDriverName" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblClientName" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txfClientrName" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblDriverSurname" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txfDriverSurname" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblClientSurname" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txfClientSurname" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblContactNo" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txfContactNo" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblClientAddress" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txfClientAddress" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblAddress" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txfAddress" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblVehicleReg" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txfVehicleReg" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txfAddInfo" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="85" max="32767" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="btnEdit" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnSave" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblClientContactNo" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txfClientContactNo" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lblAltNum" min="-2" max="-2" attributes="0"/>
+                          <Component id="txfAltNum" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblEmail" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txfClientEmail" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lblOrderID" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="txfOrderID" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="7" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lblSuburbID" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="txfSuburbID" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="btnEditClient" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnSaveClient" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnBack" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -293,39 +339,39 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="lblDriversDetails">
+            <Component class="javax.swing.JLabel" name="lblClientDetails">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Driver&apos;s Details:"/>
+                <Property name="text" type="java.lang.String" value="Client&apos;s Details:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblDriverID">
+            <Component class="javax.swing.JLabel" name="lblClientID">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="12" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Driver ID:"/>
+                <Property name="text" type="java.lang.String" value="Client ID:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblDriverName">
+            <Component class="javax.swing.JLabel" name="lblClientName">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="12" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Driver Name:"/>
+                <Property name="text" type="java.lang.String" value="Client Name:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblDriverSurname">
+            <Component class="javax.swing.JLabel" name="lblClientSurname">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="12" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Driver Surname:"/>
+                <Property name="text" type="java.lang.String" value="Client Surname:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblContactNo">
+            <Component class="javax.swing.JLabel" name="lblClientContactNo">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="12" style="0"/>
@@ -333,7 +379,7 @@
                 <Property name="text" type="java.lang.String" value="Contact Number:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblAddress">
+            <Component class="javax.swing.JLabel" name="lblClientAddress">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="12" style="0"/>
@@ -346,10 +392,10 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="12" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Vehicle Registration:"/>
+                <Property name="text" type="java.lang.String" value="Additional Information:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="txfDriverID">
+            <Component class="javax.swing.JTextField" name="txfClientID">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="12" style="0"/>
@@ -357,12 +403,12 @@
                 <Property name="horizontalAlignment" type="int" value="11"/>
               </Properties>
               <BindingProperties>
-                <BindingProperty name="text" source="lstDrivers" sourcePath="${selectedElement.driverID}" target="txfDriverID" targetPath="text" updateStrategy="0" immediately="false">
+                <BindingProperty name="text" source="lstClient" sourcePath="${selectedElement.driverID}" target="txfClientID" targetPath="text" updateStrategy="0" immediately="false">
                   <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
                 </BindingProperty>
               </BindingProperties>
             </Component>
-            <Component class="javax.swing.JTextField" name="txfDriverName">
+            <Component class="javax.swing.JTextField" name="txfClientrName">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="12" style="0"/>
@@ -370,12 +416,12 @@
                 <Property name="horizontalAlignment" type="int" value="11"/>
               </Properties>
               <BindingProperties>
-                <BindingProperty name="text" source="lstDrivers" sourcePath="${selectedElement.driverName}" target="txfDriverName" targetPath="text" updateStrategy="0" immediately="false">
+                <BindingProperty name="text" source="lstClient" sourcePath="${selectedElement.driverName}" target="txfClientrName" targetPath="text" updateStrategy="0" immediately="false">
                   <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
                 </BindingProperty>
               </BindingProperties>
             </Component>
-            <Component class="javax.swing.JTextField" name="txfDriverSurname">
+            <Component class="javax.swing.JTextField" name="txfClientSurname">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="12" style="0"/>
@@ -383,12 +429,12 @@
                 <Property name="horizontalAlignment" type="int" value="11"/>
               </Properties>
               <BindingProperties>
-                <BindingProperty name="text" source="lstDrivers" sourcePath="${selectedElement.driverSurame}" target="txfDriverSurname" targetPath="text" updateStrategy="0" immediately="false">
+                <BindingProperty name="text" source="lstClient" sourcePath="${selectedElement.driverSurame}" target="txfClientSurname" targetPath="text" updateStrategy="0" immediately="false">
                   <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
                 </BindingProperty>
               </BindingProperties>
             </Component>
-            <Component class="javax.swing.JTextField" name="txfContactNo">
+            <Component class="javax.swing.JTextField" name="txfClientContactNo">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="12" style="0"/>
@@ -396,12 +442,28 @@
                 <Property name="horizontalAlignment" type="int" value="11"/>
               </Properties>
               <BindingProperties>
-                <BindingProperty name="text" source="lstDrivers" sourcePath="${selectedElement.contactNumber}" target="txfContactNo" targetPath="text" updateStrategy="0" immediately="false">
+                <BindingProperty name="text" source="lstClient" sourcePath="${selectedElement.contactNumber}" target="txfClientContactNo" targetPath="text" updateStrategy="0" immediately="false">
+                  <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
+                </BindingProperty>
+              </BindingProperties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txfClientContactNoActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JTextField" name="txfClientAddress">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="12" style="0"/>
+                </Property>
+                <Property name="horizontalAlignment" type="int" value="11"/>
+              </Properties>
+              <BindingProperties>
+                <BindingProperty name="text" source="lstClient" sourcePath="${selectedElement.address}" target="txfClientAddress" targetPath="text" updateStrategy="0" immediately="false">
                   <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
                 </BindingProperty>
               </BindingProperties>
             </Component>
-            <Component class="javax.swing.JTextField" name="txfAddress">
+            <Component class="javax.swing.JTextField" name="txfAddInfo">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="12" style="0"/>
@@ -409,20 +471,7 @@
                 <Property name="horizontalAlignment" type="int" value="11"/>
               </Properties>
               <BindingProperties>
-                <BindingProperty name="text" source="lstDrivers" sourcePath="${selectedElement.address}" target="txfAddress" targetPath="text" updateStrategy="0" immediately="false">
-                  <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
-                </BindingProperty>
-              </BindingProperties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="txfVehicleReg">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="12" style="0"/>
-                </Property>
-                <Property name="horizontalAlignment" type="int" value="11"/>
-              </Properties>
-              <BindingProperties>
-                <BindingProperty name="text" source="lstDrivers" sourcePath="${selectedElement.vehicleReg}" target="txfVehicleReg" targetPath="text" updateStrategy="0" immediately="false">
+                <BindingProperty name="text" source="lstClient" sourcePath="${selectedElement.vehicleReg}" target="txfAddInfo" targetPath="text" updateStrategy="0" immediately="false">
                   <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
                 </BindingProperty>
               </BindingProperties>
@@ -435,7 +484,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBackActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btnEdit">
+            <Component class="javax.swing.JButton" name="btnEditClient">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/PICS/Edit 2.png"/>
@@ -443,10 +492,10 @@
                 <Property name="text" type="java.lang.String" value=" Edit"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditClientActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btnSave">
+            <Component class="javax.swing.JButton" name="btnSaveClient">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/PICS/Save 2.png"/>
@@ -454,8 +503,75 @@
                 <Property name="text" type="java.lang.String" value=" Save"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSaveActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSaveClientActionPerformed"/>
               </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblAltNum">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="12" style="0"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Alternative Number:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="txfAltNum">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="12" style="0"/>
+                </Property>
+                <Property name="horizontalAlignment" type="int" value="11"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblOrderID">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="12" style="0"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Order ID:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblEmail">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="12" style="0"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Email:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="txfClientEmail">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="12" style="0"/>
+                </Property>
+                <Property name="horizontalAlignment" type="int" value="11"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txfClientEmailActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JTextField" name="txfOrderID">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="12" style="0"/>
+                </Property>
+                <Property name="horizontalAlignment" type="int" value="11"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblSuburbID">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="12" style="0"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Suburb ID:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="txfSuburbID">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="12" style="0"/>
+                </Property>
+                <Property name="horizontalAlignment" type="int" value="11"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>

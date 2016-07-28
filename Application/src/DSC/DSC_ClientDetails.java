@@ -20,35 +20,35 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
     public DSC_ClientDetails() {
         initComponents();
         disableFields();
-        btnSave.setText("Save");
-        btnSave.setVisible(false);
-        txfDriverID.setEnabled(false);
-        lstDrivers.setSelectedIndex(0);
+        btnSaveClient.setText("Save");
+        btnSaveClient.setVisible(false);
+        txfClientID.setEnabled(false);
+        lstClient.setSelectedIndex(0);
     }
 
     public final void enableFields() {
-        txfDriverName.setEnabled(true);
-        txfDriverSurname.setEnabled(true);
-        txfContactNo.setEnabled(true);
-        txfAddress.setEnabled(true);
-        txfVehicleReg.setEnabled(true);
+        txfClientrName.setEnabled(true);
+        txfClientSurname.setEnabled(true);
+        txfClientContactNo.setEnabled(true);
+        txfClientAddress.setEnabled(true);
+        txfAddInfo.setEnabled(true);
     }
 
     public final void disableFields() {
-        txfDriverName.setEnabled(false);
-        txfDriverSurname.setEnabled(false);
-        txfContactNo.setEnabled(false);
-        txfAddress.setEnabled(false);
-        txfVehicleReg.setEnabled(false);
+        txfClientrName.setEnabled(false);
+        txfClientSurname.setEnabled(false);
+        txfClientContactNo.setEnabled(false);
+        txfClientAddress.setEnabled(false);
+        txfAddInfo.setEnabled(false);
     }
 
     public final void clearFields() {
-        txfDriverID.setText(null);
-        txfDriverName.setText(null);
-        txfDriverSurname.setText(null);
-        txfContactNo.setText(null);
-        txfAddress.setText(null);
-        txfVehicleReg.setText(null);
+        txfClientID.setText(null);
+        txfClientrName.setText(null);
+        txfClientSurname.setText(null);
+        txfClientContactNo.setText(null);
+        txfClientAddress.setText(null);
+        txfAddInfo.setText(null);
     }
 
     /**
@@ -64,154 +64,168 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("doorstepchef?zeroDateTimeBehavior=convertToNullPU").createEntityManager();
         driverTbQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT d FROM DriverTb d");
         driverTbList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : driverTbQuery.getResultList();
-        pnlBackground = new javax.swing.JPanel();
-        pnlDrivers = new javax.swing.JPanel();
-        lblDrivers = new javax.swing.JLabel();
+        pnlBackgroundClient = new javax.swing.JPanel();
+        pnlClients = new javax.swing.JPanel();
+        lblClients = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        lstDrivers = new javax.swing.JList<>();
-        btnAddDriver = new javax.swing.JButton();
-        btnDeleteDriver = new javax.swing.JButton();
-        pnlDetails = new javax.swing.JPanel();
-        lblDriversDetails = new javax.swing.JLabel();
-        lblDriverID = new javax.swing.JLabel();
-        lblDriverName = new javax.swing.JLabel();
-        lblDriverSurname = new javax.swing.JLabel();
-        lblContactNo = new javax.swing.JLabel();
-        lblAddress = new javax.swing.JLabel();
+        lstClient = new javax.swing.JList<>();
+        btnAddClient = new javax.swing.JButton();
+        btnDeleteClient = new javax.swing.JButton();
+        pnlDetailsClient = new javax.swing.JPanel();
+        lblClientDetails = new javax.swing.JLabel();
+        lblClientID = new javax.swing.JLabel();
+        lblClientName = new javax.swing.JLabel();
+        lblClientSurname = new javax.swing.JLabel();
+        lblClientContactNo = new javax.swing.JLabel();
+        lblClientAddress = new javax.swing.JLabel();
         lblVehicleReg = new javax.swing.JLabel();
-        txfDriverID = new javax.swing.JTextField();
-        txfDriverName = new javax.swing.JTextField();
-        txfDriverSurname = new javax.swing.JTextField();
-        txfContactNo = new javax.swing.JTextField();
-        txfAddress = new javax.swing.JTextField();
-        txfVehicleReg = new javax.swing.JTextField();
+        txfClientID = new javax.swing.JTextField();
+        txfClientrName = new javax.swing.JTextField();
+        txfClientSurname = new javax.swing.JTextField();
+        txfClientContactNo = new javax.swing.JTextField();
+        txfClientAddress = new javax.swing.JTextField();
+        txfAddInfo = new javax.swing.JTextField();
         btnBack = new javax.swing.JButton();
-        btnEdit = new javax.swing.JButton();
-        btnSave = new javax.swing.JButton();
+        btnEditClient = new javax.swing.JButton();
+        btnSaveClient = new javax.swing.JButton();
+        lblAltNum = new javax.swing.JLabel();
+        txfAltNum = new javax.swing.JTextField();
+        lblOrderID = new javax.swing.JLabel();
+        lblEmail = new javax.swing.JLabel();
+        txfClientEmail = new javax.swing.JTextField();
+        txfOrderID = new javax.swing.JTextField();
+        lblSuburbID = new javax.swing.JLabel();
+        txfSuburbID = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Driver Details");
 
-        pnlBackground.setBackground(new java.awt.Color(0, 153, 0));
+        pnlBackgroundClient.setBackground(new java.awt.Color(0, 153, 0));
 
-        pnlDrivers.setBackground(new java.awt.Color(0, 204, 51));
-        pnlDrivers.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        pnlClients.setBackground(new java.awt.Color(0, 204, 51));
+        pnlClients.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        lblDrivers.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lblDrivers.setText("Drivers:");
+        lblClients.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblClients.setText("Clients:");
 
-        lstDrivers.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lstDrivers.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lstClient.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lstClient.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
-        org.jdesktop.swingbinding.JListBinding jListBinding = org.jdesktop.swingbinding.SwingBindings.createJListBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, driverTbList, lstDrivers);
+        org.jdesktop.swingbinding.JListBinding jListBinding = org.jdesktop.swingbinding.SwingBindings.createJListBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, driverTbList, lstClient);
         bindingGroup.addBinding(jListBinding);
 
-        jScrollPane1.setViewportView(lstDrivers);
+        jScrollPane1.setViewportView(lstClient);
 
-        btnAddDriver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Add.png"))); // NOI18N
-        btnAddDriver.setText(" Add");
-        btnAddDriver.addActionListener(new java.awt.event.ActionListener() {
+        btnAddClient.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Add.png"))); // NOI18N
+        btnAddClient.setText(" Add");
+        btnAddClient.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddDriverActionPerformed(evt);
+                btnAddClientActionPerformed(evt);
             }
         });
 
-        btnDeleteDriver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Bin.png"))); // NOI18N
-        btnDeleteDriver.setText("Delete");
-        btnDeleteDriver.addActionListener(new java.awt.event.ActionListener() {
+        btnDeleteClient.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Bin.png"))); // NOI18N
+        btnDeleteClient.setText("Delete");
+        btnDeleteClient.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteDriverActionPerformed(evt);
+                btnDeleteClientActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout pnlDriversLayout = new javax.swing.GroupLayout(pnlDrivers);
-        pnlDrivers.setLayout(pnlDriversLayout);
-        pnlDriversLayout.setHorizontalGroup(
-            pnlDriversLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlDriversLayout.createSequentialGroup()
+        javax.swing.GroupLayout pnlClientsLayout = new javax.swing.GroupLayout(pnlClients);
+        pnlClients.setLayout(pnlClientsLayout);
+        pnlClientsLayout.setHorizontalGroup(
+            pnlClientsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlClientsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlDriversLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlClientsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
-                    .addGroup(pnlDriversLayout.createSequentialGroup()
-                        .addComponent(lblDrivers, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlClientsLayout.createSequentialGroup()
+                        .addComponent(lblClients, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAddDriver)
+                        .addComponent(btnAddClient)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnDeleteDriver)
+                        .addComponent(btnDeleteClient)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
-        pnlDriversLayout.setVerticalGroup(
-            pnlDriversLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlDriversLayout.createSequentialGroup()
+        pnlClientsLayout.setVerticalGroup(
+            pnlClientsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlClientsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlDriversLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDrivers, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAddDriver, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnDeleteDriver))
+                .addGroup(pnlClientsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblClients, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAddClient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnDeleteClient))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1)
                 .addContainerGap())
         );
 
-        pnlDetails.setBackground(new java.awt.Color(0, 204, 51));
-        pnlDetails.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        pnlDetailsClient.setBackground(new java.awt.Color(0, 204, 51));
+        pnlDetailsClient.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        lblDriversDetails.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lblDriversDetails.setText("Driver's Details:");
+        lblClientDetails.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblClientDetails.setText("Client's Details:");
 
-        lblDriverID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblDriverID.setText("Driver ID:");
+        lblClientID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblClientID.setText("Client ID:");
 
-        lblDriverName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblDriverName.setText("Driver Name:");
+        lblClientName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblClientName.setText("Client Name:");
 
-        lblDriverSurname.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblDriverSurname.setText("Driver Surname:");
+        lblClientSurname.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblClientSurname.setText("Client Surname:");
 
-        lblContactNo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblContactNo.setText("Contact Number:");
+        lblClientContactNo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblClientContactNo.setText("Contact Number:");
 
-        lblAddress.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblAddress.setText("Address:");
+        lblClientAddress.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblClientAddress.setText("Address:");
 
         lblVehicleReg.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblVehicleReg.setText("Vehicle Registration:");
+        lblVehicleReg.setText("Additional Information:");
 
-        txfDriverID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txfDriverID.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        txfClientID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txfClientID.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstDrivers, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.driverID}"), txfDriverID, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstClient, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.driverID}"), txfClientID, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
-        txfDriverName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txfDriverName.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        txfClientrName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txfClientrName.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstDrivers, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.driverName}"), txfDriverName, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstClient, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.driverName}"), txfClientrName, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
-        txfDriverSurname.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txfDriverSurname.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        txfClientSurname.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txfClientSurname.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstDrivers, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.driverSurame}"), txfDriverSurname, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstClient, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.driverSurame}"), txfClientSurname, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
-        txfContactNo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txfContactNo.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        txfClientContactNo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txfClientContactNo.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstDrivers, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.contactNumber}"), txfContactNo, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstClient, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.contactNumber}"), txfClientContactNo, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
-        txfAddress.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txfAddress.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        txfClientContactNo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfClientContactNoActionPerformed(evt);
+            }
+        });
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstDrivers, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.address}"), txfAddress, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        txfClientAddress.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txfClientAddress.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstClient, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.address}"), txfClientAddress, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
-        txfVehicleReg.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txfVehicleReg.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        txfAddInfo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txfAddInfo.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstDrivers, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.vehicleReg}"), txfVehicleReg, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstClient, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.vehicleReg}"), txfAddInfo, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
         btnBack.setText("Back");
@@ -221,109 +235,174 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
             }
         });
 
-        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Edit 2.png"))); // NOI18N
-        btnEdit.setText(" Edit");
-        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+        btnEditClient.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Edit 2.png"))); // NOI18N
+        btnEditClient.setText(" Edit");
+        btnEditClient.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditActionPerformed(evt);
+                btnEditClientActionPerformed(evt);
             }
         });
 
-        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Save 2.png"))); // NOI18N
-        btnSave.setText(" Save");
-        btnSave.addActionListener(new java.awt.event.ActionListener() {
+        btnSaveClient.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Save 2.png"))); // NOI18N
+        btnSaveClient.setText(" Save");
+        btnSaveClient.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSaveActionPerformed(evt);
+                btnSaveClientActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout pnlDetailsLayout = new javax.swing.GroupLayout(pnlDetails);
-        pnlDetails.setLayout(pnlDetailsLayout);
-        pnlDetailsLayout.setHorizontalGroup(
-            pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlDetailsLayout.createSequentialGroup()
+        lblAltNum.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblAltNum.setText("Alternative Number:");
+
+        txfAltNum.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txfAltNum.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+
+        lblOrderID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblOrderID.setText("Order ID:");
+
+        lblEmail.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblEmail.setText("Email:");
+
+        txfClientEmail.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txfClientEmail.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        txfClientEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfClientEmailActionPerformed(evt);
+            }
+        });
+
+        txfOrderID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txfOrderID.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+
+        lblSuburbID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblSuburbID.setText("Suburb ID:");
+
+        txfSuburbID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txfSuburbID.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+
+        javax.swing.GroupLayout pnlDetailsClientLayout = new javax.swing.GroupLayout(pnlDetailsClient);
+        pnlDetailsClient.setLayout(pnlDetailsClientLayout);
+        pnlDetailsClientLayout.setHorizontalGroup(
+            pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlDetailsClientLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblDriversDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(pnlDetailsLayout.createSequentialGroup()
-                        .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblVehicleReg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblAddress, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblContactNo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblDriverSurname, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblDriverName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblDriverID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblClientDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(pnlDetailsClientLayout.createSequentialGroup()
+                        .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(lblVehicleReg, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+                                .addComponent(lblClientSurname, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblClientName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblClientID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(lblClientAddress))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txfDriverID)
-                            .addComponent(txfDriverName, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txfDriverSurname, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txfContactNo, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txfAddress, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txfVehicleReg, javax.swing.GroupLayout.Alignment.TRAILING)))
-                    .addGroup(pnlDetailsLayout.createSequentialGroup()
-                        .addComponent(btnEdit)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
-                        .addComponent(btnSave)
+                        .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txfClientID)
+                            .addComponent(txfClientrName, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txfClientSurname, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txfAddInfo, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txfClientAddress)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDetailsClientLayout.createSequentialGroup()
+                        .addComponent(btnEditClient)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
+                        .addComponent(btnSaveClient)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnBack)))
+                        .addComponent(btnBack)
+                        .addGap(4, 4, 4))
+                    .addGroup(pnlDetailsClientLayout.createSequentialGroup()
+                        .addComponent(lblClientContactNo, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(57, 57, 57)
+                        .addComponent(txfClientContactNo))
+                    .addGroup(pnlDetailsClientLayout.createSequentialGroup()
+                        .addComponent(lblAltNum, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txfAltNum, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlDetailsClientLayout.createSequentialGroup()
+                        .addComponent(lblEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(57, 57, 57)
+                        .addComponent(txfClientEmail))
+                    .addGroup(pnlDetailsClientLayout.createSequentialGroup()
+                        .addComponent(lblOrderID, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txfOrderID, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlDetailsClientLayout.createSequentialGroup()
+                        .addComponent(lblSuburbID, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txfSuburbID, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
-        pnlDetailsLayout.setVerticalGroup(
-            pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlDetailsLayout.createSequentialGroup()
+        pnlDetailsClientLayout.setVerticalGroup(
+            pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlDetailsClientLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblDriversDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblClientDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDriverID)
-                    .addComponent(txfDriverID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblClientID)
+                    .addComponent(txfClientID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDriverName)
-                    .addComponent(txfDriverName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblClientName)
+                    .addComponent(txfClientrName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDriverSurname)
-                    .addComponent(txfDriverSurname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblClientSurname)
+                    .addComponent(txfClientSurname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblContactNo)
-                    .addComponent(txfContactNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblAddress)
-                    .addComponent(txfAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblClientAddress)
+                    .addComponent(txfClientAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblVehicleReg)
-                    .addComponent(txfVehicleReg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
-                .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEdit)
-                    .addComponent(btnSave)
+                    .addComponent(txfAddInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblClientContactNo)
+                    .addComponent(txfClientContactNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblAltNum)
+                    .addComponent(txfAltNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblEmail)
+                    .addComponent(txfClientEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblOrderID)
+                    .addComponent(txfOrderID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblSuburbID)
+                    .addComponent(txfSuburbID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEditClient)
+                    .addComponent(btnSaveClient)
                     .addComponent(btnBack))
                 .addContainerGap())
         );
 
-        javax.swing.GroupLayout pnlBackgroundLayout = new javax.swing.GroupLayout(pnlBackground);
-        pnlBackground.setLayout(pnlBackgroundLayout);
-        pnlBackgroundLayout.setHorizontalGroup(
-            pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlBackgroundLayout.createSequentialGroup()
+        javax.swing.GroupLayout pnlBackgroundClientLayout = new javax.swing.GroupLayout(pnlBackgroundClient);
+        pnlBackgroundClient.setLayout(pnlBackgroundClientLayout);
+        pnlBackgroundClientLayout.setHorizontalGroup(
+            pnlBackgroundClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlBackgroundClientLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pnlDrivers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlClients, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(pnlDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pnlDetailsClient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        pnlBackgroundLayout.setVerticalGroup(
-            pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlBackgroundLayout.createSequentialGroup()
+        pnlBackgroundClientLayout.setVerticalGroup(
+            pnlBackgroundClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlBackgroundClientLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlDrivers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(pnlBackgroundClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlClients, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlDetailsClient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -331,11 +410,11 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnlBackgroundClient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnlBackgroundClient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         bindingGroup.bind();
@@ -344,23 +423,23 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        listIndex = lstDrivers.getSelectedIndex();
+    private void btnEditClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditClientActionPerformed
+        listIndex = lstClient.getSelectedIndex();
         enableFields();
-        btnEdit.setEnabled(false);
-        btnSave.setVisible(true);
+        btnEditClient.setEnabled(false);
+        btnSaveClient.setVisible(true);
         editClicked = true;
-    }//GEN-LAST:event_btnEditActionPerformed
+    }//GEN-LAST:event_btnEditClientActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         if (editClicked) {
             int ans = JOptionPane.showConfirmDialog(this, "Do you wish to discard unsaved changes?");
             switch (ans) {
                 case JOptionPane.YES_OPTION:
-                    btnSave.setVisible(false);
-                    btnEdit.setEnabled(true);
+                    btnSaveClient.setVisible(false);
+                    btnEditClient.setEnabled(true);
                     disableFields();
-                    lstDrivers.setSelectedIndex(listIndex);
+                    lstClient.setSelectedIndex(listIndex);
                     editClicked = false;
                     break;
                 case JOptionPane.NO_OPTION:
@@ -374,9 +453,9 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnBackActionPerformed
 
-    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+    private void btnSaveClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveClientActionPerformed
         boolean back = false;
-        if (btnSave.getText().equals("Save")) {
+        if (btnSaveClient.getText().equals("Save")) {
             /*
                 short ID = Short.parseShort(txfDriverID.getText().trim());
                 String newName = txfDriverName.getText().trim();
@@ -389,18 +468,18 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
 
             //Commit to database
             back = true;
-        } else if (btnSave.getText().equals("Add")) {
+        } else if (btnSaveClient.getText().equals("Add")) {
             //Add to database
             boolean empty = checkEmpty();
             if (empty) {
                 JOptionPane.showMessageDialog(this, "Please fill in all fields", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
-                short newID = Short.parseShort(txfDriverID.getText().trim());
-                String newName = txfDriverName.getText().trim();
-                String newSurname = txfDriverSurname.getText().trim();
-                String newContactNo = txfContactNo.getText().trim();
-                String newAddress = txfAddress.getText().trim();
-                String newVehicleReg = txfVehicleReg.getText().trim();
+                short newID = Short.parseShort(txfClientID.getText().trim());
+                String newName = txfClientrName.getText().trim();
+                String newSurname = txfClientSurname.getText().trim();
+                String newContactNo = txfClientContactNo.getText().trim();
+                String newAddress = txfClientAddress.getText().trim();
+                String newVehicleReg = txfAddInfo.getText().trim();
 
                 String query = "INSERT INTO doorstepchef.driver_tb (`DriverID`, `DriverName`, `ContactNumber`, `Address`, `VehicleReg`, `DriverSurname`) \n"
                         + "	VALUES (" + newID + ", '" + newName + "', '" + newContactNo + "', '" + newAddress + "', '" + newVehicleReg + "', '" + newSurname + "');";
@@ -419,30 +498,30 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
 
         if (back) {
             disableFields();
-            btnSave.setVisible(false);
-            btnEdit.setEnabled(true);
+            btnSaveClient.setVisible(false);
+            btnEditClient.setEnabled(true);
             editClicked = false;
         }
 
-    }//GEN-LAST:event_btnSaveActionPerformed
+    }//GEN-LAST:event_btnSaveClientActionPerformed
 
     private boolean checkEmpty() {
         boolean empty = false;
 
-        if (txfDriverName.getText().isEmpty() && txfDriverSurname.getText().isEmpty() && txfContactNo.getText().isEmpty()
-                && txfAddress.getText().isEmpty() && txfVehicleReg.getText().isEmpty()) {
+        if (txfClientrName.getText().isEmpty() && txfClientSurname.getText().isEmpty() && txfClientContactNo.getText().isEmpty()
+                && txfClientAddress.getText().isEmpty() && txfAddInfo.getText().isEmpty()) {
             empty = true;
         }
 
         return empty;
     }
 
-    private void btnAddDriverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDriverActionPerformed
+    private void btnAddClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddClientActionPerformed
         clearFields();
         enableFields();
-        btnEdit.setEnabled(false);
-        btnSave.setText("Add");
-        btnSave.setVisible(true);
+        btnEditClient.setEnabled(false);
+        btnSaveClient.setText("Add");
+        btnSaveClient.setVisible(true);
         editClicked = true;
 
         String query = "SELECT MAX(DriverID) FROM doorstepchef.driver_tb;";
@@ -459,15 +538,15 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
         }
         numRows += 1;
-        txfDriverID.setText(numRows + "");
+        txfClientID.setText(numRows + "");
 
-    }//GEN-LAST:event_btnAddDriverActionPerformed
+    }//GEN-LAST:event_btnAddClientActionPerformed
 
-    private void btnDeleteDriverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteDriverActionPerformed
-        String name = txfDriverName.getText() + " " + txfDriverSurname.getText();
+    private void btnDeleteClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteClientActionPerformed
+        String name = txfClientrName.getText() + " " + txfClientSurname.getText();
 
-        int driverID = Integer.parseInt(txfDriverID.getText());
-        int elementIndex = lstDrivers.getSelectedIndex();
+        int driverID = Integer.parseInt(txfClientID.getText());
+        int elementIndex = lstClient.getSelectedIndex();
 
         String message = "Are you sure you want to delete " + name + "?";
         int answer = JOptionPane.showConfirmDialog(this, message, "Confirm", JOptionPane.INFORMATION_MESSAGE);
@@ -502,7 +581,15 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
 
                 break;
         }
-    }//GEN-LAST:event_btnDeleteDriverActionPerformed
+    }//GEN-LAST:event_btnDeleteClientActionPerformed
+
+    private void txfClientContactNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfClientContactNoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfClientContactNoActionPerformed
+
+    private void txfClientEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfClientEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfClientEmailActionPerformed
 
     /**
      * @param args the command line arguments
@@ -541,33 +628,41 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAddDriver;
+    private javax.swing.JButton btnAddClient;
     private javax.swing.JButton btnBack;
-    private javax.swing.JButton btnDeleteDriver;
-    private javax.swing.JButton btnEdit;
-    private javax.swing.JButton btnSave;
+    private javax.swing.JButton btnDeleteClient;
+    private javax.swing.JButton btnEditClient;
+    private javax.swing.JButton btnSaveClient;
     private java.util.List<DSC.DriverTb> driverTbList;
     private javax.persistence.Query driverTbQuery;
     private javax.persistence.EntityManager entityManager;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblAddress;
-    private javax.swing.JLabel lblContactNo;
-    private javax.swing.JLabel lblDriverID;
-    private javax.swing.JLabel lblDriverName;
-    private javax.swing.JLabel lblDriverSurname;
-    private javax.swing.JLabel lblDrivers;
-    private javax.swing.JLabel lblDriversDetails;
+    private javax.swing.JLabel lblAltNum;
+    private javax.swing.JLabel lblClientAddress;
+    private javax.swing.JLabel lblClientContactNo;
+    private javax.swing.JLabel lblClientDetails;
+    private javax.swing.JLabel lblClientID;
+    private javax.swing.JLabel lblClientName;
+    private javax.swing.JLabel lblClientSurname;
+    private javax.swing.JLabel lblClients;
+    private javax.swing.JLabel lblEmail;
+    private javax.swing.JLabel lblOrderID;
+    private javax.swing.JLabel lblSuburbID;
     private javax.swing.JLabel lblVehicleReg;
-    private javax.swing.JList<String> lstDrivers;
-    private javax.swing.JPanel pnlBackground;
-    private javax.swing.JPanel pnlDetails;
-    private javax.swing.JPanel pnlDrivers;
-    private javax.swing.JTextField txfAddress;
-    private javax.swing.JTextField txfContactNo;
-    private javax.swing.JTextField txfDriverID;
-    private javax.swing.JTextField txfDriverName;
-    private javax.swing.JTextField txfDriverSurname;
-    private javax.swing.JTextField txfVehicleReg;
+    private javax.swing.JList<String> lstClient;
+    private javax.swing.JPanel pnlBackgroundClient;
+    private javax.swing.JPanel pnlClients;
+    private javax.swing.JPanel pnlDetailsClient;
+    private javax.swing.JTextField txfAddInfo;
+    private javax.swing.JTextField txfAltNum;
+    private javax.swing.JTextField txfClientAddress;
+    private javax.swing.JTextField txfClientContactNo;
+    private javax.swing.JTextField txfClientEmail;
+    private javax.swing.JTextField txfClientID;
+    private javax.swing.JTextField txfClientSurname;
+    private javax.swing.JTextField txfClientrName;
+    private javax.swing.JTextField txfOrderID;
+    private javax.swing.JTextField txfSuburbID;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }
