@@ -490,7 +490,8 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
                 }
-
+                break;
+                
             case JOptionPane.NO_OPTION:
                 JOptionPane.showMessageDialog(this, name + " will not be deleted", "Delete Notification", JOptionPane.INFORMATION_MESSAGE);
                 break;
