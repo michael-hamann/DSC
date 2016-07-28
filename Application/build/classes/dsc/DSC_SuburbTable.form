@@ -233,11 +233,6 @@
                               <Editor/>
                               <Renderer/>
                             </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                              <Title/>
-                              <Editor/>
-                              <Renderer/>
-                            </Column>
                           </TableColumnModel>
                         </Property>
                         <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
@@ -247,12 +242,15 @@
                       <BindingProperties>
                         <BindingProperty name="elements" source="suburbTbList" target="tblSuburbTable" targetPath="elements" updateStrategy="0" immediately="true">
                           <Subbinding sourcePath="${suburbID}">
+                            <BindingParameter name="NAME" value="Suburb ID"/>
                             <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Short.class"/>
                           </Subbinding>
                           <Subbinding sourcePath="${routeID}">
+                            <BindingParameter name="NAME" value="Route ID"/>
                             <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Short.class"/>
                           </Subbinding>
                           <Subbinding sourcePath="${suburb}">
+                            <BindingParameter name="NAME" value="Suburb"/>
                             <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
                           </Subbinding>
                         </BindingProperty>

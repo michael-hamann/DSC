@@ -142,7 +142,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="btnDriverTbl" alignment="0" max="32767" attributes="0"/>
@@ -150,6 +150,7 @@
                           <Component id="btnClientTbl" alignment="0" max="32767" attributes="0"/>
                           <Component id="btnSuburbTbl" alignment="1" pref="150" max="32767" attributes="0"/>
                           <Component id="lblView" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnRouteTbl" alignment="1" pref="150" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -168,7 +169,9 @@
                       <Component id="btnClientTbl" min="-2" pref="50" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnSuburbTbl" min="-2" pref="50" max="-2" attributes="0"/>
-                      <EmptySpace pref="121" max="32767" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="btnRouteTbl" min="-2" pref="50" max="-2" attributes="0"/>
+                      <EmptySpace pref="60" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -214,6 +217,14 @@
                 <Property name="horizontalAlignment" type="int" value="0"/>
                 <Property name="text" type="java.lang.String" value="View Tables"/>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnRouteTbl">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Route Table"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRouteTblActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

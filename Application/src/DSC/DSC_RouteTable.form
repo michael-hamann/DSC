@@ -7,22 +7,22 @@
         <Property name="persistenceUnit" type="java.lang.String" value="doorstepchef?zeroDateTimeBehavior=convertToNullPU"/>
       </Properties>
     </Component>
-    <Component class="javax.persistence.Query" name="suburbTbQuery">
+    <Component class="javax.persistence.Query" name="routeTbQuery">
       <Properties>
-        <Property name="query" type="java.lang.String" value="SELECT s FROM SuburbTb s"/>
+        <Property name="query" type="java.lang.String" value="SELECT r FROM RouteTb r"/>
         <Property name="entityManager" type="java.lang.Object" editor="org.netbeans.modules.form.j2ee.J2EEPropertyModifier$EMProperty$EntityManagerEditor">
           <ComponentRef name="entityManager"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="java.util.List" name="suburbTbList">
+    <Component class="java.util.List" name="routeTbList">
       <Properties>
         <Property name="query" type="java.lang.Object" editor="org.netbeans.modules.form.j2ee.J2EEPropertyModifier$QueryBeanProperty$QueryEditor">
-          <ComponentRef name="suburbTbQuery"/>
+          <ComponentRef name="routeTbQuery"/>
         </Property>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;DSC.SuburbTb&gt;"/>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;DSC.RouteTb&gt;"/>
       </AuxValues>
     </Component>
   </NonVisualComponents>
@@ -167,7 +167,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="pnlIndent" max="32767" attributes="0"/>
-                          <Component id="lblSuburb" max="32767" attributes="0"/>
+                          <Component id="lblRoute" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -176,7 +176,7 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="lblSuburb" min="-2" pref="38" max="-2" attributes="0"/>
+                      <Component id="lblRoute" min="-2" pref="38" max="-2" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="pnlIndent" max="32767" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -214,7 +214,7 @@
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                   <SubComponents>
-                    <Component class="javax.swing.JTable" name="tblSuburbTable">
+                    <Component class="javax.swing.JTable" name="tblRouteTable">
                       <Properties>
                         <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                           <TableColumnModel selectionModel="0">
@@ -240,18 +240,21 @@
                         </Property>
                       </Properties>
                       <BindingProperties>
-                        <BindingProperty name="elements" source="suburbTbList" target="tblSuburbTable" targetPath="elements" updateStrategy="0" immediately="true">
-                          <Subbinding sourcePath="${suburbID}">
-                            <BindingParameter name="NAME" value="Suburb ID"/>
+                        <BindingProperty name="elements" source="routeTbList" target="tblRouteTable" targetPath="elements" updateStrategy="0" immediately="true">
+                          <Subbinding sourcePath="${driverID}">
+                            <BindingParameter name="NAME" value="Driver ID"/>
                             <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Short.class"/>
+                            <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
+                          </Subbinding>
+                          <Subbinding sourcePath="${timeFrame}">
+                            <BindingParameter name="NAME" value="Time Frame"/>
+                            <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+                            <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
                           </Subbinding>
                           <Subbinding sourcePath="${routeID}">
                             <BindingParameter name="NAME" value="Route ID"/>
                             <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Short.class"/>
-                          </Subbinding>
-                          <Subbinding sourcePath="${suburb}">
-                            <BindingParameter name="NAME" value="Suburb"/>
-                            <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+                            <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
                           </Subbinding>
                         </BindingProperty>
                       </BindingProperties>
@@ -260,13 +263,13 @@
                 </Container>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JLabel" name="lblSuburb">
+            <Component class="javax.swing.JLabel" name="lblRoute">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="18" style="1"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="Suburb Table"/>
+                <Property name="text" type="java.lang.String" value="Route Table"/>
               </Properties>
             </Component>
           </SubComponents>
