@@ -40,7 +40,7 @@ public class DSC_RouteTable extends javax.swing.JFrame {
         btnBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Suburb Table");
+        setTitle("Route Table");
         setBackground(new java.awt.Color(0, 0, 0));
 
         pnlBackground.setBackground(new java.awt.Color(0, 153, 0));

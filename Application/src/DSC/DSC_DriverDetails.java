@@ -487,7 +487,8 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                     stmt.executeUpdate(deleteDriver);
 
                     JOptionPane.showMessageDialog(this, "Driver has been deleted. \n Please note removing this driver has affected"
-                            + " route schedules leaving routes without an assigned driver.");
+                            + " \nroute schedules leaving routes without an assigned driver.");
+                    //refresh jList
 
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
