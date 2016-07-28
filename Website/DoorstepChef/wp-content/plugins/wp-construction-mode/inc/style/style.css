@@ -1,0 +1,313 @@
+/* 
+    Document   : style
+    Created on : Feb 22, 2014, 9:30:04 AM
+    Author     : Bilal
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.center{
+    text-align: center;
+}
+#admin-login{
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 100%;
+    text-align: center;
+    background: #fff;
+    color: #fff;
+    display: inline-block;
+    z-index: 999;
+    cursor: pointer;
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+}
+#about,
+#contact{
+    display: none;
+    position: fixed;
+    z-index: 999;
+    background: rgba( 0, 0, 0, 0.85 );
+    color: #fff;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /*overflow: hidden;*/
+    z-index: 9999;
+}
+#contact .wuc-box h3,
+#about .wuc-box h3{
+    border-bottom: 1px solid;
+    display: inline-block;
+    padding-bottom: 7px;
+    text-transform: uppercase;
+}
+#contact{
+    text-align: center;
+}
+#contact .wuc-box .trigger{
+    position: initial;
+}
+.trigger,
+.wuc_icons a{
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 100%;
+    text-align: center;
+    background: #fff;
+    color: #fff;
+    display: inline-block;
+    z-index: 999;
+    cursor: pointer;
+}
+.trigger{
+    position: absolute;
+}
+.close-trigger{
+    position: absolute;
+    right: 50px;
+    top: 50px;
+}
+.about-trigger{
+    left: 20px;
+    bottom: 20px;
+}
+.contact-trigger{
+    right: 20px;
+    bottom: 20px;
+}
+
+.wuc_icons a{
+    
+}
+
+#wuc-wrapper .wuc-logo img{
+    width: auto;
+    max-height: 150px;
+}
+#wuc-wrapper .countdown-show3 .countdown-section{
+    width: 40%;
+    
+}
+#wuc-wrapper #defaultCountdown .countdown-amount{ 
+    border: 5px solid #d0d0d0;
+    color: #121212;
+    border-radius: 100%;
+    padding: 10px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    display: inline-block;
+}
+#wuc-wrapper{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-image: url('../img/bg_pattern.png');
+    z-index: 9;
+}
+.wuc-overlay{
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: 9;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+#wuc-wrapper a{
+    text-decoration: none;
+}
+
+
+.wuc-box{
+    width: 100%;
+    margin: 0 auto;
+    color: #ffffff;
+    padding: 20px;
+    z-index: 991;
+    position: relative;
+    
+}
+.wuc-box .title{
+
+    text-align: center;
+}
+.wuc-box .subtitle{
+    font-size: 20px;
+    margin: 15px 0;
+    text-align: center;
+    height: 10%;
+    font-weight: 400;
+}
+.wuc-box .wuc_icons{
+    margin: 50px auto 0 auto;
+    text-align: center;
+}
+
+.wuc-box .wuc_icons img:first-child,
+.wuc-box .wuc_icons img:last-child{
+    margin: 0;
+}
+.wuc-box .wuc_icons img{
+    width: 30px;
+    margin: 0 5px;
+    transition: 0.4s all ease;
+    -moz-transition: 0.4s all ease;
+    -webkit-transition: 0.4s all ease;
+}
+.wuc-progress.sc-col-sm-12{
+    padding-left: 2px;
+    padding-right: 2px;
+}
+.wuc-progress{
+    
+    height: 20px;
+    display: block;
+    background: rgba(0,0,0,.4);
+    border-top: 1px solid rgba(0,0,0,.8);
+    -webkit-box-shadow: 0 1px 3px rgba(255,255,255,.2), inset 0 1px 5px rgba(0,0,0,.7);
+    box-shadow: 0 1px 3px rgba(255,255,255,.2), inset 0 1px 5px rgba(0,0,0,.7);
+    padding: 2px;
+     -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+.wuc-progress-bar{
+    float: left;
+    height: 100%;
+    width: 0;
+    border-radius: 5px;
+    background-image: linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);
+    background-color: #5bc0de;
+    background-size: 40px 40px;
+}
+.wuc-progress-number{
+    float: left;
+    height: 100%;
+    line-height: 15px;
+    font-size: 12px;
+    margin-left: 5px;
+}
+.wuc-shortcode{
+    text-align: center;
+}
+.wuc-shortcode label{
+    display: none;
+}
+.wuc-shortcode input[type=text],
+.wuc-shortcode input[type=email]{
+
+    margin-top: 10px;
+    padding: 8px 15px;
+    font-size: 14px;
+    width: 80%;
+    border: none;
+    color: #292929;
+    outline: none;
+    transition: 0.3s all ease-in-out;
+    -moz-transition: 0.3s all ease-in-out;
+    -webkit-transition: 0.3s all ease-in-out;
+}
+.wuc-shortcode input[type=submit]{
+    margin-top: 10px;
+    padding: 8px 15px;
+    font-size: 14px; 
+    border: none;
+    cursor: pointer;
+}
+.wuc-shortcode input[type=submit]:hover{
+    color: #49B2D2;
+    background: #fff;
+    background-color: #fff;
+    
+}
+/*-------Responsive---------*/
+@media(min-width: 980px){
+    #wuc-wrapper .wuc-logo{
+
+    }
+    .wuc-box .title{
+        font-weight: 200;
+        font-size: 34px;
+        margin: 30px 0;
+    }
+    .wuc-box .subtitle{
+        font-size: 20px;
+        margin: 30px 0;
+    }
+    .wuc-box{
+        width: 750px;
+        height: 100%;
+    }
+}
+
+/**
+* Grid CSS
+*/
+@media (min-width: 768px) {
+    .about-trigger{
+        left: 50px;
+        top: 50px;
+    }
+    .contact-trigger{
+        right: 50px;
+        top: 50px;
+    }    
+    .wuc-shortcode input[type=text],
+    .wuc-shortcode input[type=email]{
+        width: 50%;
+    }
+  .sc-col-sm-1, .sc-col-sm-2, .sc-col-sm-3, .sc-col-sm-4, .sc-col-sm-5, .sc-col-sm-6, .sc-col-sm-7, .sc-col-sm-8, .sc-col-sm-9, .sc-col-sm-10, .sc-col-sm-11, .sc-col-sm-12 {
+    float: left;
+    position: relative;
+    min-height: 1px;
+    padding-left: 15px;
+    padding-right: 15px;    
+  }
+  .sc-col-sm-12 {
+    width: 100%;
+  }
+  .sc-col-sm-11 {
+    width: 91.66666667%;
+  }
+  .sc-col-sm-10 {
+    width: 83.33333333%;
+  }
+  .sc-col-sm-9 {
+    width: 75%;
+  }
+  .sc-col-sm-8 {
+    width: 66.66666667%;
+  }
+  .sc-col-sm-7 {
+    width: 58.33333333%;
+  }
+  .sc-col-sm-6 {
+    width: 50%;
+  }
+  .sc-col-sm-5 {
+    width: 41.66666667%;
+  }
+  .sc-col-sm-4 {
+    width: 28.33333333%;
+  }
+  .sc-col-sm-3 {
+    width: 25%;
+  }
+  .sc-col-sm-2 {
+    width: 16.66666667%;
+  }
+  .sc-col-sm-1 {
+    width: 8.33333333%;
+  }
+}

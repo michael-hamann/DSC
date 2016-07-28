@@ -1,0 +1,195 @@
+version 3.0 ( updated 02-04-2013 )
+- Fixed the top menu scrolling issue
+	* js/custom.js
+- Bumped version number
+	* style.css
+- Fixed 'Shortcode Slideshow Only Displays 11 Images' issue
+- Added alt attribute to the imagetab shortcode
+- Fixed update notification notice in WP-Admin
+- Fixed image issues with clean WordPress Multisite 3.5 installation
+- Added et_videolink_embed custom field ( it provides the way to use video embed code for posts in the Portfolio page template )
+- Improved ePanel functionality
+- Improvement: Contact form error notifications are translatable via localization files now
+- Code improvements
+	* epanel/core_functions.php
+	* epanel/custom_functions.php
+	* epanel/import_settings.php
+	* removed epanel/js/jquery-ui.min.js
+	* removed epanel/js/jquery.form.js
+	* epanel/options_mycuisine.php
+	* epanel/page_templates/js/et-ptemplates-frontend.js
+	* epanel/page_templates/page_templates.php
+	* epanel/shortcodes/js/et_shortcodes_frontend.dev.js
+	* epanel/shortcodes/js/et_shortcodes_frontend.js
+	* epanel/shortcodes/shortcodes.php
+	* functions.php
+	* header.php
+	* home.php
+	* includes/additional_functions.php
+	* includes/breadcrumbs.php
+	* includes/featured.php
+	* includes/scripts.php
+	* includes/widgets/widget-about.php
+	* includes/widgets/widget-ads.php
+	* includes/widgets/widget-adsense.php
+	* includes/widgets/widget-customlogo.php
+	* js/custom.js
+	* lang/de_DE.mo
+	* lang/de_DE.po
+	* lang/en_US.mo
+	* lang/en_US.po
+	* lang/ru_RU.mo
+	* lang/ru_RU.po
+	* page-blog.php
+	* page-contact.php
+	* page-gallery.php
+	* page-login.php
+	* page-search.php
+	* page-sitemap.php
+	* page-template-menu.php
+	* page-template-portfolio.php
+	* searchform.php
+	* style.css
+
+version 2.9 ( updated 12-06-2012 )
+- Updated image resizing to utilize WP_Image_Editor object, available in WordPress 3.5 ( http://make.wordpress.org/core/2012/12/06/wp_image_editor-is-incoming/ )
+	* epanel/custom_functions.php
+
+version 2.8 ( updated 12-04-2012 )
+- Fixed ePanel active tab issue in WordPress 3.5
+	* epanel/css/panel.css
+- Bumped version number
+	* style.css
+
+version 2.7 ( updated 10-21-2012 )
+- Fixed scrolling issue on iPad
+	* style.css
+	* js/custom.js
+- Bumped version number
+	* style.css
+
+version 2.6 ( updated 10-01-2012 )
+- Fixed query issues on homepage
+	* epanel/core_functions.php
+	* epanel/custom_functions.php
+	* functions.php
+	* includes/entry.php
+	* includes/featured.php
+- Fixed tab shortcode issues on iPhone
+	* epanel/shortcodes/css/shortcodes.css
+- Fixed contact form jquery validation bug
+	* epanel/page_templates/js/et-ptemplates-frontend.js
+- Shortcodes now work in excerpts
+- Fixed SEO custom title issue with static homepage
+	* epanel/custom_functions.php
+- Fixed contact form issue on Bluehost
+	* page-contact.php
+- Fixed ePanel options description
+	* epanel/options_mycuisine.php
+- Bumped version number
+	* style.css
+
+version 2.5 ( updated 9-5-2012 )
+- Updated shortcodes
+	* epanel/shortcodes folder
+	* epanel/custom_functions.php
+	* page-login.php
+- Bumped version number
+	* style.css
+
+version 2.4 ( updated 8-12-2012 )
+- Fixed menu bar issue
+	* js/custom.js
+- Fixed contact form labels localization
+	* page-contact.php
+	* epanel/page_templates/page_templates.css
+	* epanel/page_templates/js/et-ptemplates-frontend.js
+	* updated lang folder
+- Fixed logo title
+	* header.php
+- Fixed 'disable all postinfo items' issue
+	* includes/postinfo.php
+- Updated ePanel core files:
+	* epanel/core_functions.php
+	* epanel/custom_functions.php	
+
+version 2.3 ( updated 6-14-2012 )
+- Fixed WP 3.4 compatibility issues
+        * epanel/js/custom_uploader.js
+        * epanel/custom_functions.php
+
+version 2.2 ( Updated: 4-04-2012 )
+- Fixed Featured slider bug, when using one slide
+	* js/custom.js
+- Improved shortcodes functionality ( now you can use ET Tabs inside of the ET Learn more block )
+	* epanel/shortcodes/js/et_shortcodes_frontend.js
+	* epanel/shortcodes/shortcodes.css
+
+version 2.1 ( Updated: 3-13-2012 )
+- Added width and height attributes to images, small images stretch to fill the space now
+	* custom_functions.php
+- Deleted Support Docs, replaced it with the link to site documentation
+	* epanel/options_mycuisine.php
+	* includes/functions/installation.php
+- Improved ePanel page select box functionality and compatibility with qTranslate and WPML plugins
+	* epanel/core_functions.php
+	* epanel/options_mycuisine.php
+- Shortcodes improvements
+	* epanel/shortcodes/shortcodes.css
+	* epanel/shortcodes/js/et_shortcodes_frontend.js
+- Improved et_videolink compatibility with iPhone and iPad, you can use videos from these sites now: http://goo.gl/U7Iuj
+	* style.css
+	* page-template-portfolio.php
+	* epanel/page_templates/js/fancybox/jquery.fancybox--1.3.4.pack.js
+- Added slider loading bar
+	* style.css
+	* includes/scripts.php
+	* images/ajax-loader.gif
+
+version 2.0 ( Updated: 1-25-2012 )
+- improved thumbnail resizing system ( epanel/custom_functions.php )
+- fixed simple slider shortcode "slide" effect issue ( epanel/shortcodes/js/et_shortcodes_frontend.js )
+- increased superfish menu delay ( js/custom.js )
+- fixed Chief's Recomendations posts thumbnail issue ( home.php )
+
+version 1.9
+- Updated ePanel with security and performance improvements
+    * /epanel
+    * functions.php
+    * style.css
+
+version 1.8
+- fixed color schemes issues ( style-Blue.css, style-Brown.css, style-Gray.css, style-Green.css  )
+
+version 1.7
+- Updated thumbnail function to clear unused images
+- Updated templates with improved coding structure
+- Fixed sample data images bug
+- Fixed featured slider bugs caused by new jQuery version
+
+version 1.6
+- Updated thumbnail function to better detect root folder. Thumbnails
+  must now be hosted within the same root folder as WordPress. 
+    * epanel/custom_functions.php
+
+version 1.5
+- Removed timthumb due to known vulnerabilities
+    * deleted timthumb.php, cache and temp folders
+    * modified 'epanel/custom_functions.php', 'epanel/options_themename.php'
+
+version 1.4
+- Fixed bug with homepage slider
+    * js/custom.js
+
+version 1.3
+- Performed extensive performance and security enhancements. 
+    * All files were updated. 
+
+version 1.2
+- Updated ePanel with various bug fixes
+- Changed lightbox script
+    * all files should be updated
+
+version 1.1
+- Featured slider thumbnail not working
+    * includes/featured.php

@@ -1,0 +1,17 @@
+/* Pro Message in Customizer */
+#accordion-section-brasserie_pro h3.accordion-section-title,
+#accordion-section-brasserie_pro.control-section-default.open h3.accordion-section-title,
+#customize-theme-controls #accordion-section-brasserie_pro h3.accordion-section-title:focus{
+	background: #c59d5f;
+	color: #fff;
+	-webkit-transition: all 0.3s ease;
+	-moz-transition: all 0.3s ease;
+	-ms-transition: all 0.3s ease;
+	-o-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+}
+#accordion-section-brasserie_pro h3.accordion-section-title:after,
+#accordion-section-brasserie_pro.control-section-default.open h3.accordion-section-title:after,
+#customize-theme-controls #accordion-section-brasserie_pro h3.accordion-section-title:focus:after{
+	color:#fff;
+}

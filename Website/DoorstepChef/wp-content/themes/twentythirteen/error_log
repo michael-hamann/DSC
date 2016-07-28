@@ -1,0 +1,2 @@
+[26-Apr-2016 13:02:40 Africa/Johannesburg] PHP Fatal error:  Call to undefined function get_header() in /home/doorsprw/public_html/wp-content/themes/twentythirteen/404.php on line 10
+[29-Jun-2016 09:43:46 Africa/Johannesburg] PHP Fatal error:  Call to undefined function get_header() in /home/doorsprw/public_html/wp-content/themes/twentythirteen/404.php on line 10

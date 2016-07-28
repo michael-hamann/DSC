@@ -1,0 +1,118 @@
+/*
+Here comes the text of your license
+Each line should be prefixed with 
+*/
+/* 
+    Created on : Feb 10, 2015, 12:09:18 AM
+    Author     : Bilal
+*/
+.left{ float: left;}
+.right {float: right;}
+.center{text-align: center;}
+.width70{ width: 70%;}
+.width25{ width: 25%;}
+.width50{ width: 50%;}
+.title{ font-weight: 600; color: #fff;}
+.sc-construction-menu td{
+    padding: 0;
+}
+.pro{
+    color: #cc0000;
+    font-size: 12px;
+    font-weight: 600;
+}
+.sc-construction-menu td a{
+    padding: 7px 5px;
+    display: inline-block;
+}
+.sc-construction-menu td a:hover{
+    background: #237491;
+
+    color: #fff;
+    transition: 0.3s all ease-in-out;
+    -moz-transition: 0.3s all ease-in-out;
+    -webkit-transition: 0.3s all ease-in-out;
+}
+#gopro{
+    width: 100%;
+    display: block;
+    clear: both;
+    padding: 10px;
+    margin: 10px 8px 15px 5px;
+    border: 1px solid #e1e1e1;
+    background: #464646;
+    color: #ffffff;
+    overflow: hidden;
+}
+#wrapper{
+    border: 1px solid #f0f0f0;
+    width: 95%;
+
+}
+#wrapper{
+    border: 1px solid #f0f0f0;
+    width: 95%;
+
+}
+table.widefat{
+    margin-bottom: 15px;
+}
+table.widefat tr{
+    transition: 0.3s all ease-in-out;
+    -moz-transition: 0.3s all ease-in-out;
+    -webkit-transition: 0.3s all ease-in-out;
+}
+table.widefat tr:hover{
+    /*background: #E6E6E6;*/
+}    
+
+#wrapper input[type='text']{
+    width: 80%;
+    transition: 0.3s all ease-in-out;
+    -moz-transition: 0.3s all ease-in-out;
+    -webkit-transition: 0.3s all ease-in-out;
+}
+#wrapper input[type='text']:focus{
+    border: 1px solid #1784c9;
+    box-shadow: 0 0 7px #1784c9;
+    -moz-box-shadow: 0 0 5px #1784c9;
+    -webkit-box-shadow: 0 0 5px #1784c9;
+}
+#wrapper input[type='text'].small-text{
+    width: 20%;
+}
+.proversion{
+    color: red;
+    font-style: italic;
+}
+.choose-progress{
+    display: none;
+}
+#wp-admin-bar-root-default #wp-admin-bar-smartcat_construction a{
+    background: #369B33;
+    color: #fff;
+    display: inline-block;
+    /*padding: 0 5px !important;*/
+}
+#wp-admin-bar-root-default #wp-admin-bar-smartcat_construction a:hover{
+    background: #2C862A;
+    color: #fff;
+}
+#datetimepicker{
+    background: url('../img/calendar.png')
+        no-repeat 100%;
+    background-size: 22px;
+    cursor: pointer;
+}
+.toggle-mode{
+    width: 75px;
+    height: 34px;
+    background: url('../img/off.png');
+    transition: 0.3s all linear;
+    -moz-transition: 0.3s all linear;
+    -webkit-transition: 0.3s all linear;
+    cursor: pointer;
+}
+.toggle-mode.active{
+    background: url('../img/on.png');
+}

@@ -1,0 +1,48 @@
+#notification-area { 
+	position: fixed; top: 0; left: 0; z-index: 9999;
+	width: 90%; padding: 10px 5% 0;
+	background: #d7e9f3;
+	border-bottom: 1px solid #86b2c9;
+}
+.admin-bar #notification-area { top: 28px; }
+#notification-area.hidden { display: none; }
+.logged-in #notification-area.hidden { display: block; } /* don't ever hide for logged-in users */
+#notification-area h3 { font-weight: bold; clear:none!important; margin: 0; padding: 0; color: #222; }
+#notification-area p { margin: 0 0 10px; color: #222; }
+#notification-area a { color: #999; }
+#remove-notice { display: block; float: right; margin: 10px 0 0 10px; border: 1px solid #86b2c9; padding: 1px 6px; color: #333; }
+#remove-notice:hover { text-decoration: none; background: #86b2c9; color: #fff;}
+
+/********************
+* colors 
+********************/
+
+/* blue - default */
+
+/* red */
+#notification-area.red { background: #ff8e8e; border-color: #d75454; }
+#notification-area.red p, #notification-area.red h3 { color: #222; }
+#notification-area.red a { color: #666; }
+#notification-area.red #remove-notice { border-color: #d75454; }
+#notification-area.red #remove-notice:hover {background: #d75454; }
+
+/* orange */
+#notification-area.orange { background: #fe8e33; border-color: #c75a02; }
+#notification-area.orange p, #notification-area.red h3 { color: #222; }
+#notification-area.orange a { color: #666; }
+#notification-area.orange #remove-notice { border-color: #c75a02; }
+#notification-area.orange #remove-notice:hover {background: #c75a02; }
+
+/* green */
+#notification-area.green { background: #5dd428; border-color: #46b117; }
+#notification-area.green p, #notification-area.red h3 { color: #222; }
+#notification-area.green a { color: #666; }
+#notification-area.green #remove-notice { border-color: #46b117; }
+#notification-area.green #remove-notice:hover {background: #46b117; }
+
+/* gray */
+#notification-area.gray { background: #d8d8d8; border-color: #bebebe; }
+#notification-area.gray p, #notification-area.red h3 { color: #222; }
+#notification-area.gray a { color: #666; }
+#notification-area.gray #remove-notice { border-color: #bebebe; }
+#notification-area.gray #remove-notice:hover {background: #bebebe; }
