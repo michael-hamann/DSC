@@ -209,7 +209,7 @@ public class ClientTb implements Serializable {
 
     @Override
     public String toString() {
-        return "DSC.ClientTb[ clientID=" + clientID + " ]";
+        return name + surname + "["+clientID+"]";
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {

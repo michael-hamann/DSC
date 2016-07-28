@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 public class DSC_DriverDetails extends javax.swing.JFrame {
 
     boolean editClicked = false;
+    int listIndex = 0;
 
     /**
      * Creates new form DSC_DriverDetails
@@ -21,11 +22,11 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         disableFields();
         btnSave.setText("Save");
         btnSave.setVisible(false);
+        txfDriverID.setEnabled(false);
         lstDrivers.setSelectedIndex(0);
     }
 
     public final void enableFields() {
-        txfDriverID.setEnabled(true);
         txfDriverName.setEnabled(true);
         txfDriverSurname.setEnabled(true);
         txfContactNo.setEnabled(true);
@@ -34,7 +35,6 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     }
 
     public final void disableFields() {
-        txfDriverID.setEnabled(false);
         txfDriverName.setEnabled(false);
         txfDriverSurname.setEnabled(false);
         txfContactNo.setEnabled(false);
@@ -61,8 +61,8 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        entityManager0 = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("doorstepchef?zeroDateTimeBehavior=convertToNullPU").createEntityManager();
-        driverTbQuery = java.beans.Beans.isDesignTime() ? null : entityManager0.createQuery("SELECT d FROM DriverTb d");
+        entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("doorstepchef?zeroDateTimeBehavior=convertToNullPU").createEntityManager();
+        driverTbQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT d FROM DriverTb d");
         driverTbList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : driverTbQuery.getResultList();
         pnlBackground = new javax.swing.JPanel();
         pnlDrivers = new javax.swing.JPanel();
@@ -345,6 +345,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        listIndex = lstDrivers.getSelectedIndex();
         enableFields();
         btnEdit.setEnabled(false);
         btnSave.setVisible(true);
@@ -359,6 +360,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                     btnSave.setVisible(false);
                     btnEdit.setEnabled(true);
                     disableFields();
+                    lstDrivers.setSelectedIndex(listIndex);
                     editClicked = false;
                     break;
                 case JOptionPane.NO_OPTION:
@@ -376,7 +378,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         boolean back = false;
         if (btnSave.getText().equals("Save")) {
             /*
-                short newID = Short.parseShort(txfDriverID.getText().trim());
+                short ID = Short.parseShort(txfDriverID.getText().trim());
                 String newName = txfDriverName.getText().trim();
                 String newSurname = txfDriverSurname.getText().trim();
                 String newContactNo = txfContactNo.getText().trim();
@@ -427,7 +429,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     private boolean checkEmpty() {
         boolean empty = false;
 
-        if (txfDriverName.getText().isEmpty() && txfDriverSurname.getText().isEmpty() && txfContactNo.getText().isEmpty() 
+        if (txfDriverName.getText().isEmpty() && txfDriverSurname.getText().isEmpty() && txfContactNo.getText().isEmpty()
                 && txfAddress.getText().isEmpty() && txfVehicleReg.getText().isEmpty()) {
             empty = true;
         }
@@ -446,7 +448,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         String query = "SELECT MAX(DriverID) FROM doorstepchef.driver_tb;";
         ResultSet rs;
         int numRows = 0;
-        
+
         try {
             Connection c = DBClass.getConnection();
             Statement stmt = c.createStatement();
@@ -458,18 +460,41 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         }
         numRows += 1;
         txfDriverID.setText(numRows + "");
-        
+
     }//GEN-LAST:event_btnAddDriverActionPerformed
 
     private void btnDeleteDriverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteDriverActionPerformed
         String name = txfDriverName.getText() + " " + txfDriverSurname.getText();
+
+        int driverID = Integer.parseInt(txfDriverID.getText());
+        int elementIndex = lstDrivers.getSelectedIndex();
+
         String message = "Are you sure you want to delete " + name + "?";
         int answer = JOptionPane.showConfirmDialog(this, message, "Confirm", JOptionPane.INFORMATION_MESSAGE);
+
         switch (answer) {
             case JOptionPane.YES_OPTION:
                 JOptionPane.showMessageDialog(this, name + " will be deleted", "Delete Notification", JOptionPane.INFORMATION_MESSAGE);
-                break;
 
+                try {
+                    Connection c = DBClass.getConnection();
+                    Statement stmt = c.createStatement();
+
+                    String update = "UPDATE route_tb SET DriverID = 0 WHERE DriverID = '" + driverID + "'";
+                    stmt.executeUpdate(update);
+
+                    String deleteDriver = "DELETE FROM doorstepchef.driver_tb WHERE DriverID LIKE '" + driverID + "'";
+                    stmt.executeUpdate(deleteDriver);
+
+                    JOptionPane.showMessageDialog(this, "Driver has been deleted. \n Please note removing this driver has affected"
+                            + " \nroute schedules leaving routes without an assigned driver.");
+                    //refresh jList
+
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                break;
+                
             case JOptionPane.NO_OPTION:
                 JOptionPane.showMessageDialog(this, name + " will not be deleted", "Delete Notification", JOptionPane.INFORMATION_MESSAGE);
                 break;
@@ -523,7 +548,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     private javax.swing.JButton btnSave;
     private java.util.List<DSC.DriverTb> driverTbList;
     private javax.persistence.Query driverTbQuery;
-    private javax.persistence.EntityManager entityManager0;
+    private javax.persistence.EntityManager entityManager;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAddress;
     private javax.swing.JLabel lblContactNo;
