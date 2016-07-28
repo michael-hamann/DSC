@@ -1,0 +1,274 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Construction Mode 3.3\n"
+"POT-Creation-Date: 2015-12-10 01:51-0500\n"
+"PO-Revision-Date: 2015-12-10 01:52-0500\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.7.4\n"
+"X-Poedit-Basepath: ../\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: admin/form.php:50
+msgid "Support"
+msgstr ""
+
+#: admin/form.php:55
+msgid "Do you need support?"
+msgstr ""
+
+#: admin/form.php:57
+msgid "Click here for instructions how to use the plugin"
+msgstr ""
+
+#: admin/form.php:65
+msgid "Default Template"
+msgstr ""
+
+#: admin/form.php:82
+msgid "One Page"
+msgstr ""
+
+#: admin/form.php:99
+msgid "Moving Background"
+msgstr ""
+
+#: admin/form.php:116 admin/form.php:441
+msgid "Client Login"
+msgstr ""
+
+#: admin/form.php:140
+msgid "General Settings"
+msgstr ""
+
+#: admin/form.php:142
+msgid "Appearance"
+msgstr ""
+
+#: admin/form.php:143
+msgid "Newsletters & Shortcodes"
+msgstr ""
+
+#: admin/form.php:144 admin/form.php:349
+msgid "Social Icons"
+msgstr ""
+
+#: admin/form.php:145
+msgid "Contact Form"
+msgstr ""
+
+#: admin/form.php:146
+msgid "Login"
+msgstr ""
+
+#: admin/form.php:147
+msgid "About Section"
+msgstr ""
+
+#: admin/form.php:148
+msgid "Contact Section"
+msgstr ""
+
+#: admin/form.php:166
+msgid "Activate Construction/Maintenance Mode"
+msgstr ""
+
+#: admin/form.php:173
+msgid "Set To Specific Page, or entire site"
+msgstr ""
+
+#: admin/form.php:176
+msgid "Entire Website"
+msgstr ""
+
+#: admin/form.php:194
+msgid "Loading Style"
+msgstr ""
+
+#: admin/form.php:205
+msgid "Percentage Complete"
+msgstr ""
+
+#: admin/form.php:221
+msgid "Analytics Code"
+msgstr ""
+
+#: admin/form.php:223
+msgid "Enter your full Analytics code including the <script> tags"
+msgstr ""
+
+#: admin/form.php:236
+msgid "Select Template"
+msgstr ""
+
+#: admin/form.php:246
+msgid "Logo"
+msgstr ""
+
+#: admin/form.php:255
+msgid "Background Image"
+msgstr ""
+
+#: admin/form.php:262
+msgid "Title"
+msgstr ""
+
+#: admin/form.php:268
+msgid "Sub-title"
+msgstr ""
+
+#: admin/form.php:276
+msgid "Font Color"
+msgstr ""
+
+#: admin/form.php:284
+msgid "Accent Color"
+msgstr ""
+
+#: admin/form.php:292
+msgid "Animation"
+msgstr ""
+
+#: admin/form.php:331
+msgid "Shortcode"
+msgstr ""
+
+#: admin/form.php:354
+msgid "Facebook URL"
+msgstr ""
+
+#: admin/form.php:358
+msgid "Enter Facebook URL or leave blank for no icon"
+msgstr ""
+
+#: admin/form.php:362
+msgid "Google Plus URL"
+msgstr ""
+
+#: admin/form.php:366
+msgid "Enter Google Plus URL or leave blank for no icon"
+msgstr ""
+
+#: admin/form.php:370
+msgid "Twitter URL"
+msgstr ""
+
+#: admin/form.php:374
+msgid "Enter Twitter URL or leave blank for no icon"
+msgstr ""
+
+#: admin/form.php:378
+msgid "Email Address"
+msgstr ""
+
+#: admin/form.php:382
+msgid "Enter email address or leave blank for no icon"
+msgstr ""
+
+#: admin/form.php:386
+msgid "Instagram"
+msgstr ""
+
+#: admin/form.php:390
+msgid "Enter Instagram URL or leave blank for no icon"
+msgstr ""
+
+#: admin/form.php:394
+msgid "Digg"
+msgstr ""
+
+#: admin/form.php:398
+msgid "Enter Digg URL or leave blank for no icon"
+msgstr ""
+
+#: admin/form.php:406
+msgid "Enter Flickr URL or leave blank for no icon"
+msgstr ""
+
+#: admin/form.php:410
+msgid "Skype"
+msgstr ""
+
+#: admin/form.php:414
+msgid "Enter Skype URL or leave blank for no icon"
+msgstr ""
+
+#: admin/form.php:418
+msgid "Tumblr"
+msgstr ""
+
+#: admin/form.php:422
+msgid "Enter Tumblr URL or leave blank for no icon"
+msgstr ""
+
+#: admin/form.php:426
+msgid "Youtube"
+msgstr ""
+
+#: admin/form.php:430
+msgid "Enter Youtube URL or leave blank for no icon"
+msgstr ""
+
+#: admin/form.php:447
+msgid ""
+"Use this feature to allow your client & visitors unique access with a "
+"username & password"
+msgstr ""
+
+#: admin/form.php:450
+msgid "Enable Client Login ?"
+msgstr ""
+
+#: admin/form.php:452 admin/form.php:506 admin/form.php:542
+msgid "Yes"
+msgstr ""
+
+#: admin/form.php:453 admin/form.php:507 admin/form.php:543
+msgid "No"
+msgstr ""
+
+#: admin/form.php:458
+msgid "Username"
+msgstr ""
+
+#: admin/form.php:463
+msgid "Password"
+msgstr ""
+
+#: admin/form.php:473
+msgid "Custom Contact Form"
+msgstr ""
+
+#: admin/form.php:479
+msgid "Display Contact form ? "
+msgstr ""
+
+#: admin/form.php:487
+msgid "Delivery Email Address"
+msgstr ""
+
+#: admin/form.php:499
+msgid "Section 1 - <em>ex: About Us</em>"
+msgstr ""
+
+#: admin/form.php:504
+msgid "Show Section 1 ?"
+msgstr ""
+
+#: admin/form.php:511 admin/form.php:547
+msgid "Label"
+msgstr ""
+
+#: admin/form.php:535
+msgid "Section 2 - <em>ex: Location</em>"
+msgstr ""
+
+#: admin/form.php:540
+msgid "Show Section 2 ?"
+msgstr ""

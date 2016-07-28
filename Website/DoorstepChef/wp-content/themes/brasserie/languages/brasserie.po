@@ -1,0 +1,808 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Reznor\n"
+"POT-Creation-Date: 2015-11-12 10:04-0000\n"
+"PO-Revision-Date: 2015-11-12 10:04-0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.5\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: _;__;_e\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: ..\n"
+"X-Poedit-SearchPath-2: .\n"
+"X-Poedit-SearchPath-3: ./.\n"
+
+#: ../404.php:12
+msgid "Oops! That page can&rsquo;t be found."
+msgstr ""
+
+#: ../404.php:20
+msgid ""
+"It looks like nothing was found at this location. Maybe try navigating to "
+"another page or a search?"
+msgstr ""
+
+#: ../archive.php:17
+#, php-format
+msgid "Category Archives: %s"
+msgstr ""
+
+#: ../archive.php:20
+#, php-format
+msgid "Tag Archives: %s"
+msgstr ""
+
+#: ../archive.php:27
+#, php-format
+msgid "Author Archives: %s"
+msgstr ""
+
+#: ../archive.php:35
+#, php-format
+msgid "Daily Archives: %s"
+msgstr ""
+
+#: ../archive.php:38
+#, php-format
+msgid "Monthly Archives: %s"
+msgstr ""
+
+#: ../archive.php:41
+#, php-format
+msgid "Yearly Archives: %s"
+msgstr ""
+
+#: ../archive.php:44 ../sidebar-woocommerce.php:27 ../sidebar.php:18
+msgid "Archives"
+msgstr ""
+
+#: ../comments.php:39 ../comments.php:59
+msgid "Comment navigation"
+msgstr ""
+
+#: ../comments.php:40 ../comments.php:60
+msgid "&larr; Older Comments"
+msgstr ""
+
+#: ../comments.php:41 ../comments.php:61
+msgid "Newer Comments &rarr;"
+msgstr ""
+
+#: ../comments.php:71
+msgid "Comments are closed."
+msgstr ""
+
+#: ../content-aside.php:11 ../content-aside.php:20 ../content.php:18
+#, php-format
+msgid "Permalink to %s"
+msgstr ""
+
+#: ../content-aside.php:15
+msgid "Continue reading <span class=\"meta-nav\">&rarr;</span>"
+msgstr ""
+
+#: ../content-aside.php:16 ../content-page.php:11 ../content-single.php:21
+#: ../content.php:63 ../image.php:86
+msgid "Pages:"
+msgstr ""
+
+#: ../content-aside.php:23
+msgid "Leave a comment"
+msgstr ""
+
+#: ../content-aside.php:23 ../content.php:48
+msgid "1 Comment"
+msgstr ""
+
+#: ../content-aside.php:23 ../content.php:48
+msgid "% Comments"
+msgstr ""
+
+#: ../content-aside.php:26 ../content-page.php:13 ../content-single.php:59
+#: ../content.php:51 ../image.php:34 ../image.php:100
+msgid "Edit"
+msgstr ""
+
+#: ../content-flexslider.php:18 ../content.php:62
+msgid "Read More"
+msgstr ""
+
+#. translators: used between list items, there is a space after the comma
+#: ../content-single.php:27 ../content.php:26 ../content.php:36
+msgid ", "
+msgstr ""
+
+#: ../content-single.php:35
+#, php-format
+msgid ""
+" Tagged %2$s. Bookmark the <a href=\"%3$s\" title=\"Permalink to %4$s\" rel="
+"\"bookmark\">permalink</a>."
+msgstr ""
+
+#: ../content-single.php:37
+#, php-format
+msgid ""
+"Bookmark the <a href=\"%3$s\" title=\"Permalink to %4$s\" rel=\"bookmark"
+"\">permalink</a>."
+msgstr ""
+
+#: ../content-single.php:43
+#, php-format
+msgid ""
+"In %1$s &nbsp; Tagged %2$s &nbsp; Bookmark the <a href=\"%3$s\" title="
+"\"Permalink to %4$s\" rel=\"bookmark\">permalink</a>."
+msgstr ""
+
+#: ../content-single.php:45
+#, php-format
+msgid ""
+"In %1$s. Bookmark the <a href=\"%3$s\" title=\"Permalink to %4$s\" rel="
+"\"bookmark\">permalink</a>."
+msgstr ""
+
+#: ../content.php:30
+#, php-format
+msgid " In %1$s"
+msgstr ""
+
+#: ../content.php:41
+#, php-format
+msgid "Tagged %1$s"
+msgstr ""
+
+#: ../content.php:48
+msgid " Leave a comment"
+msgstr ""
+
+#: ../footer.php:21 ../footer.php:30 ../footer.php:40
+#: ../page-templates/twocolleftsidebar.php:33
+msgid "Widget Ready"
+msgstr ""
+
+#: ../footer.php:22 ../page-templates/twocolleftsidebar.php:34
+msgid "This left column is widget ready! Add one in the admin panel."
+msgstr ""
+
+#: ../footer.php:31
+msgid "This center column is widget ready! Add one in the admin panel."
+msgstr ""
+
+#: ../footer.php:41
+msgid "This right column is widget ready! Add one in the admin panel."
+msgstr ""
+
+#: ../footer.php:49
+msgid "Brasserie WordPress Theme"
+msgstr ""
+
+#: ../footer.php:50
+msgid "Powered By WordPress "
+msgstr ""
+
+#: ../functions.php:56
+msgid "Primary Menu"
+msgstr ""
+
+#: ../functions.php:72
+msgid "Team Member"
+msgstr ""
+
+#: ../functions.php:133
+msgid "Primary Sidebar"
+msgstr ""
+
+#: ../functions.php:142
+msgid "Shop Sidebar"
+msgstr ""
+
+#: ../functions.php:151
+msgid "Secondary Sidebar"
+msgstr ""
+
+#: ../functions.php:160
+msgid "Left Sidebar"
+msgstr ""
+
+#: ../functions.php:169
+msgid "Left Footer Column"
+msgstr ""
+
+#: ../functions.php:171
+msgid "Widget area for footer left column"
+msgstr ""
+
+#: ../functions.php:178
+msgid "Center Footer Column"
+msgstr ""
+
+#: ../functions.php:180
+msgid "Widget area for footer center column"
+msgstr ""
+
+#: ../functions.php:187
+msgid "Right Footer Column"
+msgstr ""
+
+#: ../functions.php:189
+msgid "Widget area for footer right column"
+msgstr ""
+
+#: ../functions.php:475 ../inc/template-tags.php:236
+msgid "View your shopping cart"
+msgstr ""
+
+#: ../header.php:77
+msgid "Menu"
+msgstr ""
+
+#: ../header.php:78
+msgid "Skip to content"
+msgstr ""
+
+#: ../image.php:24
+#, php-format
+msgid ""
+"Published <span class=\"entry-date\"><time class=\"entry-date\" datetime="
+"\"%1$s\" pubdate>%2$s</time></span> at <a href=\"%3$s\" title=\"Link to full-"
+"size image\">%4$s &times; %5$s</a> in <a href=\"%6$s\" title=\"Return to %7$s"
+"\" rel=\"gallery\">%7$s</a>"
+msgstr ""
+
+#: ../image.php:38
+msgid "&larr; Previous"
+msgstr ""
+
+#: ../image.php:39
+msgid "Next &rarr;"
+msgstr ""
+
+#: ../image.php:92
+#, php-format
+msgid ""
+"<a class=\"comment-link\" href=\"#respond\" title=\"Post a comment\">Post a "
+"comment</a> or leave a trackback: <a class=\"trackback-link\" href=\"%s\" "
+"title=\"Trackback URL for your post\" rel=\"trackback\">Trackback URL</a>."
+msgstr ""
+
+#: ../image.php:94
+#, php-format
+msgid ""
+"Comments are closed, but you can leave a trackback: <a class=\"trackback-link"
+"\" href=\"%s\" title=\"Trackback URL for your post\" rel=\"trackback"
+"\">Trackback URL</a>."
+msgstr ""
+
+#: ../image.php:96
+msgid ""
+"Trackbacks are closed, but you can <a class=\"comment-link\" href=\"#respond"
+"\" title=\"Post a comment\">post a comment</a>."
+msgstr ""
+
+#: ../image.php:98
+msgid "Both comments and trackbacks are currently closed."
+msgstr ""
+
+#: ../inc/customizer.php:52 ../inc/customizer.php:75
+msgid "Upgrade to Pro"
+msgstr ""
+
+#: ../inc/customizer.php:71
+#, php-format
+msgid ""
+"<strong>Premium support</strong>, more Customizer options, typography "
+"adjustments, and more! %s."
+msgstr ""
+
+#: ../inc/customizer.php:96
+msgid "Site Colors"
+msgstr ""
+
+#: ../inc/customizer.php:100
+msgid "Homepage Settings"
+msgstr ""
+
+#: ../inc/customizer.php:133
+msgid "Theme Highlight Color"
+msgstr ""
+
+#: ../inc/customizer.php:144
+msgid "Homepage - Slider"
+msgstr ""
+
+#: ../inc/customizer.php:145
+msgid ""
+"Choose your homepage slider type. The Flexslider option will display posts "
+"from the Featured category"
+msgstr ""
+
+#: ../inc/customizer.php:158
+msgid "No Slider"
+msgstr ""
+
+#: ../inc/customizer.php:159
+msgid "FlexSlider"
+msgstr ""
+
+#: ../inc/customizer.php:164
+msgid "Select Slider"
+msgstr ""
+
+#: ../inc/customizer.php:180 ../inc/customizer.php:187
+msgid "Site Logo"
+msgstr ""
+
+#: ../inc/customizer.php:181
+msgid ""
+"Upload a logo to replace the default site name and description in the header"
+msgstr ""
+
+#: ../inc/customizer.php:199
+msgid "Top Bar Contact Details"
+msgstr ""
+
+#: ../inc/customizer.php:200
+msgid ""
+"This is a settings section to change the contact details in the top bar of "
+"header."
+msgstr ""
+
+#: ../inc/customizer.php:206
+msgid "tel number"
+msgstr ""
+
+#: ../inc/customizer.php:213
+msgid "email"
+msgstr ""
+
+#: ../inc/customizer.php:221
+msgid "Telephone Number"
+msgstr ""
+
+#: ../inc/customizer.php:229
+msgid "Email Address"
+msgstr ""
+
+#: ../inc/customizer.php:242
+msgid "Homepage - Promotion Bar"
+msgstr ""
+
+#: ../inc/customizer.php:243
+msgid "Add a url address for the button to show in the promotion bar."
+msgstr ""
+
+#: ../inc/customizer.php:249
+msgid "Default Featured Text"
+msgstr ""
+
+#: ../inc/customizer.php:256
+msgid "Find Out More"
+msgstr ""
+
+#: ../inc/customizer.php:305
+msgid "Background Color"
+msgstr ""
+
+#: ../inc/customizer.php:319
+msgid "Title text Color"
+msgstr ""
+
+#: ../inc/customizer.php:332
+msgid "Button Background Color"
+msgstr ""
+
+#: ../inc/customizer.php:345
+msgid "Button Text Color"
+msgstr ""
+
+#: ../inc/customizer.php:355
+msgid "Featured Text"
+msgstr ""
+
+#: ../inc/customizer.php:364
+msgid "Button Text"
+msgstr ""
+
+#: ../inc/customizer.php:372
+msgid "URL Link to Page"
+msgstr ""
+
+#: ../inc/customizer.php:389
+msgid "Twitter url"
+msgstr ""
+
+#: ../inc/customizer.php:390
+msgid "Facebook url"
+msgstr ""
+
+#: ../inc/customizer.php:391
+msgid "Google + url"
+msgstr ""
+
+#: ../inc/customizer.php:392
+msgid "LinkedIn url"
+msgstr ""
+
+#: ../inc/customizer.php:393
+msgid "Flickr url"
+msgstr ""
+
+#: ../inc/customizer.php:394
+msgid "Pinterest url"
+msgstr ""
+
+#: ../inc/customizer.php:395
+msgid "YouTube url"
+msgstr ""
+
+#: ../inc/customizer.php:396
+msgid "Vimeo url"
+msgstr ""
+
+#: ../inc/customizer.php:397
+msgid "Tumblr url"
+msgstr ""
+
+#: ../inc/customizer.php:398
+msgid "Dribbble url"
+msgstr ""
+
+#: ../inc/customizer.php:399
+msgid "Github url"
+msgstr ""
+
+#: ../inc/customizer.php:400
+msgid "Instagram url"
+msgstr ""
+
+#: ../inc/customizer.php:401
+msgid "Xing url"
+msgstr ""
+
+#: ../inc/customizer.php:460
+msgid "Image 1"
+msgstr ""
+
+#: ../inc/customizer.php:461
+msgid "Image 2"
+msgstr ""
+
+#: ../inc/customizer.php:462
+msgid "Image 3"
+msgstr ""
+
+#: ../inc/customizer.php:463
+msgid "Image 4"
+msgstr ""
+
+#: ../inc/customizer.php:467
+msgid "Homepage - Todays Specials"
+msgstr ""
+
+#: ../inc/customizer.php:468
+msgid "You can list up to 4 images of todays specials here."
+msgstr ""
+
+#: ../inc/customizer.php:474
+msgid "Specials"
+msgstr ""
+
+#: ../inc/customizer.php:480
+msgid "Specials Title"
+msgstr ""
+
+#: ../inc/customizer.php:510
+msgid "Image Upload"
+msgstr ""
+
+#: ../inc/customizer.php:523 ../inc/customizer.php:599
+msgid "Web URL"
+msgstr ""
+
+#: ../inc/customizer.php:552
+msgid "Feature Text Box 1"
+msgstr ""
+
+#: ../inc/customizer.php:553
+msgid "Feature Text Box 2"
+msgstr ""
+
+#: ../inc/customizer.php:554
+msgid "Feature Text Box 3"
+msgstr ""
+
+#: ../inc/customizer.php:557
+msgid "Homepage - Feature Text Boxes"
+msgstr ""
+
+#: ../inc/customizer.php:558
+msgid "You can populate up to 3 Feature Text boxes"
+msgstr ""
+
+#: ../inc/customizer.php:584
+msgid "File Upload"
+msgstr ""
+
+#: ../inc/customizer.php:594
+msgid "Header URL"
+msgstr ""
+
+#: ../inc/customizer.php:609
+msgid "Default featured text Header"
+msgstr ""
+
+#: ../inc/customizer.php:615
+msgid "Header text"
+msgstr ""
+
+#: ../inc/customizer.php:625
+msgid "Default featured text"
+msgstr ""
+
+#: ../inc/customizer.php:631
+msgid "Sub-text"
+msgstr ""
+
+#: ../inc/customizer.php:680
+msgid "Ultra Light"
+msgstr ""
+
+#: ../inc/customizer.php:681
+msgid "Ultra Light Italic"
+msgstr ""
+
+#: ../inc/customizer.php:682
+msgid "Light"
+msgstr ""
+
+#: ../inc/customizer.php:683
+msgid "Light Italic"
+msgstr ""
+
+#: ../inc/customizer.php:684
+msgid "Book"
+msgstr ""
+
+#: ../inc/customizer.php:685
+msgid "Book Italic"
+msgstr ""
+
+#: ../inc/customizer.php:686
+msgid "Regular"
+msgstr ""
+
+#: ../inc/customizer.php:687
+msgid "Regular Italic"
+msgstr ""
+
+#: ../inc/customizer.php:688
+msgid "Medium"
+msgstr ""
+
+#: ../inc/customizer.php:689
+msgid "Medium Italic"
+msgstr ""
+
+#: ../inc/customizer.php:690
+msgid "Semi-Bold"
+msgstr ""
+
+#: ../inc/customizer.php:691
+msgid "Semi-Bold Italic"
+msgstr ""
+
+#: ../inc/customizer.php:692
+msgid "Bold"
+msgstr ""
+
+#: ../inc/customizer.php:693
+msgid "Bold Italic"
+msgstr ""
+
+#: ../inc/customizer.php:694
+msgid "Extra Bold"
+msgstr ""
+
+#: ../inc/customizer.php:695
+msgid "Extra Bold Italic"
+msgstr ""
+
+#: ../inc/customizer.php:696
+msgid "Ultra Bold"
+msgstr ""
+
+#: ../inc/customizer.php:697
+msgid "Ultra Bold Italic"
+msgstr ""
+
+#: ../inc/customizer.php:704 ../inc/customizer.php:777
+msgid "Body Text"
+msgstr ""
+
+#: ../inc/customizer.php:705 ../inc/customizer.php:778
+msgid "Headers"
+msgstr ""
+
+#: ../inc/customizer.php:714
+msgid "Typography"
+msgstr ""
+
+#: ../inc/customizer.php:715
+msgid ""
+"<strong>Note.</strong><br />Please enable tags section checkbox for activate "
+"and use Google Web Fonts on selected tags."
+msgstr ""
+
+#: ../inc/customizer.php:736
+msgid "Font Family"
+msgstr ""
+
+#: ../inc/customizer.php:748
+msgid "Font Weight"
+msgstr ""
+
+#: ../inc/customizer.php:892
+msgid "Hide Slider Section?"
+msgstr ""
+
+#: ../inc/customizer.php:893
+msgid "Hide Feature Box Section?"
+msgstr ""
+
+#: ../inc/customizer.php:894
+msgid "Hide Promo Bar?"
+msgstr ""
+
+#: ../inc/customizer.php:895
+msgid "Hide Recent Posts?"
+msgstr ""
+
+#: ../inc/customizer.php:896
+msgid "Hide Specials Section?"
+msgstr ""
+
+#: ../inc/customizer.php:901
+msgid "Homepage - Hide/Show elements"
+msgstr ""
+
+#: ../inc/customizer.php:902
+msgid ""
+"Hide elements you don't need on the homepage by un-checking the relevant "
+"checkbox."
+msgstr ""
+
+#: ../inc/template-tags.php:39
+msgid "Post navigation"
+msgstr ""
+
+#: ../inc/template-tags.php:49
+msgid "<span class=\"meta-nav\">&larr;</span> Older posts"
+msgstr ""
+
+#: ../inc/template-tags.php:53
+msgid "Newer posts <span class=\"meta-nav\">&rarr;</span>"
+msgstr ""
+
+#: ../inc/template-tags.php:78
+msgid "Pingback:"
+msgstr ""
+
+#: ../inc/template-tags.php:78 ../inc/template-tags.php:101
+msgid "(Edit)"
+msgstr ""
+
+#: ../inc/template-tags.php:88
+#, php-format
+msgid "%s <span class=\"says\">says:</span>"
+msgstr ""
+
+#: ../inc/template-tags.php:91
+msgid "Your comment is awaiting moderation."
+msgstr ""
+
+#. translators: 1: date, 2: time
+#: ../inc/template-tags.php:99
+#, php-format
+msgid "%1$s at %2$s"
+msgstr ""
+
+#: ../inc/template-tags.php:126
+#, php-format
+msgid ""
+" <span class=\"pub-link\"><i class=\"fa fa-clock-o\"></i><a href=\"%1$s\" "
+"title=\"%2$s\" rel=\"bookmark\"><time class=\"entry-date\" datetime=\"%3$s\" "
+"pubdate>%4$s</time></a></span><span class=\"byline\"><i class=\"fa fa-user"
+"\"></i> by <span class=\"author vcard\"><a class=\"url fn n\" href=\"%5$s\" "
+"title=\"%6$s\" rel=\"author\">%7$s</a></span></span>"
+msgstr ""
+
+#: ../inc/template-tags.php:132
+#, php-format
+msgid "View all posts by %s"
+msgstr ""
+
+#: ../no-results.php:14
+msgid "Nothing Found"
+msgstr ""
+
+#: ../no-results.php:20
+#, php-format
+msgid ""
+"Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+msgstr ""
+
+#: ../no-results.php:24
+msgid ""
+"Sorry, but nothing matched your search terms. Please try again with some "
+"different keywords."
+msgstr ""
+
+#: ../no-results.php:29
+msgid ""
+"It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps "
+"searching can help."
+msgstr ""
+
+#: ../page-templates/custom_home.php:32
+msgid "slideInLeft"
+msgstr ""
+
+#: ../page-templates/custom_home.php:33
+msgid "fadeInUp"
+msgstr ""
+
+#: ../page-templates/custom_home.php:34
+msgid "slideInRight"
+msgstr ""
+
+#: ../page-templates/custom_home.php:45
+msgid "Find out more"
+msgstr ""
+
+#: ../page-templates/custom_home.php:60 ../page-templates/custom_home.php:121
+#: ../page-templates/custom_home.php:130 ../page-templates/custom_home.php:139
+#: ../page-templates/custom_home.php:148
+msgid "Insert Image"
+msgstr ""
+
+#: ../page-templates/custom_home.php:76
+msgid "From the blog"
+msgstr ""
+
+#: ../page-templates/custom_home.php:113
+msgid "Todays Specials"
+msgstr ""
+
+#: ../page-templates/custom_home.php:119
+msgid "special one"
+msgstr ""
+
+#: ../page-templates/custom_home.php:128
+msgid "special two"
+msgstr ""
+
+#: ../page-templates/custom_home.php:137
+msgid "special three"
+msgstr ""
+
+#: ../page-templates/custom_home.php:146
+msgid "special four"
+msgstr ""
+
+#: ../search.php:13
+#, php-format
+msgid "Search Results for: %s"
+msgstr ""
+
+#: ../searchform.php:10
+msgid "Search"
+msgstr ""
+
+#: ../sidebar-woocommerce.php:34 ../sidebar.php:25
+msgid "Meta"
+msgstr ""

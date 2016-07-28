@@ -1,0 +1,206 @@
+//Import Variables
+@import "variables";
+
+//Import mixins
+@import "mixins";
+
+
+//Import modules
+@import "modules";
+
+
+.settings_page_seocons_settings {
+  #wpwrap {
+    background-color: #fff;
+  }
+
+  .seo-consultant-settings{
+    position: relative;
+    width: 102%;
+    header {
+      margin-left: -20px;
+
+      $line : 70px * $phi;
+
+      height:  $line;
+      line-height: $line;
+      width: 100%;
+      background-color: $royal-color;
+      color: #fff;
+      h1 {
+        margin: 0;
+        text-indent: 2em;
+      }
+    }
+  }
+  .seo-consultant-form-container {
+    margin-left: 40px;
+    margin-top: 20px * $phi;
+
+    fieldset {
+      $base: 400*$px;
+      margin: 1em 1em 0 0;
+      vertical-align: top;
+      box-sizing: border-box;
+      display: inline-block;
+      width: $base;
+      height: $base / ($phi * $phi);
+      line-height: $base / ($phi * $phi)  - 2 * $font-size;
+      border: 1px solid lightgray;
+      padding: $font-size;
+
+      p {
+        margin-top: 2.5 * -$font-size;
+        font-style: italic;
+        color: lighten(#f04040, 10%);
+      }
+    }
+
+    form {
+      label {
+        font-size: 1.3 * $font-size;
+        display: inline-block;
+        width: 80%;
+      }
+    }
+
+  }
+
+  .seo-consulant-settings-form {
+
+  }
+
+}
+
+.seo-table {
+  width: 100%;
+
+  .table-filter {
+    cursor: pointer;
+  }
+
+  h4.table-filter a {
+    font-size: 0.9em;
+  }
+
+  .delete:hover {
+      color: red;
+  }
+
+  .block:hover {
+    color: orange;
+  }
+
+  .unblock:hover {
+    color: $royal-color;
+  }
+
+  .info:hover {
+    color: blue;
+  }
+
+  .container{
+    display: table; width:100%;
+    padding-bottom: 1em;
+  }
+  &>.container:nth-child(1) {
+    width: 95%;
+  }
+
+  .container-row {
+    display: table-row;
+
+    .container-cell:nth-child(1){
+      width: 10%;
+    }
+    .container-cell:nth-child(2){
+      width: 40%;
+    }
+    .container-cell:nth-child(3){
+      width: 30%;
+    }
+    .container-cell:nth-child(4){
+      width: 20%;
+    }
+  }
+
+  &.reflinks .container-row {
+    display: table-row;
+    .container-cell{
+    }
+    .container-cell:nth-child(1){
+      font-size: 0.8em;
+      text-align: left;
+      width: 35%;
+    }
+    .container-cell:nth-child(2){
+      width: 30%;
+    }
+    .container-cell:nth-child(3){
+      width: 20%;
+    }
+    .container-cell:nth-child(4){
+      width: 15%;
+    }
+  }
+
+  .container-cell {
+    font-size: 1em;
+    line-height: 1.1em;
+    display: table-cell;
+    padding: 0.62em 0;
+    color: black;
+    text-align: center;
+    word-break: break-all;
+    min-width: 50px;
+  }
+  .wrapper {
+    max-height: 200px; overflow-x: hidden; overflow-y: scroll;
+    .container-row {
+      background-color: $table-color;
+
+      &.light {
+        background-color: lighten($table-color,10%);
+      }
+    }
+  }
+  &.reflinks .wrapper {
+    max-height: 350px;
+  }
+
+  .controls i {
+    color: gray;
+    display: inline-block;
+    padding: 0 5px;
+    cursor: pointer;
+  }
+
+  .controls i:hover {
+    -webkit-transform: scale(1.3);
+    -moz-transform: scale(1.3);
+    transform: scale(1.3);
+  }
+
+  .seo-widget-controls {
+    text-align: right;
+    padding: 2em 1em;
+  }
+}
+
+a.seo-button,
+button.seo-button {
+  vertical-align: middle;
+
+  &.warning {
+    @include button(#f00);
+    display: inline-block;
+    margin: 0 1em;
+  }
+
+
+}
+
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}

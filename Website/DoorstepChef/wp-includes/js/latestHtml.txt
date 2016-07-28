@@ -1,0 +1,120 @@
+Please note that orders close at 8:30 am every Monday.
+
+<script type="text/javascript" src="/wp-includes/Order/Scripts.js"></script>
+
+
+<body onload="getDates('startDate'),  listSuburbs('Suburb')">
+<label> </label>
+<hr/>
+
+<h2 align="center">Contact Information</h2>
+
+<hr/>
+
+<form><label> Name: </label><input id="name" name="name" size="20" type="text" maxlength="20" minlength="2" />
+
+<label>Surname:</label><input id="surname" name="surname" size="20" type="text" maxlength="20" minlength="2" />
+
+<label> Collection </label> <input id="collections" name="collections_yes" type="checkbox" value="Yes" /> Yes
+
+<label>Suburb</label><select name="Suburb" id="Suburb">
+<option hidden="" disabled="disabled" selected="selected">Suburb</option>
+</select>
+
+<label style = "width : 200px"; >Delivery Address </label> <labelA> <textarea id="address" name="address" rows="5" cols="10">Delivery Address</textarea></labelA>
+
+<label>Additional Information</label><input id="addInfo" name="addInfo" size="50" type="text" maxlength="35" minlength="0" />
+
+<label>Contact Number:</label><input id="contactNum" name="number" size="20" type="text" maxlength="10" minlength="10" />
+
+<label>Alternative Number:</label><input id="altNum" name="altNum" size="20" type="text" maxlength="10" minlength="10" />
+
+<label>Email Address:</label><input id="email" name="email" size="20" type="text" maxlength="35" minlength="8" />
+
+<hr/>
+
+<h2 align="center">Order Information</h2>
+
+<hr/>
+
+<label>Family Size</label><select name="size" id="fam1">
+<option hidden="" disabled="disabled" selected="selected">Family size</option>
+<option value="single">Single</option>
+<option value="couple">Couple</option>
+<option value="three">Three</option>
+<option value="four">Four</option>
+<option value="five">Five</option>
+<option value="six">Six</option>
+</select>
+
+
+<label>Time</label>
+<form>
+<labelB> <input id="rbnAfternoon" checked="checked" name="time" type="radio" value="frame1" />      Between 11:00 and 13:00
+<input id="rbnLateAfternoon" name="time" type="radio" value="frame2" />      Between 14:00 and 16:00
+<input id="rbnEvening" name="time" type="radio" value="frame3" />      Between 17:00 and 19:00 </labelB>
+<br>
+</form>
+
+
+<label>Starting Date</label><select name="startDate" id="startDate">
+</select>
+
+<label>Days</label>
+<form>
+<labelB><input id="rbnMonThur" checked="checked" name="time" type="radio" value="fourDay" />  Monday to Thursday
+<input name="time" id="rbnMonFri" type="radio" value="fiveDay" />  Monday to Friday </labelB>
+<br>
+</form>
+
+
+
+<form method="POST">
+
+ <div id="order"> <labelB> <input type="button" onClick = "addOrder()" value = "+" id="addOrderID" > </labelB> <input type="number" name="Orderamount" id="orderAmount_0" + min="0" max="6" step="1" value="0" style="width:2.5em; height:1em" ><select name="size" id="mealTypeSelector_0">
+<option value="Standard">Standard</option>
+<option value="Low Carb">Low Carb</option>
+<option value="Kiddies">Kiddies</option></select><input type = "text" id = "orderAll_0" style="height:0.5em"> <input type = "text" id = "orderExc_0" style="height:0.5em"> </div>
+<div id = "OrderAmount"> 
+
+	 
+   
+</form>
+
+
+
+<hr/>
+
+<button type="button" onclick="submitData()" id="submit">Submit</button>
+
+</form>
+
+<j id="TestDisplay"></j>
+<div>
+
+</body>
+
+<strong>Terms and Conditions</strong>
+<ul>
+ 	<li>Delivery times vary according to driver and a specific time cannot be guaranteed.</li>
+</ul>
+<ul>
+ 	<li>Meals are delivered on a weekly basis (Monday - Friday). Delivery will be made no later than 7pm.</li>
+</ul>
+<ul>
+ 	<li>If you would like to cancel your order for the following week please do so the previous Friday, if this is not followed through you will be subject to a penalty fee of R100.00 for the one day of delivery.</li>
+</ul>
+<ul>
+ 	<li>If cancellations are made for one night during the course of the week, you are still liable for the full week’s payment.</li>
+</ul>
+<ul>
+ 	<li>Payments MUST be made on a Friday for the week ahead or Monday for the latest. Money can be handed to the driver or through internet banking. If there are any problems please let us know before Monday.</li>
+</ul>
+<ul>
+ 	<li>Should no payment be recieved by Tuesday further delivery will be cancelled for the current week.</li>
+</ul>
+<ul>
+ 	<li>The Doorstep Chef reserves the right of admission and to cancel services with notice.</li>
+</ul>
+</div>
+<div></div>
