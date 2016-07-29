@@ -71,8 +71,8 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("doorstepchef?zeroDateTimeBehavior=convertToNullPU").createEntityManager();
-        driverTbQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT d FROM DriverTb d");
-        driverTbList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : driverTbQuery.getResultList();
+        clientTbQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT c FROM ClientTb c");
+        clientTbList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : clientTbQuery.getResultList();
         pnlBackgroundClient = new javax.swing.JPanel();
         pnlClients = new javax.swing.JPanel();
         lblClients = new javax.swing.JLabel();
@@ -116,7 +116,7 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
         lstClient.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lstClient.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
-        org.jdesktop.swingbinding.JListBinding jListBinding = org.jdesktop.swingbinding.SwingBindings.createJListBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, driverTbList, lstClient);
+        org.jdesktop.swingbinding.JListBinding jListBinding = org.jdesktop.swingbinding.SwingBindings.createJListBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, clientTbList, lstClient);
         bindingGroup.addBinding(jListBinding);
 
         jScrollPane1.setViewportView(lstClient);
@@ -194,19 +194,19 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
         txfClientID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfClientID.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstClient, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.driverID}"), txfClientID, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstClient, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.clientID}"), txfClientID, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
         txfClientName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfClientName.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstClient, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.driverName}"), txfClientName, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstClient, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.name}"), txfClientName, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
         txfClientSurname.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfClientSurname.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstClient, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.driverSurame}"), txfClientSurname, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstClient, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.surame}"), txfClientSurname, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
         txfClientContactNo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -230,7 +230,7 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
         txfAddInfo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfAddInfo.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstClient, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.vehicleReg}"), txfAddInfo, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstClient, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.additionalInfo}"), txfAddInfo, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
         btnBack.setText("Back");
@@ -262,11 +262,18 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
         txfAltNum.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfAltNum.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstClient, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.alternativeNumber}"), txfAltNum, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
         lblEmail.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblEmail.setText("Email:");
 
         txfClientEmail.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfClientEmail.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstClient, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.email}"), txfClientEmail, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
         txfClientEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txfClientEmailActionPerformed(evt);
@@ -616,8 +623,8 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
     private javax.swing.JButton btnDeleteClient;
     private javax.swing.JButton btnEditClient;
     private javax.swing.JButton btnSaveClient;
-    private java.util.List<DSC.DriverTb> driverTbList;
-    private javax.persistence.Query driverTbQuery;
+    private java.util.List<DSC.ClientTb> clientTbList;
+    private javax.persistence.Query clientTbQuery;
     private javax.persistence.EntityManager entityManager;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAltNum;

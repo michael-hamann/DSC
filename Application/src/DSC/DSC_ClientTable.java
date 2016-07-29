@@ -38,6 +38,7 @@ public class DSC_ClientTable extends javax.swing.JFrame {
         lblClient = new javax.swing.JLabel();
         pnlButtons = new javax.swing.JPanel();
         btnBack = new javax.swing.JButton();
+        btnClientDetails = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Client Table");
@@ -82,35 +83,35 @@ public class DSC_ClientTable extends javax.swing.JFrame {
         tblClientTable.getTableHeader().setReorderingAllowed(false);
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, clientTbList, tblClientTable);
-        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${suburbID}"));
-        columnBinding.setColumnName("Suburb ID");
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${clientID}"));
+        columnBinding.setColumnName("Client ID");
         columnBinding.setColumnClass(Short.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${orderID}"));
-        columnBinding.setColumnName("Order ID");
-        columnBinding.setColumnClass(Short.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${email}"));
-        columnBinding.setColumnName("Email");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${alternativeNumber}"));
-        columnBinding.setColumnName("Alternative Number");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${contactNumber}"));
-        columnBinding.setColumnName("Contact Number");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${additionalInfo}"));
-        columnBinding.setColumnName("Additional Info");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${address}"));
-        columnBinding.setColumnName("Address");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${name}"));
+        columnBinding.setColumnName("Name");
         columnBinding.setColumnClass(String.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${surname}"));
         columnBinding.setColumnName("Surname");
         columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${name}"));
-        columnBinding.setColumnName("Name");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${address}"));
+        columnBinding.setColumnName("Address");
         columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${clientID}"));
-        columnBinding.setColumnName("Client ID");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${additionalInfo}"));
+        columnBinding.setColumnName("Additional Info");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${contactNumber}"));
+        columnBinding.setColumnName("Contact Number");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${alternativeNumber}"));
+        columnBinding.setColumnName("Alternative Number");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${email}"));
+        columnBinding.setColumnName("Email");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${orderID}"));
+        columnBinding.setColumnName("Order ID");
+        columnBinding.setColumnClass(Short.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${suburbID}"));
+        columnBinding.setColumnName("Suburb ID");
         columnBinding.setColumnClass(Short.class);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
@@ -165,19 +166,31 @@ public class DSC_ClientTable extends javax.swing.JFrame {
             }
         });
 
+        btnClientDetails.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btnClientDetails.setText("Client Details");
+        btnClientDetails.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClientDetailsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlButtonsLayout = new javax.swing.GroupLayout(pnlButtons);
         pnlButtons.setLayout(pnlButtonsLayout);
         pnlButtonsLayout.setHorizontalGroup(
             pnlButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlButtonsLayout.createSequentialGroup()
+            .addGroup(pnlButtonsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnBack, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
+                .addGroup(pnlButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnBack, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
+                    .addComponent(btnClientDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlButtonsLayout.setVerticalGroup(
             pnlButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlButtonsLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(btnClientDetails)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -227,6 +240,11 @@ public class DSC_ClientTable extends javax.swing.JFrame {
         new DSC_Main().setVisible(true);
     }//GEN-LAST:event_btnBackActionPerformed
 
+    private void btnClientDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientDetailsActionPerformed
+        new DSC_ClientDetails().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnClientDetailsActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -264,6 +282,7 @@ public class DSC_ClientTable extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnClientDetails;
     private java.util.List<DSC.ClientTb> clientTbList;
     private javax.persistence.Query clientTbQuery;
     private javax.persistence.EntityManager entityManager;

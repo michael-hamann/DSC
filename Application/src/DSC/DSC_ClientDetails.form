@@ -7,22 +7,22 @@
         <Property name="persistenceUnit" type="java.lang.String" value="doorstepchef?zeroDateTimeBehavior=convertToNullPU"/>
       </Properties>
     </Component>
-    <Component class="javax.persistence.Query" name="driverTbQuery">
+    <Component class="javax.persistence.Query" name="clientTbQuery">
       <Properties>
-        <Property name="query" type="java.lang.String" value="SELECT d FROM DriverTb d"/>
+        <Property name="query" type="java.lang.String" value="SELECT c FROM ClientTb c"/>
         <Property name="entityManager" type="java.lang.Object" editor="org.netbeans.modules.form.j2ee.J2EEPropertyModifier$EMProperty$EntityManagerEditor">
           <ComponentRef name="entityManager"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="java.util.List" name="driverTbList">
+    <Component class="java.util.List" name="clientTbList">
       <Properties>
         <Property name="query" type="java.lang.Object" editor="org.netbeans.modules.form.j2ee.J2EEPropertyModifier$QueryBeanProperty$QueryEditor">
-          <ComponentRef name="driverTbQuery"/>
+          <ComponentRef name="clientTbQuery"/>
         </Property>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;DSC.DriverTb&gt;"/>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;DSC.ClientTb&gt;"/>
       </AuxValues>
     </Component>
   </NonVisualComponents>
@@ -164,7 +164,7 @@
                     <Property name="selectionMode" type="int" value="0"/>
                   </Properties>
                   <BindingProperties>
-                    <BindingProperty name="elements" source="driverTbList" target="lstClient" targetPath="elements" updateStrategy="0" immediately="false"/>
+                    <BindingProperty name="elements" source="clientTbList" target="lstClient" targetPath="elements" updateStrategy="0" immediately="false"/>
                   </BindingProperties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -383,7 +383,7 @@
                 <Property name="horizontalAlignment" type="int" value="11"/>
               </Properties>
               <BindingProperties>
-                <BindingProperty name="text" source="lstClient" sourcePath="${selectedElement.driverID}" target="txfClientID" targetPath="text" updateStrategy="0" immediately="false">
+                <BindingProperty name="text" source="lstClient" sourcePath="${selectedElement.clientID}" target="txfClientID" targetPath="text" updateStrategy="0" immediately="false">
                   <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
                 </BindingProperty>
               </BindingProperties>
@@ -396,7 +396,7 @@
                 <Property name="horizontalAlignment" type="int" value="11"/>
               </Properties>
               <BindingProperties>
-                <BindingProperty name="text" source="lstClient" sourcePath="${selectedElement.driverName}" target="txfClientName" targetPath="text" updateStrategy="0" immediately="false">
+                <BindingProperty name="text" source="lstClient" sourcePath="${selectedElement.name}" target="txfClientName" targetPath="text" updateStrategy="0" immediately="false">
                   <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
                 </BindingProperty>
               </BindingProperties>
@@ -409,7 +409,7 @@
                 <Property name="horizontalAlignment" type="int" value="11"/>
               </Properties>
               <BindingProperties>
-                <BindingProperty name="text" source="lstClient" sourcePath="${selectedElement.driverSurame}" target="txfClientSurname" targetPath="text" updateStrategy="0" immediately="false">
+                <BindingProperty name="text" source="lstClient" sourcePath="${selectedElement.surame}" target="txfClientSurname" targetPath="text" updateStrategy="0" immediately="false">
                   <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
                 </BindingProperty>
               </BindingProperties>
@@ -451,7 +451,7 @@
                 <Property name="horizontalAlignment" type="int" value="11"/>
               </Properties>
               <BindingProperties>
-                <BindingProperty name="text" source="lstClient" sourcePath="${selectedElement.vehicleReg}" target="txfAddInfo" targetPath="text" updateStrategy="0" immediately="false">
+                <BindingProperty name="text" source="lstClient" sourcePath="${selectedElement.additionalInfo}" target="txfAddInfo" targetPath="text" updateStrategy="0" immediately="false">
                   <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
                 </BindingProperty>
               </BindingProperties>
@@ -501,6 +501,11 @@
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="11"/>
               </Properties>
+              <BindingProperties>
+                <BindingProperty name="text" source="lstClient" sourcePath="${selectedElement.alternativeNumber}" target="txfAltNum" targetPath="text" updateStrategy="0" immediately="false">
+                  <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
+                </BindingProperty>
+              </BindingProperties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblEmail">
               <Properties>
@@ -517,6 +522,11 @@
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="11"/>
               </Properties>
+              <BindingProperties>
+                <BindingProperty name="text" source="lstClient" sourcePath="${selectedElement.email}" target="txfClientEmail" targetPath="text" updateStrategy="0" immediately="false">
+                  <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
+                </BindingProperty>
+              </BindingProperties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txfClientEmailActionPerformed"/>
               </Events>
