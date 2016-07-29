@@ -409,7 +409,7 @@
                 <Property name="horizontalAlignment" type="int" value="11"/>
               </Properties>
               <BindingProperties>
-                <BindingProperty name="text" source="lstClient" sourcePath="${selectedElement.surame}" target="txfClientSurname" targetPath="text" updateStrategy="0" immediately="false">
+                <BindingProperty name="text" source="lstClient" sourcePath="${selectedElement.surname}" target="txfClientSurname" targetPath="text" updateStrategy="0" immediately="false">
                   <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
                 </BindingProperty>
               </BindingProperties>

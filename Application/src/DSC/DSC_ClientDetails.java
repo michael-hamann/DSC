@@ -3,6 +3,7 @@ package DSC;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -206,7 +207,7 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
         txfClientSurname.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfClientSurname.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstClient, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.surame}"), txfClientSurname, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstClient, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.surname}"), txfClientSurname, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
         txfClientContactNo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -452,7 +453,10 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
 
         String message = "Are you sure you want to delete " + name + "?";
         int answer = JOptionPane.showConfirmDialog(this, message, "Confirm", JOptionPane.INFORMATION_MESSAGE);
-
+        
+        ArrayList orderIDs = new ArrayList();
+        ArrayList suburbIDs = new ArrayList();
+        
         switch (answer) {
             case JOptionPane.YES_OPTION:
                 JOptionPane.showMessageDialog(this, name + " will be deleted", "Delete Notification", JOptionPane.INFORMATION_MESSAGE);
@@ -460,13 +464,37 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
                 try {
                     Connection c = DBClass.getConnection();
                     Statement stmt = c.createStatement();
-
-                    String updateOrderIDfk = "UPDATE order_tb SET OrderID = 0 WHERE ClientID = '" + clientID + "'";
-                    stmt.executeUpdate(updateOrderIDfk);
                     
-                    String updateSuburbIDfk = "UPDATE suburb_tb SET SuburbID = 0 WHERE ClientID = '" + clientID + "'";
-                    stmt.executeUpdate(updateSuburbIDfk);
-
+                    String findorderID = "SELECT orderID FROM client_tb WHERE ClientID LIKE '"+ clientID +"'";
+                    ResultSet orderID = stmt.executeQuery(findorderID);
+                    
+                    String findsuburbID = "SELECT suburbID FROM client_tb WHERE ClientID LIKE '"+ clientID +"'";
+                    ResultSet suburbID = stmt.executeQuery(findsuburbID);
+                    
+                    int i = 1;
+                    while(orderID.next()){
+                        String s = new String(orderID.getString(i));
+                        s = orderID.getString(i);
+                        orderIDs.add(s);
+                    }
+                    while(suburbID.next()){
+                        String s = new String(suburbID.getString(i));
+                        s = suburbID.getString(i);
+                        suburbIDs.add(s);
+                    }
+                    
+                    for (int j = 0; j < orderIDs.size(); j++) {
+                        String updateOrderIDfk = "UPDATE order_tb SET OrderID = 0 WHERE OrderID = '" + orderIDs.get(j) + "'";
+                        stmt.executeUpdate(updateOrderIDfk);
+                    
+                    }
+                   
+                    for (int j = 0; j < suburbIDs.size(); j++) {
+                        String updateSuburbIDfk = "UPDATE suburb_tb SET SuburbID = 0 WHERE SuburbID = '" + suburbID + "'";
+                        stmt.executeUpdate(updateSuburbIDfk);
+                    
+                    }
+                    
                     String deleteDriver = "DELETE FROM doorstepchef.driver_tb WHERE ClientID LIKE '" + clientID + "'";
                     stmt.executeUpdate(deleteDriver);
 
