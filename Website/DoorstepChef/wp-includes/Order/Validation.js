@@ -1,98 +1,48 @@
 var counter = 1;
 var limit = 3;
 var changed = false;
-var mealSize = 0 ;
+var mealSize = null ;
 var mealCount = 0;
 var spinnerResult;
 var addMealsComponent = false;
 var sum = 0;
- var substraction = 0;
- 
+var substraction = 0;
+var setMax= 3;
 var familyCheckSuccess =false;
 
 
 
-function checkTotal(){
-	
-	 checkFamilySize();
-	 
-	 if(familyCheckSuccess){
-		 
-	 resetSpinner();
-	 
-	 }else{
-	 
-	 substraction = mealCount - document.getElementById("totalMeals").value;
-	 
-	 alert("subtraction = "+subtraction)
-	 
-	 document.getElementById("totalMeals").value = subtraction ;
-	 
-	 }
-	 
-}
 
-function checkFamilySize(){
+
+
+
+function validateIfFamilySizeIsChecked(){
 	
-	if(!changed){
+	if(mealSize!=null){
 		
-	alert("please choose a family size.");
 		
-	document.getElementById("fam1").focus();	
-	
-	familyCheckSuccess =true;
-	
+	}else{
+		
+		alert("please choose a family size.");
+		document.getElementById("fam1").focus();	
+		document.getElementById('orderAmount_0').value = 1;
+		alert(mealSize);
+		
 	}
 	
+	
 }
 
 
-function resetSpinner(){
-	
-	document.getElementById('orderAmount_0').value = 1;
-	
-	
-	
-}
+
+
+
 
 
 
 
 function addOrder() {
 
-//var mealCount = 0;
-
-var sum = 0;
-
-	sum = 0;
-	
-	spinnerResult = parseInt(document.getElementById('orderAmount_'+(counter-1)).value);
-		
-    var val = document.getElementById("fam1");
-
-    var option = val.options[val.selectedIndex].text;
-
-	var numberOfMealsCheck = parseInt(document.getElementById("totalMeals").value);		
-	
-	var calculation = numberOfMealsCheck + spinnerResult;
-	
-	//var counterVar = counter -1 ;
-	
-	for(iterate = 0; iterate < counter ; iterate++){
-		
-		sum += parseInt(document.getElementById('orderAmount_'+(counter-1)).value);
-		
-		
-	}
-	
-	alert("sum = "+sum);
-	
-	//document.getElementById("totalMeals").value = mealCount - sum  ;
-	
-	
-	if( numberOfMealsCheck - spinnerResult <= mealSize && changed == true && sum < mealSize){
-	
-	
     if (counter <= 5) {
 
         var newdiv = document.createElement('div');
@@ -107,8 +57,6 @@ var sum = 0;
 		
 		var thisChange = changeTotalMeals - spinnerResult;
 		
-		//document.getElementById("totalMeals").value = thisChange ;
-		
 		alert("changeTotalMeals = "+thisChange);
 		
         counter++;
@@ -119,33 +67,9 @@ var sum = 0;
 
     }
 	
-	}else{
-		
-		if(changed){
-			
-		alert("Meal Limit Reached!");
-		
-		}else{
-			
-			alert("please choose a family size.");
-		
-		document.getElementById("fam1").focus();
-			
-		}
-	}
-	
 	document.getElementById("addOrderID").blur();
 
 }
-
-
-/* function result(){
-	
-	var display = document.getElementById("orderAmount_0").value;
-	
-	alert(display);
-	
-} */
 
 
 function removeOrder(div) {
@@ -154,12 +78,6 @@ function removeOrder(div) {
 
 	var changeTotalMeals = parseInt(document.getElementById("totalMeals").value);
 		
-	var thisChange = parseInt(changeTotalMeals + spinnerResult) ;
-		
-	document.getElementById("totalMeals").value = thisChange ;
-	
-	alert("thisChange = "+thisChange);
-	
     --counter;
 }
 
@@ -187,42 +105,24 @@ function doCheck(){
 
 		alert ("collect it!");
 
-		document.getElementById("address").disabled = true;
-		document.getElementById("address").value = "16 & 17 Boulevard Park\nTienie Meyer Bypass\nBellville\n7530";
-
-	 	jQuery(document).ready(function(){
-        jQuery("#addInfo").remove();
-		jQuery("#address").remove();
-		jQuery("#addressLbl").remove();
-		jQuery("#addInfoLbl").remove();
-		jQuery("#space").remove();
-
-
-
-        });
-
-
-
+		document.getElementById("removalDiv").innerHTML = "";
+		
 		break;
 
 		default:
 
-		//document.getElementById("address").disabled = false;
-		//document.getElementById("address").value = "Delivery Address";
-
-		jQuery(document).ready(function(){
-		jQuery('<label id= "addInfoLbl">Additional Information</label><input id="addInfo" name="addInfo" size="50" type="text" maxlength="35" minlength="0" /> <br id = "space" > <br id = "space" >').insertBefore("#contactHr");
-		jQuery('<label style = " width:200px " id = "addressLbl" > Delivery Address </label> <textarea id="address" name="address" rows="5" cols="10" style = "width:396px">Delivery Address</textarea>').insertBefore("#addInfoLbl");
-        jQuery('<br id = "space" > <br id = "space" >').insertBefore("#addInfoLbl");
-        });
-
+		document.getElementById("removalDiv").innerHTML = '<label id = "suburbLbl">Suburb</label><select name="Suburb" id="Suburb" onChange="timeSlotAdj()">'+
+                                                         ' <option hidden="" disabled="disabled" selected="selected">Suburb</option><br>'+
+														'  </select>'+
+														 ' <br> <br><label style = "width:200px" id = "addressLbl" >Delivery Address </label><textarea id="address" name="address" rows="5" cols="10" style = "width:396px">Delivery Address</textarea><br><br>'+
+														 ' <label id= "addInfoLbl">Additional Information</label><input id="addInfo" name="addInfo" size="50" type="text" maxlength="35" minlength="0" /><br>';
+		
+		 listSuburbs('Suburb');
+		
 		alert("we'll be there soon!");
-
-
+	
 	}
-
-
-}
+	}
 
 
 function testFunction(){
@@ -233,23 +133,32 @@ function testFunction(){
 	var altNumField = document.getElementById("altNum").value.trim();
 	var contactNumField = document.getElementById("contactNum").value.trim();
 	var email = document.getElementById("email").value.trim();
+	var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;  
+	var letters = /^[A-Za-z]+$/;
+	var numFormat = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/; 
 
-
+	//Name	
 	switch(nameField){
 
 		case "":
 
 		document.getElementById("name").focus();
 
-		alert("namefield empty");
+		alert("Please enter your name");
 
 		break;
 
 		default:
 
-		alert("Correct!");
+		if(nameField.value.match(letters)){  
+			return true;  
+		}  
+		else{  
+			alert('Name must have alphabet characters only');  
+			nameField.focus();  
+			return false;  
+		}
 	}
-
 
 
 	switch(surnameField){
@@ -302,7 +211,7 @@ function checkMeals(){
 	
 	
 	var numberOfMeals = parseInt(document.getElementById("fam1").value);
-	//var numberOfMeals = document.getElementById("fam1").value;
+	
 	
 	
 	document.getElementById("order").innerHTML = "";
@@ -337,7 +246,7 @@ function checkMeals(){
 		
 		changed = true;
 		
-		document.getElementById("totalMeals").value = 1;
+		document.getElementById("totalMeals").value  = 1;
 		
 		break;
 		
