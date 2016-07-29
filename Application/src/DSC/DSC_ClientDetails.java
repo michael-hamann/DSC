@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,6 +21,7 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
      */
     public DSC_ClientDetails() {
         initComponents();
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         disableFields();
         btnSaveClient.setText("Save");
         btnSaveClient.setVisible(false);

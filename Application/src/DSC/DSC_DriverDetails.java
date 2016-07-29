@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,6 +21,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
      */
     public DSC_DriverDetails() {
         initComponents();
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         disableFields();
         btnSave.setText("Save");
         btnSave.setVisible(false);
