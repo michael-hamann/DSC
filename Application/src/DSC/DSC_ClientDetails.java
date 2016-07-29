@@ -573,7 +573,7 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
             }
         } else {
             this.dispose();
-            new DSC_DriverTable().setVisible(true);
+            new DSC_ClientTable().setVisible(true);
         }
     }//GEN-LAST:event_btnBackActionPerformed
 
