@@ -527,7 +527,6 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
                 + "	VALUES (" + newID + ", '" + newName + "', '" + newSurname + "', '"+ newAddress + "', '"+
                 newAddInfo + "', '" + newContactNo+ "', '" + newAltNum + "', '" + newEmail +  "', '0', '0');";
 
-                String queryfk = "INSERT INTO doorstepchef.order_tb (`OrderID`)";
                 
                 try {
                     Connection c = DBClass.getConnection();
