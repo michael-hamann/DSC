@@ -1,6 +1,8 @@
 
 package DSC;
 
+import javax.swing.JFrame;
+
 /**
  *
  * @author Aliens_Michael
@@ -12,6 +14,7 @@ public class DSC_RouteTable extends javax.swing.JFrame {
      */
     public DSC_RouteTable() {
         initComponents();
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     /**

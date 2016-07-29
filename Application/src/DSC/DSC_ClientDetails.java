@@ -3,6 +3,7 @@ package DSC;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,6 +20,7 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
      */
     public DSC_ClientDetails() {
         initComponents();
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         disableFields();
         btnSaveClient.setText("Save");
         btnSaveClient.setVisible(false);
@@ -87,7 +89,7 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
         lblClientSurname = new javax.swing.JLabel();
         lblClientContactNo = new javax.swing.JLabel();
         lblClientAddress = new javax.swing.JLabel();
-        lblVehicleReg = new javax.swing.JLabel();
+        lblAddInfo = new javax.swing.JLabel();
         txfClientID = new javax.swing.JTextField();
         txfClientName = new javax.swing.JTextField();
         txfClientSurname = new javax.swing.JTextField();
@@ -188,8 +190,8 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
         lblClientAddress.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblClientAddress.setText("Address:");
 
-        lblVehicleReg.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblVehicleReg.setText("Additional Information:");
+        lblAddInfo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblAddInfo.setText("Additional Information:");
 
         txfClientID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfClientID.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
@@ -206,7 +208,7 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
         txfClientSurname.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfClientSurname.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstClient, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.surame}"), txfClientSurname, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstClient, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.surname}"), txfClientSurname, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
         txfClientContactNo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -288,21 +290,6 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblClientDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(pnlDetailsClientLayout.createSequentialGroup()
-                        .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(lblVehicleReg, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
-                                .addComponent(lblClientSurname, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblClientName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblClientID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(lblClientAddress))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txfClientID)
-                            .addComponent(txfClientName, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txfClientSurname, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txfAddInfo, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txfClientAddress)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDetailsClientLayout.createSequentialGroup()
                         .addComponent(btnEditClient)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
@@ -311,17 +298,25 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
                         .addComponent(btnBack)
                         .addGap(4, 4, 4))
                     .addGroup(pnlDetailsClientLayout.createSequentialGroup()
-                        .addComponent(lblClientContactNo, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(57, 57, 57)
-                        .addComponent(txfClientContactNo))
-                    .addGroup(pnlDetailsClientLayout.createSequentialGroup()
-                        .addComponent(lblAltNum, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txfAltNum, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlDetailsClientLayout.createSequentialGroup()
-                        .addComponent(lblEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(57, 57, 57)
-                        .addComponent(txfClientEmail)))
+                        .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(lblEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblAltNum, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblClientContactNo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblClientAddress, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblClientSurname, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblClientName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblClientID, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblAddInfo, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txfAltNum, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txfClientContactNo, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txfClientAddress, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txfClientSurname, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txfClientName, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txfClientID)
+                            .addComponent(txfAddInfo, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txfClientEmail, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
         );
         pnlDetailsClientLayout.setVerticalGroup(
@@ -345,23 +340,23 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
                 .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblClientAddress)
                     .addComponent(txfClientAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblVehicleReg)
+                    .addComponent(lblAddInfo)
                     .addComponent(txfAddInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblClientContactNo)
                     .addComponent(txfClientContactNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblAltNum)
                     .addComponent(txfAltNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblEmail)
                     .addComponent(txfClientEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                 .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEditClient)
                     .addComponent(btnSaveClient)
@@ -437,7 +432,7 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
             rs.next();
             numRows = rs.getInt(1);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
         numRows += 1;
         txfClientID.setText(numRows + "");
@@ -628,6 +623,7 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
     private javax.persistence.Query clientTbQuery;
     private javax.persistence.EntityManager entityManager;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblAddInfo;
     private javax.swing.JLabel lblAltNum;
     private javax.swing.JLabel lblClientAddress;
     private javax.swing.JLabel lblClientContactNo;
@@ -637,7 +633,6 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
     private javax.swing.JLabel lblClientSurname;
     private javax.swing.JLabel lblClients;
     private javax.swing.JLabel lblEmail;
-    private javax.swing.JLabel lblVehicleReg;
     private javax.swing.JList<String> lstClient;
     private javax.swing.JPanel pnlBackgroundClient;
     private javax.swing.JPanel pnlClients;

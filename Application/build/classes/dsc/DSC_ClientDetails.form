@@ -215,25 +215,6 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lblClientDetails" alignment="0" max="32767" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="lblVehicleReg" alignment="0" pref="164" max="32767" attributes="0"/>
-                                      <Component id="lblClientSurname" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="lblClientName" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="lblClientID" alignment="0" max="32767" attributes="0"/>
-                                  </Group>
-                                  <Component id="lblClientAddress" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="txfClientID" max="32767" attributes="0"/>
-                                  <Component id="txfClientName" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="txfClientSurname" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="txfAddInfo" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="txfClientAddress" alignment="0" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="btnEditClient" min="-2" max="-2" attributes="0"/>
                               <EmptySpace pref="89" max="32767" attributes="0"/>
@@ -243,19 +224,27 @@
                               <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="lblClientContactNo" min="-2" pref="111" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
-                              <Component id="txfClientContactNo" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="lblAltNum" pref="164" max="32767" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txfAltNum" min="-2" pref="130" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="lblEmail" min="-2" pref="111" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
-                              <Component id="txfClientEmail" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="lblEmail" max="32767" attributes="0"/>
+                                  <Component id="lblAltNum" max="32767" attributes="0"/>
+                                  <Component id="lblClientContactNo" max="32767" attributes="0"/>
+                                  <Component id="lblClientAddress" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lblClientSurname" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lblClientName" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lblClientID" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lblAddInfo" pref="140" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="txfAltNum" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="txfClientContactNo" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="txfClientAddress" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="txfClientSurname" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="txfClientName" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="txfClientID" max="32767" attributes="0"/>
+                                  <Component id="txfAddInfo" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="txfClientEmail" alignment="1" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -287,9 +276,9 @@
                           <Component id="lblClientAddress" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txfClientAddress" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblVehicleReg" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblAddInfo" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txfAddInfo" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -297,17 +286,17 @@
                           <Component id="lblClientContactNo" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txfClientContactNo" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lblAltNum" min="-2" max="-2" attributes="0"/>
                           <Component id="txfAltNum" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblEmail" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txfClientEmail" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="73" max="32767" attributes="0"/>
+                      <EmptySpace pref="58" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="btnEditClient" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnSaveClient" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -367,7 +356,7 @@
                 <Property name="text" type="java.lang.String" value="Address:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblVehicleReg">
+            <Component class="javax.swing.JLabel" name="lblAddInfo">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="12" style="0"/>
@@ -409,7 +398,7 @@
                 <Property name="horizontalAlignment" type="int" value="11"/>
               </Properties>
               <BindingProperties>
-                <BindingProperty name="text" source="lstClient" sourcePath="${selectedElement.surame}" target="txfClientSurname" targetPath="text" updateStrategy="0" immediately="false">
+                <BindingProperty name="text" source="lstClient" sourcePath="${selectedElement.surname}" target="txfClientSurname" targetPath="text" updateStrategy="0" immediately="false">
                   <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
                 </BindingProperty>
               </BindingProperties>

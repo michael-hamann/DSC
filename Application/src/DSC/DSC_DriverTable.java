@@ -1,6 +1,8 @@
 
 package DSC;
 
+import javax.swing.JFrame;
+
 /**
  *
  * @author Aliens_Michael
@@ -12,6 +14,7 @@ public class DSC_DriverTable extends javax.swing.JFrame {
      */
     public DSC_DriverTable() {
         initComponents();
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     /**
@@ -227,8 +230,8 @@ public class DSC_DriverTable extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        this.dispose();
         new DSC_Main().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnDriverDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDriverDetailsActionPerformed
