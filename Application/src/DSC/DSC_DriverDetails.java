@@ -1,6 +1,7 @@
 package DSC;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
@@ -63,7 +64,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
 
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("doorstepchef?zeroDateTimeBehavior=convertToNullPU").createEntityManager();
         driverTbQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT d FROM DriverTb d");
-        driverTbList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : driverTbQuery.getResultList();
+        driverTbList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(driverTbQuery.getResultList());
         pnlBackground = new javax.swing.JPanel();
         pnlDrivers = new javax.swing.JPanel();
         lblDrivers = new javax.swing.JLabel();
@@ -377,20 +378,36 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         boolean back = false;
         if (btnSave.getText().equals("Save")) {
-            /*
-                short ID = Short.parseShort(txfDriverID.getText().trim());
-                String newName = txfDriverName.getText().trim();
-                String newSurname = txfDriverSurname.getText().trim();
-                String newContactNo = txfContactNo.getText().trim();
-                String newAddress = txfAddress.getText().trim();
-                String newVehicleReg = txfVehicleReg.getText().trim();
-                short newRouteID = Short.parseShort(txfRouteID.getText().trim());
-             */
+            //Update existing driver
+            short ID = Short.parseShort(txfDriverID.getText().trim());
+            String newName = txfDriverName.getText().trim();
+            String newSurname = txfDriverSurname.getText().trim();
+            String newContactNo = txfContactNo.getText().trim();
+            String newAddress = txfAddress.getText().trim();
+            String newVehicleReg = txfVehicleReg.getText().trim();
 
-            //Commit to database
-            back = true;
+            try {
+                Connection c = DBClass.getConnection();
+                
+                PreparedStatement stmt = c.prepareStatement
+        ("UPDATE doorstepchef.driver_tb SET DriverName = ?, DriverSurname = ?, ContactNumber = ?, Address = ?, VehicleReg = ? WHERE DriverID = ?;");
+                stmt.setString(1, newName);
+                stmt.setString(2, newSurname);
+                stmt.setString(3, newContactNo);
+                stmt.setString(4, newAddress);
+                stmt.setString(5, newVehicleReg);
+                stmt.setShort(6, ID);
+                stmt.executeUpdate();
+                
+                JOptionPane.showMessageDialog(this, "Changes Saved");
+                //Refresh
+                back = true;
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
         } else if (btnSave.getText().equals("Add")) {
-            //Add to database
+            //Add new driver
             boolean empty = checkEmpty();
             if (empty) {
                 JOptionPane.showMessageDialog(this, "Please fill in all fields", "Error", JOptionPane.ERROR_MESSAGE);
@@ -409,7 +426,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                     Connection c = DBClass.getConnection();
                     Statement stmt = c.createStatement();
                     stmt.executeUpdate(query);
-                    JOptionPane.showMessageDialog(this, "Saved");
+                    JOptionPane.showMessageDialog(this, "New Driver Saved");
                     back = true;
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
@@ -494,7 +511,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
                 }
                 break;
-                
+
             case JOptionPane.NO_OPTION:
                 JOptionPane.showMessageDialog(this, name + " will not be deleted", "Delete Notification", JOptionPane.INFORMATION_MESSAGE);
                 break;
