@@ -1,4 +1,4 @@
-/* global boolean */
+connectionCheck();
 
 function getDates(dates) {
     var currDate = new Date();
@@ -33,7 +33,6 @@ function getDates(dates) {
             '<option value="option2">' + mon2 + '</option>' +
             '<option value="option3">' + mon3 + '</option>' +
             '<option value="option4">' + mon4 + '</option>';
-
 }
 
 
@@ -96,9 +95,33 @@ function timeSlotAdj() {
     });
 }
 
+function connectionCheck(){
+    var url = "/DoorstepChef/wp-includes/Order/CheckConnection.php";
+    var timeID = setTimeout(connFailed, 5000);
+    var html = document.getElementById("pageContent").innerHTML;
+    
+    document.getElementById("pageContent").innerHTML = "Loading ...";
+    jQuery.ajax({
+        type: 'get',
+        dataType: 'text',
+        url: url,
+        success: function (data, textStatus, jqXHR) {
+            if (data == "") {
+                clearTimeout(timeID);
+                document.getElementById("pageContent").innerHTML = html;
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown){
+            alert("Someting happned: " + errorThrown);
+        }
+    });
+}
+
+function connFailed(){
+    document.getElementById("pageContent").innerHTML = "<a>ERROR 400: DATABASE CONNECTION COULD NOT BE ESTABLISHED</a>";
+}
 
 function submitData() {
-
     var clienName = document.getElementById("name").value;
     var clientSurname = document.getElementById("surname").value;
     var contactNum = document.getElementById("contactNum").value;

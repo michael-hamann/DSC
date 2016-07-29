@@ -29,7 +29,7 @@ $routeID = 0;
 
 if ($results->num_rows > 0) {
     while ($row1 = $results->fetch_assoc()) {
-        $routeID = $row1["RouteID"]." ";
+        $routeID = $row1["RouteID"] . " ";
         echo $routeID;
     }
 }

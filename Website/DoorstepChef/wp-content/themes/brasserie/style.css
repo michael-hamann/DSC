@@ -704,6 +704,30 @@ input::-moz-focus-inner { /* Corrects inner padding and border displayed oddly i
 
 }
 
+select{
+
+	background: rgba( 255, 255, 255, 0.3 );
+
+	border: 1px solid #ccc;
+
+	border-radius: 3px;
+
+	padding: 3px;
+
+}
+
+input[type=number]{
+
+	background: rgba( 255, 255, 255, 0.3 );
+
+	border: 1px solid #ccc;
+
+	border-radius: 3px;
+
+	padding: 6px;
+
+}
+
 input[type=text],
 
 input[type=email],

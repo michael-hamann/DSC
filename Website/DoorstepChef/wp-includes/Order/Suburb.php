@@ -17,5 +17,4 @@ echo '<option hidden="" disabled="disabled" selected="selected">Suburb</option>'
 while ($row = $results->fetch_assoc()) {
     echo "<option>" . $row['Suburb'] . "</option>";
 }
-
 ?>

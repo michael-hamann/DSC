@@ -1,7 +1,7 @@
 var counter = 1;
 var limit = 3;
 var changed = false;
-var mealSize = 0 ;
+var mealSize = null ;
 var mealCount = 0;
 var spinnerResult;
 var addMealsComponent = false;
@@ -9,6 +9,37 @@ var sum = 0;
 var substraction = 0;
 var setMax= 3;
 var familyCheckSuccess =false;
+
+
+
+
+
+
+
+function validateIfFamilySizeIsChecked(){
+	
+	if(mealSize!=null){
+		
+		
+	}else{
+		
+		alert("please choose a family size.");
+		document.getElementById("fam1").focus();	
+		document.getElementById('orderAmount_0').value = 1;
+		alert(mealSize);
+		
+	}
+	
+	
+}
+
+
+
+
+
+
+
+
 
 function addOrder() {
 
@@ -102,23 +133,32 @@ function testFunction(){
 	var altNumField = document.getElementById("altNum").value.trim();
 	var contactNumField = document.getElementById("contactNum").value.trim();
 	var email = document.getElementById("email").value.trim();
+	var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;  
+	var letters = /^[A-Za-z]+$/;
+	var numFormat = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/; 
 
-
+	//Name	
 	switch(nameField){
 
 		case "":
 
 		document.getElementById("name").focus();
 
-		alert("namefield empty");
+		alert("Please enter your name");
 
 		break;
 
 		default:
 
-		alert("Correct!");
+		if(nameField.value.match(letters)){  
+			return true;  
+		}  
+		else{  
+			alert('Name must have alphabet characters only');  
+			nameField.focus();  
+			return false;  
+		}
 	}
-
 
 
 	switch(surnameField){
@@ -205,6 +245,8 @@ function checkMeals(){
 		mealSize = 2;
 		
 		changed = true;
+		
+		document.getElementById("totalMeals").value  = 1;
 		
 		break;
 		
