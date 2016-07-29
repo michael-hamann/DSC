@@ -241,10 +241,6 @@
                       </Properties>
                       <BindingProperties>
                         <BindingProperty name="elements" source="suburbTbList" target="tblSuburbTable" targetPath="elements" updateStrategy="0" immediately="true">
-                          <Subbinding sourcePath="${suburbID}">
-                            <BindingParameter name="NAME" value="Suburb ID"/>
-                            <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Short.class"/>
-                          </Subbinding>
                           <Subbinding sourcePath="${routeID}">
                             <BindingParameter name="NAME" value="Route ID"/>
                             <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Short.class"/>
@@ -252,6 +248,12 @@
                           <Subbinding sourcePath="${suburb}">
                             <BindingParameter name="NAME" value="Suburb"/>
                             <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+                            <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
+                          </Subbinding>
+                          <Subbinding sourcePath="${suburbID}">
+                            <BindingParameter name="NAME" value="Suburb ID"/>
+                            <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Short.class"/>
+                            <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
                           </Subbinding>
                         </BindingProperty>
                       </BindingProperties>
