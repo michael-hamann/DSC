@@ -470,35 +470,22 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
                     String findorderID = "SELECT orderID FROM client_tb WHERE ClientID LIKE '"+ clientID +"'";
                     ResultSet orderID = stmt.executeQuery(findorderID);
                     
-                    String findsuburbID = "SELECT suburbID FROM client_tb WHERE ClientID LIKE '"+ clientID +"'";
-                    ResultSet suburbID = stmt.executeQuery(findsuburbID);
-                    
                     int i = 1;
                     while(orderID.next()){
-                        String s = new String(orderID.getString(i));
-                        s = orderID.getString(i);
-                        orderIDs.add(s);
+                        orderIDs.add(orderID.getString("OrderID"));
+                        ++i;
                     }
-                    while(suburbID.next()){
-                        String s = new String(suburbID.getString(i));
-                        s = suburbID.getString(i);
-                        suburbIDs.add(s);
-                    }
-                    
                     for (int j = 0; j < orderIDs.size(); j++) {
                         String updateOrderIDfk = "UPDATE order_tb SET OrderID = 0 WHERE OrderID = '" + orderIDs.get(j) + "'";
                         stmt.executeUpdate(updateOrderIDfk);
                     
                     }
-                   
-                    for (int j = 0; j < suburbIDs.size(); j++) {
-                        String updateSuburbIDfk = "UPDATE suburb_tb SET SuburbID = 0 WHERE SuburbID = '" + suburbID + "'";
-                        stmt.executeUpdate(updateSuburbIDfk);
                     
-                    }
+                    String updateSuburbID = "UPDATE client_tb SET SuburbID = 0 WHERE ClientID = '"+ clientID +"'";
+                    stmt.executeUpdate(updateSuburbID);
                     
-                    String deleteDriver = "DELETE FROM doorstepchef.driver_tb WHERE ClientID LIKE '" + clientID + "'";
-                    stmt.executeUpdate(deleteDriver);
+                    String deleteClient = "DELETE FROM doorstepchef.client_tb WHERE ClientID LIKE '" + clientID + "'";
+                    stmt.executeUpdate(deleteClient);
 
                     JOptionPane.showMessageDialog(this, "Driver has been deleted. \n Please note removing this driver has affected"
                             + " route schedules leaving routes without an assigned driver.");
