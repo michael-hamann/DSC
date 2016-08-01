@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -455,6 +456,14 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
 
         return empty;
     }
+    
+//    private void addData(){
+//        DefaultListModel model = new DefaultListModel();
+//        for (int i = 0; i < driverTbList.size(); i++) {
+//            model.addElement(driverTbList.get(i));
+//        }
+//        lstDrivers.setModel(model);
+//    }
 
     private void btnAddDriverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDriverActionPerformed
         clearFields();
@@ -508,7 +517,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "Driver has been deleted. \nPlease note removing this driver has affected"
                             + " \nroute schedules leaving routes without an assigned driver.");
                     //refresh jList
-
+                    
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
                 }
