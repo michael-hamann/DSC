@@ -47,7 +47,7 @@ function validateIfMoreMealsCanBeOrdered(compID){
 	
 	alert("counter = "+counter);
 	
-	for(iterate = 0; iterate < counter-1 ; iterate++){
+	for(iterate = 0; iterate < counter ; iterate++){
 		
 		
 		sum += parseInt(document.getElementById('orderAmount_'+(iterate)).value);
@@ -184,7 +184,7 @@ function doCheck(){
 		document.getElementById("removalDiv").innerHTML = '<label id = "suburbLbl">Suburb</label><select name="Suburb" id="Suburb" onChange="timeSlotAdj()">'+
                                                          ' <option hidden="" disabled="disabled" selected="selected">Suburb</option><br>'+
 														'  </select>'+
-														 ' <br> <br><label style = "width:200px" id = "addressLbl" > </label><textarea id="address" name="address" rows="5" cols="10" style = "width:396px">Delivery Address</textarea><br><br>'+
+														 ' <br> <br><label style = "width:200px" id = "addressLbl" >Delivery Address </label><textarea id="address" name="address" rows="5" cols="10" style = "width:396px">Delivery Address</textarea><br><br>'+
 														 ' <label id= "addInfoLbl">Additional Information</label><input id="addInfo" name="addInfo" size="50" type="text" maxlength="35" minlength="0" /><br>';
 		
 		 listSuburbs('Suburb');
