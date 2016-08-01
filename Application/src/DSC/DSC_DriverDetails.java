@@ -505,7 +505,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                     String deleteDriver = "DELETE FROM doorstepchef.driver_tb WHERE DriverID LIKE '" + driverID + "'";
                     stmt.executeUpdate(deleteDriver);
 
-                    JOptionPane.showMessageDialog(this, "Driver has been deleted. \n Please note removing this driver has affected"
+                    JOptionPane.showMessageDialog(this, "Driver has been deleted. \nPlease note removing this driver has affected"
                             + " \nroute schedules leaving routes without an assigned driver.");
                     //refresh jList
 
