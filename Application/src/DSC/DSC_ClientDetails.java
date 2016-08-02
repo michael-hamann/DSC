@@ -451,13 +451,11 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
         String name = txfClientName.getText() + " " + txfClientSurname.getText();
 
         int clientID = Integer.parseInt(txfClientID.getText());
-        int elementIndex = lstClient.getSelectedIndex();
-
+        
         String message = "Are you sure you want to delete " + name + "?";
         int answer = JOptionPane.showConfirmDialog(this, message, "Confirm", JOptionPane.INFORMATION_MESSAGE);
         
         ArrayList orderIDs = new ArrayList();
-        ArrayList suburbIDs = new ArrayList();
         
         switch (answer) {
             case JOptionPane.YES_OPTION:
@@ -487,8 +485,7 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
                     String deleteClient = "DELETE FROM doorstepchef.client_tb WHERE ClientID LIKE '" + clientID + "'";
                     stmt.executeUpdate(deleteClient);
 
-                    JOptionPane.showMessageDialog(this, "Driver has been deleted. \n Please note removing this driver has affected"
-                            + " route schedules leaving routes without an assigned driver.");
+                    JOptionPane.showMessageDialog(this, "Client has been deleted. \n Orders of this client have been removed.");
 
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
