@@ -10,6 +10,7 @@ var substraction = 0;
 var setMax= 3;
 var familyCheckSuccess =false;
 var totalMealsAtTheMoment;
+var spinner;
 
 
 
@@ -38,11 +39,11 @@ function validateIfFamilySizeIsChecked(){
 
 
 
-function validateIfMoreMealsCanBeOrdered(){
+function validateIfMoreMealsCanBeOrdered(compID){
 	
 	sum = 0;
 	
-	var TotalMealsLeft	= document.getElementById("totalMeals").value;
+	var TotalMealsLeft	= parseInt(document.getElementById("totalMeals").value);
 	
 	alert("counter = "+counter);
 	
@@ -56,67 +57,68 @@ function validateIfMoreMealsCanBeOrdered(){
 	
 	alert("sum = "+ sum);
 	
+	alert("spinnerResult = "+spinnerResult);
+	
 	if(sum > mealSize){
 		
+		alert("CompID = "+compID);
+		
 		alert("Please Decrease Order Amount of delete an entire order");
-		spinnerResult = parseInt(document.getElementById('orderAmount_'+(counter-1)).value);
-		document.getElementById('orderAmount_'+(counter-1)).value = spinnerResult-1;
 		
+		spinnerResult = document.getElementById('orderAmount_'+(compID)).value;
 		
-	}
-	
-	
-	
-	
-}
-
-
-
-
-
-
-
-
-
-
-function validateIfFamilySizeIsChecked(){
-	
-	if(mealSize!=null){
+		if(document.getElementById('orderAmount_'+(compID)).value-1 >= 0){
 		
+		document.getElementById('orderAmount_'+(compID)).value = spinnerResult-1;
+		alert(spinnerResult);
+		//document.getElementById("totalMeals").value = spinnerResult -1;
+		
+		}else{
+			
+			document.getElementById('order').removeChild(div.parentNode);
+		
+		}
+		
+		document.getElementById("TotalMealsLeft").value = TotalMealsLeft-1;
 		
 	}else{
 		
-		alert("please choose a family size.");
-		document.getElementById("fam1").focus();	
-		document.getElementById('orderAmount_0').value = 1;
-		alert(mealSize);
+		alert("spinnerResult"+spinnerResult);
+		
+		document.getElementById("totalMeals").value = mealSize-sum ;
 		
 	}
 	
 	
+	
+	
 }
-
-
-
-
-
 
 
 
 
 function addOrder() {
+	
+	
+	var NumberOfmeals = document.getElementById("totalMeals").value;
+	
+	alert("mealSize = "+mealSize);
+	alert(NumberOfmeals);
 
-    if (counter <= 5) {
+	var calc = document.getElementById("totalMeals").value-sum-1;
+	alert("document.getElementById(\"totalMeals\").value-sum-1 = "+calc);
+
+    if (counter <= mealSize && NumberOfmeals-1 >= 0 && document.getElementById("totalMeals").value-1 >=0 ) {
 
         var newdiv = document.createElement('div');
 
-        newdiv.innerHTML =  '<labelA style = "margin-right: 51px" > </labelA> <input type="number" name="Orderamount" onChange= "validateIfMoreMealsCanBeOrdered()" id="orderAmount_' + counter + '" min="1" max="6" step="1" value="1" style="width:2.5em; height:1em" ><select name="size" id="mealTypeSelector_' + counter + '"><option value="Standard" id = 1>Standard</option><option value="Low Carb" id = 1 >Low Carb</option><option value="Kiddies" id = 1>Kiddies</option></select> <input type = "text" id = "orderAll_' + counter + '" style="height:0.5em"><input type = "text" id = "orderExc_' + counter + '" style="height:0.5em"><input type="Deletebutton" value="-" onclick="removeOrder(this)" style="height:0.5px">';
+        newdiv.innerHTML =  '<labelA style = "margin-right: 51px" > </labelA> <input type="number" name="Orderamount" onChange= "validateIfMoreMealsCanBeOrdered('+counter+')" id="orderAmount_' + counter + '" min="1" max="6" step="1" value="1" style="width:2.5em; height:1em" ><select name="size" id="mealTypeSelector_' + counter + '"><option value="Standard" id = 1>Standard</option><option value="Low Carb" id = 1 >Low Carb</option><option value="Kiddies" id = 1>Kiddies</option></select> <input type = "text" id = "orderAll_' + counter + '" style="height:0.5em"><input type = "text" id = "orderExc_' + counter + '" style="height:0.5em"><input type="Deletebutton" value="-" onclick="removeOrder(this)" style="height:0.5px">';
 
         document.getElementById('order').appendChild(newdiv);
 		
 		addMealsComponent = true;
 		
-		var changeTotalMeals = parseInt(document.getElementById("totalMeals").value);
+		var changeTotalMeals = document.getElementById("totalMeals").value;
 		
 		document.getElementById("totalMeals").value = 	changeTotalMeals - 1;
 		
@@ -135,15 +137,16 @@ function addOrder() {
 
 function removeOrder(div) {
 	
-    document.getElementById('order').removeChild(div.parentNode);
-
-	var changeTotalMeals = parseInt(document.getElementById("totalMeals").value);
 	
 	spinnerResult = parseInt(document.getElementById('orderAmount_'+(counter-1)).value);
 	
 	totalMealsAtTheMoment = parseInt(document.getElementById("totalMeals").value); 
+
+	document.getElementById("totalMeals").value = totalMealsAtTheMoment + spinnerResult;
 	
-	 document.getElementById("totalMeals").value = totalMealsAtTheMoment + spinnerResult;
+    document.getElementById('order').removeChild(div.parentNode);
+
+	var changeTotalMeals = parseInt(document.getElementById("totalMeals").value);
 	
     --counter;
 }
@@ -280,7 +283,7 @@ function checkMeals(){
 	
 	document.getElementById("order").innerHTML = "";
 	
-	order.innerHTML ='<div id="order"> <labelB> <input type="button" onClick = "addOrder()" value = "+" id="addOrderID" > </labelB> <input type="number" onchange="validateIfMoreMealsCanBeOrdered()" name="Orderamount" id="orderAmount_0" + min="1" max="6" step="1" value="1" style="width:2.5em; height:1em" ><select name="size" id="mealTypeSelector_0">'+
+	order.innerHTML ='<div id="order"> <labelB> <input type="button" onClick = "addOrder()" value = "+" id="addOrderID" > </labelB> <input type="number" onchange="validateIfMoreMealsCanBeOrdered(\'0\')" name="Orderamount" id="orderAmount_0" + min="1" max="6" step="1" value="1" style="width:2.5em; height:1em" ><select name="size" id="mealTypeSelector_0">'+
                           ' <option value="Standard">Standard</option>'+
                           ' <option value="Low Carb">Low Carb</option>'+
                            '<option value="Kiddies">Kiddies</option></select><input type = "text" id = "orderAll_0" style="height:0.5em"> <input type = "text" id = "orderExc_0" style="height:0.5em"> </div>'+
