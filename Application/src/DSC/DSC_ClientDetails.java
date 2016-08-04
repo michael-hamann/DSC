@@ -455,8 +455,6 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
         String message = "Are you sure you want to delete " + name + "?";
         int answer = JOptionPane.showConfirmDialog(this, message, "Confirm", JOptionPane.INFORMATION_MESSAGE);
         
-        ArrayList orderIDs = new ArrayList();
-        
         switch (answer) {
             case JOptionPane.YES_OPTION:
                 JOptionPane.showMessageDialog(this, name + " will be deleted", "Delete Notification", JOptionPane.INFORMATION_MESSAGE);
@@ -465,26 +463,18 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
                     Connection c = DBClass.getConnection();
                     Statement stmt = c.createStatement();
                     
-                    String findorderID = "SELECT orderID FROM client_tb WHERE ClientID LIKE '"+ clientID +"'";
-                    ResultSet orderID = stmt.executeQuery(findorderID);
-                    
-                    int i = 1;
-                    while(orderID.next()){
-                        orderIDs.add(orderID.getString("OrderID"));
-                        ++i;
-                    }
-                    for (int j = 0; j < orderIDs.size(); j++) {
-                        String updateOrderIDfk = "UPDATE order_tb SET OrderID = 0 WHERE OrderID = '" + orderIDs.get(j) + "'";
-                        stmt.executeUpdate(updateOrderIDfk);
-                    
-                    }
+                    String updateOrderID = "UPDATE order_tb SET Client_ID =0 WHERE Client_ID = '"+ clientID +"'";
+                    stmt.executeUpdate(updateOrderID);
                     
                     String updateSuburbID = "UPDATE client_tb SET SuburbID = 0 WHERE ClientID = '"+ clientID +"'";
                     stmt.executeUpdate(updateSuburbID);
                     
                     String deleteClient = "DELETE FROM doorstepchef.client_tb WHERE ClientID LIKE '" + clientID + "'";
                     stmt.executeUpdate(deleteClient);
-
+                    
+                    String deleteOrders = "DELETE FROM doorstepchef.order_tb WHERE Client_ID LIKE '" + clientID + "'";
+                    stmt.executeUpdate(deleteOrders);
+                    
                     JOptionPane.showMessageDialog(this, "Client has been deleted. \n Orders of this client have been removed.");
 
                 } catch (Exception e) {
@@ -537,9 +527,9 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
                 String newEmail= txfClientEmail.getText().trim();
                
                 String query = "INSERT INTO doorstepchef.client_tb (`ClientID`, `Name`, `Surname`, `Address`,`AdditionalInfo`,"
-                + " `ContactNumber`, `AlternativeNumber`, `Email`,`OrderID`,`SuburbID`) \n"
+                + " `ContactNumber`, `AlternativeNumber`, `Email`,`SuburbID`) \n"
                 + "	VALUES (" + newID + ", '" + newName + "', '" + newSurname + "', '"+ newAddress + "', '"+
-                newAddInfo + "', '" + newContactNo+ "', '" + newAltNum + "', '" + newEmail +  "', '0', '0');";
+                newAddInfo + "', '" + newContactNo+ "', '" + newAltNum + "', '" + newEmail +  "', '0');";
 
                 
                 try {

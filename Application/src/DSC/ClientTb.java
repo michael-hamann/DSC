@@ -33,7 +33,6 @@ import javax.persistence.Transient;
     @NamedQuery(name = "ClientTb.findByContactNumber", query = "SELECT c FROM ClientTb c WHERE c.contactNumber = :contactNumber"),
     @NamedQuery(name = "ClientTb.findByAlternativeNumber", query = "SELECT c FROM ClientTb c WHERE c.alternativeNumber = :alternativeNumber"),
     @NamedQuery(name = "ClientTb.findByEmail", query = "SELECT c FROM ClientTb c WHERE c.email = :email"),
-    @NamedQuery(name = "ClientTb.findByOrderID", query = "SELECT c FROM ClientTb c WHERE c.orderID = :orderID"),
     @NamedQuery(name = "ClientTb.findBySuburbID", query = "SELECT c FROM ClientTb c WHERE c.suburbID = :suburbID")})
 public class ClientTb implements Serializable {
 
@@ -65,8 +64,6 @@ public class ClientTb implements Serializable {
     @Column(name = "Email")
     private String email;
     @Basic(optional = false)
-    @Column(name = "OrderID")
-    private short orderID;
     @Column(name = "SuburbID")
     private Short suburbID;
 
@@ -77,14 +74,14 @@ public class ClientTb implements Serializable {
         this.clientID = clientID;
     }
 
-    public ClientTb(Short clientID, String address, String additionalInfo, String contactNumber, String alternativeNumber, String email, short orderID) {
+    public ClientTb(Short clientID, String address, String additionalInfo, String contactNumber, String alternativeNumber, String email) {
         this.clientID = clientID;
         this.address = address;
         this.additionalInfo = additionalInfo;
         this.contactNumber = contactNumber;
         this.alternativeNumber = alternativeNumber;
         this.email = email;
-        this.orderID = orderID;
+        
     }
 
     public Short getClientID() {
@@ -167,15 +164,6 @@ public class ClientTb implements Serializable {
         changeSupport.firePropertyChange("email", oldEmail, email);
     }
 
-    public short getOrderID() {
-        return orderID;
-    }
-
-    public void setOrderID(short orderID) {
-        short oldOrderID = this.orderID;
-        this.orderID = orderID;
-        changeSupport.firePropertyChange("orderID", oldOrderID, orderID);
-    }
 
     public Short getSuburbID() {
         return suburbID;
