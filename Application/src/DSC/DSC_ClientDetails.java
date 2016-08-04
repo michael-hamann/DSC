@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -27,6 +26,7 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
         btnSaveClient.setText("Save");
         btnSaveClient.setVisible(false);
         txfClientID.setEnabled(false);
+        txfSuburb.setEnabled(false);
         lstClient.setSelectedIndex(0);
     }
 
@@ -38,6 +38,7 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
         txfAddInfo.setEnabled(true);
         txfClientEmail.setEnabled(true);
         txfAltNum.setEnabled(true);
+        txfSuburbID.setEnabled(true);
         
     }
 
@@ -49,6 +50,7 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
         txfAddInfo.setEnabled(false);
         txfClientEmail.setEnabled(false);
         txfAltNum.setEnabled(false);
+        txfSuburbID.setEnabled(false);
         
     }
 
@@ -61,7 +63,8 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
         txfAddInfo.setText(null);
         txfClientEmail.setText(null);
         txfAltNum.setText(null);
-       
+        txfSuburbID.setText(null);
+        
     }
 
     /**
@@ -102,9 +105,13 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
         btnEditClient = new javax.swing.JButton();
         btnSaveClient = new javax.swing.JButton();
         lblAltNum = new javax.swing.JLabel();
-        txfAltNum = new javax.swing.JTextField();
         lblEmail = new javax.swing.JLabel();
         txfClientEmail = new javax.swing.JTextField();
+        lblSuburb = new javax.swing.JLabel();
+        txfSuburbID = new javax.swing.JTextField();
+        btnView = new javax.swing.JButton();
+        txfSuburb = new javax.swing.JTextField();
+        txfAltNum = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Driver Details");
@@ -263,12 +270,6 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
         lblAltNum.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblAltNum.setText("Alternative Number:");
 
-        txfAltNum.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txfAltNum.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstClient, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.alternativeNumber}"), txfAltNum, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
         lblEmail.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblEmail.setText("Email:");
 
@@ -284,6 +285,35 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
             }
         });
 
+        lblSuburb.setText("Suburb:");
+
+        txfSuburbID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txfSuburbID.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstClient, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.suburbID}"), txfSuburbID, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        txfSuburbID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfSuburbIDActionPerformed(evt);
+            }
+        });
+
+        btnView.setText("View Suburb");
+        btnView.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewActionPerformed(evt);
+            }
+        });
+
+        txfAltNum.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txfAltNum.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        txfAltNum.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfAltNumActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlDetailsClientLayout = new javax.swing.GroupLayout(pnlDetailsClient);
         pnlDetailsClient.setLayout(pnlDetailsClientLayout);
         pnlDetailsClientLayout.setHorizontalGroup(
@@ -292,40 +322,49 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblClientDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDetailsClientLayout.createSequentialGroup()
+                        .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(pnlDetailsClientLayout.createSequentialGroup()
+                                .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(lblEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
+                                    .addComponent(lblSuburb, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(57, 57, 57)
+                                .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txfClientEmail)
+                                    .addComponent(txfSuburbID)
+                                    .addGroup(pnlDetailsClientLayout.createSequentialGroup()
+                                        .addComponent(txfSuburb)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnView, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))))
+                            .addGroup(pnlDetailsClientLayout.createSequentialGroup()
+                                .addComponent(btnEditClient)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                                .addComponent(btnSaveClient)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnBack)))
+                        .addGap(4, 4, 4))
                     .addGroup(pnlDetailsClientLayout.createSequentialGroup()
-                        .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(lblVehicleReg, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
-                                .addComponent(lblClientSurname, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblClientName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblClientID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(lblClientAddress))
+                        .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(lblAltNum, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(lblVehicleReg, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+                                    .addComponent(lblClientSurname, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblClientName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblClientID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(lblClientAddress)
+                                .addComponent(lblClientContactNo, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlDetailsClientLayout.createSequentialGroup()
+                                .addComponent(txfAltNum)
+                                .addGap(5, 5, 5))
+                            .addComponent(txfClientContactNo)
                             .addComponent(txfClientID)
                             .addComponent(txfClientName, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txfClientSurname, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txfAddInfo, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txfClientAddress)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDetailsClientLayout.createSequentialGroup()
-                        .addComponent(btnEditClient)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
-                        .addComponent(btnSaveClient)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnBack)
-                        .addGap(4, 4, 4))
-                    .addGroup(pnlDetailsClientLayout.createSequentialGroup()
-                        .addComponent(lblClientContactNo, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(57, 57, 57)
-                        .addComponent(txfClientContactNo))
-                    .addGroup(pnlDetailsClientLayout.createSequentialGroup()
-                        .addComponent(lblAltNum, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txfAltNum, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlDetailsClientLayout.createSequentialGroup()
-                        .addComponent(lblEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(57, 57, 57)
-                        .addComponent(txfClientEmail)))
+                            .addComponent(txfClientAddress))))
                 .addContainerGap())
         );
         pnlDetailsClientLayout.setVerticalGroup(
@@ -358,14 +397,22 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
                     .addComponent(lblClientContactNo)
                     .addComponent(txfClientContactNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblAltNum)
                     .addComponent(txfAltNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(9, 9, 9)
                 .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblEmail)
                     .addComponent(txfClientEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblSuburb)
+                    .addComponent(txfSuburbID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txfSuburb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnView))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEditClient)
                     .addComponent(btnSaveClient)
@@ -415,7 +462,9 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
         boolean empty = false;
 
         if (txfClientName.getText().isEmpty() && txfClientSurname.getText().isEmpty() && txfClientContactNo.getText().isEmpty()
-                && txfClientAddress.getText().isEmpty() && txfAddInfo.getText().isEmpty()) {
+                && txfClientAddress.getText().isEmpty() && txfAddInfo.getText().isEmpty()
+                &&txfClientContactNo.getText().isEmpty() && txfAltNum.getText().isEmpty()&&txfClientEmail.getText().isEmpty()
+                && txfSuburbID.getText().isEmpty()) {
             empty = true;
         }
 
@@ -509,30 +558,49 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
             String newAlternativeNo = txfAltNum.getText().trim();
             String newAddress = txfClientAddress.getText().trim();
             String newEmail = txfClientEmail.getText().trim();
-
-            //Commit to database
-            try {
-                Connection c = DBClass.getConnection();
+            String newSuburb = txfSuburbID.getText().trim();
+            
+ //           String query = "SELECT Suburb FROM suburb_tb WHERE SuburbID ='"+newSuburb+"';";
+           
+//            try {
+//                    Connection a = DBClass.getConnection();
+//                    Statement stmt1 = a.createStatement();
+//                    ResultSet rs = stmt1.executeQuery(query);
+//                    if(rs.next()){
+//                       String suburbID = rs.getString(1);
+                       try {
+                        Connection c = DBClass.getConnection();
                 
-                PreparedStatement stmt = c.prepareStatement("UPDATE doorstepchef.client_tb SET Name = ?,"
+                        PreparedStatement stmt = c.prepareStatement("UPDATE doorstepchef.client_tb SET Name = ?,"
                         + " Surname = ?,  Address = ?,AdditionalInfo  = ?,ContactNumber = ?, "
-                        + "AlternativeNumber = ?,Email = ? WHERE ClientID = ?;");
-                stmt.setString(1, newName);
-                stmt.setString(2, newSurname);
-                stmt.setString(3, newAddress);
-                stmt.setString(4, newAdditionalInfo);
-                stmt.setString(5, newContactNumber);
-                stmt.setString(6, newAlternativeNo);
-                stmt.setString(7, newEmail);
-                stmt.setShort(8, ID);
-                stmt.executeUpdate();
-                
-                JOptionPane.showMessageDialog(this, "Changes Saved");
-                //Refresh
-                back = true;
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
+                        + "AlternativeNumber = ?,Email = ?,SuburbID = ? WHERE ClientID = ?;");
+                        stmt.setString(1, newName);
+                        stmt.setString(2, newSurname);
+                        stmt.setString(3, newAddress);
+                        stmt.setString(4, newAdditionalInfo);
+                        stmt.setString(5, newContactNumber);
+                        stmt.setString(6, newAlternativeNo);
+                        stmt.setString(7, newEmail);
+                        stmt.setString(8, newSuburb);
+                        stmt.setShort(9, ID);
+                        stmt.executeUpdate();
+                    
+                        JOptionPane.showMessageDialog(this, "Changes Saved");
+                         //Refresh
+                        back = true;
+                        } catch (Exception e) {
+                            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+//                    }else{
+//                        JOptionPane.showMessageDialog(rootPane, "Sorry we are not currently delivering to "+newSuburb);
+//                    }
+//                    
+//                    
+//            } catch (Exception e) {
+//                JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
+//            }
+            //Commit to database
+            
             back = true;
         } else if (btnSaveClient.getText().equals("Add")) {
             //Add to database
@@ -548,11 +616,12 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
                 String newAddInfo = txfAddInfo.getText().trim();
                 String newAltNum = txfAltNum.getText().trim();
                 String newEmail= txfClientEmail.getText().trim();
-               
+                short newSuburbID = Short.parseShort(txfSuburbID.getText().trim());
+                
                 String query = "INSERT INTO doorstepchef.client_tb (`ClientID`, `Name`, `Surname`, `Address`,`AdditionalInfo`,"
                 + " `ContactNumber`, `AlternativeNumber`, `Email`,`SuburbID`) \n"
                 + "	VALUES (" + newID + ", '" + newName + "', '" + newSurname + "', '"+ newAddress + "', '"+
-                newAddInfo + "', '" + newContactNo+ "', '" + newAltNum + "', '" + newEmail +  "', '0');";
+                newAddInfo + "', '" + newContactNo+ "', '" + newAltNum + "', '" + newEmail +  "','"+newSuburbID+"');";
 
                 
                 try {
@@ -609,6 +678,35 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txfClientContactNoActionPerformed
 
+    private void txfSuburbIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfSuburbIDActionPerformed
+      
+    }//GEN-LAST:event_txfSuburbIDActionPerformed
+
+    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
+       String client_id = txfClientID.getText();
+       String findSuburbID = "SELECT SuburbID FROM client_tb WHERE ClientID = '"+client_id+"'";
+       ResultSet rs;
+       
+       try {
+            Connection c = DBClass.getConnection();
+            Statement stmt = c.createStatement();
+            rs = stmt.executeQuery(findSuburbID);
+            rs.next();
+            int suburbID = rs.getInt(1);
+            String findSuburb = "SELECT Suburb FROM suburb_tb WHERE SuburbID = '"+suburbID+"'";
+            rs = stmt.executeQuery(findSuburb);
+            rs.next();
+            String suburb = rs.getString(1);
+            txfSuburb.setText(suburb);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnViewActionPerformed
+
+    private void txfAltNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfAltNumActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfAltNumActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -651,6 +749,7 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
     private javax.swing.JButton btnDeleteClient;
     private javax.swing.JButton btnEditClient;
     private javax.swing.JButton btnSaveClient;
+    private javax.swing.JButton btnView;
     private java.util.List<DSC.ClientTb> clientTbList;
     private javax.persistence.Query clientTbQuery;
     private javax.persistence.EntityManager entityManager;
@@ -664,6 +763,7 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
     private javax.swing.JLabel lblClientSurname;
     private javax.swing.JLabel lblClients;
     private javax.swing.JLabel lblEmail;
+    private javax.swing.JLabel lblSuburb;
     private javax.swing.JLabel lblVehicleReg;
     private javax.swing.JList<String> lstClient;
     private javax.swing.JPanel pnlBackgroundClient;
@@ -677,6 +777,8 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
     private javax.swing.JTextField txfClientID;
     private javax.swing.JTextField txfClientName;
     private javax.swing.JTextField txfClientSurname;
+    private javax.swing.JTextField txfSuburb;
+    private javax.swing.JTextField txfSuburbID;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }
