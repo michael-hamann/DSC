@@ -1,6 +1,7 @@
 package DSC;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -499,17 +500,39 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
     private void btnSaveClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveClientActionPerformed
         boolean back = false;
         if (btnSaveClient.getText().equals("Save")) {
-            /*
-            short ID = Short.parseShort(txfDriverID.getText().trim());
-            String newName = txfDriverName.getText().trim();
-            String newSurname = txfDriverSurname.getText().trim();
-            String newContactNo = txfContactNo.getText().trim();
-            String newAddress = txfAddress.getText().trim();
-            String newVehicleReg = txfVehicleReg.getText().trim();
-            short newRouteID = Short.parseShort(txfRouteID.getText().trim());
-            */
+            
+            short ID = Short.parseShort(txfClientID.getText().trim());
+            String newName = txfClientName.getText().trim();
+            String newSurname = txfClientSurname.getText().trim();
+            String newAdditionalInfo = txfAddInfo.getText().trim();
+            String newContactNumber = txfClientContactNo.getText().trim();
+            String newAlternativeNo = txfAltNum.getText().trim();
+            String newAddress = txfClientAddress.getText().trim();
+            String newEmail = txfClientEmail.getText().trim();
 
             //Commit to database
+            try {
+                Connection c = DBClass.getConnection();
+                
+                PreparedStatement stmt = c.prepareStatement("UPDATE doorstepchef.client_tb SET Name = ?,"
+                        + " Surname = ?,  Address = ?,AdditionalInfo  = ?,ContactNumber = ?, "
+                        + "AlternativeNumber = ?,Email = ? WHERE ClientID = ?;");
+                stmt.setString(1, newName);
+                stmt.setString(2, newSurname);
+                stmt.setString(3, newAddress);
+                stmt.setString(4, newAdditionalInfo);
+                stmt.setString(5, newContactNumber);
+                stmt.setString(6, newAlternativeNo);
+                stmt.setString(7, newEmail);
+                stmt.setShort(8, ID);
+                stmt.executeUpdate();
+                
+                JOptionPane.showMessageDialog(this, "Changes Saved");
+                //Refresh
+                back = true;
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
             back = true;
         } else if (btnSaveClient.getText().equals("Add")) {
             //Add to database
