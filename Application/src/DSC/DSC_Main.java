@@ -38,6 +38,7 @@ public class DSC_Main extends javax.swing.JFrame {
         btnSuburbTbl = new javax.swing.JButton();
         lblView = new javax.swing.JLabel();
         btnRouteTbl = new javax.swing.JButton();
+        btnOrderTbl1 = new javax.swing.JButton();
         pnlReports = new javax.swing.JPanel();
         btnDriverRpt = new javax.swing.JButton();
         btnChefRpt = new javax.swing.JButton();
@@ -63,11 +64,11 @@ public class DSC_Main extends javax.swing.JFrame {
         pnlHeadingLayout.setHorizontalGroup(
             pnlHeadingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlHeadingLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(23, Short.MAX_VALUE)
                 .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         pnlHeadingLayout.setVerticalGroup(
             pnlHeadingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -121,6 +122,13 @@ public class DSC_Main extends javax.swing.JFrame {
             }
         });
 
+        btnOrderTbl1.setText("Order Table");
+        btnOrderTbl1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOrderTbl1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlTablesLayout = new javax.swing.GroupLayout(pnlTables);
         pnlTables.setLayout(pnlTablesLayout);
         pnlTablesLayout.setHorizontalGroup(
@@ -133,7 +141,8 @@ public class DSC_Main extends javax.swing.JFrame {
                     .addComponent(btnClientTbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSuburbTbl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
                     .addComponent(lblView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnRouteTbl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
+                    .addComponent(btnRouteTbl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                    .addComponent(btnOrderTbl1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlTablesLayout.setVerticalGroup(
@@ -151,7 +160,9 @@ public class DSC_Main extends javax.swing.JFrame {
                 .addComponent(btnSuburbTbl, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnRouteTbl, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnOrderTbl1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         pnlReports.setBackground(new java.awt.Color(0, 204, 51));
@@ -298,6 +309,11 @@ public class DSC_Main extends javax.swing.JFrame {
         new DSC_RouteTable().setVisible(true);
     }//GEN-LAST:event_btnRouteTblActionPerformed
 
+    private void btnOrderTbl1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrderTbl1ActionPerformed
+        this.dispose();
+        new DSC_OrderTable().setVisible(true);
+    }//GEN-LAST:event_btnOrderTbl1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -340,6 +356,7 @@ public class DSC_Main extends javax.swing.JFrame {
     private javax.swing.JButton btnDriverTbl;
     private javax.swing.JButton btnHandlerRpt;
     private javax.swing.JButton btnMealsTbl;
+    private javax.swing.JButton btnOrderTbl1;
     private javax.swing.JButton btnPackerRpt;
     private javax.swing.JButton btnRouteTbl;
     private javax.swing.JButton btnSuburbTbl;
