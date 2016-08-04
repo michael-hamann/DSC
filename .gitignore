@@ -2,3 +2,5 @@
 Application/build/classes/dsc/DSC_DriverDetails.class
 *.class
 Application/build/classes/dsc/DSC_DriverDetails.class
+/Application/nbproject/private/
+/Application/build/
