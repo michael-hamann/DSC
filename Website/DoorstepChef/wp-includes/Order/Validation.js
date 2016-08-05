@@ -47,17 +47,24 @@ function validateIfMoreMealsCanBeOrdered(compID){
 	
 	alert("counter = "+counter);
 	
-	for(iterate = 0; iterate < counter ; iterate++){
+	
+	
+	for(iterate = 0; iterate < 6 ; iterate++){
 		
-		
+		try{
+		alert("iterate = "+iterate);
 		sum += parseInt(document.getElementById('orderAmount_'+(iterate)).value);
 		
+	    }catch(Exception){
 		
-	}
+	    }
+}
 	
 	alert("sum = "+ sum);
 	
-	alert("spinnerResult = "+spinnerResult);
+	var valueOfSpinner = document.getElementById('orderAmount_'+(compID)).value;
+	
+	if(sum+valueOfSpinner <= mealSize){
 	
 	if(sum > mealSize){
 		
@@ -65,12 +72,14 @@ function validateIfMoreMealsCanBeOrdered(compID){
 		
 		alert("Please Decrease Order Amount of delete an entire order");
 		
-		spinnerResult = document.getElementById('orderAmount_'+(compID)).value;
+		spinnerResult = parseInt(document.getElementById('orderAmount_'+(compID)).value);
 		
 		if(document.getElementById('orderAmount_'+(compID)).value-1 >= 0){
 		
 		document.getElementById('orderAmount_'+(compID)).value = spinnerResult-1;
-		alert(spinnerResult);
+		
+		alert("spinnerResult = "+spinnerResult);
+		
 		//document.getElementById("totalMeals").value = spinnerResult -1;
 		
 		}else{
@@ -78,8 +87,7 @@ function validateIfMoreMealsCanBeOrdered(compID){
 			document.getElementById('order').removeChild(div.parentNode);
 		
 		}
-		
-		document.getElementById("TotalMealsLeft").value = TotalMealsLeft-1;
+		//alert("TotalMealsLeft = "+TotalMealsLeft);
 		
 	}else{
 		
@@ -88,7 +96,12 @@ function validateIfMoreMealsCanBeOrdered(compID){
 		document.getElementById("totalMeals").value = mealSize-sum ;
 		
 	}
-	
+	}else{
+		
+		document.getElementById('orderAmount_'+(compID)).value = 1;
+		alert("not allowed!");
+		
+	}
 	
 	
 	
@@ -100,10 +113,12 @@ function validateIfMoreMealsCanBeOrdered(compID){
 function addOrder() {
 	
 	
+	
 	var NumberOfmeals = document.getElementById("totalMeals").value;
 	
 	alert("mealSize = "+mealSize);
 	alert(NumberOfmeals);
+	alert("counter = "+counter);
 
 	var calc = document.getElementById("totalMeals").value-sum-1;
 	alert("document.getElementById(\"totalMeals\").value-sum-1 = "+calc);
@@ -112,7 +127,7 @@ function addOrder() {
 
         var newdiv = document.createElement('div');
 
-        newdiv.innerHTML =  '<labelA style = "margin-right: 51px" > </labelA> <input type="number" name="Orderamount" onChange= "validateIfMoreMealsCanBeOrdered('+counter+')" id="orderAmount_' + counter + '" min="1" max="6" step="1" value="1" style="width:2.5em; height:1em" ><select name="size" id="mealTypeSelector_' + counter + '"><option value="Standard" id = 1>Standard</option><option value="Low Carb" id = 1 >Low Carb</option><option value="Kiddies" id = 1>Kiddies</option></select> <input type = "text" id = "orderAll_' + counter + '" style="height:0.5em"><input type = "text" id = "orderExc_' + counter + '" style="height:0.5em"><input type="Deletebutton" value="-" onclick="removeOrder(this)" style="height:0.5px">';
+        newdiv.innerHTML =  '<labelA style = "margin-right: 51px" > </labelA> <input class="ordersClass" type="number" name="Orderamount" onChange= "validateIfMoreMealsCanBeOrdered('+counter+')" id="orderAmount_' + counter + '" min="1" max="6" step="1" value="1" style="width:2.5em; height:1em" ><select name="size" id="mealTypeSelector_' + counter + '"><option value="Standard" id = 1>Standard</option><option value="Low Carb" id = 1 >Low Carb</option><option value="Kiddies" id = 1>Kiddies</option></select> <input type = "text" id = "orderAll_' + counter + '" style="height:0.5em"><input type = "text" id = "orderExc_' + counter + '" style="height:0.5em"><input type="Deletebutton" value="-" onclick="removeOrder(this)" style="height:0.5px">';
 
         document.getElementById('order').appendChild(newdiv);
 		
@@ -147,6 +162,15 @@ function removeOrder(div) {
     document.getElementById('order').removeChild(div.parentNode);
 
 	var changeTotalMeals = parseInt(document.getElementById("totalMeals").value);
+	
+	/* var hiddenInput = document.getElementById('orderAmount_'+(counter-1));
+    hiddenInput.id = "'orderAmount_'+(counter-1)"; */
+	
+	/* var e = document.getElementById('orderAmount_'+(counter-1));
+	e.id = "'orderAmount_'+(counter-1)";
+	 */
+	
+	//alert("hiddenInput = "+hiddenInput);
 	
     --counter;
 }
@@ -278,6 +302,11 @@ function resetElements(){
 
 function checkMeals(){
 	
+		counter = 1;
+		
+        document.getElementById("fam1Err").innerHTML = "";
+        document.getElementById("fam1").style.borderColor = "#ccc";
+
 	
 	var numberOfMeals = parseInt(document.getElementById("fam1").value);
 	
