@@ -133,9 +133,9 @@
                           <Group type="102" attributes="0">
                               <Component id="lblDrivers" min="-2" pref="118" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="btnAddDriver" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnAddOrder" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="btnDeleteDriver" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnDeleteOrder" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -150,8 +150,8 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lblDrivers" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="btnDeleteDriver" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnAddDriver" alignment="3" max="32767" attributes="0"/>
+                              <Component id="btnDeleteOrder" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnAddOrder" alignment="3" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -193,7 +193,7 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JButton" name="btnAddDriver">
+            <Component class="javax.swing.JButton" name="btnAddOrder">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/PICS/Add.png"/>
@@ -201,10 +201,10 @@
                 <Property name="text" type="java.lang.String" value=" Add"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddDriverActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddOrderActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btnDeleteDriver">
+            <Component class="javax.swing.JButton" name="btnDeleteOrder">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/PICS/Bin.png"/>
@@ -212,7 +212,7 @@
                 <Property name="text" type="java.lang.String" value="Delete"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeleteDriverActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeleteOrderActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
@@ -235,15 +235,15 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblDriversDetails" alignment="0" max="32767" attributes="0"/>
+                          <Component id="lblOrdersDetails" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="lblVehicleReg" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="lblAddress" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="lblContactNo" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="lblDriverSurname" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="lblDriverName" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="lblDriverID" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lblClientID" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lblDuration" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lblRouteID" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lblStartingDate" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lblFamilySize" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lblOrderID" alignment="0" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -257,7 +257,7 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="btnOrderDateAdd" min="-2" pref="71" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="btnRemove" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -277,37 +277,39 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="lblDriversDetails" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="lblOrdersDetails" min="-2" pref="30" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblDriverID" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblOrderID" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txfOrderID" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblDriverName" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblFamilySize" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="spnOrderFamilySize" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblDriverSurname" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="spnOrderStartingDate" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="btnOrderDateAdd" alignment="1" min="-2" pref="23" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblStartingDate" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="spnOrderStartingDate" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnRemove" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblContactNo" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblRouteID" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txfOrderRouteID" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblAddress" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblDuration" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txfOrderDuration" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblVehicleReg" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblClientID" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txfOrderClientID" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="91" max="32767" attributes="0"/>
@@ -322,7 +324,7 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="lblDriversDetails">
+            <Component class="javax.swing.JLabel" name="lblOrdersDetails">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="1"/>
@@ -330,7 +332,7 @@
                 <Property name="text" type="java.lang.String" value="Order&apos;s Details:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblDriverID">
+            <Component class="javax.swing.JLabel" name="lblOrderID">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="12" style="0"/>
@@ -338,7 +340,7 @@
                 <Property name="text" type="java.lang.String" value="Order ID:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblDriverName">
+            <Component class="javax.swing.JLabel" name="lblFamilySize">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="12" style="0"/>
@@ -346,7 +348,7 @@
                 <Property name="text" type="java.lang.String" value="Family Size:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblDriverSurname">
+            <Component class="javax.swing.JLabel" name="lblStartingDate">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="12" style="0"/>
@@ -354,7 +356,7 @@
                 <Property name="text" type="java.lang.String" value="Starting Date:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblContactNo">
+            <Component class="javax.swing.JLabel" name="lblRouteID">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="12" style="0"/>
@@ -362,7 +364,7 @@
                 <Property name="text" type="java.lang.String" value="Route ID:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblAddress">
+            <Component class="javax.swing.JLabel" name="lblDuration">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="12" style="0"/>
@@ -370,7 +372,7 @@
                 <Property name="text" type="java.lang.String" value="Duration:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblVehicleReg">
+            <Component class="javax.swing.JLabel" name="lblClientID">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="12" style="0"/>
@@ -384,7 +386,6 @@
                   <Font name="Tahoma" size="12" style="0"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="11"/>
-                <Property name="text" type="java.lang.String" value=""/>
               </Properties>
               <BindingProperties>
                 <BindingProperty name="text" source="lstOrders" sourcePath="${selectedElement.orderID}" target="txfOrderID" targetPath="text" updateStrategy="0" immediately="false">
@@ -493,12 +494,12 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnOrderDateAddActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton1">
+            <Component class="javax.swing.JButton" name="btnRemove">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Remove"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRemoveActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
