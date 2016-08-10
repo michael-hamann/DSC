@@ -8,6 +8,9 @@ package DSC;
 public class ExcelReport {
     
     //make sheet
+    public void create(){
+        
+    }
     
     //make report
     
