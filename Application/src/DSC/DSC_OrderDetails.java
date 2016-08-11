@@ -1,3 +1,4 @@
+
 package DSC;
 
 import java.sql.Connection;
@@ -76,16 +77,16 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
         lblDrivers = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         lstOrders = new javax.swing.JList<>();
-        btnAddDriver = new javax.swing.JButton();
-        btnDeleteDriver = new javax.swing.JButton();
+        btnAddOrder = new javax.swing.JButton();
+        btnDeleteOrder = new javax.swing.JButton();
         pnlDetails = new javax.swing.JPanel();
-        lblDriversDetails = new javax.swing.JLabel();
-        lblDriverID = new javax.swing.JLabel();
-        lblDriverName = new javax.swing.JLabel();
-        lblDriverSurname = new javax.swing.JLabel();
-        lblContactNo = new javax.swing.JLabel();
-        lblAddress = new javax.swing.JLabel();
-        lblVehicleReg = new javax.swing.JLabel();
+        lblOrdersDetails = new javax.swing.JLabel();
+        lblOrderID = new javax.swing.JLabel();
+        lblFamilySize = new javax.swing.JLabel();
+        lblStartingDate = new javax.swing.JLabel();
+        lblRouteID = new javax.swing.JLabel();
+        lblDuration = new javax.swing.JLabel();
+        lblClientID = new javax.swing.JLabel();
         txfOrderID = new javax.swing.JTextField();
         txfOrderRouteID = new javax.swing.JTextField();
         txfOrderDuration = new javax.swing.JTextField();
@@ -96,7 +97,7 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
         btnSaveOrder = new javax.swing.JButton();
         btnEditOrder = new javax.swing.JButton();
         btnOrderDateAdd = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnRemove = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Driver Details");
@@ -117,19 +118,19 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(lstOrders);
 
-        btnAddDriver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Add.png"))); // NOI18N
-        btnAddDriver.setText(" Add");
-        btnAddDriver.addActionListener(new java.awt.event.ActionListener() {
+        btnAddOrder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Add.png"))); // NOI18N
+        btnAddOrder.setText(" Add");
+        btnAddOrder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddDriverActionPerformed(evt);
+                btnAddOrderActionPerformed(evt);
             }
         });
 
-        btnDeleteDriver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Bin.png"))); // NOI18N
-        btnDeleteDriver.setText("Delete");
-        btnDeleteDriver.addActionListener(new java.awt.event.ActionListener() {
+        btnDeleteOrder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Bin.png"))); // NOI18N
+        btnDeleteOrder.setText("Delete");
+        btnDeleteOrder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteDriverActionPerformed(evt);
+                btnDeleteOrderActionPerformed(evt);
             }
         });
 
@@ -144,9 +145,9 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
                     .addGroup(pnlDriversLayout.createSequentialGroup()
                         .addComponent(lblDrivers, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAddDriver)
+                        .addComponent(btnAddOrder)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnDeleteDriver)
+                        .addComponent(btnDeleteOrder)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -157,8 +158,8 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
                 .addGroup(pnlDriversLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblDrivers, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnlDriversLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnDeleteDriver)
-                        .addComponent(btnAddDriver, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(btnDeleteOrder)
+                        .addComponent(btnAddOrder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1)
                 .addContainerGap())
@@ -167,30 +168,29 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
         pnlDetails.setBackground(new java.awt.Color(0, 204, 51));
         pnlDetails.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        lblDriversDetails.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lblDriversDetails.setText("Order's Details:");
+        lblOrdersDetails.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblOrdersDetails.setText("Order's Details:");
 
-        lblDriverID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblDriverID.setText("Order ID:");
+        lblOrderID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblOrderID.setText("Order ID:");
 
-        lblDriverName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblDriverName.setText("Family Size:");
+        lblFamilySize.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblFamilySize.setText("Family Size:");
 
-        lblDriverSurname.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblDriverSurname.setText("Starting Date:");
+        lblStartingDate.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblStartingDate.setText("Starting Date:");
 
-        lblContactNo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblContactNo.setText("Route ID:");
+        lblRouteID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblRouteID.setText("Route ID:");
 
-        lblAddress.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblAddress.setText("Duration:");
+        lblDuration.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblDuration.setText("Duration:");
 
-        lblVehicleReg.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblVehicleReg.setText("Client ID:");
+        lblClientID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblClientID.setText("Client ID:");
 
         txfOrderID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfOrderID.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        txfOrderID.setText("");
 
         org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstOrders, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.orderID}"), txfOrderID, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
@@ -260,10 +260,10 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Remove");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnRemove.setText("Remove");
+        btnRemove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnRemoveActionPerformed(evt);
             }
         });
 
@@ -274,15 +274,15 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
             .addGroup(pnlDetailsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblDriversDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblOrdersDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlDetailsLayout.createSequentialGroup()
                         .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblVehicleReg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblAddress, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblContactNo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblDriverSurname, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblDriverName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblDriverID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(lblClientID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblDuration, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblRouteID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblStartingDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblFamilySize, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblOrderID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txfOrderID)
@@ -291,11 +291,11 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
                             .addComponent(txfOrderClientID, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(spnOrderFamilySize)
                             .addGroup(pnlDetailsLayout.createSequentialGroup()
-                                .addComponent(spnOrderStartingDate, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
+                                .addComponent(spnOrderStartingDate, javax.swing.GroupLayout.PREFERRED_SIZE, 109, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnOrderDateAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1))))
+                                .addComponent(btnRemove))))
                     .addGroup(pnlDetailsLayout.createSequentialGroup()
                         .addComponent(btnEditOrder)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -308,32 +308,33 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
             pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDetailsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblDriversDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblOrdersDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDriverID)
+                    .addComponent(lblOrderID)
                     .addComponent(txfOrderID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDriverName)
+                    .addComponent(lblFamilySize)
                     .addComponent(spnOrderFamilySize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDriverSurname)
-                    .addComponent(spnOrderStartingDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
-                    .addComponent(btnOrderDateAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnOrderDateAdd, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblStartingDate)
+                        .addComponent(spnOrderStartingDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnRemove)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblContactNo)
+                    .addComponent(lblRouteID)
                     .addComponent(txfOrderRouteID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblAddress)
+                    .addComponent(lblDuration)
                     .addComponent(txfOrderDuration, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblVehicleReg)
+                    .addComponent(lblClientID)
                     .addComponent(txfOrderClientID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -418,13 +419,13 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
             String newAddress = txfAddress.getText().trim();
             String newVehicleReg = txfVehicleReg.getText().trim();
             short newRouteID = Short.parseShort(txfRouteID.getText().trim());
-            */
+             */
 
             //Commit to database
             back = true;
         } else if (btnSaveOrder.getText().equals("Add")) {
             //Add to database
-           // boolean empty = checkEmpty();
+            // boolean empty = checkEmpty();
             if (false) {//empty
                 JOptionPane.showMessageDialog(this, "Please fill in all fields", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
@@ -441,7 +442,6 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
 //                + " `ContactNumber`, `AlternativeNumber`, `Email`,`SuburbID`) \n"
 //                + "	VALUES (" + newID + ", '" + newName + "', '" + newSurname + "', '"+ newAddress + "', '"+
 //                newAddInfo + "', '" + newContactNo+ "', '" + newAltNum + "', '" + newEmail +  "', '0');";
-
                 try {
                     Connection c = DBClass.getConnection();
                     Statement stmt = c.createStatement();
@@ -471,18 +471,18 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditOrderActionPerformed
 
     private void btnOrderDateAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrderDateAddActionPerformed
-        Date date = (Date)spnOrderStartingDate.getValue();
+        Date date = (Date) spnOrderStartingDate.getValue();
         date.setDate(date.getDate() + 7);
         spnOrderStartingDate.setValue(date);
     }//GEN-LAST:event_btnOrderDateAddActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Date date = (Date)spnOrderStartingDate.getValue();
+    private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
+        Date date = (Date) spnOrderStartingDate.getValue();
         date.setDate(date.getDate() - 7);
         spnOrderStartingDate.setValue(date);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnRemoveActionPerformed
 
-    private void btnAddDriverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDriverActionPerformed
+    private void btnAddOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddOrderActionPerformed
         clearFields();
         enableFields();
         btnEditOrder.setEnabled(false);
@@ -505,9 +505,9 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
         }
         numRows += 1;
         txfOrderID.setText(numRows + "");
-    }//GEN-LAST:event_btnAddDriverActionPerformed
+    }//GEN-LAST:event_btnAddOrderActionPerformed
 
-    private void btnDeleteDriverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteDriverActionPerformed
+    private void btnDeleteOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteOrderActionPerformed
         int orderID = Integer.parseInt(txfOrderID.getText());
         int elementIndex = lstOrders.getSelectedIndex();
 
@@ -516,37 +516,36 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
 
         switch (answer) {
             case JOptionPane.YES_OPTION:
-            JOptionPane.showMessageDialog(this, "Orders: " + orderID + " will be deleted", "Delete Notification", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Orders: " + orderID + " will be deleted", "Delete Notification", JOptionPane.INFORMATION_MESSAGE);
 
-            try {
-                Connection c = DBClass.getConnection();
-                Statement stmt = c.createStatement();
+                try {
+                    Connection c = DBClass.getConnection();
+                    Statement stmt = c.createStatement();
 
-                String deleteMeals = "DELETE FROM doorstepchef.meal_tb WHERE OrderID = '" + orderID + "'";
-                stmt.executeUpdate(deleteMeals);
+                    String deleteMeals = "DELETE FROM doorstepchef.meal_tb WHERE OrderID = '" + orderID + "'";
+                    stmt.executeUpdate(deleteMeals);
 
-                String deleteDriver = "DELETE FROM doorstepchef.order_tb WHERE OrderID = '" + orderID + "'";
-                stmt.executeUpdate(deleteDriver);
+                    String deleteDriver = "DELETE FROM doorstepchef.order_tb WHERE OrderID = '" + orderID + "'";
+                    stmt.executeUpdate(deleteDriver);
 
-                JOptionPane.showMessageDialog(this, "Orders: " + orderID + " has been deleted. \nPlease note removing this Order has also removed all meals assosiated with it.");
-                //refresh jList
+                    JOptionPane.showMessageDialog(this, "Orders: " + orderID + " has been deleted. \nPlease note removing this Order has also removed all meals assosiated with it.");
+                    //refresh jList
 
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
-            }
-            break;
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                break;
 
             case JOptionPane.NO_OPTION:
-            JOptionPane.showMessageDialog(this,"Orders: " + orderID + " will not be deleted", "Delete Notification", JOptionPane.INFORMATION_MESSAGE);
-            break;
+                JOptionPane.showMessageDialog(this, "Orders: " + orderID + " will not be deleted", "Delete Notification", JOptionPane.INFORMATION_MESSAGE);
+                break;
 
             case JOptionPane.CANCEL_OPTION:
 
-            break;
+                break;
         }
-    }//GEN-LAST:event_btnDeleteDriverActionPerformed
+    }//GEN-LAST:event_btnDeleteOrderActionPerformed
 
-  
     /**
      * @param args the command line arguments
      */
@@ -584,25 +583,25 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAddDriver;
+    private javax.swing.JButton btnAddOrder;
     private javax.swing.JButton btnBack;
-    private javax.swing.JButton btnDeleteDriver;
+    private javax.swing.JButton btnDeleteOrder;
     private javax.swing.JButton btnEditOrder;
     private javax.swing.JButton btnOrderDateAdd;
+    private javax.swing.JButton btnRemove;
     private javax.swing.JButton btnSaveOrder;
     private java.util.List<DSC.DriverTb> driverTbList;
     private javax.persistence.Query driverTbQuery;
     private javax.persistence.EntityManager entityManager;
-    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblAddress;
-    private javax.swing.JLabel lblContactNo;
-    private javax.swing.JLabel lblDriverID;
-    private javax.swing.JLabel lblDriverName;
-    private javax.swing.JLabel lblDriverSurname;
+    private javax.swing.JLabel lblClientID;
     private javax.swing.JLabel lblDrivers;
-    private javax.swing.JLabel lblDriversDetails;
-    private javax.swing.JLabel lblVehicleReg;
+    private javax.swing.JLabel lblDuration;
+    private javax.swing.JLabel lblFamilySize;
+    private javax.swing.JLabel lblOrderID;
+    private javax.swing.JLabel lblOrdersDetails;
+    private javax.swing.JLabel lblRouteID;
+    private javax.swing.JLabel lblStartingDate;
     private javax.swing.JList<String> lstOrders;
     private java.util.List<DSC.OrderTb> orderTbList;
     private javax.persistence.Query orderTbQuery;
