@@ -25,7 +25,6 @@ public class DSC_OrderTable extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("doorstepchef?zeroDateTimeBehavior=convertToNullPU").createEntityManager();
         mealTbQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT m FROM MealTb m");
@@ -38,8 +37,6 @@ public class DSC_OrderTable extends javax.swing.JFrame {
         lblName = new javax.swing.JLabel();
         pnlTable = new javax.swing.JPanel();
         pnlIndent = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblMealsTable = new javax.swing.JTable();
         lblMeals = new javax.swing.JLabel();
         pnlButtons = new javax.swing.JPanel();
         btnBack = new javax.swing.JButton();
@@ -85,38 +82,15 @@ public class DSC_OrderTable extends javax.swing.JFrame {
 
         pnlIndent.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, orderTbList, tblMealsTable);
-        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${clientID}"));
-        columnBinding.setColumnName("Client ID");
-        columnBinding.setColumnClass(Short.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${duration}"));
-        columnBinding.setColumnName("Duration");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${routeID}"));
-        columnBinding.setColumnName("Route ID");
-        columnBinding.setColumnClass(Short.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${startingDate}"));
-        columnBinding.setColumnName("Starting Date");
-        columnBinding.setColumnClass(java.util.Date.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${familySize}"));
-        columnBinding.setColumnName("Family Size");
-        columnBinding.setColumnClass(Short.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${orderID}"));
-        columnBinding.setColumnName("Order ID");
-        columnBinding.setColumnClass(Short.class);
-        bindingGroup.addBinding(jTableBinding);
-        jTableBinding.bind();
-        jScrollPane1.setViewportView(tblMealsTable);
-
         javax.swing.GroupLayout pnlIndentLayout = new javax.swing.GroupLayout(pnlIndent);
         pnlIndent.setLayout(pnlIndentLayout);
         pnlIndentLayout.setHorizontalGroup(
             pnlIndentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         pnlIndentLayout.setVerticalGroup(
             pnlIndentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
+            .addGap(0, 449, Short.MAX_VALUE)
         );
 
         lblMeals.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -220,8 +194,6 @@ public class DSC_OrderTable extends javax.swing.JFrame {
             .addComponent(pnlBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        bindingGroup.bind();
-
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -276,7 +248,6 @@ public class DSC_OrderTable extends javax.swing.JFrame {
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnOrderDetails;
     private javax.persistence.EntityManager entityManager;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblLogo;
     private javax.swing.JLabel lblMeals;
     private javax.swing.JLabel lblName;
@@ -289,7 +260,5 @@ public class DSC_OrderTable extends javax.swing.JFrame {
     private javax.swing.JPanel pnlHeading;
     private javax.swing.JPanel pnlIndent;
     private javax.swing.JPanel pnlTable;
-    private javax.swing.JTable tblMealsTable;
-    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

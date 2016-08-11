@@ -311,7 +311,7 @@ public class DSC_Main extends javax.swing.JFrame {
 
     private void btnOrderTbl1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrderTbl1ActionPerformed
         this.dispose();
-        new DSC_OrderTable().setVisible(true);
+        new DSC_VeiwOrder().setVisible(true);
     }//GEN-LAST:event_btnOrderTbl1ActionPerformed
 
     /**
