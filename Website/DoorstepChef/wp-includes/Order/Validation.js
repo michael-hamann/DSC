@@ -96,8 +96,17 @@ function validateIfMoreMealsCanBeOrdered(compID){
 		
 		var currentValue = document.getElementById('orderAmount_'+(compID)).value;
 		document.getElementById("totalMeals").value = 0 ;
+		
+		if(mealSize==0){
+		
+		document.getElementById('orderAmount_'+(compID)).value = 1;
+		
+		}else{
+			
 		var subtractIncorrectValue = sum - currentValue;
 		document.getElementById('orderAmount_'+(compID)).value = mealSize-subtractIncorrectValue;
+			
+		}
 		alert("not allowed!");		
 	}
 		
