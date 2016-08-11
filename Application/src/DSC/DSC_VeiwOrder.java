@@ -3,6 +3,9 @@ package DSC;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -20,25 +23,71 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
     public DSC_VeiwOrder() {
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        txfClientID.setEnabled(false);
+        txfOrderID.setEnabled(false);
+        txfOrderClientID.setEnabled(false);
+        txfSuburb.setEnabled(false);
+        disableFieldsClient();
+        disableFieldsOrder();
+        btnSaveClient.setEnabled(false);
+        btnSaveOrder.setEnabled(false);
     }
     
      public final void enableFieldsClient() {
-        spnOrderFamilySize.setEnabled(true);
-        txfOrderDuration.setEnabled(true);
-        btnOrderDateAdd.setEnabled(true);
-        txfOrderClientID.setEnabled(true);
+        txfClientName.setEnabled(true);
+        txfClientSurname.setEnabled(true);
+        txfClientContactNo.setEnabled(true);
+        txfClientAddress.setEnabled(true);
+        txfAddInfo.setEnabled(true);
+        txfClientEmail.setEnabled(true);
+        txfAltNum.setEnabled(true);
+        txfSuburb.setEnabled(true);
+        btnChangeSuburb.setEnabled(true);
     }
 
     public final void disableFieldsClient() {
+        txfClientName.setEnabled(false);
+        txfClientSurname.setEnabled(false);
+        txfClientContactNo.setEnabled(false);
+        txfClientAddress.setEnabled(false);
+        txfAddInfo.setEnabled(false);
+        txfClientEmail.setEnabled(false);
+        txfAltNum.setEnabled(false);
+        txfSuburb.setEnabled(false);
+        btnChangeSuburb.setEnabled(false);
+    }
+
+    public final void clearFieldsClient() {
+        txfClientID.setText(null);
+        txfClientName.setText(null);
+        txfClientSurname.setText(null);
+        txfClientContactNo.setText(null);
+        txfClientAddress.setText(null);
+        txfAddInfo.setText(null);
+        txfClientEmail.setText(null);
+        txfAltNum.setText(null);
+        txfSuburb.setText(null);
+    }
+
+     public final void enableFieldsOrder() {
+        spnOrderFamilySize.setEnabled(true);
+        txfOrderDuration.setEnabled(true);
+        btnOrderDateAdd.setEnabled(true);
+        btnRemove.setEnabled(true);
+        txfOrderClientID.setEnabled(true);
+    }
+
+    public final void disableFieldsOrder() {
         spnOrderFamilySize.setEnabled(false);
         spnOrderStartingDate.setEnabled(false);
         txfOrderRouteID.setEnabled(false);
         txfOrderDuration.setEnabled(false);
         txfOrderClientID.setEnabled(false);
         btnOrderDateAdd.setEnabled(false);
+        btnRemove.setEnabled(false);
     }
 
-    public final void clearFieldsClient() {
+    public final void clearFieldsOrder() {
         txfOrderID.setText(null);
         spnOrderFamilySize.setValue(0);
         spnOrderStartingDate.setValue(null);
@@ -617,6 +666,11 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
         jScrollPane2.setViewportView(tblMeals);
 
         btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlBackgroundLayout = new javax.swing.GroupLayout(pnlBackground);
         pnlBackground.setLayout(pnlBackgroundLayout);
@@ -682,7 +736,7 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_txfClientContactNoActionPerformed
 
     private void btnEditClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditClientActionPerformed
-//        listIndex = lstClient.getSelectedIndex();
+
         enableFieldsClient();
         btnEditClient.setEnabled(false);
         btnSaveClient.setVisible(true);
@@ -752,8 +806,8 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
 
                 try {
                     Connection c = DBClass.getConnection();
-              //      Statement stmt = c.createStatement();
-                //    stmt.executeUpdate(query);
+                    Statement stmt = c.createStatement();
+                    stmt.executeUpdate(query);
                     JOptionPane.showMessageDialog(this, "Saved");
                     back = true;
                 } catch (Exception e) {
@@ -763,10 +817,10 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
         }
 
         if (back) {
-//            disableFields();
-//            btnSaveClient.setVisible(false);
-//            btnEditClient.setEnabled(true);
-//            editClicked = false;
+            disableFieldsClient();
+            btnSaveClient.setVisible(false);
+            btnEditClient.setEnabled(true);
+            editClicked = false;
         }
     }//GEN-LAST:event_btnSaveClientActionPerformed
 
@@ -801,69 +855,86 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
 
         int clientID = Integer.parseInt(txfClientID.getText());
 
-//        String message = "Are you sure you want to delete " + name + "?";
-//        int answer = JOptionPane.showConfirmDialog(this, message, "Confirm", JOptionPane.INFORMATION_MESSAGE);
-//
-//        switch (answer) {
-//            case JOptionPane.YES_OPTION:
-//            JOptionPane.showMessageDialog(this, name + " will be deleted", "Delete Notification", JOptionPane.INFORMATION_MESSAGE);
-//
-//            try {
-//                Connection c = DBClass.getConnection();
-//                Statement stmt = c.createStatement();
-//
-//                String updateOrderID = "UPDATE order_tb SET Client_ID =0 WHERE Client_ID = '" + clientID + "'";
-//                stmt.executeUpdate(updateOrderID);
-//
-//                String updateSuburbID = "UPDATE client_tb SET SuburbID = 0 WHERE ClientID = '" + clientID + "'";
-//                stmt.executeUpdate(updateSuburbID);
-//
-//                String deleteClient = "DELETE FROM doorstepchef.client_tb WHERE ClientID LIKE '" + clientID + "'";
-//                stmt.executeUpdate(deleteClient);
-//
-//                String deleteOrders = "DELETE FROM doorstepchef.order_tb WHERE Client_ID LIKE '" + clientID + "'";
-//                stmt.executeUpdate(deleteOrders);
-//
-//                JOptionPane.showMessageDialog(this, "Client has been deleted. \n Orders of this client have been removed.");
-//
-//            } catch (Exception e) {
-//                JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
-//            }
-//            break;
-//
-//            case JOptionPane.NO_OPTION:
-//            JOptionPane.showMessageDialog(this, name + " will not be deleted", "Delete Notification", JOptionPane.INFORMATION_MESSAGE);
-//            break;
-//
-//            case JOptionPane.CANCEL_OPTION:
-//
-//            break;
-//        }
+        String message = "Are you sure you want to delete " + name + "?";
+        int answer = JOptionPane.showConfirmDialog(this, message, "Confirm", JOptionPane.INFORMATION_MESSAGE);
+
+        switch (answer) {
+            case JOptionPane.YES_OPTION:
+            JOptionPane.showMessageDialog(this, name + " will be deleted", "Delete Notification", JOptionPane.INFORMATION_MESSAGE);
+
+            try {
+                Connection c = DBClass.getConnection();
+                Statement stmt = c.createStatement();
+
+                String updateOrderID = "UPDATE order_tb SET Client_ID =0 WHERE Client_ID = '" + clientID + "'";
+                stmt.executeUpdate(updateOrderID);
+
+                String updateSuburbID = "UPDATE client_tb SET SuburbID = 0 WHERE ClientID = '" + clientID + "'";
+                stmt.executeUpdate(updateSuburbID);
+
+                String deleteClient = "DELETE FROM doorstepchef.client_tb WHERE ClientID LIKE '" + clientID + "'";
+                stmt.executeUpdate(deleteClient);
+
+                String deleteOrders = "DELETE FROM doorstepchef.order_tb WHERE Client_ID LIKE '" + clientID + "'";
+                stmt.executeUpdate(deleteOrders);
+
+                JOptionPane.showMessageDialog(this, "Client has been deleted. \n Orders of this client have been removed.");
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            break;
+
+            case JOptionPane.NO_OPTION:
+            JOptionPane.showMessageDialog(this, name + " will not be deleted", "Delete Notification", JOptionPane.INFORMATION_MESSAGE);
+            break;
+
+            case JOptionPane.CANCEL_OPTION:
+
+            break;
+        }
     }//GEN-LAST:event_btnDeleteClientActionPerformed
 
     private void btnAddClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddClientActionPerformed
-//        clearFields();
-//        enableFields();
-//        btnEditClient.setEnabled(false);
-//        btnSaveClient.setText("Add");
-//        btnSaveClient.setVisible(true);
-//        editClicked = true;
-//
-//        String query = "SELECT MAX(ClientID) FROM doorstepchef.client_tb;";
-//        ResultSet rs;
-//        int numRows = 0;
-//
-//        try {
-//            Connection c = DBClass.getConnection();
-//            Statement stmt = c.createStatement();
-//            rs = stmt.executeQuery(query);
-//            rs.next();
-//            numRows = rs.getInt(1);
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
-//        }
-//        numRows += 1;
-//        txfClientID.setText(numRows + "");
+        clearFieldsClient();
+        enableFieldsClient();
+        clearFieldsOrder();
+        enableFieldsOrder();
+        btnEditClient.setEnabled(false);
+        btnEditOrder.setEnabled(false);
+        btnSaveClient.setVisible(true);
+        btnSaveOrder.setVisible(true);
+        editClicked = true;
+
+        String query = "SELECT MAX(ClientID) FROM doorstepchef.client_tb;";
+        ResultSet rs;
+        int numRows = 0;
+
+        try {
+            Connection c = DBClass.getConnection();
+            Statement stmt = c.createStatement();
+            rs = stmt.executeQuery(query);
+            rs.next();
+            numRows = rs.getInt(1);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        numRows += 1;
+        txfClientID.setText(numRows + "");
+     
+        String query2 = "SELECT MAX(OrderID) FROM doorstepchef.order_tb;";
+        numRows = 0;
+
+        try {
+            Connection c = DBClass.getConnection();
+            Statement stmt = c.createStatement();
+            rs = stmt.executeQuery(query);
+            rs.next();
+            numRows = rs.getInt(1);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        txfClientID.setText(numRows + "");
     }//GEN-LAST:event_btnAddClientActionPerformed
 
     private void txfOrderIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfOrderIDActionPerformed
@@ -873,76 +944,122 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
     private void btnSaveOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveOrderActionPerformed
         boolean back = false;
         if (btnSaveOrder.getText().equals("Save")) {
-            /*
-            short ID = Short.parseShort(txfDriverID.getText().trim());
-            String newName = txfDriverName.getText().trim();
-            String newSurname = txfDriverSurname.getText().trim();
-            String newContactNo = txfContactNo.getText().trim();
-            String newAddress = txfAddress.getText().trim();
-            String newVehicleReg = txfVehicleReg.getText().trim();
-            short newRouteID = Short.parseShort(txfRouteID.getText().trim());
-            */
+            short ID = Short.parseShort(txfClientID.getText().trim());
+            String newName = txfClientName.getText().trim();
+            String newSurname = txfClientSurname.getText().trim();
+            String newAdditionalInfo = txfAddInfo.getText().trim();
+            String newContactNumber = txfClientContactNo.getText().trim();
+            String newAlternativeNo = txfAltNum.getText().trim();
+            String newAddress = txfClientAddress.getText().trim();
+            String newEmail = txfClientEmail.getText().trim();
+            String newSuburbID = txfSuburb.getText().trim();
+           
+            String query = "SELECT SuburbID FROM suburb_tb ;";
+            try {
+                Connection c = DBClass.getConnection();
 
-            //Commit to database
+                PreparedStatement stmt = c.prepareStatement("UPDATE doorstepchef.client_tb SET Name = ?,"
+                        + " Surname = ?,  Address = ?,AdditionalInfo  = ?,ContactNumber = ?, "
+                        + "AlternativeNumber = ?,Email = ?,SuburbID = ? WHERE ClientID = ?;");
+                stmt.setString(1, newName);
+                stmt.setString(2, newSurname);
+                stmt.setString(3, newAddress);
+                stmt.setString(4, newAdditionalInfo);
+                stmt.setString(5, newContactNumber);
+                stmt.setString(6, newAlternativeNo);
+                stmt.setString(7, newEmail);
+                stmt.setString(8, newSuburbID);
+                stmt.setShort(9, ID);
+                stmt.executeUpdate();
+
+                JOptionPane.showMessageDialog(this, "Changes Saved");
+                //Refresh
+                back = true;
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
             back = true;
         } else if (btnSaveOrder.getText().equals("Add")) {
             //Add to database
-            // boolean empty = checkEmpty();
-            if (false) {//empty
-               // JOptionPane.showMessageDialog(this, "Please fill in all fields", "Error", JOptionPane.ERROR_MESSAGE);
+             boolean empty = checkEmpty();
+            if (false) {
+            //empty
+                JOptionPane.showMessageDialog(this, "Please fill in all fields", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
-                //                short newID = Short.parseShort(txfClientID.getText().trim());
-                //                String newName = txfClientName.getText().trim();
-                //                String newSurname = txfClientSurname.getText().trim();
-                //                String newContactNo = txfClientContactNo.getText().trim();
-                //                String newAddress = txfClientAddress.getText().trim();
-                //                String newAddInfo = txfAddInfo.getText().trim();
-                //                String newAltNum = txfAltNum.getText().trim();
-                //                String newEmail= txfClientEmail.getText().trim();
+                                short newID = Short.parseShort(txfClientID.getText().trim());
+                                String newName = txfClientName.getText().trim();
+                                String newSurname = txfClientSurname.getText().trim();
+                                String newContactNo = txfClientContactNo.getText().trim();
+                                String newAddress = txfClientAddress.getText().trim();
+                                String newAddInfo = txfAddInfo.getText().trim();
+                                String newAltNum = txfAltNum.getText().trim();
+                                String newEmail= txfClientEmail.getText().trim();
 
-                //                String query = "INSERT INTO doorstepchef.client_tb (`ClientID`, `Name`, `Surname`, `Address`,`AdditionalInfo`,"
-                //                + " `ContactNumber`, `AlternativeNumber`, `Email`,`SuburbID`) \n"
-                //                + "	VALUES (" + newID + ", '" + newName + "', '" + newSurname + "', '"+ newAddress + "', '"+
-                //                newAddInfo + "', '" + newContactNo+ "', '" + newAltNum + "', '" + newEmail +  "', '0');";
-              //  try {
-//                    Connection c = DBClass.getConnection();
-//                    Statement stmt = c.createStatement();
-//                    //stmt.executeUpdate(query);
-//                    JOptionPane.showMessageDialog(this, "Saved");
-//                    back = true;
-//                } catch (Exception e) {
-//                    JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
-//                }
-//            }
-//        }
-//
-//        if (back) {
-//            disableFields();
-//            btnSaveOrder.setVisible(false);
-//            btnEditOrder.setEnabled(true);
-//            editClicked = false;
+                                String query = "INSERT INTO doorstepchef.client_tb (`ClientID`, `Name`, `Surname`, `Address`,`AdditionalInfo`,"
+                                + " `ContactNumber`, `AlternativeNumber`, `Email`,`SuburbID`) \n"
+                                + "	VALUES (" + newID + ", '" + newName + "', '" + newSurname + "', '"+ newAddress + "', '"+
+                                newAddInfo + "', '" + newContactNo+ "', '" + newAltNum + "', '" + newEmail +  "', '0');";
+                try {
+                      Connection c = DBClass.getConnection();
+                    Statement stmt = c.createStatement();
+                    stmt.executeUpdate(query);
+                    JOptionPane.showMessageDialog(this, "Saved");
+                    back = true;
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
+
+        if (back) {
+            disableFieldsClient();
+            btnSaveOrder.setVisible(false);
+            btnEditOrder.setEnabled(true);
+            editClicked = false;
         }
     }//GEN-LAST:event_btnSaveOrderActionPerformed
-    }
+    
     private void btnEditOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditOrderActionPerformed
-//        listIndex = lstOrders.getSelectedIndex();
-//        enableFields();
-//        btnEditOrder.setEnabled(false);
-//        btnSaveOrder.setVisible(true);
-//        editClicked = true;
+      
+        enableFieldsOrder();
+        btnEditOrder.setEnabled(false);
+        btnSaveOrder.setVisible(true);
+        editClicked = true;
     }//GEN-LAST:event_btnEditOrderActionPerformed
 
     private void btnOrderDateAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrderDateAddActionPerformed
-//        Date date = (Date) spnOrderStartingDate.getValue();
-//        date.setDate(date.getDate() + 7);
-//        spnOrderStartingDate.setValue(date);
+        Date date = (Date) spnOrderStartingDate.getValue();
+        date.setDate(date.getDate() + 7);
+        spnOrderStartingDate.setValue(date);
     }//GEN-LAST:event_btnOrderDateAddActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
-//        Date date = (Date) spnOrderStartingDate.getValue();
-//        date.setDate(date.getDate() - 7);
-//        spnOrderStartingDate.setValue(date);
+        Date date = (Date) spnOrderStartingDate.getValue();
+        date.setDate(date.getDate() - 7);
+        spnOrderStartingDate.setValue(date);
     }//GEN-LAST:event_btnRemoveActionPerformed
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        if (editClicked) {
+            int ans = JOptionPane.showConfirmDialog(this, "Do you wish to discard unsaved changes?");
+            switch (ans) {
+                case JOptionPane.YES_OPTION:
+                    btnSaveOrder.setVisible(false);
+                    btnEditOrder.setEnabled(true);
+                    disableFieldsClient();
+                    disableFieldsOrder();
+                    editClicked = false;
+                    break;
+                case JOptionPane.NO_OPTION:
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            this.dispose();
+            new DSC_Main().setVisible(true);
+        }
+    }//GEN-LAST:event_btnBackActionPerformed
 
     /**
      * @param args the command line arguments
