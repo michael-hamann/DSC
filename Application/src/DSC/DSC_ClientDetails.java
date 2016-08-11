@@ -39,7 +39,7 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
         txfClientEmail.setEnabled(true);
         txfAltNum.setEnabled(true);
         txfSuburbID.setEnabled(true);
-        
+
     }
 
     public final void disableFields() {
@@ -51,7 +51,7 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
         txfClientEmail.setEnabled(false);
         txfAltNum.setEnabled(false);
         txfSuburbID.setEnabled(false);
-        
+
     }
 
     public final void clearFields() {
@@ -64,7 +64,7 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
         txfClientEmail.setText(null);
         txfAltNum.setText(null);
         txfSuburbID.setText(null);
-        
+
     }
 
     /**
@@ -463,7 +463,7 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
 
         if (txfClientName.getText().isEmpty() && txfClientSurname.getText().isEmpty() && txfClientContactNo.getText().isEmpty()
                 && txfClientAddress.getText().isEmpty() && txfAddInfo.getText().isEmpty()
-                &&txfClientContactNo.getText().isEmpty() && txfAltNum.getText().isEmpty()&&txfClientEmail.getText().isEmpty()
+                && txfClientContactNo.getText().isEmpty() && txfAltNum.getText().isEmpty() && txfClientEmail.getText().isEmpty()
                 && txfSuburbID.getText().isEmpty()) {
             empty = true;
         }
@@ -501,10 +501,10 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
         String name = txfClientName.getText() + " " + txfClientSurname.getText();
 
         int clientID = Integer.parseInt(txfClientID.getText());
-        
+
         String message = "Are you sure you want to delete " + name + "?";
         int answer = JOptionPane.showConfirmDialog(this, message, "Confirm", JOptionPane.INFORMATION_MESSAGE);
-        
+
         switch (answer) {
             case JOptionPane.YES_OPTION:
                 JOptionPane.showMessageDialog(this, name + " will be deleted", "Delete Notification", JOptionPane.INFORMATION_MESSAGE);
@@ -512,26 +512,26 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
                 try {
                     Connection c = DBClass.getConnection();
                     Statement stmt = c.createStatement();
-                    
-                    String updateOrderID = "UPDATE order_tb SET Client_ID =0 WHERE Client_ID = '"+ clientID +"'";
+
+                    String updateOrderID = "UPDATE order_tb SET Client_ID =0 WHERE Client_ID = '" + clientID + "'";
                     stmt.executeUpdate(updateOrderID);
-                    
-                    String updateSuburbID = "UPDATE client_tb SET SuburbID = 0 WHERE ClientID = '"+ clientID +"'";
+
+                    String updateSuburbID = "UPDATE client_tb SET SuburbID = 0 WHERE ClientID = '" + clientID + "'";
                     stmt.executeUpdate(updateSuburbID);
-                    
+
                     String deleteClient = "DELETE FROM doorstepchef.client_tb WHERE ClientID LIKE '" + clientID + "'";
                     stmt.executeUpdate(deleteClient);
-                    
+
                     String deleteOrders = "DELETE FROM doorstepchef.order_tb WHERE Client_ID LIKE '" + clientID + "'";
                     stmt.executeUpdate(deleteOrders);
-                    
+
                     JOptionPane.showMessageDialog(this, "Client has been deleted. \n Orders of this client have been removed.");
 
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
                 }
                 break;
-                
+
             case JOptionPane.NO_OPTION:
                 JOptionPane.showMessageDialog(this, name + " will not be deleted", "Delete Notification", JOptionPane.INFORMATION_MESSAGE);
                 break;
@@ -549,7 +549,7 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
     private void btnSaveClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveClientActionPerformed
         boolean back = false;
         if (btnSaveClient.getText().equals("Save")) {
-            
+
             short ID = Short.parseShort(txfClientID.getText().trim());
             String newName = txfClientName.getText().trim();
             String newSurname = txfClientSurname.getText().trim();
@@ -558,54 +558,38 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
             String newAlternativeNo = txfAltNum.getText().trim();
             String newAddress = txfClientAddress.getText().trim();
             String newEmail = txfClientEmail.getText().trim();
-            String newSuburb = txfSuburbID.getText().trim();
-            
- //           String query = "SELECT Suburb FROM suburb_tb WHERE SuburbID ='"+newSuburb+"';";
+            String newSuburbID = txfSuburbID.getText().trim();
            
-//            try {
-//                    Connection a = DBClass.getConnection();
-//                    Statement stmt1 = a.createStatement();
-//                    ResultSet rs = stmt1.executeQuery(query);
-//                    if(rs.next()){
-//                       String suburbID = rs.getString(1);
-                       try {
-                        Connection c = DBClass.getConnection();
-                
-                        PreparedStatement stmt = c.prepareStatement("UPDATE doorstepchef.client_tb SET Name = ?,"
+            String query = "SELECT SuburbID FROM suburb_tb ;";
+            try {
+                Connection c = DBClass.getConnection();
+
+                PreparedStatement stmt = c.prepareStatement("UPDATE doorstepchef.client_tb SET Name = ?,"
                         + " Surname = ?,  Address = ?,AdditionalInfo  = ?,ContactNumber = ?, "
                         + "AlternativeNumber = ?,Email = ?,SuburbID = ? WHERE ClientID = ?;");
-                        stmt.setString(1, newName);
-                        stmt.setString(2, newSurname);
-                        stmt.setString(3, newAddress);
-                        stmt.setString(4, newAdditionalInfo);
-                        stmt.setString(5, newContactNumber);
-                        stmt.setString(6, newAlternativeNo);
-                        stmt.setString(7, newEmail);
-                        stmt.setString(8, newSuburb);
-                        stmt.setShort(9, ID);
-                        stmt.executeUpdate();
-                    
-                        JOptionPane.showMessageDialog(this, "Changes Saved");
-                         //Refresh
-                        back = true;
-                        } catch (Exception e) {
-                            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                        }
-//                    }else{
-//                        JOptionPane.showMessageDialog(rootPane, "Sorry we are not currently delivering to "+newSuburb);
-//                    }
-//                    
-//                    
-//            } catch (Exception e) {
-//                JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
-//            }
-            //Commit to database
-            
+                stmt.setString(1, newName);
+                stmt.setString(2, newSurname);
+                stmt.setString(3, newAddress);
+                stmt.setString(4, newAdditionalInfo);
+                stmt.setString(5, newContactNumber);
+                stmt.setString(6, newAlternativeNo);
+                stmt.setString(7, newEmail);
+                stmt.setString(8, newSuburbID);
+                stmt.setShort(9, ID);
+                stmt.executeUpdate();
+
+                JOptionPane.showMessageDialog(this, "Changes Saved");
+                //Refresh
+                back = true;
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
             back = true;
         } else if (btnSaveClient.getText().equals("Add")) {
             //Add to database
             boolean empty = checkEmpty();
-            if (empty) {
+            if (empty) { 
                 JOptionPane.showMessageDialog(this, "Please fill in all fields", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 short newID = Short.parseShort(txfClientID.getText().trim());
@@ -615,15 +599,14 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
                 String newAddress = txfClientAddress.getText().trim();
                 String newAddInfo = txfAddInfo.getText().trim();
                 String newAltNum = txfAltNum.getText().trim();
-                String newEmail= txfClientEmail.getText().trim();
+                String newEmail = txfClientEmail.getText().trim();
                 short newSuburbID = Short.parseShort(txfSuburbID.getText().trim());
-                
-                String query = "INSERT INTO doorstepchef.client_tb (`ClientID`, `Name`, `Surname`, `Address`,`AdditionalInfo`,"
-                + " `ContactNumber`, `AlternativeNumber`, `Email`,`SuburbID`) \n"
-                + "	VALUES (" + newID + ", '" + newName + "', '" + newSurname + "', '"+ newAddress + "', '"+
-                newAddInfo + "', '" + newContactNo+ "', '" + newAltNum + "', '" + newEmail +  "','"+newSuburbID+"');";
 
-                
+                String query = "INSERT INTO doorstepchef.client_tb (`ClientID`, `Name`, `Surname`, `Address`,`AdditionalInfo`,"
+                        + " `ContactNumber`, `AlternativeNumber`, `Email`,`SuburbID`) \n"
+                        + "	VALUES (" + newID + ", '" + newName + "', '" + newSurname + "', '" + newAddress + "', '"
+                        + newAddInfo + "', '" + newContactNo + "', '" + newAltNum + "', '" + newEmail + "','" + newSuburbID + "');";
+
                 try {
                     Connection c = DBClass.getConnection();
                     Statement stmt = c.createStatement();
@@ -657,16 +640,16 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
             int ans = JOptionPane.showConfirmDialog(this, "Do you wish to discard unsaved changes?");
             switch (ans) {
                 case JOptionPane.YES_OPTION:
-                btnSaveClient.setVisible(false);
-                btnEditClient.setEnabled(true);
-                disableFields();
-                lstClient.setSelectedIndex(listIndex);
-                editClicked = false;
-                break;
+                    btnSaveClient.setVisible(false);
+                    btnEditClient.setEnabled(true);
+                    disableFields();
+                    lstClient.setSelectedIndex(listIndex);
+                    editClicked = false;
+                    break;
                 case JOptionPane.NO_OPTION:
-                break;
+                    break;
                 default:
-                break;
+                    break;
             }
         } else {
             this.dispose();
@@ -679,21 +662,18 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
     }//GEN-LAST:event_txfClientContactNoActionPerformed
 
     private void txfSuburbIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfSuburbIDActionPerformed
-      
+
     }//GEN-LAST:event_txfSuburbIDActionPerformed
 
     private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
-       String client_id = txfClientID.getText();
-       String findSuburbID = "SELECT SuburbID FROM client_tb WHERE ClientID = '"+client_id+"'";
-       ResultSet rs;
-       
-       try {
+        
+        ResultSet rs;
+        String suburbID = txfSuburbID.getText();
+
+        try {
             Connection c = DBClass.getConnection();
             Statement stmt = c.createStatement();
-            rs = stmt.executeQuery(findSuburbID);
-            rs.next();
-            int suburbID = rs.getInt(1);
-            String findSuburb = "SELECT Suburb FROM suburb_tb WHERE SuburbID = '"+suburbID+"'";
+            String findSuburb = "SELECT Suburb FROM suburb_tb WHERE SuburbID = '" + suburbID + "'";
             rs = stmt.executeQuery(findSuburb);
             rs.next();
             String suburb = rs.getString(1);
