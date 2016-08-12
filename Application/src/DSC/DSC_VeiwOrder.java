@@ -41,7 +41,6 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
         txfAddInfo.setEnabled(true);
         txfClientEmail.setEnabled(true);
         txfAltNum.setEnabled(true);
-        txfSuburb.setEnabled(true);
         btnChangeSuburb.setEnabled(true);
     }
 
@@ -139,12 +138,13 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
         lblName = new javax.swing.JLabel();
         pnlTable = new javax.swing.JPanel();
         txfSearch = new javax.swing.JTextField();
-        chbSearchColumn = new javax.swing.JComboBox<>();
+        cmbSearchColumn = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblOrderTable = new javax.swing.JTable();
-        btnDeleteClient = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
         btnAddClient = new javax.swing.JButton();
         lblSearchBy = new javax.swing.JLabel();
+        btnSearch = new javax.swing.JButton();
         pnlDetailsClient = new javax.swing.JPanel();
         lblClientDetails = new javax.swing.JLabel();
         lblClientID = new javax.swing.JLabel();
@@ -233,15 +233,45 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
             }
         });
 
-        chbSearchColumn.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Client ID", "Name", "Surname", "Address", "Additional Information", "Contact Number", "Alternative Number", "Email", "Suburb", " " }));
+        cmbSearchColumn.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ClientID", "Name", "Surname", "Address", "AdditionalInfo", "ContactNumber", "AlternativeNumber", "Email", "Suburb", " " }));
 
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, clientTbList, tblOrderTable);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${additionalInfo}"));
+        columnBinding.setColumnName("Additional Info");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${address}"));
+        columnBinding.setColumnName("Address");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${alternativeNumber}"));
+        columnBinding.setColumnName("Alternative Number");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${clientID}"));
+        columnBinding.setColumnName("Client ID");
+        columnBinding.setColumnClass(Short.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${contactNumber}"));
+        columnBinding.setColumnName("Contact Number");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${email}"));
+        columnBinding.setColumnName("Email");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${name}"));
+        columnBinding.setColumnName("Name");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${suburbID}"));
+        columnBinding.setColumnName("Suburb ID");
+        columnBinding.setColumnClass(Short.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${surname}"));
+        columnBinding.setColumnName("Surname");
+        columnBinding.setColumnClass(String.class);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();
         jScrollPane1.setViewportView(tblOrderTable);
 
-        btnDeleteClient.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Bin.png"))); // NOI18N
-        btnDeleteClient.setText("Delete");
-        btnDeleteClient.addActionListener(new java.awt.event.ActionListener() {
+        btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Bin.png"))); // NOI18N
+        btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteClientActionPerformed(evt);
+                btnDeleteActionPerformed(evt);
             }
         });
 
@@ -256,6 +286,13 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
         lblSearchBy.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblSearchBy.setText("Search by :");
 
+        btnSearch.setText("Go");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlTableLayout = new javax.swing.GroupLayout(pnlTable);
         pnlTable.setLayout(pnlTableLayout);
         pnlTableLayout.setHorizontalGroup(
@@ -266,14 +303,16 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
                     .addGroup(pnlTableLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(lblSearchBy)
+                        .addGap(5, 5, 5)
+                        .addComponent(btnSearch)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(chbSearchColumn, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cmbSearchColumn, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txfSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 989, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnDeleteClient, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnDelete, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnAddClient, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -283,15 +322,16 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblSearchBy)
-                    .addComponent(chbSearchColumn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txfSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(cmbSearchColumn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txfSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSearch))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlTableLayout.createSequentialGroup()
-                        .addGap(0, 119, Short.MAX_VALUE)
+                        .addGap(0, 114, Short.MAX_VALUE)
                         .addComponent(btnAddClient)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnDeleteClient))
+                        .addComponent(btnDelete))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -641,8 +681,8 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mealTbList, tblMeals);
-        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${allergy}"));
+        jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, mealTbList, tblMeals);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${allergy}"));
         columnBinding.setColumnName("Allergy");
         columnBinding.setColumnClass(String.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${exclusions}"));
@@ -702,9 +742,8 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(pnlDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(pnlDetailsClient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(pnlDetails, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlDetailsClient, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnBack)
                 .addGap(23, 23, 23))
@@ -739,7 +778,7 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
 
         enableFieldsClient();
         btnEditClient.setEnabled(false);
-        btnSaveClient.setVisible(true);
+        btnSaveClient.setEnabled(true);
         editClicked = true;
     }//GEN-LAST:event_btnEditClientActionPerformed
 
@@ -818,7 +857,7 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
 
         if (back) {
             disableFieldsClient();
-            btnSaveClient.setVisible(false);
+            btnSaveClient.setEnabled(false);
             btnEditClient.setEnabled(true);
             editClicked = false;
         }
@@ -850,7 +889,7 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txfAltNumActionPerformed
 
-    private void btnDeleteClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteClientActionPerformed
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         String name = txfClientName.getText() + " " + txfClientSurname.getText();
 
         int clientID = Integer.parseInt(txfClientID.getText());
@@ -893,7 +932,7 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
 
             break;
         }
-    }//GEN-LAST:event_btnDeleteClientActionPerformed
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnAddClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddClientActionPerformed
         clearFieldsClient();
@@ -1023,7 +1062,7 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
       
         enableFieldsOrder();
         btnEditOrder.setEnabled(false);
-        btnSaveOrder.setVisible(true);
+        btnSaveOrder.setEnabled(true);
         editClicked = true;
     }//GEN-LAST:event_btnEditOrderActionPerformed
 
@@ -1060,6 +1099,71 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
             new DSC_Main().setVisible(true);
         }
     }//GEN-LAST:event_btnBackActionPerformed
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        
+        String column = (String) cmbSearchColumn.getSelectedItem();
+        String searchFor = txfSearch.getText();
+        
+        String searchElement = "SELECT * FROM doorstepchef.client_tb WHERE "+column+" LIKE '"+searchFor+"';";
+        ResultSet clientRS;
+        ResultSet orderRS;
+       
+        try {
+            Connection c = DBClass.getConnection();
+            Statement stmt = c.createStatement();
+            clientRS = stmt.executeQuery(searchElement);
+            clientRS.next();
+            if(clientRS == null || !clientRS.first()){
+                 //display no items found based on search
+                 JOptionPane.showMessageDialog(rootPane, "No records found of '"+searchFor+"'!Please check that '"+column+"' is spelt correctly.");
+            }else{
+               //display searched items in client panel
+               txfClientID.setText(clientRS.getString(1));
+               txfClientName.setText(clientRS.getString(2));
+               txfClientSurname.setText(clientRS.getString(3));
+               txfClientAddress.setText(clientRS.getString(4));
+               txfAddInfo.setText(clientRS.getString(5));
+               txfClientContactNo.setText(clientRS.getString(6));
+               txfAltNum.setText(clientRS.getString(7));
+               txfClientEmail.setText(clientRS.getString(8));
+               
+               tblMeals.setRowSelectionInterval(WIDTH, WIDTH);
+        
+               //get suburb name from suburb table using fk
+               String findSuburbID = "SELECT SuburbID FROM client_tb WHERE ClientID LIKE '"+clientRS.getString(1)+"';";
+               clientRS = stmt.executeQuery(findSuburbID);
+               clientRS.next();
+               String suburbID = clientRS.getString(1);
+               
+               String findsuburb = "SELECT Suburb FROM suburb_TB WHERE SuburbID = '"+suburbID+"';";
+               clientRS = stmt.executeQuery(findsuburb);
+               clientRS.next();
+               //display suburb to textfield
+               txfSuburb.setText(clientRS.getString(1));
+               //get orders of client
+               String findOrders = "SELECT * FROM order_tb WHERE Client_ID LIKE '"+clientRS.getString(1)+ "';";
+               orderRS = stmt.executeQuery(findOrders);
+               
+               //display if any the order details
+               if(orderRS == null || !orderRS.first()){
+                   JOptionPane.showMessageDialog(rootPane, "No orders found for '"+searchFor+"'.");
+               }else{
+                    orderRS.next();
+                    txfOrderID.setText(orderRS.getString(1));
+                    spnOrderFamilySize.setValue(orderRS.getString(2));
+                    spnOrderStartingDate.setValue(orderRS.getString(3));
+                    txfOrderRouteID.setText(orderRS.getString(4));
+                    txfOrderDuration.setText(orderRS.getString(5));
+                    txfOrderClientID.setText(orderRS.getString(6));
+               }
+               
+          }
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnSearchActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1103,18 +1207,19 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
     private javax.swing.JButton btnAddClient;
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnChangeSuburb;
-    private javax.swing.JButton btnDeleteClient;
+    private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEditClient;
     private javax.swing.JButton btnEditOrder;
     private javax.swing.JButton btnOrderDateAdd;
     private javax.swing.JButton btnRemove;
     private javax.swing.JButton btnSaveClient;
     private javax.swing.JButton btnSaveOrder;
-    private javax.swing.JComboBox<String> chbSearchColumn;
+    private javax.swing.JButton btnSearch;
     private java.util.List<DSC.ClientTb> clientTbList;
     private java.util.List<DSC.ClientTb> clientTbList1;
     private javax.persistence.Query clientTbQuery;
     private javax.persistence.Query clientTbQuery1;
+    private javax.swing.JComboBox<String> cmbSearchColumn;
     private javax.persistence.EntityManager entityManager;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

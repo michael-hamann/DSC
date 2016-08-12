@@ -122,7 +122,7 @@ public class DSC_Main extends javax.swing.JFrame {
             }
         });
 
-        btnOrderTbl1.setText("Order Table");
+        btnOrderTbl1.setText("Place an Order");
         btnOrderTbl1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnOrderTbl1ActionPerformed(evt);

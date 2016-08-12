@@ -194,10 +194,8 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="jScrollPane2" pref="0" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="pnlDetails" max="32767" attributes="0"/>
-                          <Component id="pnlDetailsClient" max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="pnlDetails" alignment="1" max="32767" attributes="0"/>
+                      <Component id="pnlDetailsClient" alignment="1" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
                   <Component id="btnBack" min="-2" max="-2" attributes="0"/>
@@ -277,16 +275,18 @@
                           <Group type="102" attributes="0">
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               <Component id="lblSearchBy" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+                              <Component id="btnSearch" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="chbSearchColumn" min="-2" pref="112" max="-2" attributes="0"/>
+                              <Component id="cmbSearchColumn" min="-2" pref="112" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="txfSearch" min="-2" pref="112" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jScrollPane1" max="32767" attributes="0"/>
+                          <Component id="jScrollPane1" pref="989" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="btnDeleteClient" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnDelete" alignment="1" min="-2" max="-2" attributes="0"/>
                           <Component id="btnAddClient" alignment="1" min="-2" pref="77" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -299,18 +299,19 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblSearchBy" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="chbSearchColumn" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cmbSearchColumn" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txfSearch" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnSearch" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <EmptySpace min="0" pref="119" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="114" max="32767" attributes="0"/>
                               <Component id="btnAddClient" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="btnDeleteClient" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnDelete" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
+                          <Component id="jScrollPane1" alignment="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -323,17 +324,17 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txfSearchActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JComboBox" name="chbSearchColumn">
+            <Component class="javax.swing.JComboBox" name="cmbSearchColumn">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="10">
-                    <StringItem index="0" value="Client ID"/>
+                    <StringItem index="0" value="ClientID"/>
                     <StringItem index="1" value="Name"/>
                     <StringItem index="2" value="Surname"/>
                     <StringItem index="3" value="Address"/>
-                    <StringItem index="4" value="Additional Information"/>
-                    <StringItem index="5" value="Contact Number"/>
-                    <StringItem index="6" value="Alternative Number"/>
+                    <StringItem index="4" value="AdditionalInfo"/>
+                    <StringItem index="5" value="ContactNumber"/>
+                    <StringItem index="6" value="AlternativeNumber"/>
                     <StringItem index="7" value="Email"/>
                     <StringItem index="8" value="Suburb"/>
                     <StringItem index="9" value=" "/>
@@ -357,10 +358,41 @@
                       <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                     </Property>
                   </Properties>
+                  <BindingProperties>
+                    <BindingProperty name="elements" source="clientTbList" target="tblOrderTable" targetPath="elements" updateStrategy="0" immediately="true">
+                      <Subbinding sourcePath="${additionalInfo}">
+                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+                      </Subbinding>
+                      <Subbinding sourcePath="${address}">
+                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+                      </Subbinding>
+                      <Subbinding sourcePath="${alternativeNumber}">
+                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+                      </Subbinding>
+                      <Subbinding sourcePath="${clientID}">
+                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Short.class"/>
+                      </Subbinding>
+                      <Subbinding sourcePath="${contactNumber}">
+                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+                      </Subbinding>
+                      <Subbinding sourcePath="${email}">
+                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+                      </Subbinding>
+                      <Subbinding sourcePath="${name}">
+                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+                      </Subbinding>
+                      <Subbinding sourcePath="${suburbID}">
+                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Short.class"/>
+                      </Subbinding>
+                      <Subbinding sourcePath="${surname}">
+                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+                      </Subbinding>
+                    </BindingProperty>
+                  </BindingProperties>
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JButton" name="btnDeleteClient">
+            <Component class="javax.swing.JButton" name="btnDelete">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/PICS/Bin.png"/>
@@ -368,7 +400,7 @@
                 <Property name="text" type="java.lang.String" value="Delete"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeleteClientActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeleteActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnAddClient">
@@ -389,6 +421,14 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Search by :"/>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnSearch">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Go"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSearchActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
