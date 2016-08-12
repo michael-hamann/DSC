@@ -29,8 +29,7 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
         txfSuburb.setEnabled(false);
         disableFieldsClient();
         disableFieldsOrder();
-        btnSaveClient.setEnabled(false);
-        btnSaveOrder.setEnabled(false);
+        btnSave.setEnabled(false);
     }
     
      public final void enableFieldsClient() {
@@ -142,7 +141,7 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblOrderTable = new javax.swing.JTable();
         btnDelete = new javax.swing.JButton();
-        btnAddClient = new javax.swing.JButton();
+        btnAdd = new javax.swing.JButton();
         lblSearchBy = new javax.swing.JLabel();
         btnSearch = new javax.swing.JButton();
         pnlDetailsClient = new javax.swing.JPanel();
@@ -160,7 +159,6 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
         txfClientAddress = new javax.swing.JTextField();
         txfAddInfo = new javax.swing.JTextField();
         btnEditClient = new javax.swing.JButton();
-        btnSaveClient = new javax.swing.JButton();
         lblAltNum = new javax.swing.JLabel();
         lblEmail = new javax.swing.JLabel();
         txfClientEmail = new javax.swing.JTextField();
@@ -182,13 +180,13 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
         txfOrderClientID = new javax.swing.JTextField();
         spnOrderFamilySize = new javax.swing.JSpinner();
         spnOrderStartingDate = new javax.swing.JSpinner();
-        btnSaveOrder = new javax.swing.JButton();
         btnEditOrder = new javax.swing.JButton();
         btnOrderDateAdd = new javax.swing.JButton();
         btnRemove = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblMeals = new javax.swing.JTable();
         btnBack = new javax.swing.JButton();
+        btnSave = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Meals Table");
@@ -284,11 +282,11 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
             }
         });
 
-        btnAddClient.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Add.png"))); // NOI18N
-        btnAddClient.setText(" Add");
-        btnAddClient.addActionListener(new java.awt.event.ActionListener() {
+        btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Add.png"))); // NOI18N
+        btnAdd.setText(" Add");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddClientActionPerformed(evt);
+                btnAddActionPerformed(evt);
             }
         });
 
@@ -323,23 +321,23 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnDelete, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnAddClient, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnAdd, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         pnlTableLayout.setVerticalGroup(
             pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTableLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblSearchBy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cmbSearchColumn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txfSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblSearchBy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlTableLayout.createSequentialGroup()
                         .addGap(0, 114, Short.MAX_VALUE)
-                        .addComponent(btnAddClient)
+                        .addComponent(btnAdd)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnDelete))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
@@ -401,14 +399,6 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
             }
         });
 
-        btnSaveClient.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Save 2.png"))); // NOI18N
-        btnSaveClient.setText(" Save");
-        btnSaveClient.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSaveClientActionPerformed(evt);
-            }
-        });
-
         lblAltNum.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblAltNum.setText("Alternative Number:");
 
@@ -461,8 +451,7 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
                             .addComponent(txfClientEmail)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDetailsClientLayout.createSequentialGroup()
                         .addComponent(btnEditClient)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSaveClient))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(pnlDetailsClientLayout.createSequentialGroup()
                         .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblClientSurname)
@@ -532,9 +521,7 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
                     .addComponent(btnChangeSuburb)
                     .addComponent(txfSuburb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEditClient)
-                    .addComponent(btnSaveClient))
+                .addComponent(btnEditClient)
                 .addContainerGap())
         );
 
@@ -582,14 +569,6 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
         spnOrderFamilySize.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
 
         spnOrderStartingDate.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(1470311210147L), null, null, java.util.Calendar.DAY_OF_WEEK));
-
-        btnSaveOrder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Save 2.png"))); // NOI18N
-        btnSaveOrder.setText(" Save");
-        btnSaveOrder.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSaveOrderActionPerformed(evt);
-            }
-        });
 
         btnEditOrder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Edit 2.png"))); // NOI18N
         btnEditOrder.setText(" Edit");
@@ -650,8 +629,7 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
                                         .addComponent(btnRemove, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE))))))
                     .addGroup(pnlDetailsLayout.createSequentialGroup()
                         .addComponent(btnEditOrder)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSaveOrder)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnlDetailsLayout.setVerticalGroup(
@@ -685,9 +663,7 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
                     .addComponent(lblClientID1)
                     .addComponent(txfOrderClientID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSaveOrder)
-                    .addComponent(btnEditOrder))
+                .addComponent(btnEditOrder)
                 .addContainerGap())
         );
 
@@ -727,6 +703,14 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
             }
         });
 
+        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Save 2.png"))); // NOI18N
+        btnSave.setText(" Save");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlBackgroundLayout = new javax.swing.GroupLayout(pnlBackground);
         pnlBackground.setLayout(pnlBackgroundLayout);
         pnlBackgroundLayout.setHorizontalGroup(
@@ -744,6 +728,8 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBackgroundLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnSave)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnBack)))
                 .addContainerGap())
         );
@@ -759,7 +745,9 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
                     .addComponent(pnlDetailsClient, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(11, 11, 11)
-                .addComponent(btnBack)
+                .addGroup(pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBack)
+                    .addComponent(btnSave))
                 .addContainerGap())
         );
 
@@ -789,93 +777,11 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_txfClientContactNoActionPerformed
 
     private void btnEditClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditClientActionPerformed
-
+        btnSave.setEnabled(true);
         enableFieldsClient();
         btnEditClient.setEnabled(false);
-        btnSaveClient.setEnabled(true);
         editClicked = true;
     }//GEN-LAST:event_btnEditClientActionPerformed
-
-    private void btnSaveClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveClientActionPerformed
-        boolean back = false;
-        if (btnSaveClient.getText().equals("Save")) {
-
-            short ID = Short.parseShort(txfClientID.getText().trim());
-            String newName = txfClientName.getText().trim();
-            String newSurname = txfClientSurname.getText().trim();
-            String newAdditionalInfo = txfAddInfo.getText().trim();
-            String newContactNumber = txfClientContactNo.getText().trim();
-            String newAlternativeNo = txfAltNum.getText().trim();
-            String newAddress = txfClientAddress.getText().trim();
-            String newEmail = txfClientEmail.getText().trim();
-            String newSuburb = txfSuburb.getText().trim();
-
-            String query = "SELECT SuburbID FROM suburb_tb ;";
-            try {
-                Connection c = DBClass.getConnection();
-
-                PreparedStatement stmt = c.prepareStatement("UPDATE doorstepchef.client_tb SET Name = ?,"
-                    + " Surname = ?,  Address = ?,AdditionalInfo  = ?,ContactNumber = ?, "
-                    + "AlternativeNumber = ?,Email = ?,SuburbID = ? WHERE ClientID = ?;");
-                stmt.setString(1, newName);
-                stmt.setString(2, newSurname);
-                stmt.setString(3, newAddress);
-                stmt.setString(4, newAdditionalInfo);
-                stmt.setString(5, newContactNumber);
-                stmt.setString(6, newAlternativeNo);
-                stmt.setString(7, newEmail);
-                stmt.setString(8, newSuburb);
-                stmt.setShort(9, ID);
-                stmt.executeUpdate();
-
-                JOptionPane.showMessageDialog(this, "Changes Saved");
-                //Refresh
-                back = true;
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
-
-            back = true;
-        } else if (btnSaveClient.getText().equals("Add")) {
-            //Add to database
-            boolean empty = checkEmpty();
-            if (empty) {
-                JOptionPane.showMessageDialog(this, "Please fill in all fields", "Error", JOptionPane.ERROR_MESSAGE);
-            } else {
-                short newID = Short.parseShort(txfClientID.getText().trim());
-                String newName = txfClientName.getText().trim();
-                String newSurname = txfClientSurname.getText().trim();
-                String newContactNo = txfClientContactNo.getText().trim();
-                String newAddress = txfClientAddress.getText().trim();
-                String newAddInfo = txfAddInfo.getText().trim();
-                String newAltNum = txfAltNum.getText().trim();
-                String newEmail = txfClientEmail.getText().trim();
-                short newSuburb = Short.parseShort(txfSuburb.getText().trim());
-
-                String query = "INSERT INTO doorstepchef.client_tb (`ClientID`, `Name`, `Surname`, `Address`,`AdditionalInfo`,"
-                + " `ContactNumber`, `AlternativeNumber`, `Email`,`SuburbID`) \n"
-                + "	VALUES (" + newID + ", '" + newName + "', '" + newSurname + "', '" + newAddress + "', '"
-                + newAddInfo + "', '" + newContactNo + "', '" + newAltNum + "', '" + newEmail + "','" + newSuburb + "');";
-
-                try {
-                    Connection c = DBClass.getConnection();
-                    Statement stmt = c.createStatement();
-                    stmt.executeUpdate(query);
-                    JOptionPane.showMessageDialog(this, "Saved");
-                    back = true;
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        }
-
-        if (back) {
-            disableFieldsClient();
-            btnSaveClient.setEnabled(false);
-            btnEditClient.setEnabled(true);
-            editClicked = false;
-        }
-    }//GEN-LAST:event_btnSaveClientActionPerformed
 
     private void txfClientEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfClientEmailActionPerformed
         // TODO add your handling code here:
@@ -883,20 +789,6 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
 
     private void btnChangeSuburbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeSuburbActionPerformed
 
-//        ResultSet rs;
-//        String suburbID = txfSuburbID.getText();
-//
-//        try {
-//            Connection c = DBClass.getConnection();
-//            Statement stmt = c.createStatement();
-//            String findSuburb = "SELECT Suburb FROM suburb_tb WHERE SuburbID = '" + suburbID + "'";
-//            rs = stmt.executeQuery(findSuburb);
-//            rs.next();
-//            String suburb = rs.getString(1);
-//            txfSuburb.setText(suburb);
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
-//        }
     }//GEN-LAST:event_btnChangeSuburbActionPerformed
 
     private void txfAltNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfAltNumActionPerformed
@@ -948,18 +840,19 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
-    private void btnAddClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddClientActionPerformed
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         clearFieldsClient();
         enableFieldsClient();
         clearFieldsOrder();
         enableFieldsOrder();
         btnEditClient.setEnabled(false);
         btnEditOrder.setEnabled(false);
-        btnSaveClient.setVisible(true);
-        btnSaveOrder.setVisible(true);
+        btnSave.setVisible(true);
         editClicked = true;
-
+        
+        btnSave.setText("Add");
         String query = "SELECT MAX(ClientID) FROM doorstepchef.client_tb;";
+        
         ResultSet rs;
         int numRows = 0;
 
@@ -981,22 +874,22 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
         try {
             Connection c = DBClass.getConnection();
             Statement stmt = c.createStatement();
-            rs = stmt.executeQuery(query);
+            rs = stmt.executeQuery(query2);
             rs.next();
             numRows = rs.getInt(1);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
         }
-        txfClientID.setText(numRows + "");
-    }//GEN-LAST:event_btnAddClientActionPerformed
+        txfOrderID.setText(numRows + "");
+    }//GEN-LAST:event_btnAddActionPerformed
 
     private void txfOrderIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfOrderIDActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txfOrderIDActionPerformed
 
-    private void btnSaveOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveOrderActionPerformed
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         boolean back = false;
-        if (btnSaveOrder.getText().equals("Save")) {
+        if (btnSave.getText().equals("Save")) {
             short ID = Short.parseShort(txfClientID.getText().trim());
             String newName = txfClientName.getText().trim();
             String newSurname = txfClientSurname.getText().trim();
@@ -1005,12 +898,17 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
             String newAlternativeNo = txfAltNum.getText().trim();
             String newAddress = txfClientAddress.getText().trim();
             String newEmail = txfClientEmail.getText().trim();
-            String newSuburbID = txfSuburb.getText().trim();
+            String newSuburb = txfSuburb.getText().trim();
            
-            String query = "SELECT SuburbID FROM suburb_tb ;";
+            ResultSet rs;
             try {
                 Connection c = DBClass.getConnection();
-
+                Statement stmt2 = c.createStatement();
+                String findSuburbID = "SELECT SuburbID FROM suburb_tb WHERE Suburb LIKE '"+ newSuburb +"';";
+                rs = stmt2.executeQuery(findSuburbID);
+                rs.next();
+                String newSuburbID = rs.getString(1);
+                
                 PreparedStatement stmt = c.prepareStatement("UPDATE doorstepchef.client_tb SET Name = ?,"
                         + " Surname = ?,  Address = ?,AdditionalInfo  = ?,ContactNumber = ?, "
                         + "AlternativeNumber = ?,Email = ?,SuburbID = ? WHERE ClientID = ?;");
@@ -1024,6 +922,24 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
                 stmt.setString(8, newSuburbID);
                 stmt.setShort(9, ID);
                 stmt.executeUpdate();
+                
+                int orderID =Integer.parseInt(txfOrderID.getText());
+                int newFamilySize = (int) spnOrderFamilySize.getValue();
+                int newStartingDate = (int) spnOrderStartingDate.getValue();
+                String newRouteID = txfOrderRouteID.getText();
+                String newDuration = txfOrderDuration.getText();
+                String newOrderClientID = txfOrderClientID.getText();
+                
+                stmt = c.prepareStatement("UPDATE doorstepchef.order_tb SET FamilySize = ?,"
+                        + " StartingDate = ?,  RouteID = ?,Duration  = ?,Client_ID = ?, "
+                        + " WHERE OrderID = ?;");
+                
+                stmt.setInt(1, newFamilySize);
+                stmt.setInt(2, newStartingDate);
+                stmt.setString(3, newRouteID);
+                stmt.setString(4,newDuration);
+                stmt.setString(5, newOrderClientID );
+                stmt.setInt(6, orderID);
 
                 JOptionPane.showMessageDialog(this, "Changes Saved");
                 //Refresh
@@ -1032,7 +948,7 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
             back = true;
-        } else if (btnSaveOrder.getText().equals("Add")) {
+        } else if (btnSave.getText().equals("Add")) {
             //Add to database
              boolean empty = checkEmpty();
             if (false) {
@@ -1053,7 +969,7 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
                                 + "	VALUES (" + newID + ", '" + newName + "', '" + newSurname + "', '"+ newAddress + "', '"+
                                 newAddInfo + "', '" + newContactNo+ "', '" + newAltNum + "', '" + newEmail +  "', '0');";
                 try {
-                      Connection c = DBClass.getConnection();
+                    Connection c = DBClass.getConnection();
                     Statement stmt = c.createStatement();
                     stmt.executeUpdate(query);
                     JOptionPane.showMessageDialog(this, "Saved");
@@ -1062,21 +978,23 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
+            btnSave.setText("Save");
         }
 
         if (back) {
             disableFieldsClient();
-            btnSaveOrder.setVisible(false);
+            btnSave.setVisible(false);
             btnEditOrder.setEnabled(true);
+            btnEditClient.setEnabled(true);
             editClicked = false;
         }
-    }//GEN-LAST:event_btnSaveOrderActionPerformed
+    }//GEN-LAST:event_btnSaveActionPerformed
     
     private void btnEditOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditOrderActionPerformed
       
         enableFieldsOrder();
         btnEditOrder.setEnabled(false);
-        btnSaveOrder.setEnabled(true);
+        btnSave.setEnabled(true);
         editClicked = true;
     }//GEN-LAST:event_btnEditOrderActionPerformed
 
@@ -1097,7 +1015,7 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
             int ans = JOptionPane.showConfirmDialog(this, "Do you wish to discard unsaved changes?");
             switch (ans) {
                 case JOptionPane.YES_OPTION:
-                    btnSaveOrder.setVisible(false);
+                    btnSave.setVisible(false);
                     btnEditOrder.setEnabled(true);
                     disableFieldsClient();
                     disableFieldsOrder();
@@ -1218,7 +1136,7 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAddClient;
+    private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnChangeSuburb;
     private javax.swing.JButton btnDelete;
@@ -1226,8 +1144,7 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
     private javax.swing.JButton btnEditOrder;
     private javax.swing.JButton btnOrderDateAdd;
     private javax.swing.JButton btnRemove;
-    private javax.swing.JButton btnSaveClient;
-    private javax.swing.JButton btnSaveOrder;
+    private javax.swing.JButton btnSave;
     private javax.swing.JButton btnSearch;
     private java.util.List<DSC.ClientTb> clientTbList;
     private java.util.List<DSC.ClientTb> clientTbList1;
