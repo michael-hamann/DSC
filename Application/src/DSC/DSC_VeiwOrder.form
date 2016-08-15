@@ -538,12 +538,8 @@
                               </Group>
                               <EmptySpace min="0" pref="31" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="txfSuburb" min="-2" pref="68" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="btnChangeSuburb" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="txfClientEmail" max="32767" attributes="0"/>
+                                  <Component id="txfClientEmail" pref="181" max="32767" attributes="0"/>
+                                  <Component id="cmbSuburbs" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
@@ -635,8 +631,7 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblSuburb" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnChangeSuburb" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txfSuburb" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cmbSuburbs" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="btnEditClient" min="-2" max="-2" attributes="0"/>
@@ -796,14 +791,6 @@
                 <Property name="text" type="java.lang.String" value="Suburb:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="btnChangeSuburb">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Change Suburb"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnChangeSuburbActionPerformed"/>
-              </Events>
-            </Component>
             <Component class="javax.swing.JTextField" name="txfAltNum">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -815,7 +802,20 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txfAltNumActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JTextField" name="txfSuburb">
+            <Component class="javax.swing.JComboBox" name="cmbSuburbs">
+              <Properties>
+                <Property name="maximumRowCount" type="int" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="10000" type="code"/>
+                </Property>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="1">
+                    <StringItem index="0" value="None Selected"/>
+                  </StringArray>
+                </Property>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>

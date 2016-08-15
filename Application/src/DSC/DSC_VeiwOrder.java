@@ -26,7 +26,7 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
         txfClientID.setEnabled(false);
         txfOrderID.setEnabled(false);
         txfOrderClientID.setEnabled(false);
-        txfSuburb.setEnabled(false);
+        cmbSuburbs.setEnabled(false);
         disableFieldsClient();
         disableFieldsOrder();
         btnSave.setEnabled(false);
@@ -40,7 +40,7 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
         txfAddInfo.setEnabled(true);
         txfClientEmail.setEnabled(true);
         txfAltNum.setEnabled(true);
-        btnChangeSuburb.setEnabled(true);
+        cmbSuburbs.setEnabled(true);
     }
 
     public final void disableFieldsClient() {
@@ -51,8 +51,8 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
         txfAddInfo.setEnabled(false);
         txfClientEmail.setEnabled(false);
         txfAltNum.setEnabled(false);
-        txfSuburb.setEnabled(false);
-        btnChangeSuburb.setEnabled(false);
+        cmbSuburbs.setEnabled(false);
+        cmbSuburbs.setEnabled(false);
     }
 
     public final void clearFieldsClient() {
@@ -64,7 +64,7 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
         txfAddInfo.setText(null);
         txfClientEmail.setText(null);
         txfAltNum.setText(null);
-        txfSuburb.setText(null);
+        cmbSuburbs.setSelectedIndex(0);
     }
 
      public final void enableFieldsOrder() {
@@ -100,7 +100,7 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
         if (txfClientName.getText().isEmpty() && txfClientSurname.getText().isEmpty() && txfClientContactNo.getText().isEmpty()
                 && txfClientAddress.getText().isEmpty() && txfAddInfo.getText().isEmpty()
                 && txfClientContactNo.getText().isEmpty() && txfAltNum.getText().isEmpty() && txfClientEmail.getText().isEmpty()
-                && txfSuburb.getText().isEmpty()) {
+                && cmbSuburbs.getSelectedIndex()==0) {
             empty = true;
         }
 
@@ -163,9 +163,8 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
         lblEmail = new javax.swing.JLabel();
         txfClientEmail = new javax.swing.JTextField();
         lblSuburb = new javax.swing.JLabel();
-        btnChangeSuburb = new javax.swing.JButton();
         txfAltNum = new javax.swing.JTextField();
-        txfSuburb = new javax.swing.JTextField();
+        cmbSuburbs = new javax.swing.JComboBox<>();
         pnlDetails = new javax.swing.JPanel();
         lblOrdersDetails = new javax.swing.JLabel();
         lblOrderID = new javax.swing.JLabel();
@@ -415,13 +414,6 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
 
         lblSuburb.setText("Suburb:");
 
-        btnChangeSuburb.setText("Change Suburb");
-        btnChangeSuburb.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnChangeSuburbActionPerformed(evt);
-            }
-        });
-
         txfAltNum.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfAltNum.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         txfAltNum.addActionListener(new java.awt.event.ActionListener() {
@@ -429,6 +421,9 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
                 txfAltNumActionPerformed(evt);
             }
         });
+
+        cmbSuburbs.setMaximumRowCount(10000);
+        cmbSuburbs.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "None Selected" }));
 
         javax.swing.GroupLayout pnlDetailsClientLayout = new javax.swing.GroupLayout(pnlDetailsClient);
         pnlDetailsClient.setLayout(pnlDetailsClientLayout);
@@ -444,11 +439,8 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
                             .addComponent(lblSuburb, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE))
                         .addGap(0, 31, Short.MAX_VALUE)
                         .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(pnlDetailsClientLayout.createSequentialGroup()
-                                .addComponent(txfSuburb, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnChangeSuburb))
-                            .addComponent(txfClientEmail)))
+                            .addComponent(txfClientEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
+                            .addComponent(cmbSuburbs, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDetailsClientLayout.createSequentialGroup()
                         .addComponent(btnEditClient)
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -518,8 +510,7 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblSuburb)
-                    .addComponent(btnChangeSuburb)
-                    .addComponent(txfSuburb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbSuburbs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnEditClient)
                 .addContainerGap())
@@ -777,19 +768,34 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_txfClientContactNoActionPerformed
 
     private void btnEditClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditClientActionPerformed
+        
         btnSave.setEnabled(true);
         enableFieldsClient();
         btnEditClient.setEnabled(false);
         editClicked = true;
+        
+        ResultSet rs;
+      
+                 try {
+                    Connection c = DBClass.getConnection();
+                    Statement stmt = c.createStatement();
+                    String query2 = "SELECT Suburb FROM suburb_tb;";
+                    rs = stmt.executeQuery(query2);
+                    rs.next();
+                    if(cmbSuburbs.getItemCount()<2){
+                         while(rs.next()){
+                              cmbSuburbs.addItem(rs.getString("Suburb"));
+                          }
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
+                }
+        
     }//GEN-LAST:event_btnEditClientActionPerformed
 
     private void txfClientEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfClientEmailActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txfClientEmailActionPerformed
-
-    private void btnChangeSuburbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeSuburbActionPerformed
-
-    }//GEN-LAST:event_btnChangeSuburbActionPerformed
 
     private void txfAltNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfAltNumActionPerformed
         // TODO add your handling code here:
@@ -881,11 +887,21 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
         }
         txfOrderID.setText(numRows + "");
-    }//GEN-LAST:event_btnAddActionPerformed
+       
+        try {
+            Connection c = DBClass.getConnection();
+            Statement stmt = c.createStatement();
+            String query3 = "SELECT Suburb FROM suburb_tb;";
+            rs = stmt.executeQuery(query3);
+            rs.next();
+            while(rs.next()){
+                cmbSuburbs.addItem(rs.getString("Suburb"));
 
-    private void txfOrderIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfOrderIDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txfOrderIDActionPerformed
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         boolean back = false;
@@ -898,7 +914,7 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
             String newAlternativeNo = txfAltNum.getText().trim();
             String newAddress = txfClientAddress.getText().trim();
             String newEmail = txfClientEmail.getText().trim();
-            String newSuburb = txfSuburb.getText().trim();
+            String newSuburb = (String) cmbSuburbs.getSelectedItem();
            
             ResultSet rs;
             try {
@@ -990,26 +1006,6 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSaveActionPerformed
     
-    private void btnEditOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditOrderActionPerformed
-      
-        enableFieldsOrder();
-        btnEditOrder.setEnabled(false);
-        btnSave.setEnabled(true);
-        editClicked = true;
-    }//GEN-LAST:event_btnEditOrderActionPerformed
-
-    private void btnOrderDateAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrderDateAddActionPerformed
-        Date date = (Date) spnOrderStartingDate.getValue();
-        date.setDate(date.getDate() + 7);
-        spnOrderStartingDate.setValue(date);
-    }//GEN-LAST:event_btnOrderDateAddActionPerformed
-
-    private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
-        Date date = (Date) spnOrderStartingDate.getValue();
-        date.setDate(date.getDate() - 7);
-        spnOrderStartingDate.setValue(date);
-    }//GEN-LAST:event_btnRemoveActionPerformed
-
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         if (editClicked) {
             int ans = JOptionPane.showConfirmDialog(this, "Do you wish to discard unsaved changes?");
@@ -1030,9 +1026,28 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
             this.dispose();
             new DSC_Main().setVisible(true);
         }
+        btnEditClient.setEnabled(true);
+        btnEditOrder.setEnabled(true);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        ResultSet rs;
+        
+         try {
+                    Connection c = DBClass.getConnection();
+                    Statement stmt = c.createStatement();
+                    String query2 = "SELECT Suburb FROM suburb_tb;";
+                    rs = stmt.executeQuery(query2);
+                    rs.next();
+                    if(cmbSuburbs.getItemCount()<2){
+                         while(rs.next()){
+                              cmbSuburbs.addItem(rs.getString("Suburb"));
+                          }
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
+                }
+       
         
         String column = (String) cmbSearchColumn.getSelectedItem();
         String searchFor = txfSearch.getText();
@@ -1040,7 +1055,7 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
         String searchElement = "SELECT * FROM doorstepchef.client_tb WHERE "+column+" LIKE '"+searchFor+"';";
         ResultSet clientRS;
         ResultSet orderRS;
-       
+        
         try {
             Connection c = DBClass.getConnection();
             Statement stmt = c.createStatement();
@@ -1050,6 +1065,7 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
                  //display no items found based on search
                  JOptionPane.showMessageDialog(rootPane, "No records found of '"+searchFor+"'!Please check that '"+column+"' is spelt correctly.");
             }else{
+              
                //display searched items in client panel
                txfClientID.setText(clientRS.getString(1));
                txfClientName.setText(clientRS.getString(2));
@@ -1061,8 +1077,8 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
                txfClientEmail.setText(clientRS.getString(8));
                
                tblMeals.setRowSelectionInterval(WIDTH, WIDTH);
-        
-               //get suburb name from suburb table using fk
+              
+              //get suburb name from suburb table using fk
                String findSuburbID = "SELECT SuburbID FROM client_tb WHERE ClientID LIKE '"+clientRS.getString(1)+"';";
                clientRS = stmt.executeQuery(findSuburbID);
                clientRS.next();
@@ -1071,9 +1087,16 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
                String findsuburb = "SELECT Suburb FROM suburb_TB WHERE SuburbID = '"+suburbID+"';";
                clientRS = stmt.executeQuery(findsuburb);
                clientRS.next();
-               //display suburb to textfield
-               txfSuburb.setText(clientRS.getString(1));
-               //get orders of client
+               String sub = clientRS.getString(1);
+                for (int i = 0; i < cmbSuburbs.getItemCount(); i++) {
+                    String item = cmbSuburbs.getItemAt(i);
+                    if(item.equals(sub)){
+                        cmbSuburbs.setSelectedIndex(i);
+                        break;
+                    }
+                }
+               cmbSuburbs.setSelectedItem(clientRS.getString(1));
+               
                String findOrders = "SELECT * FROM order_tb WHERE Client_ID LIKE '"+clientRS.getString(1)+ "';";
                orderRS = stmt.executeQuery(findOrders);
                
@@ -1095,7 +1118,32 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
         }
+        
     }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
+        Date date = (Date) spnOrderStartingDate.getValue();
+        date.setDate(date.getDate() - 7);
+        spnOrderStartingDate.setValue(date);
+    }//GEN-LAST:event_btnRemoveActionPerformed
+
+    private void btnOrderDateAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrderDateAddActionPerformed
+        Date date = (Date) spnOrderStartingDate.getValue();
+        date.setDate(date.getDate() + 7);
+        spnOrderStartingDate.setValue(date);
+    }//GEN-LAST:event_btnOrderDateAddActionPerformed
+
+    private void btnEditOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditOrderActionPerformed
+
+        enableFieldsOrder();
+        btnEditOrder.setEnabled(false);
+        btnSave.setEnabled(true);
+        editClicked = true;
+    }//GEN-LAST:event_btnEditOrderActionPerformed
+
+    private void txfOrderIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfOrderIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfOrderIDActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1138,7 +1186,6 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnBack;
-    private javax.swing.JButton btnChangeSuburb;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEditClient;
     private javax.swing.JButton btnEditOrder;
@@ -1151,6 +1198,7 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
     private javax.persistence.Query clientTbQuery;
     private javax.persistence.Query clientTbQuery1;
     private javax.swing.JComboBox<String> cmbSearchColumn;
+    private javax.swing.JComboBox<String> cmbSuburbs;
     private javax.persistence.EntityManager entityManager;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -1204,7 +1252,6 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
     private javax.swing.JTextField txfOrderID;
     private javax.swing.JTextField txfOrderRouteID;
     private javax.swing.JTextField txfSearch;
-    private javax.swing.JTextField txfSuburb;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }
