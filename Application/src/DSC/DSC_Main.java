@@ -289,19 +289,23 @@ public class DSC_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSuburbTblActionPerformed
 
     private void btnDriverRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDriverRptActionPerformed
-        // TODO add your handling code here:
+        ExcelReport er = new ExcelReport();
+        er.create("Driver Report");
     }//GEN-LAST:event_btnDriverRptActionPerformed
 
     private void btnChefRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChefRptActionPerformed
-        // TODO add your handling code here:
+        ExcelReport er = new ExcelReport();
+        er.create("Chef Report");
     }//GEN-LAST:event_btnChefRptActionPerformed
 
     private void btnPackerRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPackerRptActionPerformed
-        // TODO add your handling code here:
+        ExcelReport er = new ExcelReport();
+        er.create("Packer Report");
     }//GEN-LAST:event_btnPackerRptActionPerformed
 
     private void btnHandlerRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHandlerRptActionPerformed
-        // TODO add your handling code here:
+        ExcelReport er = new ExcelReport();
+        er.create("Handler Report");
     }//GEN-LAST:event_btnHandlerRptActionPerformed
 
     private void btnRouteTblActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRouteTblActionPerformed
