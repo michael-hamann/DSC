@@ -974,7 +974,7 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
             int ans = JOptionPane.showConfirmDialog(this, "Do you wish to discard unsaved changes?");
             switch (ans) {
                 case JOptionPane.YES_OPTION:
-                    btnSave.setVisible(false);
+                    btnSave.setEnabled(false);
                     btnEditOrder.setEnabled(true);
                     disableFieldsClient();
                     disableFieldsOrder();
