@@ -151,7 +151,7 @@
                           <Component id="btnSuburbTbl" alignment="1" pref="150" max="32767" attributes="0"/>
                           <Component id="lblView" alignment="0" max="32767" attributes="0"/>
                           <Component id="btnRouteTbl" alignment="1" pref="150" max="32767" attributes="0"/>
-                          <Component id="btnOrderTbl1" alignment="1" pref="150" max="32767" attributes="0"/>
+                          <Component id="btnViewOrders" alignment="1" pref="150" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -173,7 +173,7 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnRouteTbl" min="-2" pref="50" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="btnOrderTbl1" min="-2" pref="50" max="-2" attributes="0"/>
+                      <Component id="btnViewOrders" min="-2" pref="50" max="-2" attributes="0"/>
                       <EmptySpace pref="36" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -229,12 +229,12 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRouteTblActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btnOrderTbl1">
+            <Component class="javax.swing.JButton" name="btnViewOrders">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Place an Order"/>
+                <Property name="text" type="java.lang.String" value="View Orders"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnOrderTbl1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnViewOrdersActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>

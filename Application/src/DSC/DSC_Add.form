@@ -173,22 +173,18 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="pnlDetails" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="btnSave" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="btnCancel" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="jScrollPane2" min="-2" pref="390" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
-                                      <Component id="btnAddOrder" max="32767" attributes="0"/>
-                                      <Component id="btnDeleteOrder" alignment="0" pref="129" max="32767" attributes="0"/>
-                                  </Group>
-                              </Group>
+                          <EmptySpace min="0" pref="393" max="32767" attributes="0"/>
+                          <Component id="btnSave" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="btnCancel" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="jScrollPane2" pref="0" max="32767" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
+                              <Component id="btnAddOrder" max="32767" attributes="0"/>
+                              <Component id="btnDeleteOrder" alignment="0" pref="129" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -588,36 +584,28 @@
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="lblClientID1" alignment="0" max="32767" attributes="0"/>
                                   <Component id="lblDuration" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lblClientID1" alignment="0" max="32767" attributes="0"/>
                                   <Component id="lblRouteID" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="lblStartingDate" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lblStartingDate" alignment="0" pref="93" max="32767" attributes="0"/>
+                                  <Component id="lblFamilySize" alignment="0" max="32767" attributes="0"/>
                                   <Component id="lblOrderID" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="lblFamilySize" max="32767" attributes="0"/>
                               </Group>
+                              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <EmptySpace max="32767" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="txfOrderRouteID" alignment="1" pref="405" max="32767" attributes="0"/>
-                                          <Component id="txfOrderDuration" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="txfOrderClientID" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="txfOrderID" alignment="1" max="32767" attributes="0"/>
-                                      </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="spnOrderStartingDate" min="-2" pref="254" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="btnOrderDateAdd" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="btnRemove" min="-2" pref="81" max="-2" attributes="0"/>
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   </Group>
-                                  <Group type="102" attributes="0">
-                                      <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="spnOrderFamilySize" max="32767" attributes="0"/>
-                                          <Group type="102" attributes="0">
-                                              <Component id="spnOrderStartingDate" max="32767" attributes="0"/>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Component id="btnOrderDateAdd" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Component id="btnRemove" min="-2" pref="81" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                  </Group>
+                                  <Component id="txfOrderID" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="spnOrderFamilySize" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="txfOrderRouteID" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="txfOrderDuration" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="txfOrderClientID" alignment="1" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
