@@ -173,7 +173,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="pnlDetails" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="0" pref="395" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="397" max="32767" attributes="0"/>
                           <Component id="btnSave" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="btnCancel" min="-2" max="-2" attributes="0"/>
@@ -198,12 +198,12 @@
                       <Component id="pnlDetails1" max="32767" attributes="0"/>
                       <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="btnSave" max="32767" attributes="0"/>
-                      <Component id="btnCancel" max="32767" attributes="0"/>
+                      <Component id="btnCancel" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -221,7 +221,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="lblLogo" pref="446" max="32767" attributes="0"/>
+                      <Component id="lblLogo" pref="447" max="32767" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="lblName" max="32767" attributes="0"/>
                       <EmptySpace min="-2" pref="386" max="-2" attributes="0"/>
