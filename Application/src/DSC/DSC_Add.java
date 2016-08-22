@@ -220,7 +220,7 @@ public class DSC_Add extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnlHeadingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblLogo, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
-                    .addComponent(lblName, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE))
+                    .addComponent(lblName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
