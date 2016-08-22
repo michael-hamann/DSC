@@ -45,7 +45,7 @@ public class DBClass {
 
     public static void makeConn() {
         ref = new Firebase("https://dsc-database.firebaseio.com/");
-        Firebase newref = ref.child("Routes");
+
         Firebase.AuthResultHandler authHandler = new Firebase.AuthResultHandler() {
             @Override
             public void onAuthenticated(AuthData ad) {
@@ -67,29 +67,6 @@ public class DBClass {
             @Override
             public void onAuthenticated(AuthData authData) {
                 System.out.println("Login Succeeded!");
-            }
-        });
-    }
-
-    public static void getData() {
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot ds) {
-                System.out.println(ds + "\n");
-                for (DataSnapshot Data : ds.getChildren()) {
-                    System.out.println(Data + "\n");
-                    System.out.println("\n\n" + Data.child("StartingDate").getValue() + "\n\n");
-                    for (DataSnapshot Data2 : Data.getChildren()) {
-                        System.out.println(Data2);
-                        
-                    }
-                    System.out.println("\n\n");
-                }
-            }
-
-            @Override
-            public void onCancelled(FirebaseError fe) {
-                JOptionPane.showMessageDialog(null, "ERROR: " + fe);
             }
         });
     }

@@ -14,7 +14,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class ExcelReport {
 
     //make sheet
-    public void create(String name) {
+    public void createExcel(String name) {
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet spreadsheet = workbook.createSheet(name);
         

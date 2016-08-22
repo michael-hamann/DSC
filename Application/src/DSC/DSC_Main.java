@@ -1,4 +1,3 @@
-
 package DSC;
 
 import javax.swing.JFrame;
@@ -16,7 +15,6 @@ public class DSC_Main extends javax.swing.JFrame {
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         DBClass.makeConn();
-        DBClass.getData();
     }
 
     /**
@@ -295,7 +293,9 @@ public class DSC_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDriverRptActionPerformed
 
     private void btnChefRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChefRptActionPerformed
-        // TODO add your handling code here:
+
+        ChefReport.getData(); // get data relavant to ChefReport
+
     }//GEN-LAST:event_btnChefRptActionPerformed
 
     private void btnPackerRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPackerRptActionPerformed
