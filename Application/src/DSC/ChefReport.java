@@ -32,11 +32,11 @@ public class ChefReport {
 
                     PrintWriter pw = new PrintWriter(new FileWriter("ChefReport.txt"));
                     
-                    for (DataSnapshot Data : ds.getChildren()) {
+                    for (DataSnapshot Data : ds.getChildren()) {//entire database
 
-                        for (DataSnapshot Data2 : Data.getChildren()) {
+                        for (DataSnapshot Data2 : Data.getChildren()) {//children of database 
 
-                            for (DataSnapshot Data3 : Data2.getChildren()) {
+                            for (DataSnapshot Data3 : Data2.getChildren()) {//children of database table
                                 
                                 pw.println(Data3.getKey());
                                 pw.println("Quantity: " + Data3.child("Quantity").getValue());
