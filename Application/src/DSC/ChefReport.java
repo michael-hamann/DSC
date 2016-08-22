@@ -10,6 +10,11 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -23,15 +28,31 @@ public class ChefReport {
         tableRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot ds) {
+                try {
 
-                for (DataSnapshot Data : ds.getChildren()) {
+                    PrintWriter pw = new PrintWriter(new FileWriter("ChefReport.txt"));
+                    
+                    for (DataSnapshot Data : ds.getChildren()) {
 
-                    System.out.println("\n\n" + Data.child("Quanity").getValue() + "\n\n" + Data.child("Exclusions").getValue() + "\n\n" + Data.child("RouteID").getValue());
-                    for (DataSnapshot Data2 : Data.getChildren()) {
-                        System.out.println(Data2);
+                        for (DataSnapshot Data2 : Data.getChildren()) {
+
+                            for (DataSnapshot Data3 : Data2.getChildren()) {
+                                
+                                pw.println(Data3.getKey());
+                                pw.println("Quantity: " + Data3.child("Quantity").getValue());
+                                pw.println("Exclusions: " + Data3.child("Exclutions").getValue());
+                                
+                                System.out.println(Data3.getKey() + "\n" + "Quantity: " + Data3.child("Quantity").getValue() + "\n" + "Exclusions: " + Data3.child("Exclutions").getValue() + "\n\n");
+
+                            }
+
+                        }
+                        System.out.println("\n\n");
 
                     }
-                    System.out.println("\n\n");
+                    pw.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(ChefReport.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             }
