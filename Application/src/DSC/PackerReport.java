@@ -19,7 +19,8 @@ import javax.swing.JOptionPane;
 public class PackerReport {
 
     public static void getData() {
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+       Firebase tableRef = ref.child("");// Go to specific Table
+        tableRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot ds) {
                 Firebase tableRef = ref.child(""); // Go to specific Table

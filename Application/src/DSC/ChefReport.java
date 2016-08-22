@@ -19,14 +19,13 @@ import javax.swing.JOptionPane;
 public class ChefReport {
 
     public static void getData() {
-        Firebase tableRef = ref.child("Orders");
+        Firebase tableRef = ref.child("Orders");// Go to specific Table
         tableRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot ds) {
-                
-                 // Go to specific Table
+
                 for (DataSnapshot Data : ds.getChildren()) {
-                    
+
                     System.out.println("\n\n" + Data.child("Quanity").getValue() + "\n\n" + Data.child("Exclusions").getValue() + "\n\n" + Data.child("RouteID").getValue());
                     for (DataSnapshot Data2 : Data.getChildren()) {
                         System.out.println(Data2);
