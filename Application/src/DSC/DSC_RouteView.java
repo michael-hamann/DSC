@@ -14,7 +14,17 @@ public class DSC_RouteView extends javax.swing.JFrame {
      */
     public DSC_RouteView() {
         initComponents();
+        setRoutesList();
+        setSuburbsList();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+    }
+    
+    private void setRoutesList(){
+        //Get children of routes
+    }
+    
+    private void setSuburbsList(){
+        //Get children of routes > suburbs
     }
 
     /**
@@ -36,14 +46,14 @@ public class DSC_RouteView extends javax.swing.JFrame {
         pnlRoutes = new javax.swing.JPanel();
         lblRoutes = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        lstRoutes = new javax.swing.JList<>();
         pnlFields = new javax.swing.JPanel();
         btnBack = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
         pnlSuburbs = new javax.swing.JPanel();
         lblSuburbs = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList<>();
+        lstSuburbs = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Route Table");
@@ -87,12 +97,12 @@ public class DSC_RouteView extends javax.swing.JFrame {
         lblRoutes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblRoutes.setText("Routes");
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        lstRoutes.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(lstRoutes);
 
         javax.swing.GroupLayout pnlRoutesLayout = new javax.swing.GroupLayout(pnlRoutes);
         pnlRoutes.setLayout(pnlRoutesLayout);
@@ -160,12 +170,12 @@ public class DSC_RouteView extends javax.swing.JFrame {
         lblSuburbs.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblSuburbs.setText("Suburbs");
 
-        jList2.setModel(new javax.swing.AbstractListModel<String>() {
+        lstSuburbs.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane2.setViewportView(jList2);
+        jScrollPane2.setViewportView(lstSuburbs);
 
         javax.swing.GroupLayout pnlSuburbsLayout = new javax.swing.GroupLayout(pnlSuburbs);
         pnlSuburbs.setLayout(pnlSuburbsLayout);
@@ -275,14 +285,14 @@ public class DSC_RouteView extends javax.swing.JFrame {
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnEdit;
     private javax.persistence.EntityManager entityManager;
-    private javax.swing.JList<String> jList1;
-    private javax.swing.JList<String> jList2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblLogo;
     private javax.swing.JLabel lblName;
     private javax.swing.JLabel lblRoutes;
     private javax.swing.JLabel lblSuburbs;
+    private javax.swing.JList<String> lstRoutes;
+    private javax.swing.JList<String> lstSuburbs;
     private javax.swing.JPanel pnlBackground;
     private javax.swing.JPanel pnlFields;
     private javax.swing.JPanel pnlHeading;
