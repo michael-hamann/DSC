@@ -588,7 +588,6 @@
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="lblClientID1" alignment="0" max="32767" attributes="0"/>
                                   <Component id="lblDuration" alignment="0" max="32767" attributes="0"/>
                                   <Component id="lblRouteID" alignment="0" max="32767" attributes="0"/>
                                   <Component id="lblStartingDate" alignment="0" max="32767" attributes="0"/>
@@ -601,7 +600,6 @@
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                           <Component id="txfOrderRouteID" alignment="1" pref="405" max="32767" attributes="0"/>
                                           <Component id="txfOrderDuration" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="txfOrderClientID" alignment="0" max="32767" attributes="0"/>
                                           <Component id="txfOrderID" alignment="1" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -610,7 +608,7 @@
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="spnOrderFamilySize" max="32767" attributes="0"/>
                                           <Group type="102" attributes="0">
-                                              <Component id="spnOrderStartingDate" max="32767" attributes="0"/>
+                                              <Component id="spnOrderStartingDate" pref="253" max="32767" attributes="0"/>
                                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                               <Component id="btnOrderDateAdd" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -657,12 +655,7 @@
                           <Component id="lblDuration" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txfOrderDuration" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblClientID1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txfOrderClientID" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace pref="27" max="32767" attributes="0"/>
+                      <EmptySpace pref="59" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -716,14 +709,6 @@
                 <Property name="text" type="java.lang.String" value="Duration:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblClientID1">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="12" style="0"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Client ID:"/>
-              </Properties>
-            </Component>
             <Component class="javax.swing.JTextField" name="txfOrderID">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -744,14 +729,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txfOrderDuration">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="12" style="0"/>
-                </Property>
-                <Property name="horizontalAlignment" type="int" value="11"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="txfOrderClientID">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="12" style="0"/>

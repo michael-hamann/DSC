@@ -108,7 +108,38 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
         return empty;
     }
 
-
+    ResultSet tbrs;
+    public void setTable(){
+        
+        try {
+            Connection c = DBClass.getConnection();
+            Statement stmt = c.createStatement();
+            
+            String q = "SELECT client_tb.Name, client_tb.Surname, order_tb.StartingDate,order_tb.FamilySize,"
+                    + "order_tb.Duration FROM order_tb INNER JOIN client_tb ON order_tb.Client_ID = client_tb.ClientID ;";
+            tbrs = stmt.executeQuery(q);
+            tbrs.next();
+            
+            DefaultTableModel model = (DefaultTableModel) tblOrderTable.getModel();
+            model.setRowCount(0);
+            JOptionPane.showMessageDialog(rootPane, "table cleared");
+            int columns = tbrs.getMetaData().getColumnCount();
+        
+            while(tbrs.next()){
+                Object[] row = new Object[columns];
+                for (int i = 1; i <= columns; i++){  
+                     row[i - 1] = tbrs.getObject(i);
+                 }
+            ((DefaultTableModel) tblOrderTable.getModel()).insertRow(tbrs.getRow()-1,row);
+            JOptionPane.showMessageDialog(rootPane, "table populated");
+                 }
+            model.fireTableDataChanged(); 
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+          
+        }
+       
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -117,7 +148,6 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("doorstepchef?zeroDateTimeBehavior=convertToNullPU").createEntityManager();
         mealTbQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT m FROM MealTb m");
@@ -140,6 +170,7 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
         txfSearch = new javax.swing.JTextField();
         cmbSearchColumn = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
+        setTable();
         tblOrderTable = new javax.swing.JTable();
         btnDelete = new javax.swing.JButton();
         btnAdd = new javax.swing.JButton();
@@ -233,45 +264,29 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
         cmbSearchColumn.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ClientID", "Name", "Surname", "Address", "AdditionalInfo", "ContactNumber", "AlternativeNumber", "Email", "Suburb" }));
         cmbSearchColumn.setPreferredSize(new java.awt.Dimension(115, 23));
 
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, clientTbList, tblOrderTable);
-        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${additionalInfo}"));
-        columnBinding.setColumnName("Additional Info");
-        columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${address}"));
-        columnBinding.setColumnName("Address");
-        columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${alternativeNumber}"));
-        columnBinding.setColumnName("Alternative Number");
-        columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${clientID}"));
-        columnBinding.setColumnName("Client ID");
-        columnBinding.setColumnClass(Short.class);
-        columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${contactNumber}"));
-        columnBinding.setColumnName("Contact Number");
-        columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${email}"));
-        columnBinding.setColumnName("Email");
-        columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${name}"));
-        columnBinding.setColumnName("Name");
-        columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${suburbID}"));
-        columnBinding.setColumnName("Suburb ID");
-        columnBinding.setColumnClass(Short.class);
-        columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${surname}"));
-        columnBinding.setColumnName("Surname");
-        columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
-        bindingGroup.addBinding(jTableBinding);
-        jTableBinding.bind();
+        tblOrderTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Name", "Surname", "FamilySize", "StartingDate", "Duration"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tblOrderTable);
 
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Bin.png"))); // NOI18N
@@ -749,8 +764,6 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(pnlBackground, javax.swing.GroupLayout.PREFERRED_SIZE, 779, Short.MAX_VALUE)
         );
-
-        bindingGroup.bind();
 
         pack();
         setLocationRelativeTo(null);
@@ -1234,6 +1247,5 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
     private javax.swing.JTextField txfOrderID;
     private javax.swing.JTextField txfOrderRouteID;
     private javax.swing.JTextField txfSearch;
-    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

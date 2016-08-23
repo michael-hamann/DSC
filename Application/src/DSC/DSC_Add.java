@@ -26,14 +26,13 @@ public class DSC_Add extends javax.swing.JFrame {
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         txfClientID.setEnabled(false);
         txfOrderID.setEnabled(false);
-        txfOrderClientID.setEnabled(false);
         cmbSuburbs.setEnabled(false);
         disableFieldsClient();
         disableFieldsOrder();
         btnSave.setEnabled(false);
     }
     
-     public final void enableFieldsClient() {
+    public final void enableFieldsClient() {
         txfClientName.setEnabled(true);
         txfClientSurname.setEnabled(true);
         txfClientContactNo.setEnabled(true);
@@ -68,12 +67,11 @@ public class DSC_Add extends javax.swing.JFrame {
         cmbSuburbs.setSelectedIndex(0);
     }
 
-     public final void enableFieldsOrder() {
+    public final void enableFieldsOrder() {
         spnOrderFamilySize.setEnabled(true);
         txfOrderDuration.setEnabled(true);
         btnOrderDateAdd.setEnabled(true);
         btnRemove.setEnabled(true);
-        txfOrderClientID.setEnabled(true);
     }
 
     public final void disableFieldsOrder() {
@@ -81,7 +79,6 @@ public class DSC_Add extends javax.swing.JFrame {
         spnOrderStartingDate.setEnabled(false);
         txfOrderRouteID.setEnabled(false);
         txfOrderDuration.setEnabled(false);
-        txfOrderClientID.setEnabled(false);
         btnOrderDateAdd.setEnabled(false);
         btnRemove.setEnabled(false);
     }
@@ -92,7 +89,6 @@ public class DSC_Add extends javax.swing.JFrame {
         spnOrderStartingDate.setValue(null);
         txfOrderRouteID.setText(null);
         txfOrderDuration.setText(null);
-        txfOrderClientID.setText(null);
     }
     
     private boolean checkEmpty() {
@@ -101,7 +97,7 @@ public class DSC_Add extends javax.swing.JFrame {
         if (txfClientName.getText().isEmpty() && txfClientSurname.getText().isEmpty() && txfClientContactNo.getText().isEmpty()
                 && txfClientAddress.getText().isEmpty() && txfAddInfo.getText().isEmpty()
                 && txfClientContactNo.getText().isEmpty() && txfAltNum.getText().isEmpty() && txfClientEmail.getText().isEmpty()
-                && cmbSuburbs.getSelectedIndex()==0) {
+                && cmbSuburbs.getSelectedIndex()==0 && lstOrders.getMaxSelectionIndex()<1) {
             empty = true;
         }
 
@@ -162,11 +158,9 @@ public class DSC_Add extends javax.swing.JFrame {
         lblStartingDate = new javax.swing.JLabel();
         lblRouteID = new javax.swing.JLabel();
         lblDuration = new javax.swing.JLabel();
-        lblClientID1 = new javax.swing.JLabel();
         txfOrderID = new javax.swing.JTextField();
         txfOrderRouteID = new javax.swing.JTextField();
         txfOrderDuration = new javax.swing.JTextField();
-        txfOrderClientID = new javax.swing.JTextField();
         spnOrderFamilySize = new javax.swing.JSpinner();
         spnOrderStartingDate = new javax.swing.JSpinner();
         btnOrderDateAdd = new javax.swing.JButton();
@@ -398,9 +392,6 @@ public class DSC_Add extends javax.swing.JFrame {
         lblDuration.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblDuration.setText("Duration:");
 
-        lblClientID1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblClientID1.setText("Client ID:");
-
         txfOrderID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfOrderID.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         txfOrderID.addActionListener(new java.awt.event.ActionListener() {
@@ -414,9 +405,6 @@ public class DSC_Add extends javax.swing.JFrame {
 
         txfOrderDuration.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfOrderDuration.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-
-        txfOrderClientID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txfOrderClientID.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
         spnOrderFamilySize.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
 
@@ -449,7 +437,6 @@ public class DSC_Add extends javax.swing.JFrame {
                         .addGap(45, 45, 45))
                     .addGroup(pnlDetailsLayout.createSequentialGroup()
                         .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblClientID1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblDuration, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblRouteID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblStartingDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -461,14 +448,13 @@ public class DSC_Add extends javax.swing.JFrame {
                                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(txfOrderRouteID, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
                                     .addComponent(txfOrderDuration)
-                                    .addComponent(txfOrderClientID)
                                     .addComponent(txfOrderID, javax.swing.GroupLayout.Alignment.TRAILING)))
                             .addGroup(pnlDetailsLayout.createSequentialGroup()
                                 .addGap(35, 35, 35)
                                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(spnOrderFamilySize)
                                     .addGroup(pnlDetailsLayout.createSequentialGroup()
-                                        .addComponent(spnOrderStartingDate)
+                                        .addComponent(spnOrderStartingDate, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(btnOrderDateAdd)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -502,11 +488,7 @@ public class DSC_Add extends javax.swing.JFrame {
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDuration)
                     .addComponent(txfOrderDuration, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblClientID1)
-                    .addComponent(txfOrderClientID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
 
         tblMeals.setModel(new javax.swing.table.DefaultTableModel(
@@ -754,8 +736,9 @@ public class DSC_Add extends javax.swing.JFrame {
     }//GEN-LAST:event_txfOrderIDActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        boolean back = false;
-        if (btnSave.getText().equals("Save")) {
+            while(!checkEmpty()){
+                JOptionPane.showMessageDialog(rootPane, "Please fill in all required fields.");
+            }
             short ID = Short.parseShort(txfClientID.getText().trim());
             String newName = txfClientName.getText().trim();
             String newSurname = txfClientSurname.getText().trim();
@@ -794,8 +777,7 @@ public class DSC_Add extends javax.swing.JFrame {
                 Date newStartingDate = new java.sql.Date((long)spnOrderStartingDate.getValue());
                 String newRouteID = txfOrderRouteID.getText();
                 String newDuration = txfOrderDuration.getText();
-                String newOrderClientID = txfOrderClientID.getText();
-
+                
                 stmt = c.prepareStatement("UPDATE doorstepchef.order_tb SET FamilySize = ?,"
                     + " StartingDate = ?,  RouteID = ?,Duration  = ?,Client_ID = ?, "
                     + " WHERE OrderID = ?;");
@@ -804,54 +786,18 @@ public class DSC_Add extends javax.swing.JFrame {
                 stmt.setDate(2, (java.sql.Date) newStartingDate);
                 stmt.setInt(3 ,Integer.parseInt(newRouteID));
                 stmt.setString(4,newDuration);
-                stmt.setString(5, newOrderClientID );
+                stmt.setShort(5,ID);
                 stmt.setInt(6, orderID);
+                stmt.executeUpdate();
 
                 JOptionPane.showMessageDialog(this, "Changes Saved");
                 //Refresh
-                back = true;
+               
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
-            back = true;
-        } else if (btnSave.getText().equals("Add")) {
-            //Add to database
-            boolean empty = checkEmpty();
-            if (false) {
-                //empty
-                JOptionPane.showMessageDialog(this, "Please fill in all fields", "Error", JOptionPane.ERROR_MESSAGE);
-            } else {
-                short newID = Short.parseShort(txfClientID.getText().trim());
-                String newName = txfClientName.getText().trim();
-                String newSurname = txfClientSurname.getText().trim();
-                String newContactNo = txfClientContactNo.getText().trim();
-                String newAddress = txfClientAddress.getText().trim();
-                String newAddInfo = txfAddInfo.getText().trim();
-                String newAltNum = txfAltNum.getText().trim();
-                String newEmail= txfClientEmail.getText().trim();
-
-                String query = "INSERT INTO doorstepchef.client_tb (`ClientID`, `Name`, `Surname`, `Address`,`AdditionalInfo`,"
-                + " `ContactNumber`, `AlternativeNumber`, `Email`,`SuburbID`) \n"
-                + "	VALUES (" + newID + ", '" + newName + "', '" + newSurname + "', '"+ newAddress + "', '"+
-                newAddInfo + "', '" + newContactNo+ "', '" + newAltNum + "', '" + newEmail +  "', '0');";
-                try {
-                    Connection c = DBClass.getConnection();
-                    Statement stmt = c.createStatement();
-                    stmt.executeUpdate(query);
-                    JOptionPane.showMessageDialog(this, "Saved");
-                    back = true;
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-            btnSave.setText("Save");
-        }
-
-        if (back) {
-            disableFieldsClient();
-            btnSave.setVisible(false);
-            editClicked = false;
-        }
+               
+        
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnDeleteOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteOrderActionPerformed
@@ -956,7 +902,6 @@ public class DSC_Add extends javax.swing.JFrame {
     private javax.swing.JLabel lblClientContactNo;
     private javax.swing.JLabel lblClientDetails;
     private javax.swing.JLabel lblClientID;
-    private javax.swing.JLabel lblClientID1;
     private javax.swing.JLabel lblClientName;
     private javax.swing.JLabel lblClientSurname;
     private javax.swing.JLabel lblComments;
@@ -1000,7 +945,6 @@ public class DSC_Add extends javax.swing.JFrame {
     private javax.swing.JTextField txfClientID;
     private javax.swing.JTextField txfClientName;
     private javax.swing.JTextField txfClientSurname;
-    private javax.swing.JTextField txfOrderClientID;
     private javax.swing.JTextField txfOrderDuration;
     private javax.swing.JTextField txfOrderID;
     private javax.swing.JTextField txfOrderRouteID;
