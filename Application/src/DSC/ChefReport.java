@@ -10,6 +10,11 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,20 +23,36 @@ import javax.swing.JOptionPane;
  */
 public class ChefReport {
 
-    public static void getData() {
+    public static void getChefData_Ordertb() {
+
         Firebase tableRef = ref.child("Orders");// Go to specific Table
         tableRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot ds) {
+                try {
 
-                for (DataSnapshot Data : ds.getChildren()) {
+                    PrintWriter pw = new PrintWriter(new FileWriter("ChefReport.txt"));
 
-                    System.out.println("\n\n" + Data.child("Quanity").getValue() + "\n\n" + Data.child("Exclusions").getValue() + "\n\n" + Data.child("RouteID").getValue());
-                    for (DataSnapshot Data2 : Data.getChildren()) {
-                        System.out.println(Data2);
+                    for (DataSnapshot Data : ds.getChildren()) {//entire database
+
+                        for (DataSnapshot Data2 : Data.getChildren()) {//children of database 
+
+                            for (DataSnapshot Data3 : Data2.getChildren()) {//children of database table
+
+                                pw.println("OrderID: " + Data.getKey());
+                                pw.println("Quantity: " + Data3.child("Quantity").getValue());
+                                pw.println("Exclusions: " + Data3.child("Exclutions").getValue());
+                                pw.println("Allergy: " + Data3.child("Allergy").getValue());
+                                pw.println("");
+
+                            }
+
+                        }
 
                     }
-                    System.out.println("\n\n");
+                    pw.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(ChefReport.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             }

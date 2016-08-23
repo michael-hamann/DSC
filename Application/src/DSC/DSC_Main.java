@@ -37,8 +37,8 @@ public class DSC_Main extends javax.swing.JFrame {
         btnClientTbl = new javax.swing.JButton();
         btnSuburbTbl = new javax.swing.JButton();
         lblView = new javax.swing.JLabel();
-        btnRouteTbl = new javax.swing.JButton();
-        btnOrderTbl1 = new javax.swing.JButton();
+        btnRouteView = new javax.swing.JButton();
+        btnViewOrders = new javax.swing.JButton();
         pnlReports = new javax.swing.JPanel();
         btnDriverRpt = new javax.swing.JButton();
         btnChefRpt = new javax.swing.JButton();
@@ -115,17 +115,17 @@ public class DSC_Main extends javax.swing.JFrame {
         lblView.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblView.setText("View Tables");
 
-        btnRouteTbl.setText("Route Table");
-        btnRouteTbl.addActionListener(new java.awt.event.ActionListener() {
+        btnRouteView.setText("Route View");
+        btnRouteView.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRouteTblActionPerformed(evt);
+                btnRouteViewActionPerformed(evt);
             }
         });
 
-        btnOrderTbl1.setText("Place an Order");
-        btnOrderTbl1.addActionListener(new java.awt.event.ActionListener() {
+        btnViewOrders.setText("View Orders");
+        btnViewOrders.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnOrderTbl1ActionPerformed(evt);
+                btnViewOrdersActionPerformed(evt);
             }
         });
 
@@ -141,8 +141,8 @@ public class DSC_Main extends javax.swing.JFrame {
                     .addComponent(btnClientTbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSuburbTbl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
                     .addComponent(lblView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnRouteTbl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                    .addComponent(btnOrderTbl1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
+                    .addComponent(btnRouteView, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                    .addComponent(btnViewOrders, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlTablesLayout.setVerticalGroup(
@@ -159,9 +159,9 @@ public class DSC_Main extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnSuburbTbl, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnRouteTbl, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnRouteView, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnOrderTbl1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnViewOrders, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(36, Short.MAX_VALUE))
         );
 
@@ -289,12 +289,14 @@ public class DSC_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSuburbTblActionPerformed
 
     private void btnDriverRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDriverRptActionPerformed
-        // TODO add your handling code here:
+      
+        DriverReport.getDriverData_Clientstb();
+        
     }//GEN-LAST:event_btnDriverRptActionPerformed
 
     private void btnChefRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChefRptActionPerformed
 
-        ChefReport.getData(); // get data relavant to ChefReport
+        ChefReport.getChefData_Ordertb(); // get data relavant to ChefReport
 
     }//GEN-LAST:event_btnChefRptActionPerformed
 
@@ -306,15 +308,15 @@ public class DSC_Main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnHandlerRptActionPerformed
 
-    private void btnRouteTblActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRouteTblActionPerformed
+    private void btnRouteViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRouteViewActionPerformed
         this.dispose();
-        new DSC_RouteTable().setVisible(true);
-    }//GEN-LAST:event_btnRouteTblActionPerformed
+        new DSC_RouteView().setVisible(true);
+    }//GEN-LAST:event_btnRouteViewActionPerformed
 
-    private void btnOrderTbl1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrderTbl1ActionPerformed
+    private void btnViewOrdersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewOrdersActionPerformed
         this.dispose();
         new DSC_VeiwOrder().setVisible(true);
-    }//GEN-LAST:event_btnOrderTbl1ActionPerformed
+    }//GEN-LAST:event_btnViewOrdersActionPerformed
 
     /**
      * @param args the command line arguments
@@ -358,10 +360,10 @@ public class DSC_Main extends javax.swing.JFrame {
     private javax.swing.JButton btnDriverTbl;
     private javax.swing.JButton btnHandlerRpt;
     private javax.swing.JButton btnMealsTbl;
-    private javax.swing.JButton btnOrderTbl1;
     private javax.swing.JButton btnPackerRpt;
-    private javax.swing.JButton btnRouteTbl;
+    private javax.swing.JButton btnRouteView;
     private javax.swing.JButton btnSuburbTbl;
+    private javax.swing.JButton btnViewOrders;
     private javax.persistence.EntityManager entityManager;
     private javax.swing.JLabel lblGenerate;
     private javax.swing.JLabel lblLogo;
