@@ -37,7 +37,7 @@ public class DSC_Main extends javax.swing.JFrame {
         btnClientTbl = new javax.swing.JButton();
         btnSuburbTbl = new javax.swing.JButton();
         lblView = new javax.swing.JLabel();
-        btnRouteTbl = new javax.swing.JButton();
+        btnRouteView = new javax.swing.JButton();
         btnViewOrders = new javax.swing.JButton();
         pnlReports = new javax.swing.JPanel();
         btnDriverRpt = new javax.swing.JButton();
@@ -115,10 +115,10 @@ public class DSC_Main extends javax.swing.JFrame {
         lblView.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblView.setText("View Tables");
 
-        btnRouteTbl.setText("Route Table");
-        btnRouteTbl.addActionListener(new java.awt.event.ActionListener() {
+        btnRouteView.setText("Route View");
+        btnRouteView.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRouteTblActionPerformed(evt);
+                btnRouteViewActionPerformed(evt);
             }
         });
 
@@ -141,7 +141,7 @@ public class DSC_Main extends javax.swing.JFrame {
                     .addComponent(btnClientTbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSuburbTbl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
                     .addComponent(lblView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnRouteTbl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                    .addComponent(btnRouteView, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
                     .addComponent(btnViewOrders, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -159,7 +159,7 @@ public class DSC_Main extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnSuburbTbl, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnRouteTbl, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnRouteView, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnViewOrders, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(36, Short.MAX_VALUE))
@@ -308,10 +308,10 @@ public class DSC_Main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnHandlerRptActionPerformed
 
-    private void btnRouteTblActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRouteTblActionPerformed
+    private void btnRouteViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRouteViewActionPerformed
         this.dispose();
-        new DSC_RouteTable().setVisible(true);
-    }//GEN-LAST:event_btnRouteTblActionPerformed
+        new DSC_RouteView().setVisible(true);
+    }//GEN-LAST:event_btnRouteViewActionPerformed
 
     private void btnViewOrdersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewOrdersActionPerformed
         this.dispose();
@@ -361,7 +361,7 @@ public class DSC_Main extends javax.swing.JFrame {
     private javax.swing.JButton btnHandlerRpt;
     private javax.swing.JButton btnMealsTbl;
     private javax.swing.JButton btnPackerRpt;
-    private javax.swing.JButton btnRouteTbl;
+    private javax.swing.JButton btnRouteView;
     private javax.swing.JButton btnSuburbTbl;
     private javax.swing.JButton btnViewOrders;
     private javax.persistence.EntityManager entityManager;
