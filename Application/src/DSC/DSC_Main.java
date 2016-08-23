@@ -289,12 +289,14 @@ public class DSC_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSuburbTblActionPerformed
 
     private void btnDriverRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDriverRptActionPerformed
-        // TODO add your handling code here:
+      
+        DriverReport.getDriverData_Clientstb();
+        
     }//GEN-LAST:event_btnDriverRptActionPerformed
 
     private void btnChefRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChefRptActionPerformed
 
-        ChefReport.getData(); // get data relavant to ChefReport
+        ChefReport.getChefData_Ordertb(); // get data relavant to ChefReport
 
     }//GEN-LAST:event_btnChefRptActionPerformed
 

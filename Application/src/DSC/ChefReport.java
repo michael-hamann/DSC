@@ -23,7 +23,8 @@ import javax.swing.JOptionPane;
  */
 public class ChefReport {
 
-    public static void getData() {
+    public static void getChefData_Ordertb() {
+
         Firebase tableRef = ref.child("Orders");// Go to specific Table
         tableRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -31,23 +32,22 @@ public class ChefReport {
                 try {
 
                     PrintWriter pw = new PrintWriter(new FileWriter("ChefReport.txt"));
-                    
+
                     for (DataSnapshot Data : ds.getChildren()) {//entire database
 
                         for (DataSnapshot Data2 : Data.getChildren()) {//children of database 
 
                             for (DataSnapshot Data3 : Data2.getChildren()) {//children of database table
-                                
-                                pw.println(Data3.getKey());
+
+                                pw.println("OrderID: " + Data.getKey());
                                 pw.println("Quantity: " + Data3.child("Quantity").getValue());
                                 pw.println("Exclusions: " + Data3.child("Exclutions").getValue());
-                                
-                                System.out.println(Data3.getKey() + "\n" + "Quantity: " + Data3.child("Quantity").getValue() + "\n" + "Exclusions: " + Data3.child("Exclutions").getValue() + "\n\n");
+                                pw.println("Allergy: " + Data3.child("Allergy").getValue());
+                                pw.println("");
 
                             }
 
                         }
-                        System.out.println("\n\n");
 
                     }
                     pw.close();
