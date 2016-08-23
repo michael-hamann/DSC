@@ -875,7 +875,7 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
             }
         } else {
             this.dispose();
-            new DSC_Add().setVisible(true);
+            
         }
     }//GEN-LAST:event_btnAddActionPerformed
 
