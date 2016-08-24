@@ -14,7 +14,6 @@ public class DSC_Main extends javax.swing.JFrame {
     public DSC_Main() {
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        DBClass.makeConn();
     }
 
     /**

@@ -443,11 +443,11 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
 //                + "	VALUES (" + newID + ", '" + newName + "', '" + newSurname + "', '"+ newAddress + "', '"+
 //                newAddInfo + "', '" + newContactNo+ "', '" + newAltNum + "', '" + newEmail +  "', '0');";
                 try {
-                    Connection c = DBClass.getConnection();
-                    Statement stmt = c.createStatement();
-                    //stmt.executeUpdate(query);
-                    JOptionPane.showMessageDialog(this, "Saved");
-                    back = true;
+//                    Connection c = DBClass.getConnection();
+//                    Statement stmt = c.createStatement();
+//                    //stmt.executeUpdate(query);
+//                    JOptionPane.showMessageDialog(this, "Saved");
+//                    back = true;
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -495,11 +495,11 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
         int numRows = 0;
 
         try {
-            Connection c = DBClass.getConnection();
-            Statement stmt = c.createStatement();
-            rs = stmt.executeQuery(query);
-            rs.next();
-            numRows = rs.getInt(1);
+//            Connection c = DBClass.getConnection();
+//            Statement stmt = c.createStatement();
+//            rs = stmt.executeQuery(query);
+//            rs.next();
+//            numRows = rs.getInt(1);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -519,17 +519,17 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Orders: " + orderID + " will be deleted", "Delete Notification", JOptionPane.INFORMATION_MESSAGE);
 
                 try {
-                    Connection c = DBClass.getConnection();
-                    Statement stmt = c.createStatement();
-
-                    String deleteMeals = "DELETE FROM doorstepchef.meal_tb WHERE OrderID = '" + orderID + "'";
-                    stmt.executeUpdate(deleteMeals);
-
-                    String deleteDriver = "DELETE FROM doorstepchef.order_tb WHERE OrderID = '" + orderID + "'";
-                    stmt.executeUpdate(deleteDriver);
-
-                    JOptionPane.showMessageDialog(this, "Orders: " + orderID + " has been deleted. \nPlease note removing this Order has also removed all meals assosiated with it.");
-                    //refresh jList
+//                    Connection c = DBClass.getConnection();
+//                    Statement stmt = c.createStatement();
+//
+//                    String deleteMeals = "DELETE FROM doorstepchef.meal_tb WHERE OrderID = '" + orderID + "'";
+//                    stmt.executeUpdate(deleteMeals);
+//
+//                    String deleteDriver = "DELETE FROM doorstepchef.order_tb WHERE OrderID = '" + orderID + "'";
+//                    stmt.executeUpdate(deleteDriver);
+//
+//                    JOptionPane.showMessageDialog(this, "Orders: " + orderID + " has been deleted. \nPlease note removing this Order has also removed all meals assosiated with it.");
+//                    //refresh jList
 
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);

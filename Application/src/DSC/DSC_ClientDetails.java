@@ -485,11 +485,11 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
         int numRows = 0;
 
         try {
-            Connection c = DBClass.getConnection();
-            Statement stmt = c.createStatement();
-            rs = stmt.executeQuery(query);
-            rs.next();
-            numRows = rs.getInt(1);
+          //  Connection c = DBClass.getConnection();
+        //    Statement stmt = c.createStatement();
+         //   rs = stmt.executeQuery(query);
+         //   rs.next();
+         //   numRows = rs.getInt(1);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -511,20 +511,20 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, name + " will be deleted", "Delete Notification", JOptionPane.INFORMATION_MESSAGE);
 
                 try {
-                    Connection c = DBClass.getConnection();
-                    Statement stmt = c.createStatement();
+                   // Connection c = DBClass.getConnection();
+                 //   Statement stmt = c.createStatement();
 
-                    String updateOrderID = "UPDATE order_tb SET Client_ID =0 WHERE Client_ID = '" + clientID + "'";
-                    stmt.executeUpdate(updateOrderID);
-
-                    String updateSuburbID = "UPDATE client_tb SET SuburbID = 0 WHERE ClientID = '" + clientID + "'";
-                    stmt.executeUpdate(updateSuburbID);
-
-                    String deleteClient = "DELETE FROM doorstepchef.client_tb WHERE ClientID LIKE '" + clientID + "'";
-                    stmt.executeUpdate(deleteClient);
-
-                    String deleteOrders = "DELETE FROM doorstepchef.order_tb WHERE Client_ID LIKE '" + clientID + "'";
-                    stmt.executeUpdate(deleteOrders);
+//                    String updateOrderID = "UPDATE order_tb SET Client_ID =0 WHERE Client_ID = '" + clientID + "'";
+//                    stmt.executeUpdate(updateOrderID);
+//
+//                    String updateSuburbID = "UPDATE client_tb SET SuburbID = 0 WHERE ClientID = '" + clientID + "'";
+//                    stmt.executeUpdate(updateSuburbID);
+//
+//                    String deleteClient = "DELETE FROM doorstepchef.client_tb WHERE ClientID LIKE '" + clientID + "'";
+//                    stmt.executeUpdate(deleteClient);
+//
+//                    String deleteOrders = "DELETE FROM doorstepchef.order_tb WHERE Client_ID LIKE '" + clientID + "'";
+//                    stmt.executeUpdate(deleteOrders);
 
                     JOptionPane.showMessageDialog(this, "Client has been deleted. \n Orders of this client have been removed.");
 
@@ -563,25 +563,25 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
            
             String query = "SELECT SuburbID FROM suburb_tb ;";
             try {
-                Connection c = DBClass.getConnection();
-
-                PreparedStatement stmt = c.prepareStatement("UPDATE doorstepchef.client_tb SET Name = ?,"
-                        + " Surname = ?,  Address = ?,AdditionalInfo  = ?,ContactNumber = ?, "
-                        + "AlternativeNumber = ?,Email = ?,SuburbID = ? WHERE ClientID = ?;");
-                stmt.setString(1, newName);
-                stmt.setString(2, newSurname);
-                stmt.setString(3, newAddress);
-                stmt.setString(4, newAdditionalInfo);
-                stmt.setString(5, newContactNumber);
-                stmt.setString(6, newAlternativeNo);
-                stmt.setString(7, newEmail);
-                stmt.setString(8, newSuburbID);
-                stmt.setShort(9, ID);
-                stmt.executeUpdate();
-
-                JOptionPane.showMessageDialog(this, "Changes Saved");
-                //Refresh
-                back = true;
+//                Connection c = DBClass.getConnection();
+//
+//                PreparedStatement stmt = c.prepareStatement("UPDATE doorstepchef.client_tb SET Name = ?,"
+//                        + " Surname = ?,  Address = ?,AdditionalInfo  = ?,ContactNumber = ?, "
+//                        + "AlternativeNumber = ?,Email = ?,SuburbID = ? WHERE ClientID = ?;");
+//                stmt.setString(1, newName);
+//                stmt.setString(2, newSurname);
+//                stmt.setString(3, newAddress);
+//                stmt.setString(4, newAdditionalInfo);
+//                stmt.setString(5, newContactNumber);
+//                stmt.setString(6, newAlternativeNo);
+//                stmt.setString(7, newEmail);
+//                stmt.setString(8, newSuburbID);
+//                stmt.setShort(9, ID);
+//                stmt.executeUpdate();
+//
+//                JOptionPane.showMessageDialog(this, "Changes Saved");
+//                //Refresh
+//                back = true;
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -609,11 +609,11 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
                         + newAddInfo + "', '" + newContactNo + "', '" + newAltNum + "', '" + newEmail + "','" + newSuburbID + "');";
 
                 try {
-                    Connection c = DBClass.getConnection();
-                    Statement stmt = c.createStatement();
-                    stmt.executeUpdate(query);
-                    JOptionPane.showMessageDialog(this, "Saved");
-                    back = true;
+//                    Connection c = DBClass.getConnection();
+//                    Statement stmt = c.createStatement();
+//                    stmt.executeUpdate(query);
+//                    JOptionPane.showMessageDialog(this, "Saved");
+//                    back = true;
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -672,13 +672,13 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
         String suburbID = txfSuburbID.getText();
 
         try {
-            Connection c = DBClass.getConnection();
-            Statement stmt = c.createStatement();
-            String findSuburb = "SELECT Suburb FROM suburb_tb WHERE SuburbID = '" + suburbID + "'";
-            rs = stmt.executeQuery(findSuburb);
-            rs.next();
-            String suburb = rs.getString(1);
-            txfSuburb.setText(suburb);
+//            Connection c = DBClass.getConnection();
+//            Statement stmt = c.createStatement();
+//            String findSuburb = "SELECT Suburb FROM suburb_tb WHERE SuburbID = '" + suburbID + "'";
+//            rs = stmt.executeQuery(findSuburb);
+//            rs.next();
+//            String suburb = rs.getString(1);
+//            txfSuburb.setText(suburb);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
         }

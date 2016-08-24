@@ -112,28 +112,28 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
     public void setTable(){
         
         try {
-            Connection c = DBClass.getConnection();
-            Statement stmt = c.createStatement();
-            
-            String q = "SELECT client_tb.Name, client_tb.Surname, order_tb.StartingDate,order_tb.FamilySize,"
-                    + "order_tb.Duration FROM order_tb INNER JOIN client_tb ON order_tb.Client_ID = client_tb.ClientID ;";
-            tbrs = stmt.executeQuery(q);
-            tbrs.next();
-            
-            DefaultTableModel model = (DefaultTableModel) tblOrderTable.getModel();
-            model.setRowCount(0);
-            JOptionPane.showMessageDialog(rootPane, "table cleared");
-            int columns = tbrs.getMetaData().getColumnCount();
-        
-            while(tbrs.next()){
-                Object[] row = new Object[columns];
-                for (int i = 1; i <= columns; i++){  
-                     row[i - 1] = tbrs.getObject(i);
-                 }
-            ((DefaultTableModel) tblOrderTable.getModel()).insertRow(tbrs.getRow()-1,row);
-            JOptionPane.showMessageDialog(rootPane, "table populated");
-                 }
-            model.fireTableDataChanged(); 
+//            Connection c = DBClass.getConnection();
+//            Statement stmt = c.createStatement();
+//            
+//            String q = "SELECT client_tb.Name, client_tb.Surname, order_tb.StartingDate,order_tb.FamilySize,"
+//                    + "order_tb.Duration FROM order_tb INNER JOIN client_tb ON order_tb.Client_ID = client_tb.ClientID ;";
+//            tbrs = stmt.executeQuery(q);
+//            tbrs.next();
+//            
+//            DefaultTableModel model = (DefaultTableModel) tblOrderTable.getModel();
+//            model.setRowCount(0);
+//            JOptionPane.showMessageDialog(rootPane, "table cleared");
+//            int columns = tbrs.getMetaData().getColumnCount();
+//        
+//            while(tbrs.next()){
+//                Object[] row = new Object[columns];
+//                for (int i = 1; i <= columns; i++){  
+//                     row[i - 1] = tbrs.getObject(i);
+//                 }
+//            ((DefaultTableModel) tblOrderTable.getModel()).insertRow(tbrs.getRow()-1,row);
+//            JOptionPane.showMessageDialog(rootPane, "table populated");
+//                 }
+//            model.fireTableDataChanged(); 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -788,16 +788,16 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
         ResultSet rs;
       
                  try {
-                    Connection c = DBClass.getConnection();
-                    Statement stmt = c.createStatement();
-                    String query2 = "SELECT Suburb FROM suburb_tb;";
-                    rs = stmt.executeQuery(query2);
-                    rs.next();
-                    if(cmbSuburbs.getItemCount()<2){
-                         while(rs.next()){
-                              cmbSuburbs.addItem(rs.getString("Suburb"));
-                          }
-                    }
+//                    Connection c = DBClass.getConnection();
+//                    Statement stmt = c.createStatement();
+//                    String query2 = "SELECT Suburb FROM suburb_tb;";
+//                    rs = stmt.executeQuery(query2);
+//                    rs.next();
+//                    if(cmbSuburbs.getItemCount()<2){
+//                         while(rs.next()){
+//                              cmbSuburbs.addItem(rs.getString("Suburb"));
+//                          }
+//                    }
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -825,22 +825,22 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, name + " will be deleted", "Delete Notification", JOptionPane.INFORMATION_MESSAGE);
 
             try {
-                Connection c = DBClass.getConnection();
-                Statement stmt = c.createStatement();
-
-                String updateClientID = "UPDATE order_tb SET Client_ID =0 WHERE Client_ID = '" + clientID + "'";
-                stmt.executeUpdate(updateClientID);
-
-                String updateSuburbID = "UPDATE client_tb SET SuburbID = 0 WHERE ClientID = '" + clientID + "'";
-                stmt.executeUpdate(updateSuburbID);
-                
-                String deleteClient = "DELETE FROM doorstepchef.client_tb WHERE ClientID LIKE '" + clientID + "'";
-                stmt.executeUpdate(deleteClient);
-
-                String deleteOrders = "DELETE FROM doorstepchef.order_tb WHERE Client_ID LIKE '" + clientID + "'";
-                stmt.executeUpdate(deleteOrders);
-
-                JOptionPane.showMessageDialog(this, "Client has been deleted. \n Orders of this client have been removed.");
+//                Connection c = DBClass.getConnection();
+//                Statement stmt = c.createStatement();
+//
+//                String updateClientID = "UPDATE order_tb SET Client_ID =0 WHERE Client_ID = '" + clientID + "'";
+//                stmt.executeUpdate(updateClientID);
+//
+//                String updateSuburbID = "UPDATE client_tb SET SuburbID = 0 WHERE ClientID = '" + clientID + "'";
+//                stmt.executeUpdate(updateSuburbID);
+//                
+//                String deleteClient = "DELETE FROM doorstepchef.client_tb WHERE ClientID LIKE '" + clientID + "'";
+//                stmt.executeUpdate(deleteClient);
+//
+//                String deleteOrders = "DELETE FROM doorstepchef.order_tb WHERE Client_ID LIKE '" + clientID + "'";
+//                stmt.executeUpdate(deleteOrders);
+//
+//                JOptionPane.showMessageDialog(this, "Client has been deleted. \n Orders of this client have been removed.");
 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
@@ -894,48 +894,48 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
            
             ResultSet rs;
             try {
-                Connection c = DBClass.getConnection();
-                Statement stmt2 = c.createStatement();
-                String findSuburbID = "SELECT SuburbID FROM suburb_tb WHERE Suburb LIKE '"+ newSuburb +"';";
-                rs = stmt2.executeQuery(findSuburbID);
-                rs.next();
-                String newSuburbID = rs.getString(1);
-                
-                PreparedStatement stmt = c.prepareStatement("UPDATE doorstepchef.client_tb SET Name = ?,"
-                        + " Surname = ?,  Address = ?,AdditionalInfo  = ?,ContactNumber = ?, "
-                        + "AlternativeNumber = ?,Email = ?,SuburbID = ? WHERE ClientID = ?;");
-                stmt.setString(1, newName);
-                stmt.setString(2, newSurname);
-                stmt.setString(3, newAddress);
-                stmt.setString(4, newAdditionalInfo);
-                stmt.setString(5, newContactNumber);
-                stmt.setString(6, newAlternativeNo);
-                stmt.setString(7, newEmail);
-                stmt.setString(8, newSuburbID);
-                stmt.setShort(9, ID);
-                stmt.executeUpdate();
-                
-                int orderID =Integer.parseInt(txfOrderID.getText());
-                int newFamilySize = (int) spnOrderFamilySize.getValue();
-                Date newStartingDate = new java.sql.Date((long)spnOrderStartingDate.getValue());
-                String newRouteID = txfOrderRouteID.getText();
-                String newDuration = txfOrderDuration.getText();
-                String newOrderClientID = txfOrderClientID.getText();
-                
-                stmt = c.prepareStatement("UPDATE doorstepchef.order_tb SET FamilySize = ?,"
-                        + " StartingDate = ?,  RouteID = ?,Duration  = ?,Client_ID = ?, "
-                        + " WHERE OrderID = ?;");
-                
-                stmt.setInt(1, newFamilySize);
-                stmt.setDate(2, (java.sql.Date) newStartingDate);
-                stmt.setInt(3 ,Integer.parseInt(newRouteID));
-                stmt.setString(4,newDuration);
-                stmt.setString(5, newOrderClientID );
-                stmt.setInt(6, orderID);
-
-                JOptionPane.showMessageDialog(this, "Changes Saved");
-                //Refresh
-                back = true;
+//                Connection c = DBClass.getConnection();
+//                Statement stmt2 = c.createStatement();
+//                String findSuburbID = "SELECT SuburbID FROM suburb_tb WHERE Suburb LIKE '"+ newSuburb +"';";
+//                rs = stmt2.executeQuery(findSuburbID);
+//                rs.next();
+//                String newSuburbID = rs.getString(1);
+//                
+//                PreparedStatement stmt = c.prepareStatement("UPDATE doorstepchef.client_tb SET Name = ?,"
+//                        + " Surname = ?,  Address = ?,AdditionalInfo  = ?,ContactNumber = ?, "
+//                        + "AlternativeNumber = ?,Email = ?,SuburbID = ? WHERE ClientID = ?;");
+//                stmt.setString(1, newName);
+//                stmt.setString(2, newSurname);
+//                stmt.setString(3, newAddress);
+//                stmt.setString(4, newAdditionalInfo);
+//                stmt.setString(5, newContactNumber);
+//                stmt.setString(6, newAlternativeNo);
+//                stmt.setString(7, newEmail);
+//                stmt.setString(8, newSuburbID);
+//                stmt.setShort(9, ID);
+//                stmt.executeUpdate();
+//                
+//                int orderID =Integer.parseInt(txfOrderID.getText());
+//                int newFamilySize = (int) spnOrderFamilySize.getValue();
+//                Date newStartingDate = new java.sql.Date((long)spnOrderStartingDate.getValue());
+//                String newRouteID = txfOrderRouteID.getText();
+//                String newDuration = txfOrderDuration.getText();
+//                String newOrderClientID = txfOrderClientID.getText();
+//                
+//                stmt = c.prepareStatement("UPDATE doorstepchef.order_tb SET FamilySize = ?,"
+//                        + " StartingDate = ?,  RouteID = ?,Duration  = ?,Client_ID = ?, "
+//                        + " WHERE OrderID = ?;");
+//                
+//                stmt.setInt(1, newFamilySize);
+//                stmt.setDate(2, (java.sql.Date) newStartingDate);
+//                stmt.setInt(3 ,Integer.parseInt(newRouteID));
+//                stmt.setString(4,newDuration);
+//                stmt.setString(5, newOrderClientID );
+//                stmt.setInt(6, orderID);
+//
+//                JOptionPane.showMessageDialog(this, "Changes Saved");
+//                //Refresh
+//                back = true;
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -961,11 +961,11 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
                                 + "	VALUES (" + newID + ", '" + newName + "', '" + newSurname + "', '"+ newAddress + "', '"+
                                 newAddInfo + "', '" + newContactNo+ "', '" + newAltNum + "', '" + newEmail +  "', '0');";
                 try {
-                    Connection c = DBClass.getConnection();
-                    Statement stmt = c.createStatement();
-                    stmt.executeUpdate(query);
-                    JOptionPane.showMessageDialog(this, "Saved");
-                    back = true;
+//                    Connection c = DBClass.getConnection();
+//                    Statement stmt = c.createStatement();
+//                    stmt.executeUpdate(query);
+//                    JOptionPane.showMessageDialog(this, "Saved");
+//                    back = true;
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -1014,16 +1014,16 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
         ResultSet rs;
         
         try {
-                    Connection c = DBClass.getConnection();
-                    Statement stmt = c.createStatement();
-                    String query2 = "SELECT Suburb FROM suburb_tb;";
-                    rs = stmt.executeQuery(query2);
-                    rs.next();
-                    if(cmbSuburbs.getItemCount()<2){
-                         while(rs.next()){
-                              cmbSuburbs.addItem(rs.getString("Suburb"));
-                          }
-                    }
+//                    Connection c = DBClass.getConnection();
+//                    Statement stmt = c.createStatement();
+//                    String query2 = "SELECT Suburb FROM suburb_tb;";
+//                    rs = stmt.executeQuery(query2);
+//                    rs.next();
+//                    if(cmbSuburbs.getItemCount()<2){
+//                         while(rs.next()){
+//                              cmbSuburbs.addItem(rs.getString("Suburb"));
+//                          }
+//                    }
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -1037,78 +1037,78 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
         ResultSet orderRS;
         
         try {
-            Connection c = DBClass.getConnection();
-            Statement stmt = c.createStatement();
-            clientRS = stmt.executeQuery(searchElement);
-            clientRS.next();
-             if(clientRS == null || !clientRS.first()){
-                 //display no items found based on search
-                 JOptionPane.showMessageDialog(rootPane, "No records found of '"+searchFor+"'!Please check that '"+column+"' is spelt correctly.");
-            }else{
-              
-               //display searched items in client panel
-               txfClientID.setText(clientRS.getString(1));
-               txfClientName.setText(clientRS.getString(2));
-               txfClientSurname.setText(clientRS.getString(3));
-               txfClientAddress.setText(clientRS.getString(4));
-               txfAddInfo.setText(clientRS.getString(5));
-               txfClientContactNo.setText(clientRS.getString(6));
-               txfAltNum.setText(clientRS.getString(7));
-               txfClientEmail.setText(clientRS.getString(8));
-               
-              //get suburb name from suburb table using fk
-               String findSuburbID = "SELECT SuburbID FROM client_tb WHERE ClientID LIKE '"+clientRS.getString(1)+"';";
-               clientRS = stmt.executeQuery(findSuburbID);
-               clientRS.next();
-               String suburbID = clientRS.getString(1);
-               
-               String findsuburb = "SELECT Suburb FROM suburb_TB WHERE SuburbID = '"+suburbID+"';";
-               clientRS = stmt.executeQuery(findsuburb);
-               clientRS.next();
-               String sub = clientRS.getString(1);
-                for (int i = 0; i < cmbSuburbs.getItemCount(); i++) {
-                    String item = cmbSuburbs.getItemAt(i);
-                    if(item.equals(sub)){
-                        cmbSuburbs.setSelectedIndex(i);
-                        break;
-                    }
-                }
-               cmbSuburbs.setSelectedItem(clientRS.getString(1));
-               
-               String findOrders = "SELECT * FROM order_tb WHERE Client_ID LIKE '"+txfClientID.getText()+ "';";
-               orderRS = stmt.executeQuery(findOrders);
-               orderRS.next();
-               //display if any the order details
-               if(!orderRS.first()){
-                   JOptionPane.showMessageDialog(rootPane, "No orders found for '"+searchFor+"'.");
-               }else{
-                    txfOrderID.setText(orderRS.getString(1));
-                    spnOrderFamilySize.setValue(orderRS.getInt(2));
-                    spnOrderStartingDate.setValue(orderRS.getDate(3));
-                    txfOrderRouteID.setText(orderRS.getString(4));
-                    txfOrderDuration.setText(orderRS.getString(5));
-                    txfOrderClientID.setText(orderRS.getString(6));
-               }
-          }
+//            Connection c = DBClass.getConnection();
+//            Statement stmt = c.createStatement();
+//            clientRS = stmt.executeQuery(searchElement);
+//            clientRS.next();
+//             if(clientRS == null || !clientRS.first()){
+//                 //display no items found based on search
+//                 JOptionPane.showMessageDialog(rootPane, "No records found of '"+searchFor+"'!Please check that '"+column+"' is spelt correctly.");
+//            }else{
+//              
+//               //display searched items in client panel
+//               txfClientID.setText(clientRS.getString(1));
+//               txfClientName.setText(clientRS.getString(2));
+//               txfClientSurname.setText(clientRS.getString(3));
+//               txfClientAddress.setText(clientRS.getString(4));
+//               txfAddInfo.setText(clientRS.getString(5));
+//               txfClientContactNo.setText(clientRS.getString(6));
+//               txfAltNum.setText(clientRS.getString(7));
+//               txfClientEmail.setText(clientRS.getString(8));
+//               
+//              //get suburb name from suburb table using fk
+//               String findSuburbID = "SELECT SuburbID FROM client_tb WHERE ClientID LIKE '"+clientRS.getString(1)+"';";
+//               clientRS = stmt.executeQuery(findSuburbID);
+//               clientRS.next();
+//               String suburbID = clientRS.getString(1);
+//               
+//               String findsuburb = "SELECT Suburb FROM suburb_TB WHERE SuburbID = '"+suburbID+"';";
+//               clientRS = stmt.executeQuery(findsuburb);
+//               clientRS.next();
+//               String sub = clientRS.getString(1);
+//                for (int i = 0; i < cmbSuburbs.getItemCount(); i++) {
+//                    String item = cmbSuburbs.getItemAt(i);
+//                    if(item.equals(sub)){
+//                        cmbSuburbs.setSelectedIndex(i);
+//                        break;
+//                    }
+//                }
+//               cmbSuburbs.setSelectedItem(clientRS.getString(1));
+//               
+//               String findOrders = "SELECT * FROM order_tb WHERE Client_ID LIKE '"+txfClientID.getText()+ "';";
+//               orderRS = stmt.executeQuery(findOrders);
+//               orderRS.next();
+//               //display if any the order details
+//               if(!orderRS.first()){
+//                   JOptionPane.showMessageDialog(rootPane, "No orders found for '"+searchFor+"'.");
+//               }else{
+//                    txfOrderID.setText(orderRS.getString(1));
+//                    spnOrderFamilySize.setValue(orderRS.getInt(2));
+//                    spnOrderStartingDate.setValue(orderRS.getDate(3));
+//                    txfOrderRouteID.setText(orderRS.getString(4));
+//                    txfOrderDuration.setText(orderRS.getString(5));
+//                    txfOrderClientID.setText(orderRS.getString(6));
+//               }
+//          }
           
         String id = txfOrderID.getText();
         DefaultTableModel model = (DefaultTableModel) tblMeals.getModel();
         model.setRowCount(0);
         
         String findrec ="SELECT * FROM meal_tb WHERE OrderID LIKE '"+id+"';";
-        orderRS = stmt.executeQuery(findrec);
+       // orderRS = stmt.executeQuery(findrec);
         
-        int columns = orderRS.getMetaData().getColumnCount();
+     //   int columns = orderRS.getMetaData().getColumnCount();
         
-        while(orderRS.next()){
-        Object[] row = new Object[columns];
-        for (int i = 1; i <= columns; i++){  
-                row[i - 1] = orderRS.getObject(i);
-        }
-        ((DefaultTableModel) tblMeals.getModel()).insertRow(orderRS.getRow()-1,row);
-        }
-        
-        model.fireTableDataChanged();   
+//        while(orderRS.next()){
+//        Object[] row = new Object[columns];
+//        for (int i = 1; i <= columns; i++){  
+//                row[i - 1] = orderRS.getObject(i);
+//        }
+//        ((DefaultTableModel) tblMeals.getModel()).insertRow(orderRS.getRow()-1,row);
+//        }
+//        
+//        model.fireTableDataChanged();   
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
         }

@@ -390,21 +390,21 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
             String newVehicleReg = txfVehicleReg.getText().trim();
 
             try {
-                Connection c = DBClass.getConnection();
-                
-                PreparedStatement stmt = c.prepareStatement
-        ("UPDATE doorstepchef.driver_tb SET DriverName = ?, DriverSurname = ?, ContactNumber = ?, Address = ?, VehicleReg = ? WHERE DriverID = ?;");
-                stmt.setString(1, newName);
-                stmt.setString(2, newSurname);
-                stmt.setString(3, newContactNo);
-                stmt.setString(4, newAddress);
-                stmt.setString(5, newVehicleReg);
-                stmt.setShort(6, ID);
-                stmt.executeUpdate();
-                
-                JOptionPane.showMessageDialog(this, "Changes Saved");
-                //Refresh
-                back = true;
+//                Connection c = DBClass.getConnection();
+//                
+//                PreparedStatement stmt = c.prepareStatement
+//        ("UPDATE doorstepchef.driver_tb SET DriverName = ?, DriverSurname = ?, ContactNumber = ?, Address = ?, VehicleReg = ? WHERE DriverID = ?;");
+//                stmt.setString(1, newName);
+//                stmt.setString(2, newSurname);
+//                stmt.setString(3, newContactNo);
+//                stmt.setString(4, newAddress);
+//                stmt.setString(5, newVehicleReg);
+//                stmt.setShort(6, ID);
+//                stmt.executeUpdate();
+//                
+//                JOptionPane.showMessageDialog(this, "Changes Saved");
+//                //Refresh
+//                back = true;
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -426,11 +426,11 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                         + "	VALUES (" + newID + ", '" + newName + "', '" + newContactNo + "', '" + newAddress + "', '" + newVehicleReg + "', '" + newSurname + "');";
 
                 try {
-                    Connection c = DBClass.getConnection();
-                    Statement stmt = c.createStatement();
-                    stmt.executeUpdate(query);
-                    JOptionPane.showMessageDialog(this, "New Driver Saved");
-                    back = true;
+//                    Connection c = DBClass.getConnection();
+//                    Statement stmt = c.createStatement();
+//                    stmt.executeUpdate(query);
+//                    JOptionPane.showMessageDialog(this, "New Driver Saved");
+//                    back = true;
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -470,11 +470,11 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         int numRows = 0;
 
         try {
-            Connection c = DBClass.getConnection();
-            Statement stmt = c.createStatement();
-            rs = stmt.executeQuery(query);
-            rs.next();
-            numRows = rs.getInt(1);
+//            Connection c = DBClass.getConnection();
+//            Statement stmt = c.createStatement();
+//            rs = stmt.executeQuery(query);
+//            rs.next();
+//            numRows = rs.getInt(1);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -497,18 +497,18 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, name + " will be deleted", "Delete Notification", JOptionPane.INFORMATION_MESSAGE);
 
                 try {
-                    Connection c = DBClass.getConnection();
-                    Statement stmt = c.createStatement();
-
-                    String update = "UPDATE route_tb SET DriverID = 0 WHERE DriverID = '" + driverID + "'";
-                    stmt.executeUpdate(update);
-
-                    String deleteDriver = "DELETE FROM doorstepchef.driver_tb WHERE DriverID LIKE '" + driverID + "'";
-                    stmt.executeUpdate(deleteDriver);
-
-                    JOptionPane.showMessageDialog(this, "Driver has been deleted. \nPlease note removing this driver has affected"
-                            + " \nroute schedules leaving routes without an assigned driver.");
-                    //refresh jList
+//                    Connection c = DBClass.getConnection();
+//                    Statement stmt = c.createStatement();
+//
+//                    String update = "UPDATE route_tb SET DriverID = 0 WHERE DriverID = '" + driverID + "'";
+//                    stmt.executeUpdate(update);
+//
+//                    String deleteDriver = "DELETE FROM doorstepchef.driver_tb WHERE DriverID LIKE '" + driverID + "'";
+//                    stmt.executeUpdate(deleteDriver);
+//
+//                    JOptionPane.showMessageDialog(this, "Driver has been deleted. \nPlease note removing this driver has affected"
+//                            + " \nroute schedules leaving routes without an assigned driver.");
+//                    //refresh jList
 
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
