@@ -1,4 +1,6 @@
-connectionCheck();
+var routeInfo;
+var allSuburbs;
+listSuburbs();
 
 function getDates(dates) {
     var currDate = new Date();
@@ -6,7 +8,7 @@ function getDates(dates) {
     var mon1, mon2, mon3, mon4;
     while (counter < 4) {
         for (var i = 0; i < 7; i++) {
-            if (currDate.getDay() != 1) {
+            if (currDate.getDay() !== 1) {
                 currDate.setDate(currDate.getDate() + 1);
             }
         }
@@ -35,18 +37,76 @@ function getDates(dates) {
             '<option value="option4">' + mon4 + '</option>';
 }
 
+//-------------------------------------------------------------------------*Data Reduction (PHP Side)
+function listSuburbs() {
 
-function listSuburbs(suburbDropdown) {
     var url = "/DoorstepChef/wp-includes/Order/Suburb.php";
+    allSuburbs = [
+        {suburb: "collection", timeframes: ""}
+    ];
+    routeInfo = [
+        {suburb: "", timeframe: "", routeID: "0"}
+    ];
+    var html = document.getElementById("pageContent").innerHTML;
+    document.getElementById("pageContent").innerHTML = "Loading ...";
 
     jQuery.ajax({
         type: 'get',
         url: url,
         success: function (data, textStatus, jqXHR) {
-            document.getElementById(suburbDropdown).innerHTML = data;
+            if (data !== "false") {
+                console.log(data);
+                document.getElementById("pageContent").innerHTML = html;
+                getDates("startDate");
+
+                var routeData = JSON.parse(JSON.parse(data));
+                console.log(routeData);
+                for (var i in routeData) {
+                    if (routeData[i].Active) {
+                        var arr = routeData[i].Suburbs;
+                        var arrTimes = routeData[i].TimeFrame;
+                        for (var j = 0; j < arr.length; j++) {
+                            var found = false;
+                            for (var k = 0; k < allSuburbs.length; k++) {
+                                if (allSuburbs[k].suburb === arr[j]) {
+                                    if (!allSuburbs[k].timeframes.includes(arrTimes)) {
+                                        allSuburbs[k].timeframes += arrTimes + ", ";
+                                    }
+                                    found = true;
+                                }
+                            }
+                            if (!found) {
+                                allSuburbs.push({suburb: arr[j], timeframes: arrTimes + ", "});
+                            }
+                        }
+                    }
+                }
+
+                for (var i in routeData) {
+                    if (routeData[i].Active) {
+                        var arr = routeData[i].Suburbs;
+                        var arrTimes = routeData[i].TimeFrame;
+                        var routeID = i;
+                        for (var j = 0; j < arr.length; j++) {
+                            routeInfo.push({suburb: arr[j], timeframe: arrTimes, routeID: i});
+                        }
+
+                    }
+                }
+
+                var val = '<option hidden="" disabled="disabled" selected="selected">Please Select a Suburb</option>';
+                for (var i = 1; i < allSuburbs.length; i++) {
+                    val += "<option>" + allSuburbs[i].suburb + "</option>";
+                }
+
+                document.getElementById("Suburb").innerHTML = val;
+            } else {
+                document.getElementById("pageContent").innerHTML = "<a>ERROR 400: DATABASE CONNECTION COULD NOT BE ESTABLISHED</a>";
+            }
+
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            alert("Failed to get Dates: " + errorThrown);
+            alert("Failed to get Suburbs: " + errorThrown);
         }
     });
 }
@@ -54,84 +114,223 @@ function listSuburbs(suburbDropdown) {
 
 function timeSlotAdj() {
     var selectedSuburb = document.getElementById("Suburb").options[document.getElementById("Suburb").selectedIndex].text;
-    var url = "/DoorstepChef/wp-includes/Order/TimeSlotChange.php";
+    var responseData = "";
 
-    jQuery.ajax({
-        type: 'get',
-        url: url,
-        data: {suburb: selectedSuburb},
-        dataType: "text",
-        success: function (data, textStatus, jqXHR) {
-            var responseData = data;
-            var responseText = new Array(5);
-            responseText[0] = "<labelB>";
-            responseText[1] = "";
-            responseText[2] = "";
-            responseText[3] = "";
-            responseText[4] = "</labelB> <br><br>";
-            var responses = responseData.split(", ");
-            var firstIterate;
-            for (var i = 0; i < responses.length - 1; i++) {
-
-                if (i == 0) {
-                    firstIterate = 'checked="checked" ';
-                } else {
-                    firstIterate = '';
-                }
-
-                if (responses[i] == "Afternoon") {
-                    responseText[1] = '<input id="rbnAfternoon" ' + firstIterate + ' name="time" type="radio" value="frame1" />      Between 11:00 and 13:00 <br>';
-                } else if (responses[i] == "Late Afternoon") {
-                    responseText[2] = '<input id="rbnLateAfternoon" ' + firstIterate + ' name="time" type="radio" value="frame2" />      Between 14:00 and 16:00<br>';
-                } else if (responses[i] == "Evening") {
-                    responseText[3] = '<input id="rbnEvening" ' + firstIterate + ' name="time" type="radio" value="frame3" />      Between 17:00 and 19:00<br>'
-                }
-            }
-            document.getElementById("TimeSlots").innerHTML = responseText[0] + responseText[1] + responseText[2] + responseText[3] + responseText[4];
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            alert("Something happned: " + errorThrown);
+    for (var i = 0; i < allSuburbs.length; i++) {
+        if (allSuburbs[i].suburb === selectedSuburb) {
+            responseData = allSuburbs[i].timeframes;
         }
-    });
+    }
+
+    var responseText = new Array(5);
+    responseText[0] = "<labelB>";
+    responseText[1] = "";
+    responseText[2] = "";
+    responseText[3] = "";
+    responseText[4] = "</labelB> <br><br>";
+    var responses = responseData.split(", ");
+    var firstIterate = 'checked="checked" ';
+    for (var i = 0; i < responses.length - 1; i++) {
+        if (responses[i] === "Afternoon") {
+            responseText[1] = '<input id="rbnAfternoon" # name="time" type="radio" value="frame1" />      Between 11:00 and 13:00 <br>';
+        } else if (responses[i] === "Late Afternoon") {
+            responseText[2] = '<input id="rbnLateAfternoon" # name="time" type="radio" value="frame2" />      Between 14:00 and 16:00<br>';
+        } else if (responses[i] === "Evening") {
+            responseText[3] = '<input id="rbnEvening" # name="time" type="radio" value="frame3" />      Between 17:00 and 19:00<br>';
+        }
+    }
+
+    for (var i = 1; i < responseText.length - 1; i++) {
+        if (responseText[i].includes("#")) {
+            responseText[i] = responseText[i].replace("#", firstIterate);
+            firstIterate = "";
+        }
+    }
+    document.getElementById("TimeSlots").innerHTML = responseText[0] + responseText[1] + responseText[2] + responseText[3] + responseText[4];
+
+    document.getElementById("addInfo").disabled = false;
+    document.getElementById("address").disabled = false;
+    document.getElementById("addInfo").style.borderColor = "#cccccc";
+    document.getElementById("address").style.borderColor = "#cccccc";
+    document.getElementById("addInfo").style.color = "#666";
+    document.getElementById("address").style.color = "#666";
+    document.getElementById("addInfoLbl").style.color = "#666";
+    document.getElementById("addressLbl").style.color = "#666";
+    document.getElementById("Suburb").style.borderColor = "#cccccc";
+    document.getElementById("suburbErr").innerHTML = "";
 }
 
-function connectionCheck(){
-    var url = "/DoorstepChef/wp-includes/Order/CheckConnection.php";
-    var timeID = setTimeout(connFailed, 5000);
-    var html = document.getElementById("pageContent").innerHTML;
-    
-    document.getElementById("pageContent").innerHTML = "Loading ...";
-    jQuery.ajax({
-        type: 'get',
-        dataType: 'text',
-        url: url,
-        success: function (data, textStatus, jqXHR) {
-            if (data == "") {
-                clearTimeout(timeID);
-                document.getElementById("pageContent").innerHTML = html;
-            }
-        },
-        error: function (jqXHR, textStatus, errorThrown){
-            alert("Someting happned: " + errorThrown);
-        }
-    });
+function submitSimpleTextCheck(component, errorText) {
+    var letters = /^[A-Za-z \'-]+$/;
+    var value = document.getElementById(component).value.trim();
+    if (value === "") {
+        document.getElementById(component).style.borderColor = "#DD5C61";
+        document.getElementById(errorText).innerHTML = "* You can't leave this empty.";
+        return false;
+    } else if (!value.match(letters)) {
+        document.getElementById(component).style.borderColor = "#DD5C61";
+        document.getElementById(errorText).innerHTML = "* This field can only take letters.";
+        return false;
+    } else {
+        document.getElementById(component).style.borderColor = "#cccccc";
+        document.getElementById(errorText).innerHTML = "";
+        return true;
+    }
 }
 
-function connFailed(){
-    document.getElementById("pageContent").innerHTML = "<a>ERROR 400: DATABASE CONNECTION COULD NOT BE ESTABLISHED</a>";
+function submitNumberCheck(component, errorText, compulsory) {
+    var numFormat = /^[0-9]*$/;
+    var value = document.getElementById(component).value.trim() + "";
+    if (compulsory && value === "") {
+        document.getElementById(component).style.borderColor = "#DD5C61";
+        document.getElementById(errorText).innerHTML = "* You can't leave this empty.";
+        return false;
+    } else if (!value.match(numFormat)) {
+        document.getElementById(component).style.borderColor = "#DD5C61";
+        document.getElementById(errorText).innerHTML = "* This field can only take numbers.";
+        return false;
+    } else if (value.length < 10) {
+        document.getElementById(component).style.borderColor = "#DD5C61";
+        document.getElementById(errorText).innerHTML = "* This field has to be 10 digits long.";
+        return false;
+    } else {
+        document.getElementById(component).style.borderColor = "#cccccc";
+        document.getElementById(errorText).innerHTML = "";
+        return true;
+    }
+}
+
+function submitEmailCheck(component, errorText) {
+    var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    var value = document.getElementById(component).value.trim();
+    if (value === "") {
+        document.getElementById(component).style.borderColor = "#cccccc";
+        document.getElementById(errorText).innerHTML = "";
+        return true;
+    } else if (!value.match(mailformat)) {
+        document.getElementById(component).style.borderColor = "#DD5C61";
+        document.getElementById(errorText).innerHTML = "* Not a valid e-mail address.";
+        return false;
+    } else {
+        document.getElementById(component).style.borderColor = "#cccccc";
+        document.getElementById(errorText).innerHTML = "";
+        return true;
+    }
+
+}
+
+function submitAddressCheck(componentSuburb, errorTextSuburb, componentAddress, errorTextAddress) {
+    var suburbValue = document.getElementById("Suburb").options[document.getElementById("Suburb").selectedIndex].text;
+    var addressValue = document.getElementById("address").value;
+
+    if (suburbValue === "Please choose a suburb.") {
+        document.getElementById(componentSuburb).style.borderColor = "#DD5C61";
+        document.getElementById(errorTextSuburb).innerHTML = "* You must select a suburb.";
+        return false;
+    } else if (addressValue === "") {
+        document.getElementById(componentAddress).style.borderColor = "#DD5C61";
+        document.getElementById(errorTextAddress).innerHTML = "* You must supply an address.";
+    } else {
+        document.getElementById(componentAddress).style.borderColor = "#cccccc";
+        document.getElementById(errorTextAddress).innerHTML = "";
+        return true;
+    }
+
+}
+
+function submitFamilyCheck(component, errorText) {
+    var selection = document.getElementById(component).selectedIndex;
+    if (selection === 0) {
+        document.getElementById(errorText).innerHTML = "* You must select a family size.";
+        document.getElementById(component).style.borderColor = "#DD5C61";
+        return false;
+    } else {
+        return true;
+    }
+}
+
+function submitDateCheck(component, errorText) {
+    var selection = document.getElementById(component).selectedIndex;
+    if (selection === 0) {
+        document.getElementById(errorText).innerHTML = "* You must select a starting date.";
+        document.getElementById(component).style.borderColor = "#DD5C61";
+        return false;
+    } else {
+        return true;
+    }
+}
+
+function valColorChange() {
+    document.getElementById("startingDateErr").innerHTML = "";
+    document.getElementById("startDate").style.borderColor = "#ccc";
+}
+
+function findPos(obj) {
+    var curtop = 0;
+    if (obj.offsetParent) {
+        do {
+            curtop += obj.offsetTop;
+        } while (obj = obj.offsetParent);
+        return [curtop];
+    }
 }
 
 function submitData() {
-    var clienName = document.getElementById("name").value;
-    var clientSurname = document.getElementById("surname").value;
-    var contactNum = document.getElementById("contactNum").value;
+    var allGood = true;
+    var compFocus;
+
+    var clienName;
+    if (submitSimpleTextCheck("name", "nameErr")) {
+        clienName = document.getElementById("name").value;
+    } else {
+        window.scroll(0, (findPos(document.getElementById("name")) - 110));
+        allGood = false;
+    }
+
+    var clientSurname;
+    if (submitSimpleTextCheck("surname", "surnameErr")) {
+        clientSurname = document.getElementById("surname").value;
+    } else {
+        if (allGood) {
+            window.scroll(0, (findPos(document.getElementById("surname")) - 110));
+        }
+        allGood = false;
+    }
+
+    var contactNum;
+    if (submitNumberCheck("contactNum", "contactNumErr", true)) {
+        contactNum = document.getElementById("contactNum").value;
+    } else {
+        if (allGood) {
+            window.scroll(0, (findPos(document.getElementById("contactNum")) - 110));
+        }
+        allGood = false;
+    }
+
     var altNum = "";
-    if (!document.getElementById("altNum").value == "") {
-        altNum = document.getElementById("altNum").value;
+    if (!document.getElementById("altNum").value === "") {
+        if (submitNumberCheck("altNum", "altNumErr", false)) {
+            altNum = document.getElementById("altNum").value;
+        } else {
+            if (allGood) {
+                window.scroll(0, (findPos(document.getElementById("altName")) - 110));
+            }
+            allGood = false;
+        }
     } else {
         altNum = "N/A";
     }
-    var email = document.getElementById("email").value;
+
+    var email = "";
+    if (submitEmailCheck("email", "emailErr")) {
+        email = document.getElementById("email").value;
+    } else {
+        if (allGood) {
+            window.scroll(0, (findPos(document.getElementById("email")) - 110));
+        }
+        allGood = false;
+    }
+
     var suburb = "";
     var address = "";
     var addInfo = "";
@@ -140,33 +339,52 @@ function submitData() {
         address = "-";
         addInfo = "-";
     } else {
-        suburb = document.getElementById("Suburb").options[document.getElementById("Suburb").selectedIndex].text;
-        address = document.getElementById("address").value;
-        addInfo = document.getElementById("addInfo").value;
+        if (submitAddressCheck("Suburb", "suburbErr", "address", "addressErr")) {
+            suburb = document.getElementById("Suburb").options[document.getElementById("Suburb").selectedIndex].text;
+            address = document.getElementById("address").value;
+            addInfo = document.getElementById("addInfo").value;
+        } else {
+            if (allGood) {
+                window.scroll(0, (findPos(document.getElementById("Suburb")) - 110));
+            }
+            allGood = false;
+        }
     }
 
-    var familySize = document.getElementById("fam1").selectedIndex;
+    if (submitFamilyCheck("fam1", "fam1Err")) {
+        var familySize = document.getElementById("fam1").selectedIndex;
+    } else {
+        if (allGood) {
+            window.scroll(0, (findPos(document.getElementById("fam1")) - 110));
+        }
+        allGood = false;
+    }
+
     var timeSlot = "";
-    if (document.getElementById("rbnAfternoon") != null) {
+    if (document.getElementById("rbnAfternoon") !== null) {
         if (document.getElementById("rbnAfternoon").checked) {
             timeSlot = "Afternoon";
-            alert(timeSlot);
         }
     }
-    if (document.getElementById("rbnLateAfternoon") != null) {
+    if (document.getElementById("rbnLateAfternoon") !== null) {
         if (document.getElementById("rbnLateAfternoon").checked) {
             timeSlot = "Late Afternoon";
-            alert(timeSlot);
         }
     }
-    if (document.getElementById("rbnEvening") != null) {
+    if (document.getElementById("rbnEvening") !== null) {
         if (document.getElementById("rbnEvening").checked) {
             timeSlot = "Evening";
-            alert(timeSlot);
         }
     }
+    if (submitDateCheck("startDate", "startingDateErr")) {
+        var startingDate = new Date(document.getElementById("startDate").options[document.getElementById("startDate").selectedIndex].text);
+    } else {
+        if (allGood) {
+            window.scroll(0, (findPos(document.getElementById("startDate")) - 110));
+        }
+        allGood = false;
+    }
 
-    var startingDate = new Date(document.getElementById("startDate").options[document.getElementById("startDate").selectedIndex].text);
     var orderDuration = "";
     if (document.getElementById("rbnMonThur").checked) {
         orderDuration = "Monday - Thursday";
@@ -209,35 +427,53 @@ function submitData() {
         console.log(meals[i][3]);
     }
 
-    var jsonOrder = JSON.stringify({
-        "clientName": clienName,
-        "clientSurname": clientSurname,
-        "suburb": suburb,
-        "address": address,
-        "addInfo": addInfo,
-        "contactNum": contactNum,
-        "altNum": altNum,
-        "email": email,
-        "familySize": familySize,
-        "timeSlot": timeSlot,
-        "startingDate": startingDate,
-        "orderDuration": orderDuration,
-        "meals": meals
-    });
 
-    var url = "/DoorstepChef/wp-includes/Order/SubmitOrder.php";
-    jQuery.ajax({
-        type: 'POST',
-        url: url,
-        data: {mydata: jsonOrder},
-        dataType: 'text',
-        success: function (data, textStatus, jqXHR) {
-            document.getElementById("TestDisplay").innerHTML = data + " - data";
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            alert("Failed : " + errorThrown);
+
+
+
+    if (allGood) {
+        var jsonOrder = JSON.stringify({
+            "clientName": clienName,
+            "clientSurname": clientSurname,
+            "suburb": suburb,
+            "address": address,
+            "addInfo": addInfo,
+            "contactNum": contactNum,
+            "altNum": altNum,
+            "email": email,
+            "familySize": familySize,
+            "timeSlot": timeSlot,
+            "startingDate": startingDate,
+            "orderDuration": orderDuration,
+            "meals": meals
+        });
+
+
+        var routeID = "";
+        for (var i = 0; i < routeInfo.length; i++) {
+            if (routeInfo[i]["suburb"] === suburb && routeInfo[i]["timeframe"] === timeSlot) {
+                routeID = routeInfo[i]["routeID"];
+            }
         }
-    });
+        console.log(routeID);
+
+        var url = "/DoorstepChef/wp-includes/Order/SubmitOrder.php";
+        jQuery.ajax({
+            type: 'POST',
+            url: url,
+            data: {mydata: jsonOrder,
+                routeID: routeID},
+            dataType: 'text',
+            success: function (data, textStatus, jqXHR) {
+                document.getElementById("TestDisplay").innerHTML = data;
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert("Failed to add Order: " + errorThrown);
+            }
+        });
+    } else {
+        // --------------------------------------------------------------------- Logic for incorrect values.
+    }
 
     document.getElementById("submit").blur();
 }

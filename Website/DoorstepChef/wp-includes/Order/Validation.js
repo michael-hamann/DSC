@@ -44,7 +44,7 @@ function validateIfMoreMealsCanBeOrdered(compID){
 	var checkSpinner = parseInt(document.getElementById('orderAmount_'+(compID)).value);
 	var validateTotal = document.getElementById("totalMeals").value;
 	
-	if(checkSpinner<0&&validateTotal<0){
+	if(checkSpinner<0||validateTotal<0){
 	
 	alert("Do not do abnormal things!");
 	
@@ -137,7 +137,7 @@ function addOrder() {
 				componentCount = mealsId[iterate];
 				var newdiv = document.createElement('div');
 
-				newdiv.innerHTML =  '<labelA style = "margin-right: 51px" > </labelA> <input class="ordersClass" type="number" name="Orderamount" onChange= "validateIfMoreMealsCanBeOrdered('+componentCount+')" id="orderAmount_' + componentCount + '" min="1" max="6" step="1" value="1" style="width:2.5em; height:1em" ><select name="size" id="mealTypeSelector_' + componentCount + '"><option value="Standard" id = 1>Standard</option><option value="Low Carb" id = 1 >Low Carb</option><option value="Kiddies" id = 1>Kiddies</option></select> <input type = "text" id = "orderAll_' + componentCount+ '" style="height:0.5em"><input type = "text" id = "orderExc_' + componentCount + '" style="height:0.5em"><input type="Deletebutton" value="-" onclick="removeOrder(this,'+componentCount+')" style="height:0.5px">';
+				newdiv.innerHTML =  '<labelA style = "margin-right: 3.6em" > </labelA> <input style="height:1em;width:1.5em" type="number" name="Orderamount" onChange= "validateIfMoreMealsCanBeOrdered('+componentCount+')" id="orderAmount_' + componentCount + '" min="1" max="6" step="1" value="1" > <select name="size" style="height:2em" id="mealTypeSelector_' + componentCount + '"><option value="Standard" id = 1>Standard</option><option value="Low Carb" id = 1 >Low Carb</option><option value="Kiddies" id = 1>Kiddies</option></select> <input type = "text" style="height:1em" id = "orderAll_' + componentCount+ '"> <input type = "text" style="height:1em" id = "orderExc_' + componentCount + '" style="height:0.5em"> <input style="height:1em;background-image: url(https://cdn2.iconfinder.com/data/icons/3_Minicons-Free-_Pack/45/RecycleBin.png)" type="Deletebutton" onclick="removeOrder(this,'+componentCount+')">';
 
                 document.getElementById('order').appendChild(newdiv);
 		        componentCount++;
@@ -146,8 +146,6 @@ function addOrder() {
 			}
 			
 			}catch(Exception){
-				
-				
 				
 			}
 		}
@@ -292,9 +290,6 @@ function testFunction(){
 		alert("Correct!");
 	}
 
-
-
-
 }
 
 
@@ -317,10 +312,10 @@ function checkMeals(){
 	
 	document.getElementById("order").innerHTML = "";
 	
-	order.innerHTML ='<div id="order"> <labelB> <input type="button" onClick = "addOrder()" value = "+" id="addOrderID" > </labelB> <input type="number" onchange="validateIfMoreMealsCanBeOrdered(\'0\')" name="Orderamount" id="orderAmount_0" + min="1" max="6" step="1" value="1" style="width:2.5em; height:1em" ><select name="size" id="mealTypeSelector_0">'+
+	order.innerHTML ='<div id="order"> <labelB> <input type="button" onClick = "addOrder()" value = "+" id="addOrderID" > </labelB> <input type="number" style="height:1em;width:1.5em" onchange="validateIfMoreMealsCanBeOrdered(\'0\')" name="Orderamount" id="orderAmount_0" + min="1" max="6" step="1" value="1" style="width:2.5em;height:1em" > <select name="size" style="height:2em" id="mealTypeSelector_0">'+
                           ' <option value="Standard">Standard</option>'+
                           ' <option value="Low Carb">Low Carb</option>'+
-                           '<option value="Kiddies">Kiddies</option></select><input type = "text" id = "orderAll_0" style="height:0.5em"> <input type = "text" id = "orderExc_0" style="height:0.5em"> </div>'+
+                           '<option value="Kiddies">Kiddies</option></select> <input type = "text" style="height:1em" id = "orderAll_0" style="height:1.5em"> <input type = "text" style="height:1em" id = "orderExc_0"> </div>'+
                            '<div id = "OrderAmount">';
 	
 	

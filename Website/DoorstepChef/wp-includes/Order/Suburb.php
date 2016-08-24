@@ -1,20 +1,27 @@
 <?php
 
-$servername = "22.153.255.61";
-$username = "root";
-$password = "root";
-$dbname = "doorstepchef";
+//https://github.com/firebase/firebase-token-generator-php
+//https://github.com/ktamas77/firebase-php
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+require '/lib/FirebaseLogin/firebaseLib.php';
+require '/lib/TokenGen/TokenGenerator.php';
 
-if ($conn->connect_error) {
-    die("connection failed (Suburb Get): " . $conn->connect_error);
+use Firebase\Firebaselib;
+use Firebase\Token\TokenException;
+use Firebase\Token\TokenGenerator;
+
+try {
+    $generator = new TokenGenerator('9zeiksdYSEyETtuUDSlXiTRAo23KTQBv2mIfrMyp');
+    $token = $generator
+        ->setData(array('uid' => 'Website'))
+        ->create();
+} catch (TokenException $e) {
+    echo "Error: ".$e->getMessage();
 }
 
-$sql = "SELECT DISTINCT Suburb FROM suburb_tb WHERE Suburb NOT LIKE 'Collection' ORDER BY Suburb";
-$results = $conn->query($sql);
-echo '<option hidden="" disabled="disabled" selected="selected">Suburb</option>';
-while ($row = $results->fetch_assoc()) {
-    echo "<option>" . $row['Suburb'] . "</option>";
-}
+$uri = "https://dsc-database.firebaseio.com/";
+$firebase = new FirebaseLib($uri, $token);
+
+$routeData = $firebase->get("Routes/");
+echo json_encode($routeData);
 ?>

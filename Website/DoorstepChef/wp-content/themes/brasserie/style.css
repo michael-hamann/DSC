@@ -150,6 +150,24 @@ section {
 
 }
 
+f {
+
+  	padding-left:3em;
+  	color: #DD5C61;
+  
+}
+
+
+#addInfo,
+#addInfoLbl,
+#addressLbl,
+#address{
+
+	color: #eaeaea;
+  	border-color: #eaeaea;
+  
+}
+
 
 
 ol, ul {
@@ -228,7 +246,7 @@ textarea {
 
 	color: #747474;	
 
-	
+	resize: none;
 
 	font-size: 1.4rem;
 
@@ -736,7 +754,7 @@ textarea {
 
 	background: rgba( 255, 255, 255, 0.3 );
 
-	border: 1px solid #ccc;
+	border: 1px solid #cccccc;
 
 	border-radius: 3px;
 
@@ -750,7 +768,7 @@ input[type=email]:focus,
 
 textarea:focus {
 
-	background: #fff;
+	background: #ffffff;
 
 }
 
@@ -823,6 +841,14 @@ mar{
 
 margin-right = 100px;
 
+}
+
+.ordersClass{
+  
+  height:2px;
+  width:180px;
+  
+  
 }
 
 
