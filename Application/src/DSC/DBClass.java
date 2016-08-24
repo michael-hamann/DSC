@@ -15,12 +15,11 @@ import javax.swing.JOptionPane;
  */
 public class DBClass {
 
-    public static Firebase ref;
+    protected static Firebase ref;
 
     public static Firebase getConnection(String uid){
-        String token = genToken(uid);
         ref = new Firebase("https://dsc-database.firebaseio.com/");
-        ref.authWithCustomToken(token, new Firebase.AuthResultHandler() {
+        ref.authWithCustomToken(genToken(uid), new Firebase.AuthResultHandler() {
             @Override
             public void onAuthenticated(AuthData ad) {
                 System.out.println("Database succesfully connected!");

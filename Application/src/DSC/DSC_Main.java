@@ -12,6 +12,7 @@ public class DSC_Main extends javax.swing.JFrame {
      * Creates new form DSC_Main
      */
     public DSC_Main() {
+        DBClass.getConnection("Website");
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
@@ -25,13 +26,12 @@ public class DSC_Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("doorstepchef?zeroDateTimeBehavior=convertToNullPU").createEntityManager();
         pnlBackground = new javax.swing.JPanel();
         pnlHeading = new javax.swing.JPanel();
         lblLogo = new javax.swing.JLabel();
         lblName = new javax.swing.JLabel();
         pnlTables = new javax.swing.JPanel();
-        btnDriverTbl = new javax.swing.JButton();
+        btnPlaceOrder = new javax.swing.JButton();
         btnMealsTbl = new javax.swing.JButton();
         btnClientTbl = new javax.swing.JButton();
         btnSuburbTbl = new javax.swing.JButton();
@@ -82,10 +82,10 @@ public class DSC_Main extends javax.swing.JFrame {
         pnlTables.setBackground(new java.awt.Color(0, 204, 51));
         pnlTables.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        btnDriverTbl.setText("Driver Table");
-        btnDriverTbl.addActionListener(new java.awt.event.ActionListener() {
+        btnPlaceOrder.setText("Place Order");
+        btnPlaceOrder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDriverTblActionPerformed(evt);
+                btnPlaceOrderActionPerformed(evt);
             }
         });
 
@@ -135,7 +135,7 @@ public class DSC_Main extends javax.swing.JFrame {
             .addGroup(pnlTablesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlTablesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnDriverTbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnPlaceOrder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnMealsTbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnClientTbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSuburbTbl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
@@ -150,7 +150,7 @@ public class DSC_Main extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(lblView, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnDriverTbl, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnPlaceOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnMealsTbl, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -267,10 +267,10 @@ public class DSC_Main extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnDriverTblActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDriverTblActionPerformed
+    private void btnPlaceOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlaceOrderActionPerformed
         this.dispose();
-        new DSC_DriverTable().setVisible(true);
-    }//GEN-LAST:event_btnDriverTblActionPerformed
+        new DSC_Place_Order().setVisible(true);
+    }//GEN-LAST:event_btnPlaceOrderActionPerformed
 
     private void btnMealsTblActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMealsTblActionPerformed
         this.dispose();
@@ -356,14 +356,13 @@ public class DSC_Main extends javax.swing.JFrame {
     private javax.swing.JButton btnChefRpt;
     private javax.swing.JButton btnClientTbl;
     private javax.swing.JButton btnDriverRpt;
-    private javax.swing.JButton btnDriverTbl;
     private javax.swing.JButton btnHandlerRpt;
     private javax.swing.JButton btnMealsTbl;
     private javax.swing.JButton btnPackerRpt;
+    private javax.swing.JButton btnPlaceOrder;
     private javax.swing.JButton btnRouteView;
     private javax.swing.JButton btnSuburbTbl;
     private javax.swing.JButton btnViewOrders;
-    private javax.persistence.EntityManager entityManager;
     private javax.swing.JLabel lblGenerate;
     private javax.swing.JLabel lblLogo;
     private javax.swing.JLabel lblName;
