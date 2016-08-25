@@ -11,29 +11,32 @@ import javax.swing.JOptionPane;
 /**
  *
  * @author Aliens_Michael
- * 
+ *
  */
 public class DBClass {
 
-    protected static Firebase ref;
+    private static Firebase ref;
 
-    public static Firebase getConnection(String uid){
-        ref = new Firebase("https://dsc-database.firebaseio.com/");
-        ref.authWithCustomToken(genToken(uid), new Firebase.AuthResultHandler() {
-            @Override
-            public void onAuthenticated(AuthData ad) {
-                System.out.println("Database succesfully connected!");
-            }
+    public static Firebase getInstance(String uid) {
+        if (ref == null) {
+            ref = new Firebase("https://dsc-database.firebaseio.com/");
+            ref.authWithCustomToken(genToken(uid), new Firebase.AuthResultHandler() {
+                @Override
+                public void onAuthenticated(AuthData ad) {
+                    System.out.println("Database succesfully connected!");
+                }
 
-            @Override
-            public void onAuthenticationError(FirebaseError fe) {
-                JOptionPane.showMessageDialog(null, "Error: Could not Authenticate to Database.\nError : " + fe, "Error", JOptionPane.ERROR_MESSAGE);
-                System.exit(1);
-            }
-        });
+                @Override
+                public void onAuthenticationError(FirebaseError fe) {
+                    JOptionPane.showMessageDialog(null, "Error: Could not Authenticate to Database.\nError : " + fe, "Error", JOptionPane.ERROR_MESSAGE);
+                    System.exit(1);
+                }
+            });
+        }
+
         return ref;
     }
-    
+
     private static String genToken(String uid) {
         Map<String, Object> payload = new HashMap<String, Object>();
         payload.put("uid", uid);

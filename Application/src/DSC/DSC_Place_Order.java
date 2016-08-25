@@ -4,7 +4,11 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -29,6 +33,8 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         refreshTable();
         getSuburbs();
+        getDates();
+        
 
         rbtAfternoon.setEnabled(false);
         rbtEvening.setEnabled(false);
@@ -70,7 +76,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         ckbClientCollection = new javax.swing.JCheckBox();
         cmbClientSuburb = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
-        txfClientDeliveryAddress = new javax.swing.JTextArea();
+        txaClientDeliveryAddress = new javax.swing.JTextArea();
         pnlSurveyInfo = new javax.swing.JPanel();
         lblSurveyInfo = new javax.swing.JLabel();
         lblSurveyReason = new javax.swing.JLabel();
@@ -88,14 +94,14 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         lblOrderInfo = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cmbOrderDate = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         rbtAfternoon = new javax.swing.JRadioButton();
         rbtLateAfternoon = new javax.swing.JRadioButton();
         rbtEvening = new javax.swing.JRadioButton();
         jLabel4 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        rbtMonToFri = new javax.swing.JRadioButton();
+        rbtMonToThur = new javax.swing.JRadioButton();
         btnAddMeal = new javax.swing.JButton();
         btnEditMeal = new javax.swing.JButton();
         btnDeleteMeal = new javax.swing.JButton();
@@ -159,6 +165,12 @@ public class DSC_Place_Order extends javax.swing.JFrame {
 
         lblClientAddInfo.setText("Additional Information: ");
 
+        ckbClientCollection.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                ckbClientCollectionStateChanged(evt);
+            }
+        });
+
         cmbClientSuburb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Suburb" }));
         cmbClientSuburb.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -166,10 +178,10 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             }
         });
 
-        txfClientDeliveryAddress.setColumns(20);
-        txfClientDeliveryAddress.setRows(5);
-        txfClientDeliveryAddress.setWrapStyleWord(true);
-        jScrollPane2.setViewportView(txfClientDeliveryAddress);
+        txaClientDeliveryAddress.setColumns(20);
+        txaClientDeliveryAddress.setRows(5);
+        txaClientDeliveryAddress.setWrapStyleWord(true);
+        jScrollPane2.setViewportView(txaClientDeliveryAddress);
 
         javax.swing.GroupLayout pnlClientInfoLayout = new javax.swing.GroupLayout(pnlClientInfo);
         pnlClientInfo.setLayout(pnlClientInfoLayout);
@@ -359,7 +371,8 @@ public class DSC_Place_Order extends javax.swing.JFrame {
 
         jLabel2.setText("Starting Date: ");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbOrderDate.setMaximumRowCount(4);
+        cmbOrderDate.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Date" }));
 
         jLabel3.setText("TimeSlot: ");
 
@@ -375,12 +388,12 @@ public class DSC_Place_Order extends javax.swing.JFrame {
 
         jLabel4.setText("TimeFrame: ");
 
-        rbgTimeFrames.add(jRadioButton1);
-        jRadioButton1.setSelected(true);
-        jRadioButton1.setText("Monday - Friday");
+        rbgTimeFrames.add(rbtMonToFri);
+        rbtMonToFri.setSelected(true);
+        rbtMonToFri.setText("Monday - Friday");
 
-        rbgTimeFrames.add(jRadioButton2);
-        jRadioButton2.setText("Monday - Thursday");
+        rbgTimeFrames.add(rbtMonToThur);
+        rbtMonToThur.setText("Monday - Thursday");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -394,14 +407,14 @@ public class DSC_Place_Order extends javax.swing.JFrame {
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cmbOrderDate, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jRadioButton2)
+                            .addComponent(rbtMonToThur)
                             .addComponent(rbtEvening)
                             .addComponent(rbtLateAfternoon)
                             .addComponent(rbtAfternoon)
-                            .addComponent(jRadioButton1))
+                            .addComponent(rbtMonToFri))
                         .addGap(0, 98, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -411,7 +424,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbOrderDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -423,9 +436,9 @@ public class DSC_Place_Order extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jRadioButton1))
+                    .addComponent(rbtMonToFri))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jRadioButton2)
+                .addComponent(rbtMonToThur)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -557,7 +570,14 @@ public class DSC_Place_Order extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-
+        
+        String clientname = txfClientName.getText();
+        String clientSurname = txfClientSurname.getText();
+        String clientContactNumber = txfClientContactNumber.getText();
+        String clientAlternativeNumber = txfClientAlternativeNumber.getText();
+        String clientEmail = txfClientEmail.getText();
+        
+        
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
@@ -613,6 +633,35 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         changeTimeSlots();
     }//GEN-LAST:event_cmbClientSuburbItemStateChanged
 
+    private void ckbClientCollectionStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_ckbClientCollectionStateChanged
+
+        boolean checked = ckbClientCollection.isSelected();
+        if (checked) {
+            txaClientDeliveryAddress.setText("-");
+            txfClientAdditionalInfo.setText("-");
+            cmbClientSuburb.setSelectedIndex(0);
+            cmbClientSuburb.setEnabled(false);
+            txaClientDeliveryAddress.setEnabled(false);
+            txfClientAdditionalInfo.setEnabled(false);
+            rbtAfternoon.setEnabled(true);
+            rbtAfternoon.setSelected(true);
+            rbtLateAfternoon.setEnabled(true);
+            rbtEvening.setEnabled(true);
+            
+        }else{
+             txaClientDeliveryAddress.setText("");
+            txfClientAdditionalInfo.setText("");
+            cmbClientSuburb.setEnabled(true);
+            txaClientDeliveryAddress.setEnabled(true);
+            txfClientAdditionalInfo.setEnabled(true);
+            rbtAfternoon.setEnabled(false);
+            rbtLateAfternoon.setEnabled(false);
+            rbtEvening.setEnabled(false);
+            changeTimeSlots();
+        }
+        
+    }//GEN-LAST:event_ckbClientCollectionStateChanged
+
     /**
      * @param args the command line arguments
      */
@@ -656,16 +705,14 @@ public class DSC_Place_Order extends javax.swing.JFrame {
     private javax.swing.JButton btnSave;
     private javax.swing.JCheckBox ckbClientCollection;
     private javax.swing.JComboBox<String> cmbClientSuburb;
+    private javax.swing.JComboBox<String> cmbOrderDate;
     private javax.swing.JComboBox<String> cmbSurveyReason;
     private javax.swing.JComboBox<String> cmbSurveySource;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -696,12 +743,14 @@ public class DSC_Place_Order extends javax.swing.JFrame {
     private javax.swing.JRadioButton rbtAfternoon;
     private javax.swing.JRadioButton rbtEvening;
     private javax.swing.JRadioButton rbtLateAfternoon;
+    private javax.swing.JRadioButton rbtMonToFri;
+    private javax.swing.JRadioButton rbtMonToThur;
     private javax.swing.JTable tblOrderMeals;
+    private javax.swing.JTextArea txaClientDeliveryAddress;
     private javax.swing.JTextArea txaSurveyComments;
     private javax.swing.JTextField txfClientAdditionalInfo;
     private javax.swing.JTextField txfClientAlternativeNumber;
     private javax.swing.JTextField txfClientContactNumber;
-    private javax.swing.JTextArea txfClientDeliveryAddress;
     private javax.swing.JTextField txfClientEmail;
     private javax.swing.JTextField txfClientName;
     private javax.swing.JTextField txfClientSurname;
@@ -740,13 +789,16 @@ public class DSC_Place_Order extends javax.swing.JFrame {
 
     private void getSuburbs() {
 
-        Firebase ref = DBClass.ref.child("Routes");
+        Firebase ref = DBClass.getInstance("Website").child("Routes");
         ref.orderByChild("Active").equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot ds) {
                 for (DataSnapshot dataSnapshot : ds.getChildren()) {
                     if (dataSnapshot.child("Active").getValue(boolean.class)) {
                         String subArr[] = dataSnapshot.child("Suburbs").getValue(String[].class);
+                        if (subArr[0].equals("Collection")) {
+                            continue;
+                        }
                         for (String string : subArr) {
                             boolean found = false;
                             for (SuburbData suburbData : subList) {
@@ -770,7 +822,11 @@ public class DSC_Place_Order extends javax.swing.JFrame {
 
                 String[] subArr = new String[subList.size()];
                 for (int i = 0; i < subArr.length; i++) {
-                    subArr[i] = subList.get(i).suburb;
+                        subArr[i] = subList.get(i).suburb;
+                }
+                try {
+                    Arrays.sort(subArr);
+                } catch (NullPointerException e) {
                 }
                 cmbClientSuburb.setModel(new DefaultComboBoxModel<>(subArr));
                 changeTimeSlots();
@@ -811,6 +867,26 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         }
     }
 
+    public void getDates(){
+        Calendar currentDate = Calendar.getInstance();
+        int counter = 0;
+        String[] weeks = new String[4];
+        while (counter<4) {            
+            for (int i = 0; i < 7; i++) {
+                if (currentDate.get(Calendar.DAY_OF_WEEK)!=2) {
+                    currentDate.add(Calendar.DAY_OF_WEEK, 1);
+                }
+            }
+            
+            DateFormat df = new SimpleDateFormat("dd MMMMM yyyy");
+            weeks[counter] = df.format(currentDate.getTime());
+            currentDate.add(Calendar.DAY_OF_WEEK, 1);
+            counter++;
+        }
+        
+        cmbOrderDate.setModel(new DefaultComboBoxModel<>(weeks));
+    }
+    
     class SuburbData {
 
         public String suburb;
