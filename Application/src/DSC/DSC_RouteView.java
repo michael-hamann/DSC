@@ -16,6 +16,8 @@ public class DSC_RouteView extends javax.swing.JFrame {
         initComponents();
         setRoutesList();
         setSuburbsList();
+        lstRoutes.setSelectedIndex(0);
+        lstSuburbs.setSelectedIndex(0);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
     
@@ -47,6 +49,8 @@ public class DSC_RouteView extends javax.swing.JFrame {
         lblRoutes = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         lstRoutes = new javax.swing.JList<>();
+        btnAddRoute = new javax.swing.JButton();
+        btnDeleteRoute = new javax.swing.JButton();
         pnlFields = new javax.swing.JPanel();
         btnBack = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
@@ -54,6 +58,8 @@ public class DSC_RouteView extends javax.swing.JFrame {
         lblSuburbs = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         lstSuburbs = new javax.swing.JList<>();
+        btnDeleteSuburb = new javax.swing.JButton();
+        btnAddSuburb = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Route Table");
@@ -102,7 +108,14 @@ public class DSC_RouteView extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        lstRoutes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(lstRoutes);
+
+        btnAddRoute.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Add.png"))); // NOI18N
+        btnAddRoute.setText("Add");
+
+        btnDeleteRoute.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Bin.png"))); // NOI18N
+        btnDeleteRoute.setText("Delete");
 
         javax.swing.GroupLayout pnlRoutesLayout = new javax.swing.GroupLayout(pnlRoutes);
         pnlRoutes.setLayout(pnlRoutesLayout);
@@ -111,8 +124,12 @@ public class DSC_RouteView extends javax.swing.JFrame {
             .addGroup(pnlRoutesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlRoutesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblRoutes, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
+                    .addComponent(lblRoutes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
+                    .addGroup(pnlRoutesLayout.createSequentialGroup()
+                        .addComponent(btnAddRoute)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnDeleteRoute)))
                 .addContainerGap())
         );
         pnlRoutesLayout.setVerticalGroup(
@@ -120,7 +137,11 @@ public class DSC_RouteView extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlRoutesLayout.createSequentialGroup()
                 .addComponent(lblRoutes, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 431, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 402, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlRoutesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAddRoute)
+                    .addComponent(btnDeleteRoute))
                 .addContainerGap())
         );
 
@@ -175,17 +196,28 @@ public class DSC_RouteView extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        lstSuburbs.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(lstSuburbs);
+
+        btnDeleteSuburb.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Bin.png"))); // NOI18N
+        btnDeleteSuburb.setText("Delete");
+
+        btnAddSuburb.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Add.png"))); // NOI18N
+        btnAddSuburb.setText("Add");
 
         javax.swing.GroupLayout pnlSuburbsLayout = new javax.swing.GroupLayout(pnlSuburbs);
         pnlSuburbs.setLayout(pnlSuburbsLayout);
         pnlSuburbsLayout.setHorizontalGroup(
             pnlSuburbsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlSuburbsLayout.createSequentialGroup()
+            .addGroup(pnlSuburbsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlSuburbsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane2)
-                    .addComponent(lblSuburbs, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE))
+                .addGroup(pnlSuburbsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblSuburbs, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(pnlSuburbsLayout.createSequentialGroup()
+                        .addComponent(btnAddSuburb)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                        .addComponent(btnDeleteSuburb)))
                 .addContainerGap())
         );
         pnlSuburbsLayout.setVerticalGroup(
@@ -194,6 +226,10 @@ public class DSC_RouteView extends javax.swing.JFrame {
                 .addComponent(lblSuburbs, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlSuburbsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAddSuburb)
+                    .addComponent(btnDeleteSuburb))
                 .addContainerGap())
         );
 
@@ -207,7 +243,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
                 .addComponent(pnlRoutes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlSuburbs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlFields, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -282,7 +318,11 @@ public class DSC_RouteView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddRoute;
+    private javax.swing.JButton btnAddSuburb;
     private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnDeleteRoute;
+    private javax.swing.JButton btnDeleteSuburb;
     private javax.swing.JButton btnEdit;
     private javax.persistence.EntityManager entityManager;
     private javax.swing.JScrollPane jScrollPane1;
