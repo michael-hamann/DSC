@@ -111,11 +111,11 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace pref="77" max="32767" attributes="0"/>
+                      <EmptySpace pref="106" max="32767" attributes="0"/>
                       <Component id="lblLogo" min="-2" pref="312" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="lblName" min="-2" pref="388" max="-2" attributes="0"/>
-                      <EmptySpace pref="77" max="32767" attributes="0"/>
+                      <EmptySpace pref="107" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -216,6 +216,9 @@
               <SubComponents>
                 <Component class="javax.swing.JList" name="lstRoutes">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="12" style="0"/>
+                    </Property>
                     <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
                       <StringArray count="5">
                         <StringItem index="0" value="Item 1"/>
@@ -235,14 +238,23 @@
             </Container>
             <Component class="javax.swing.JButton" name="btnAddRoute">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="12" style="0"/>
+                </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/PICS/Add.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Add"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddRouteActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnDeleteRoute">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="12" style="0"/>
+                </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/PICS/Bin.png"/>
                 </Property>
@@ -272,8 +284,10 @@
                           <Component id="pnlInfo" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="btnShowOther" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="btnChangeDriver" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="btnSave" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="btnEdit" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
@@ -307,6 +321,7 @@
                           <Component id="btnEdit" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnChangeDriver" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnShowOther" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnSave" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -370,15 +385,36 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="lblRouteID" max="32767" attributes="0"/>
-                              <Component id="lblCurrDriver" pref="100" max="32767" attributes="0"/>
-                              <Component id="lblSubName" max="32767" attributes="0"/>
-                              <Component id="lblTimes" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="pnlNew" max="32767" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                      <Component id="jLabel1" max="32767" attributes="0"/>
+                                      <Component id="lblTimes" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="lblSubName" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="lblCurrDriver" alignment="0" pref="169" max="32767" attributes="0"/>
+                                      <Component id="lblRouteID" alignment="0" max="32767" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="txfCurrDriver" max="32767" attributes="0"/>
+                                      <Component id="txfRouteID" max="32767" attributes="0"/>
+                                      <Component id="txfSuburbName" max="32767" attributes="0"/>
+                                      <Component id="txfSuburbID" alignment="1" max="32767" attributes="0"/>
+                                      <Group type="102" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="chbEvening" min="-2" max="-2" attributes="0"/>
+                                              <Component id="chbLateAfternoon" min="-2" max="-2" attributes="0"/>
+                                              <Component id="chbAfternoon" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -386,14 +422,37 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="lblRouteID" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblRouteID" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txfRouteID" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="lblCurrDriver" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txfSuburbID" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="lblSubName" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblCurrDriver" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txfCurrDriver" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="lblTimes" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblSubName" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txfSuburbName" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblTimes" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="chbAfternoon" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="chbLateAfternoon" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="chbEvening" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="pnlNew" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -431,6 +490,113 @@
                     <Property name="text" type="java.lang.String" value="Times:"/>
                   </Properties>
                 </Component>
+                <Component class="javax.swing.JTextField" name="txfRouteID">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="12" style="0"/>
+                    </Property>
+                    <Property name="horizontalAlignment" type="int" value="11"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="txfCurrDriver">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="12" style="0"/>
+                    </Property>
+                    <Property name="horizontalAlignment" type="int" value="11"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="txfSuburbName">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="12" style="0"/>
+                    </Property>
+                    <Property name="horizontalAlignment" type="int" value="11"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel1">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="12" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Suburb ID:"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="txfSuburbID">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="12" style="0"/>
+                    </Property>
+                    <Property name="horizontalAlignment" type="int" value="11"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JCheckBox" name="chbAfternoon">
+                  <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="default"/>
+                    </Property>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="12" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Afternoon"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JCheckBox" name="chbLateAfternoon">
+                  <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="default"/>
+                    </Property>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="12" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Late Afternoon"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JCheckBox" name="chbEvening">
+                  <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="default"/>
+                    </Property>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="12" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Evening"/>
+                  </Properties>
+                </Component>
+                <Container class="javax.swing.JPanel" name="pnlNew">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="33" green="cc" red="0" type="rgb"/>
+                    </Property>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                        <TitledBorder title="New Thing">
+                          <Border PropertyName="innerBorder" info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                            <LineBorder/>
+                          </Border>
+                          <Font PropertyName="font" name="Tahoma" size="12" style="0"/>
+                        </TitledBorder>
+                      </Border>
+                    </Property>
+                  </Properties>
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                </Container>
               </SubComponents>
             </Container>
             <Component class="javax.swing.JLabel" name="lblSortBy">
@@ -477,6 +643,20 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnShowOtherActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnSave">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="12" style="0"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/PICS/Save 2.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Save"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSaveActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
@@ -546,6 +726,9 @@
               <SubComponents>
                 <Component class="javax.swing.JList" name="lstSuburbs">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="12" style="0"/>
+                    </Property>
                     <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
                       <StringArray count="5">
                         <StringItem index="0" value="Item 1"/>
@@ -565,6 +748,9 @@
             </Container>
             <Component class="javax.swing.JButton" name="btnDeleteSuburb">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="12" style="0"/>
+                </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/PICS/Bin.png"/>
                 </Property>
@@ -573,11 +759,17 @@
             </Component>
             <Component class="javax.swing.JButton" name="btnAddSuburb">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="12" style="0"/>
+                </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/PICS/Add.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Add"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddSuburbActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

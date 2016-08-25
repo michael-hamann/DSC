@@ -2,6 +2,8 @@
 package DSC;
 
 import javax.swing.JFrame;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
 
 /**
  *
@@ -15,19 +17,38 @@ public class DSC_RouteView extends javax.swing.JFrame {
     public DSC_RouteView() {
         initComponents();
         btnShowOther.setText("Show inactive");
-        setRoutesList();
-        setSuburbsList();
+        disableChecks();
+        btnSave.setVisible(false);
+        pnlNew.setVisible(false);
+        setRoutesList("Active");
+        setSuburbsList("Active");
         lstRoutes.setSelectedIndex(0);
         lstSuburbs.setSelectedIndex(0);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
     
-    private void setRoutesList(){
+    private void setRoutesList(String active){
         //Get children of routes
+        if (active.equalsIgnoreCase("Active")) {
+            
+        } else if (active.equalsIgnoreCase("Inactive")){
+            
+        }
     }
     
-    private void setSuburbsList(){
+    private void setSuburbsList(String active){
         //Get children of routes > suburbs
+        if (active.equalsIgnoreCase("Active")) {
+            
+        } else if (active.equalsIgnoreCase("Inactive")){
+            
+        }
+    }
+    
+    private void disableChecks(){
+        chbAfternoon.setEnabled(false);
+        chbLateAfternoon.setEnabled(false);
+        chbEvening.setEnabled(false);
     }
 
     /**
@@ -61,10 +82,20 @@ public class DSC_RouteView extends javax.swing.JFrame {
         lblCurrDriver = new javax.swing.JLabel();
         lblSubName = new javax.swing.JLabel();
         lblTimes = new javax.swing.JLabel();
+        txfRouteID = new javax.swing.JTextField();
+        txfCurrDriver = new javax.swing.JTextField();
+        txfSuburbName = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        txfSuburbID = new javax.swing.JTextField();
+        chbAfternoon = new javax.swing.JCheckBox();
+        chbLateAfternoon = new javax.swing.JCheckBox();
+        chbEvening = new javax.swing.JCheckBox();
+        pnlNew = new javax.swing.JPanel();
         lblSortBy = new javax.swing.JLabel();
         cmbSort = new javax.swing.JComboBox<>();
         btnChangeDriver = new javax.swing.JButton();
         btnShowOther = new javax.swing.JButton();
+        btnSave = new javax.swing.JButton();
         pnlSuburbs = new javax.swing.JPanel();
         lblSuburbs = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -91,11 +122,11 @@ public class DSC_RouteView extends javax.swing.JFrame {
         pnlHeadingLayout.setHorizontalGroup(
             pnlHeadingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlHeadingLayout.createSequentialGroup()
-                .addContainerGap(77, Short.MAX_VALUE)
+                .addContainerGap(106, Short.MAX_VALUE)
                 .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(77, Short.MAX_VALUE))
+                .addContainerGap(107, Short.MAX_VALUE))
         );
         pnlHeadingLayout.setVerticalGroup(
             pnlHeadingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -114,6 +145,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
         lblRoutes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblRoutes.setText("Routes");
 
+        lstRoutes.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lstRoutes.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -122,9 +154,16 @@ public class DSC_RouteView extends javax.swing.JFrame {
         lstRoutes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(lstRoutes);
 
+        btnAddRoute.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnAddRoute.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Add.png"))); // NOI18N
         btnAddRoute.setText("Add");
+        btnAddRoute.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddRouteActionPerformed(evt);
+            }
+        });
 
+        btnDeleteRoute.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnDeleteRoute.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Bin.png"))); // NOI18N
         btnDeleteRoute.setText("Delete");
 
@@ -198,31 +237,107 @@ public class DSC_RouteView extends javax.swing.JFrame {
         lblTimes.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblTimes.setText("Times:");
 
+        txfRouteID.setEditable(false);
+        txfRouteID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txfRouteID.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+
+        txfCurrDriver.setEditable(false);
+        txfCurrDriver.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txfCurrDriver.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+
+        txfSuburbName.setEditable(false);
+        txfSuburbName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txfSuburbName.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel1.setText("Suburb ID:");
+
+        txfSuburbID.setEditable(false);
+        txfSuburbID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txfSuburbID.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+
+        chbAfternoon.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        chbAfternoon.setText("Afternoon");
+
+        chbLateAfternoon.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        chbLateAfternoon.setText("Late Afternoon");
+
+        chbEvening.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        chbEvening.setText("Evening");
+
+        pnlNew.setBackground(new java.awt.Color(0, 204, 51));
+        pnlNew.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "New Thing", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12))); // NOI18N
+
+        javax.swing.GroupLayout pnlNewLayout = new javax.swing.GroupLayout(pnlNew);
+        pnlNew.setLayout(pnlNewLayout);
+        pnlNewLayout.setHorizontalGroup(
+            pnlNewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        pnlNewLayout.setVerticalGroup(
+            pnlNewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout pnlInfoLayout = new javax.swing.GroupLayout(pnlInfo);
         pnlInfo.setLayout(pnlInfoLayout);
         pnlInfoLayout.setHorizontalGroup(
             pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlInfoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblRouteID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblCurrDriver, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                    .addComponent(lblSubName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblTimes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlNew, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(pnlInfoLayout.createSequentialGroup()
+                        .addGroup(pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblTimes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblSubName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblCurrDriver, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+                            .addComponent(lblRouteID, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txfCurrDriver)
+                            .addComponent(txfRouteID)
+                            .addComponent(txfSuburbName)
+                            .addComponent(txfSuburbID, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(pnlInfoLayout.createSequentialGroup()
+                                .addGroup(pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(chbEvening)
+                                    .addComponent(chbLateAfternoon)
+                                    .addComponent(chbAfternoon))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
+                .addContainerGap())
         );
         pnlInfoLayout.setVerticalGroup(
             pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlInfoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblRouteID)
+                .addGroup(pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblRouteID)
+                    .addComponent(txfRouteID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblCurrDriver)
+                .addGroup(pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(txfSuburbID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblSubName)
+                .addGroup(pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblCurrDriver)
+                    .addComponent(txfCurrDriver, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblTimes)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblSubName)
+                    .addComponent(txfSuburbName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTimes)
+                    .addComponent(chbAfternoon))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(chbLateAfternoon)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(chbEvening)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(pnlNew, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         lblSortBy.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -243,6 +358,15 @@ public class DSC_RouteView extends javax.swing.JFrame {
             }
         });
 
+        btnSave.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Save 2.png"))); // NOI18N
+        btnSave.setText("Save");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlFieldsLayout = new javax.swing.GroupLayout(pnlFields);
         pnlFields.setLayout(pnlFieldsLayout);
         pnlFieldsLayout.setHorizontalGroup(
@@ -253,8 +377,10 @@ public class DSC_RouteView extends javax.swing.JFrame {
                     .addComponent(pnlInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFieldsLayout.createSequentialGroup()
                         .addComponent(btnShowOther)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnChangeDriver)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSave)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEdit)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -281,7 +407,8 @@ public class DSC_RouteView extends javax.swing.JFrame {
                     .addComponent(btnBack)
                     .addComponent(btnEdit)
                     .addComponent(btnChangeDriver)
-                    .addComponent(btnShowOther))
+                    .addComponent(btnShowOther)
+                    .addComponent(btnSave))
                 .addContainerGap())
         );
 
@@ -292,6 +419,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
         lblSuburbs.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblSuburbs.setText("Suburbs");
 
+        lstSuburbs.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lstSuburbs.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -300,11 +428,18 @@ public class DSC_RouteView extends javax.swing.JFrame {
         lstSuburbs.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(lstSuburbs);
 
+        btnDeleteSuburb.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnDeleteSuburb.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Bin.png"))); // NOI18N
         btnDeleteSuburb.setText("Delete");
 
+        btnAddSuburb.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnAddSuburb.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Add.png"))); // NOI18N
         btnAddSuburb.setText("Add");
+        btnAddSuburb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddSuburbActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlSuburbsLayout = new javax.swing.GroupLayout(pnlSuburbs);
         pnlSuburbs.setLayout(pnlSuburbsLayout);
@@ -381,18 +516,51 @@ public class DSC_RouteView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        // TODO add your handling code here:
+        chbAfternoon.setEnabled(true);
+        chbLateAfternoon.setEnabled(true);
+        chbEvening.setEnabled(true);
+        btnEdit.setVisible(false);
+        btnSave.setVisible(true);
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnShowOtherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowOtherActionPerformed
         if(btnShowOther.getText().equalsIgnoreCase("Show inactive")){
             //show inactive routes
+            setRoutesList("Inactive");
+        setSuburbsList("Inactive");
             btnShowOther.setText("Show active");
         } else {
             //show active routes
+            setRoutesList("Active");
+        setSuburbsList("Active");
             btnShowOther.setText("Show inactive");
         }
     }//GEN-LAST:event_btnShowOtherActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        if(pnlNew.isVisible()){
+            //save to db
+        } else {
+            //save changes of times
+        }
+        disableChecks();
+        btnSave.setVisible(false);
+        btnEdit.setVisible(true);
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void btnAddRouteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRouteActionPerformed
+        pnlNew.setBorder(new TitledBorder(new EtchedBorder(), "New Route"));
+        pnlNew.setVisible(true);
+        btnEdit.setVisible(false);
+        btnSave.setVisible(true);
+    }//GEN-LAST:event_btnAddRouteActionPerformed
+
+    private void btnAddSuburbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSuburbActionPerformed
+        pnlNew.setBorder(new TitledBorder(new EtchedBorder(), "New Suburb"));
+        pnlNew.setVisible(true);
+        btnEdit.setVisible(false);
+        btnSave.setVisible(true);
+    }//GEN-LAST:event_btnAddSuburbActionPerformed
 
     /**
      * @param args the command line arguments
@@ -440,9 +608,14 @@ public class DSC_RouteView extends javax.swing.JFrame {
     private javax.swing.JButton btnDeleteRoute;
     private javax.swing.JButton btnDeleteSuburb;
     private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnSave;
     private javax.swing.JButton btnShowOther;
+    private javax.swing.JCheckBox chbAfternoon;
+    private javax.swing.JCheckBox chbEvening;
+    private javax.swing.JCheckBox chbLateAfternoon;
     private javax.swing.JComboBox<String> cmbSort;
     private javax.persistence.EntityManager entityManager;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblCurrDriver;
@@ -461,9 +634,14 @@ public class DSC_RouteView extends javax.swing.JFrame {
     private javax.swing.JPanel pnlFields;
     private javax.swing.JPanel pnlHeading;
     private javax.swing.JPanel pnlInfo;
+    private javax.swing.JPanel pnlNew;
     private javax.swing.JPanel pnlRoutes;
     private javax.swing.JPanel pnlSuburbs;
     private java.util.List<DSC.RouteTb> routeTbList;
     private javax.persistence.Query routeTbQuery;
+    private javax.swing.JTextField txfCurrDriver;
+    private javax.swing.JTextField txfRouteID;
+    private javax.swing.JTextField txfSuburbID;
+    private javax.swing.JTextField txfSuburbName;
     // End of variables declaration//GEN-END:variables
 }
