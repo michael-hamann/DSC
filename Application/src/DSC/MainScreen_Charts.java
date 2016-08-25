@@ -88,12 +88,12 @@ public class MainScreen_Charts extends JPanel {
                         dataset,
                         PlotOrientation.VERTICAL,
                         false, true, false);
-                
+                //0, 0, 900, 580
                 ChartPanel chartPanel = new ChartPanel(barChart);
-                chartPanel.setBounds(pnlBarChart.getBounds());
+                chartPanel.setBounds(0, 0, 900, 580);
 
                 pnlBarChart.add(chartPanel);
-                pnlBarChart.setBounds(180, 155, 1010,600);
+                pnlBarChart.setBounds(pnlBarChart.getBounds());
                 
                 
             }
