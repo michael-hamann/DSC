@@ -197,7 +197,7 @@ public class ClientTb implements Serializable {
 
     @Override
     public String toString() {
-        return name + surname + "["+clientID+"]";
+        return name +" "+ surname + "["+clientID+"]";
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
