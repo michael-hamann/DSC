@@ -1,8 +1,11 @@
-
 package DSC;
 
-import java.sql.ResultSet;
-import java.util.Date;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -13,20 +16,25 @@ import javax.swing.table.DefaultTableModel;
  */
 public class DSC_Place_Order extends javax.swing.JFrame {
 
-    boolean editClicked = false;
-    
+    private ArrayList<Meal> orderMeals = new ArrayList<>();
+    private ArrayList<SuburbData> subList = new ArrayList<>();
+
     /**
      * Creates new form DSC_Main
      */
     public DSC_Place_Order() {
         //Connect and get all data from db
-        
-        tblOrderMeals.setModel(new DefaultTableModel(new Object[][]{null,null,null,null}, new String[]{"Quantity","MealType", "Allergy", "Exclutions"}));
+
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        
+        refreshTable();
+        getSuburbs();
+
+        rbtAfternoon.setEnabled(false);
+        rbtEvening.setEnabled(false);
+        rbtLateAfternoon.setEnabled(false);
     }
-       
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -81,8 +89,6 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
-        jLabel1 = new javax.swing.JLabel();
-        jSpinner1 = new javax.swing.JSpinner();
         jLabel3 = new javax.swing.JLabel();
         rbtAfternoon = new javax.swing.JRadioButton();
         rbtLateAfternoon = new javax.swing.JRadioButton();
@@ -93,6 +99,8 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         btnAddMeal = new javax.swing.JButton();
         btnEditMeal = new javax.swing.JButton();
         btnDeleteMeal = new javax.swing.JButton();
+        txfMealsTotal = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Meals Table");
@@ -152,6 +160,11 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         lblClientAddInfo.setText("Additional Information: ");
 
         cmbClientSuburb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Suburb" }));
+        cmbClientSuburb.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbClientSuburbItemStateChanged(evt);
+            }
+        });
 
         txfClientDeliveryAddress.setColumns(20);
         txfClientDeliveryAddress.setRows(5);
@@ -348,11 +361,6 @@ public class DSC_Place_Order extends javax.swing.JFrame {
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jLabel1.setText("Order Size: ");
-
-        jSpinner1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(0, 0, 100, 1));
-
         jLabel3.setText("TimeSlot: ");
 
         rbgTimeSlots.add(rbtAfternoon);
@@ -383,8 +391,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel4)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -393,7 +400,6 @@ public class DSC_Place_Order extends javax.swing.JFrame {
                             .addComponent(jRadioButton2)
                             .addComponent(rbtEvening)
                             .addComponent(rbtLateAfternoon)
-                            .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(rbtAfternoon)
                             .addComponent(jRadioButton1))
                         .addGap(0, 98, Short.MAX_VALUE)))
@@ -403,10 +409,6 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -451,45 +453,57 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             }
         });
 
+        jLabel5.setText("Total");
+
         javax.swing.GroupLayout pnlOrderInfoLayout = new javax.swing.GroupLayout(pnlOrderInfo);
         pnlOrderInfo.setLayout(pnlOrderInfoLayout);
         pnlOrderInfoLayout.setHorizontalGroup(
             pnlOrderInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(lblOrderInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(pnlOrderInfoLayout.createSequentialGroup()
-                .addGap(37, 37, 37)
+                .addGroup(pnlOrderInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlOrderInfoLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(pnlOrderInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 545, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlOrderInfoLayout.createSequentialGroup()
+                                .addComponent(txfMealsTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(pnlOrderInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlOrderInfoLayout.createSequentialGroup()
+                                        .addComponent(btnSave)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnBack))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlOrderInfoLayout.createSequentialGroup()
+                                        .addComponent(btnDeleteMeal)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(btnEditMeal)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(btnAddMeal, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                    .addGroup(pnlOrderInfoLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel5)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(pnlOrderInfoLayout.createSequentialGroup()
+                .addGap(51, 51, 51)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(pnlOrderInfoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlOrderInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 545, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlOrderInfoLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(pnlOrderInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlOrderInfoLayout.createSequentialGroup()
-                                .addComponent(btnSave)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnBack))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlOrderInfoLayout.createSequentialGroup()
-                                .addComponent(btnDeleteMeal)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnEditMeal)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnAddMeal, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap())
         );
         pnlOrderInfoLayout.setVerticalGroup(
             pnlOrderInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlOrderInfoLayout.createSequentialGroup()
                 .addComponent(lblOrderInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(46, 46, 46)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlOrderInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddMeal)
                     .addComponent(btnEditMeal)
-                    .addComponent(btnDeleteMeal))
+                    .addComponent(btnDeleteMeal)
+                    .addComponent(txfMealsTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -552,22 +566,53 @@ public class DSC_Place_Order extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnAddMealActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddMealActionPerformed
-        
-        
-        
+
+        DSC_PlaceOrder_Mealpane pane = new DSC_PlaceOrder_Mealpane();
+        pane.setBack(this);
+        pane.setVisible(true);
+        pane.setFocusableWindowState(true);
+        this.setEnabled(false);
+
     }//GEN-LAST:event_btnAddMealActionPerformed
 
     private void btnEditMealActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditMealActionPerformed
 
-        
+        int selectedIndex = tblOrderMeals.getSelectedRow();
+        if (selectedIndex == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a meal to edit.");
+        } else {
+            Meal meal = new Meal((int) tblOrderMeals.getValueAt(selectedIndex, 0), tblOrderMeals.getValueAt(selectedIndex, 1).toString(), tblOrderMeals.getValueAt(selectedIndex, 2).toString(), tblOrderMeals.getValueAt(selectedIndex, 3).toString());
+
+            DSC_PlaceOrder_Mealpane pane = new DSC_PlaceOrder_Mealpane(meal, selectedIndex);
+            pane.setBack(this);
+            pane.setVisible(true);
+            pane.setFocusableWindowState(true);
+            this.setEnabled(false);
+        }
+
     }//GEN-LAST:event_btnEditMealActionPerformed
 
     private void btnDeleteMealActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteMealActionPerformed
-        
-        
-        
+
+        int selectedIndex = tblOrderMeals.getSelectedRow();
+        if (selectedIndex == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a meal to edit.");
+        } else {
+            orderMeals.remove(selectedIndex);
+            int total = 0;
+            for (Meal orderMeal : orderMeals) {
+                total += orderMeal.getQuantity();
+            }
+            txfMealsTotal.setText(total + "");
+            refreshTable();
+        }
+
     }//GEN-LAST:event_btnDeleteMealActionPerformed
-    
+
+    private void cmbClientSuburbItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbClientSuburbItemStateChanged
+        changeTimeSlots();
+    }//GEN-LAST:event_cmbClientSuburbItemStateChanged
+
     /**
      * @param args the command line arguments
      */
@@ -614,17 +659,16 @@ public class DSC_Place_Order extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmbSurveyReason;
     private javax.swing.JComboBox<String> cmbSurveySource;
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JLabel lblClientAddInfo;
     private javax.swing.JLabel lblClientAddress;
     private javax.swing.JLabel lblClientAlternativeNumber;
@@ -661,5 +705,131 @@ public class DSC_Place_Order extends javax.swing.JFrame {
     private javax.swing.JTextField txfClientEmail;
     private javax.swing.JTextField txfClientName;
     private javax.swing.JTextField txfClientSurname;
+    private javax.swing.JTextField txfMealsTotal;
     // End of variables declaration//GEN-END:variables
+
+    public void refreshTable() {
+        Object[][] mealsArr = new Object[orderMeals.size()][4];
+        for (int i = 0; i < orderMeals.size(); i++) {
+            mealsArr[i] = orderMeals.get(i).returnObj();
+        }
+
+        tblOrderMeals.setModel(new DefaultTableModel(
+                mealsArr,
+                new String[]{"Quantity", "MealType", "Allergy", "Exclutions"}
+        ));
+    }
+
+    public void addMealToList(Meal meal) {
+        orderMeals.add(meal);
+        int total = 0;
+        for (Meal orderMeal : orderMeals) {
+            total += orderMeal.getQuantity();
+        }
+        txfMealsTotal.setText(total + "");
+    }
+
+    public void replaceMealOnList(Meal meal, int index) {
+        orderMeals.set(index, meal);
+        int total = 0;
+        for (Meal orderMeal : orderMeals) {
+            total += orderMeal.getQuantity();
+        }
+        txfMealsTotal.setText(total + "");
+    }
+
+    private void getSuburbs() {
+
+        Firebase ref = DBClass.ref.child("Routes");
+        ref.orderByChild("Active").equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot ds) {
+                for (DataSnapshot dataSnapshot : ds.getChildren()) {
+                    if (dataSnapshot.child("Active").getValue(boolean.class)) {
+                        String subArr[] = dataSnapshot.child("Suburbs").getValue(String[].class);
+                        for (String string : subArr) {
+                            boolean found = false;
+                            for (SuburbData suburbData : subList) {
+                                if (suburbData.suburb.equals(string)) {
+                                    if (dataSnapshot.child("TimeFrame").getValue(String.class).equals("Afternoon")) {
+                                        suburbData.afternoon = true;
+                                    } else if (dataSnapshot.child("TimeFrame").getValue(String.class).equals("Late Afternoon")) {
+                                        suburbData.lateAfternoon = true;
+                                    } else {
+                                        suburbData.evening = true;
+                                    }
+                                    found = true;
+                                }
+                            }
+                            if (!found) {
+                                subList.add(new SuburbData(string, dataSnapshot.child("TimeFrame").getValue(String.class)));
+                            }
+                        }
+                    }
+                }
+
+                String[] subArr = new String[subList.size()];
+                for (int i = 0; i < subArr.length; i++) {
+                    subArr[i] = subList.get(i).suburb;
+                }
+                cmbClientSuburb.setModel(new DefaultComboBoxModel<>(subArr));
+                changeTimeSlots();
+            }
+
+            @Override
+            public void onCancelled(FirebaseError fe) {
+                JOptionPane.showMessageDialog(null, "Could not fetch suburbs.\nCheck logs for error report.", "Suburb Error", JOptionPane.ERROR_MESSAGE);
+                System.err.print("Database connection error (Suburb): " + fe);
+            }
+        });
+        
+    }
+    
+    private void changeTimeSlots(){
+        String selectedSuburb = cmbClientSuburb.getSelectedItem().toString();
+
+        rbtAfternoon.setEnabled(false);
+        rbtAfternoon.setSelected(true);
+        rbtEvening.setEnabled(false);
+        rbtLateAfternoon.setEnabled(false);
+
+        for (SuburbData suburbData : subList) {
+            if (suburbData.suburb.equals(selectedSuburb)) {
+                if (suburbData.evening) {
+                    rbtEvening.setEnabled(true);
+                    rbtEvening.setSelected(true);
+                }
+                if (suburbData.lateAfternoon) {
+                    rbtLateAfternoon.setEnabled(true);
+                    rbtLateAfternoon.setSelected(true);
+                }
+                if (suburbData.afternoon) {
+                    rbtAfternoon.setEnabled(true);
+                    rbtAfternoon.setSelected(true);
+                }
+            }
+        }
+    }
+
+    class SuburbData {
+
+        public String suburb;
+        public boolean evening, afternoon, lateAfternoon;
+
+        public SuburbData(String suburb, String time) {
+            this.suburb = suburb;
+            this.evening = false;
+            this.afternoon = false;
+            this.lateAfternoon = false;
+            if (time.equals("Evening")) {
+                evening = true;
+            } else if (time.equals("Afternoon")) {
+                afternoon = true;
+            } else {
+                lateAfternoon = true;
+            }
+
+        }
+
+    }
 }
