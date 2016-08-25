@@ -1,5 +1,6 @@
 package DSC;
 
+import static DSC.DBClass.getConnection;
 import javax.swing.JFrame;
 
 /**
@@ -14,6 +15,7 @@ public class DSC_Main extends javax.swing.JFrame {
     public DSC_Main() {
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        getConnection("Website");
     }
 
     /**
