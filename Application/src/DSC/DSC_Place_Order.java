@@ -20,6 +20,8 @@ public class DSC_Place_Order extends javax.swing.JFrame {
      */
     public DSC_Place_Order() {
         //Connect and get all data from db
+        
+        tblOrderMeals.setModel(new DefaultTableModel(new Object[][]{null,null,null,null}, new String[]{"Quantity","MealType", "Allergy", "Exclutions"}));
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         
