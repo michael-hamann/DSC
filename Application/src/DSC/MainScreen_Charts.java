@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Panel;
+import java.awt.Rectangle;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -93,9 +94,11 @@ public class MainScreen_Charts extends JPanel {
                 chartPanel.setBounds(0, 0, 900, 580);
 
                 pnlBarChart.add(chartPanel);
-                pnlBarChart.setBounds(180, 155, 1010,600);
+//                pnlBarChart.setBounds(180, 155, 1010,600);
                 
-                
+                Dimension d = new Dimension(pnlBarChart.getWidth(),pnlBarChart.getHeight());
+                Rectangle r = new Rectangle(d);
+                pnlBarChart.setBounds(r);
             }
 
             @Override
