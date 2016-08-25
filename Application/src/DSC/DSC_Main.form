@@ -2,9 +2,9 @@
 
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
-    <Component class="javax.persistence.EntityManager" name="entityManager">
+    <Component class="javax.persistence.EntityManager" name="entityManager1">
       <Properties>
-        <Property name="persistenceUnit" type="java.lang.String" value="doorstepchef?zeroDateTimeBehavior=convertToNullPU"/>
+        <Property name="persistenceUnit" type="java.lang.String" value="pu"/>
       </Properties>
     </Component>
   </NonVisualComponents>
@@ -31,11 +31,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="pnlBackground" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-          </Group>
+          <Component id="pnlBackground" alignment="1" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -61,8 +57,8 @@
                   <Component id="pnlTables" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="pnlBarChart" max="32767" attributes="0"/>
                       <Component id="jPanel2" max="32767" attributes="0"/>
+                      <Component id="pnlBarChart" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -90,12 +86,12 @@
                       <Component id="pnlReports" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="pnlBarChart" max="32767" attributes="0"/>
                               <Component id="jPanel1" max="32767" attributes="0"/>
                               <Group type="102" attributes="0">
                                   <Component id="btnChangeChart" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
+                              <Component id="pnlBarChart" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -125,11 +121,11 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace pref="37" max="32767" attributes="0"/>
+                      <EmptySpace pref="70" max="32767" attributes="0"/>
                       <Component id="lblLogo" min="-2" pref="312" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="lblName" min="-2" pref="388" max="-2" attributes="0"/>
-                      <EmptySpace pref="37" max="32767" attributes="0"/>
+                      <EmptySpace pref="70" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -188,8 +184,8 @@
                           <Component id="btnClientTbl" alignment="0" max="32767" attributes="0"/>
                           <Component id="btnSuburbTbl" alignment="1" pref="150" max="32767" attributes="0"/>
                           <Component id="lblView" alignment="0" max="32767" attributes="0"/>
-                          <Component id="btnRouteView" alignment="1" pref="150" max="32767" attributes="0"/>
-                          <Component id="btnViewOrders" alignment="1" pref="150" max="32767" attributes="0"/>
+                          <Component id="btnRouteView" alignment="1" max="32767" attributes="0"/>
+                          <Component id="btnViewOrders" alignment="1" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -298,8 +294,8 @@
                           <Component id="btnDriverRpt" alignment="0" max="32767" attributes="0"/>
                           <Component id="btnChefRpt" alignment="0" max="32767" attributes="0"/>
                           <Component id="btnPackerRpt" alignment="0" max="32767" attributes="0"/>
-                          <Component id="btnHandlerRpt" alignment="1" pref="150" max="32767" attributes="0"/>
-                          <Component id="lblGenerate" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnHandlerRpt" alignment="1" max="32767" attributes="0"/>
+                          <Component id="lblGenerate" alignment="0" pref="150" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -376,18 +372,7 @@
             </Property>
           </Properties>
 
-          <Layout>
-            <DimensionLayout dim="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-              </Group>
-            </DimensionLayout>
-            <DimensionLayout dim="1">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-              </Group>
-            </DimensionLayout>
-          </Layout>
+          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
         </Container>
         <Container class="javax.swing.JPanel" name="jPanel2">
           <Properties>

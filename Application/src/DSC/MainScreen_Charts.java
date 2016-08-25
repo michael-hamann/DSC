@@ -90,10 +90,10 @@ public class MainScreen_Charts extends JPanel {
                         false, true, false);
                 //0, 0, 900, 580
                 ChartPanel chartPanel = new ChartPanel(barChart);
-                chartPanel.setBounds(0, 0, 900, 580);
+                chartPanel.setBounds(0,0,pnlBarChart.getWidth(),pnlBarChart.getHeight());
 
                 pnlBarChart.add(chartPanel);
-                pnlBarChart.setBounds(pnlBarChart.getBounds());
+                pnlBarChart.repaint();
                 
                 
             }
