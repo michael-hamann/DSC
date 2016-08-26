@@ -76,7 +76,7 @@ public class MainScreen_Charts extends JPanel {
                    
                 }
                 
-                 DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+                DefaultCategoryDataset dataset = new DefaultCategoryDataset();
                 dataset.addValue(countLowCarb, "", "Low Carb");
                 dataset.addValue(countStandard, "", "Standard");
                 dataset.addValue(countKiddies, "", "Kiddies");
@@ -96,10 +96,10 @@ public class MainScreen_Charts extends JPanel {
                 pnlBarChart.add(chartPanel);
                 pnlBarChart.repaint();
 
-                chartPanel.setBounds(0, 0, 1000, 580);
+               // chartPanel.setBounds(0, 0, 1000, 580);
 
                 pnlBarChart.add(chartPanel);
-                pnlBarChart.setBounds(180, 155, 1010,600);
+                //pnlBarChart.setBounds(180, 155, 1010,600);
 
                 
                 
@@ -115,5 +115,31 @@ public class MainScreen_Charts extends JPanel {
 
                 
     }
+    public static void createTable(JPanel pane){
+           DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+                dataset.addValue(countLowCarb, "", "Low Carb");
+                dataset.addValue(countStandard, "", "Standard");
+                dataset.addValue(countKiddies, "", "Kiddies");
+
+                JFreeChart barChart = ChartFactory.createBarChart(
+                        "Comparison of Total Meals Between Weeks",
+                        "Number Of Meals",
+                        "Meal Types",
+                        dataset,
+                        PlotOrientation.VERTICAL,
+                        false, true, false);
+                
+                ChartPanel chartPanel = new ChartPanel(barChart);
+                
+                chartPanel.setBounds(0,0,pane.getWidth(),pane.getHeight());
+
+                pane.add(chartPanel);
+                pane.repaint();
+
+               // chartPanel.setBounds(0, 0, 1000, 580);
+
+                pane.add(chartPanel);
+                //pnlBarChart.setBounds(180, 155, 1010,600);
+       }
 
 }

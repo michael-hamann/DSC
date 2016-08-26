@@ -238,6 +238,11 @@ public class DSC_Main extends javax.swing.JFrame {
         );
 
         pnlBarChart.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        pnlBarChart.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                pnlBarChartComponentResized(evt);
+            }
+        });
 
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -400,6 +405,10 @@ public class DSC_Main extends javax.swing.JFrame {
     private void btnChangeChartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeChartActionPerformed
         
     }//GEN-LAST:event_btnChangeChartActionPerformed
+
+    private void pnlBarChartComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_pnlBarChartComponentResized
+        MainScreen_Charts.createTable(pnlBarChart);
+    }//GEN-LAST:event_pnlBarChartComponentResized
 
     /**
      * @param args the command line arguments
