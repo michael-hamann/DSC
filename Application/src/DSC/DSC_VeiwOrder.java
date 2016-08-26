@@ -1,15 +1,7 @@
-
 package DSC;
 
-import static DSC.DBClass.ref;
-import com.firebase.client.ChildEventListener;
-import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
 import java.sql.ResultSet;
 import java.util.Date;
-import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -21,23 +13,22 @@ import javax.swing.table.DefaultTableModel;
 public class DSC_VeiwOrder extends javax.swing.JFrame {
 
     boolean editClicked = false;
-    
+
     /**
      * Creates new form DSC_Main
      */
     public DSC_VeiwOrder() {
         initComponents();
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);   
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         txfClientID.setEnabled(false);
         txfOrderID.setEnabled(false);
-        txfOrderClientID.setEnabled(false);
         cmbSuburbs.setEnabled(false);
         disableFieldsClient();
         disableFieldsOrder();
         btnSave.setEnabled(false);
         ClientData.getData();
     }
-    
+
     public final void enableFieldsClient() {
         txfClientName.setEnabled(true);
         txfClientSurname.setEnabled(true);
@@ -78,7 +69,6 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
         txfOrderDuration.setEnabled(true);
         btnOrderDateAdd.setEnabled(true);
         btnRemove.setEnabled(true);
-        txfOrderClientID.setEnabled(true);
     }
 
     public final void disableFieldsOrder() {
@@ -86,7 +76,6 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
         spnOrderStartingDate.setEnabled(false);
         txfOrderRouteID.setEnabled(false);
         txfOrderDuration.setEnabled(false);
-        txfOrderClientID.setEnabled(false);
         btnOrderDateAdd.setEnabled(false);
         btnRemove.setEnabled(false);
     }
@@ -97,78 +86,52 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
         spnOrderStartingDate.setValue(null);
         txfOrderRouteID.setText(null);
         txfOrderDuration.setText(null);
-        txfOrderClientID.setText(null);
     }
-    
+
     private boolean checkEmpty() {
         boolean empty = false;
 
         if (txfClientName.getText().isEmpty() && txfClientSurname.getText().isEmpty() && txfClientContactNo.getText().isEmpty()
                 && txfClientAddress.getText().isEmpty() && txfAddInfo.getText().isEmpty()
                 && txfClientContactNo.getText().isEmpty() && txfAltNum.getText().isEmpty() && txfClientEmail.getText().isEmpty()
-                && cmbSuburbs.getSelectedIndex()==0) {
+                && cmbSuburbs.getSelectedIndex() == 0) {
             empty = true;
         }
 
         return empty;
     }
 
-    public void populateTable(){
-        
-//        for (Client c: ClientData.allclients) {
-//            Object[] row = { c.getName(), c.getSurname(),c.getContactNum(), c.getEmail(), c.getSuburb() ,
-//                 ,
-//                 , familySize };
-//
-//                        model.addRow(row);  
-//                model.fireTableDataChanged();
-//        }
-        
-        
-        Firebase tableRef = ref.child("Clients");
-        tableRef.addChildEventListener(new ChildEventListener() {
-            
-            @Override
-            public void onChildAdded(DataSnapshot ds, String string) {
-                
-                DefaultTableModel model = (DefaultTableModel) tblOrderTable.getModel();
-                        Map<String,String> map = ds.getValue(Map.class); 
-                        String name = map.get("Name");
-                        String surname = map.get("Surname");
-                        String contactNo = map.get("ContactNum");
-                        String email = map.get("Email");
-                        String suburb = map.get("Suburb");
-                        Boolean active = Boolean.parseBoolean(map.get("Active"));
-                        String duration = map.get("Duration");
-                        String familySize = map.get("FamilySize");
-                        
-                        Object[] row = { name, surname, contactNo, email, suburb ,active ,duration, familySize };
+    public void populateTable() {
+        ClientData.getData();
+        OrderData.getOrders();
 
-                        model.addRow(row);  
-                model.fireTableDataChanged();
-            }
+        DefaultTableModel model = (DefaultTableModel) tblOrderTable.getModel();
+        for (Client c : ClientData.allclients) {
+            String clientid = c.getClientId();
+            String name = c.getName();
+            String surname = c.getSurname();
+            String contactNum = c.getContactNum();
+            String email = c.getEmail();
+            String suburb = c.getSuburb();
 
-            @Override
-            public void onCancelled(FirebaseError fe) {
-                JOptionPane.showMessageDialog(null, "ERROR: " + fe);
-            }
+            String active = "";
+            String duration = "";
+            String familySize = "";
 
-            @Override
-            public void onChildChanged(DataSnapshot ds, String string) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            for (Orders o : OrderData.allOrders) {
+                String id = o.getOrderClientid();
+                if (clientid.equals(id)) {
+                    duration = o.getDuration();
+                    familySize = o.getFamilySize();
+                    active = o.isActive();
+                }
             }
-
-            @Override
-            public void onChildRemoved(DataSnapshot ds) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot ds, String string) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-        }); 
+            Object[] row = {name, surname, contactNum, email, suburb, active, duration, familySize};
+            model.addRow(row);
+            model.fireTableDataChanged();
+        }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -232,11 +195,9 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
         lblStartingDate = new javax.swing.JLabel();
         lblRouteID = new javax.swing.JLabel();
         lblDuration = new javax.swing.JLabel();
-        lblClientID1 = new javax.swing.JLabel();
         txfOrderID = new javax.swing.JTextField();
         txfOrderRouteID = new javax.swing.JTextField();
         txfOrderDuration = new javax.swing.JTextField();
-        txfOrderClientID = new javax.swing.JTextField();
         spnOrderFamilySize = new javax.swing.JSpinner();
         spnOrderStartingDate = new javax.swing.JSpinner();
         btnEditOrder = new javax.swing.JButton();
@@ -289,7 +250,7 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
             }
         });
 
-        cmbSearchColumn.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ClientID", "Name", "Surname", "Address", "AdditionalInfo", "ContactNumber", "AlternativeNumber", "Email", "Suburb" }));
+        cmbSearchColumn.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Name", "Surname", "Contact Number", "Email", "Suburb", "Duration", "FamilySize" }));
         cmbSearchColumn.setPreferredSize(new java.awt.Dimension(115, 23));
 
         tblOrderTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -583,9 +544,6 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
         lblDuration.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblDuration.setText("Duration:");
 
-        lblClientID1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblClientID1.setText("Client ID:");
-
         txfOrderID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfOrderID.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         txfOrderID.addActionListener(new java.awt.event.ActionListener() {
@@ -599,9 +557,6 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
 
         txfOrderDuration.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfOrderDuration.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-
-        txfOrderClientID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txfOrderClientID.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
         spnOrderFamilySize.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
 
@@ -640,7 +595,6 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
                     .addComponent(lblOrdersDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlDetailsLayout.createSequentialGroup()
                         .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblClientID1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblDuration, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblRouteID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblStartingDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -652,18 +606,17 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
                                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(txfOrderRouteID, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
                                     .addComponent(txfOrderDuration)
-                                    .addComponent(txfOrderClientID)
                                     .addComponent(txfOrderID, javax.swing.GroupLayout.Alignment.TRAILING)))
                             .addGroup(pnlDetailsLayout.createSequentialGroup()
                                 .addGap(35, 35, 35)
                                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(spnOrderFamilySize, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(spnOrderFamilySize)
                                     .addGroup(pnlDetailsLayout.createSequentialGroup()
                                         .addComponent(spnOrderStartingDate, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(btnOrderDateAdd)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(btnRemove, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE))))))
+                                        .addComponent(btnOrderDateAdd, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnRemove))))))
                     .addGroup(pnlDetailsLayout.createSequentialGroup()
                         .addComponent(btnEditOrder)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -695,10 +648,6 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDuration)
                     .addComponent(txfOrderDuration, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblClientID1)
-                    .addComponent(txfOrderClientID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnEditOrder)
                 .addContainerGap())
@@ -808,13 +757,13 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_txfClientContactNoActionPerformed
 
     private void btnEditClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditClientActionPerformed
-        
+
         btnSave.setEnabled(true);
         enableFieldsClient();
         btnEditClient.setEnabled(false);
         editClicked = true;
-        
-        
+
+
     }//GEN-LAST:event_btnEditClientActionPerformed
 
     private void txfClientEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfClientEmailActionPerformed
@@ -828,45 +777,27 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         String name = txfClientName.getText() + " " + txfClientSurname.getText();
 
-        int clientID = Integer.parseInt(txfClientID.getText());
-
         String message = "Are you sure you want to delete " + name + "?";
         int answer = JOptionPane.showConfirmDialog(this, message, "Confirm", JOptionPane.INFORMATION_MESSAGE);
 
         switch (answer) {
             case JOptionPane.YES_OPTION:
-            JOptionPane.showMessageDialog(this, name + " will be deleted", "Delete Notification", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, name + " will be deleted", "Delete Notification", JOptionPane.INFORMATION_MESSAGE);
 
-            try {
-//                Connection c = DBClass.getConnection();
-//                Statement stmt = c.createStatement();
-//
-//                String updateClientID = "UPDATE order_tb SET Client_ID =0 WHERE Client_ID = '" + clientID + "'";
-//                stmt.executeUpdate(updateClientID);
-//
-//                String updateSuburbID = "UPDATE client_tb SET SuburbID = 0 WHERE ClientID = '" + clientID + "'";
-//                stmt.executeUpdate(updateSuburbID);
-//                
-//                String deleteClient = "DELETE FROM doorstepchef.client_tb WHERE ClientID LIKE '" + clientID + "'";
-//                stmt.executeUpdate(deleteClient);
-//
-//                String deleteOrders = "DELETE FROM doorstepchef.order_tb WHERE Client_ID LIKE '" + clientID + "'";
-//                stmt.executeUpdate(deleteOrders);
-//
-//                JOptionPane.showMessageDialog(this, "Client has been deleted. \n Orders of this client have been removed.");
+                try {
 
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
-            }
-            break;
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                break;
 
             case JOptionPane.NO_OPTION:
-            JOptionPane.showMessageDialog(this, name + " will not be deleted", "Delete Notification", JOptionPane.INFORMATION_MESSAGE);
-            break;
+                JOptionPane.showMessageDialog(this, name + " will not be deleted", "Delete Notification", JOptionPane.INFORMATION_MESSAGE);
+                break;
 
             case JOptionPane.CANCEL_OPTION:
 
-            break;
+                break;
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
@@ -888,7 +819,7 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
             }
         } else {
             this.dispose();
-            
+
         }
     }//GEN-LAST:event_btnAddActionPerformed
 
@@ -904,7 +835,7 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
             String newAddress = txfClientAddress.getText().trim();
             String newEmail = txfClientEmail.getText().trim();
             String newSuburb = (String) cmbSuburbs.getSelectedItem();
-           
+
             ResultSet rs;
             try {
 //                Connection c = DBClass.getConnection();
@@ -955,24 +886,24 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
             back = true;
         } else if (btnSave.getText().equals("Add")) {
             //Add to database
-             boolean empty = checkEmpty();
+            boolean empty = checkEmpty();
             if (false) {
-            //empty
+                //empty
                 JOptionPane.showMessageDialog(this, "Please fill in all fields", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
-                                short newID = Short.parseShort(txfClientID.getText().trim());
-                                String newName = txfClientName.getText().trim();
-                                String newSurname = txfClientSurname.getText().trim();
-                                String newContactNo = txfClientContactNo.getText().trim();
-                                String newAddress = txfClientAddress.getText().trim();
-                                String newAddInfo = txfAddInfo.getText().trim();
-                                String newAltNum = txfAltNum.getText().trim();
-                                String newEmail= txfClientEmail.getText().trim();
+                short newID = Short.parseShort(txfClientID.getText().trim());
+                String newName = txfClientName.getText().trim();
+                String newSurname = txfClientSurname.getText().trim();
+                String newContactNo = txfClientContactNo.getText().trim();
+                String newAddress = txfClientAddress.getText().trim();
+                String newAddInfo = txfAddInfo.getText().trim();
+                String newAltNum = txfAltNum.getText().trim();
+                String newEmail = txfClientEmail.getText().trim();
 
-                                String query = "INSERT INTO doorstepchef.client_tb (`ClientID`, `Name`, `Surname`, `Address`,`AdditionalInfo`,"
-                                + " `ContactNumber`, `AlternativeNumber`, `Email`,`SuburbID`) \n"
-                                + "	VALUES (" + newID + ", '" + newName + "', '" + newSurname + "', '"+ newAddress + "', '"+
-                                newAddInfo + "', '" + newContactNo+ "', '" + newAltNum + "', '" + newEmail +  "', '0');";
+                String query = "INSERT INTO doorstepchef.client_tb (`ClientID`, `Name`, `Surname`, `Address`,`AdditionalInfo`,"
+                        + " `ContactNumber`, `AlternativeNumber`, `Email`,`SuburbID`) \n"
+                        + "	VALUES (" + newID + ", '" + newName + "', '" + newSurname + "', '" + newAddress + "', '"
+                        + newAddInfo + "', '" + newContactNo + "', '" + newAltNum + "', '" + newEmail + "', '0');";
                 try {
 //                    Connection c = DBClass.getConnection();
 //                    Statement stmt = c.createStatement();
@@ -994,7 +925,7 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
             editClicked = false;
         }
     }//GEN-LAST:event_btnSaveActionPerformed
-    
+
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         if (editClicked) {
             int ans = JOptionPane.showConfirmDialog(this, "Do you wish to discard unsaved changes?");
@@ -1020,32 +951,191 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        //String column = (String) cmbSearchColumn.getSelectedItem();
+        String column = (String) cmbSearchColumn.getSelectedItem();
         String searchFor = txfSearch.getText();
-                
-        if(txfSearch.getText().equals("")){
-          JOptionPane.showMessageDialog(rootPane, "Please enter search value!");
-        
-        }else{
-//            
-//                txfClientID.setText(c.getClientId());
-//                txfClientName.setText(c.getName());
-//                txfClientSurname.setText(c.getSurname());
-//                txfClientAddress.setText(c.getAddress());
-//                txfAddInfo.setText(c.getAddInfo());
-//                txfClientContactNo.setText(c.getContactNum());
-//                txfAltNum.setText(c.getAltNum());
-//                txfClientEmail.setText(c.getEmail()); 
-//                cmbSuburbs.setSelectedItem(c.getSuburb());
 
-//                Orders o = OrderData.getOrders();
-//                txfOrderID.setText(o.getOrderid());
-//                txfOrderDuration.setText(o.getDuration());
-//                spnOrderFamilySize.setValue(o.getFamilySize());
-//                spnOrderStartingDate.setValue(o.getStartingDate());
-//                txfOrderRouteID.setText(o.getRouteId());
-//                
+        if (txfSearch.getText().equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "Please enter search value!");
+
+        } else {
+            switch (searchFor) {
+                case "Name":
+                    for (Client client : ClientData.allclients) {
+                        if (searchFor.equalsIgnoreCase(client.getName())) {
+                            txfClientID.setText(client.getClientId());
+                            txfClientName.setText(client.getName());
+                            txfClientSurname.setText(client.getSurname());
+                            txfClientAddress.setText(client.getAddress());
+                            txfAddInfo.setText(client.getAddInfo());
+                            txfClientContactNo.setText(client.getContactNum());
+                            txfAltNum.setText(client.getAltNum());
+                            txfClientEmail.setText(client.getEmail());
+                            cmbSuburbs.setSelectedItem(client.getSuburb());
+                            String id = client.getClientId();
+                            for (Orders orders : OrderData.allOrders) {
+                                if (id.equalsIgnoreCase(orders.getOrderClientid())) {
+                                    txfOrderID.setText(orders.getOrderid());
+                                    txfOrderDuration.setText(orders.getDuration());
+                                    spnOrderFamilySize.setValue(orders.getFamilySize());
+                                    spnOrderStartingDate.setValue(orders.getStartingDate());
+                                    txfOrderRouteID.setText(orders.getRouteId());
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case "Surname":
+                    for (Client client : ClientData.allclients) {
+                        if (searchFor.equalsIgnoreCase(client.getSurname())) {
+                            txfClientID.setText(client.getClientId());
+                            txfClientName.setText(client.getName());
+                            txfClientSurname.setText(client.getSurname());
+                            txfClientAddress.setText(client.getAddress());
+                            txfAddInfo.setText(client.getAddInfo());
+                            txfClientContactNo.setText(client.getContactNum());
+                            txfAltNum.setText(client.getAltNum());
+                            txfClientEmail.setText(client.getEmail());
+                            cmbSuburbs.setSelectedItem(client.getSuburb());
+                            String id = client.getClientId();
+                            for (Orders orders : OrderData.allOrders) {
+                                if (id.equalsIgnoreCase(orders.getOrderClientid())) {
+                                    txfOrderID.setText(orders.getOrderid());
+                                    txfOrderDuration.setText(orders.getDuration());
+                                    spnOrderFamilySize.setValue(orders.getFamilySize());
+                                    spnOrderStartingDate.setValue(orders.getStartingDate());
+                                    txfOrderRouteID.setText(orders.getRouteId());
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case "Contact Number":
+                    for (Client client : ClientData.allclients) {
+                        if (searchFor.equalsIgnoreCase(client.getContactNum())) {
+                            txfClientID.setText(client.getClientId());
+                            txfClientName.setText(client.getName());
+                            txfClientSurname.setText(client.getSurname());
+                            txfClientAddress.setText(client.getAddress());
+                            txfAddInfo.setText(client.getAddInfo());
+                            txfClientContactNo.setText(client.getContactNum());
+                            txfAltNum.setText(client.getAltNum());
+                            txfClientEmail.setText(client.getEmail());
+                            cmbSuburbs.setSelectedItem(client.getSuburb());
+                            String id = client.getClientId();
+                            for (Orders orders : OrderData.allOrders) {
+                                if (id.equalsIgnoreCase(orders.getOrderClientid())) {
+                                    txfOrderID.setText(orders.getOrderid());
+                                    txfOrderDuration.setText(orders.getDuration());
+                                    spnOrderFamilySize.setValue(orders.getFamilySize());
+                                    spnOrderStartingDate.setValue(orders.getStartingDate());
+                                    txfOrderRouteID.setText(orders.getRouteId());
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case "Email":
+                    for (Client client : ClientData.allclients) {
+                        if (searchFor.equalsIgnoreCase(client.getEmail())) {
+                            txfClientID.setText(client.getClientId());
+                            txfClientName.setText(client.getName());
+                            txfClientSurname.setText(client.getSurname());
+                            txfClientAddress.setText(client.getAddress());
+                            txfAddInfo.setText(client.getAddInfo());
+                            txfClientContactNo.setText(client.getContactNum());
+                            txfAltNum.setText(client.getAltNum());
+                            txfClientEmail.setText(client.getEmail());
+                            cmbSuburbs.setSelectedItem(client.getSuburb());
+                            String id = client.getClientId();
+                            for (Orders orders : OrderData.allOrders) {
+                                if (id.equalsIgnoreCase(orders.getOrderClientid())) {
+                                    txfOrderID.setText(orders.getOrderid());
+                                    txfOrderDuration.setText(orders.getDuration());
+                                    spnOrderFamilySize.setValue(orders.getFamilySize());
+                                    spnOrderStartingDate.setValue(orders.getStartingDate());
+                                    txfOrderRouteID.setText(orders.getRouteId());
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case "Suburb":
+                    for (Client client : ClientData.allclients) {
+                        if (searchFor.equalsIgnoreCase(client.getSuburb())) {
+                            txfClientID.setText(client.getClientId());
+                            txfClientName.setText(client.getName());
+                            txfClientSurname.setText(client.getSurname());
+                            txfClientAddress.setText(client.getAddress());
+                            txfAddInfo.setText(client.getAddInfo());
+                            txfClientContactNo.setText(client.getContactNum());
+                            txfAltNum.setText(client.getAltNum());
+                            txfClientEmail.setText(client.getEmail());
+                            cmbSuburbs.setSelectedItem(client.getSuburb());
+                            String id = client.getClientId();
+                            for (Orders orders : OrderData.allOrders) {
+                                if (id.equalsIgnoreCase(orders.getOrderClientid())) {
+                                    txfOrderID.setText(orders.getOrderid());
+                                    txfOrderDuration.setText(orders.getDuration());
+                                    spnOrderFamilySize.setValue(orders.getFamilySize());
+                                    spnOrderStartingDate.setValue(orders.getStartingDate());
+                                    txfOrderRouteID.setText(orders.getRouteId());
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case "Duration":
+                    for (Orders orders : OrderData.allOrders) {
+                        if (searchFor.equalsIgnoreCase((orders.getDuration()))) {
+                            txfOrderID.setText(orders.getOrderid());
+                            txfOrderDuration.setText(orders.getDuration());
+                            spnOrderFamilySize.setValue(orders.getFamilySize());
+                            spnOrderStartingDate.setValue(orders.getStartingDate());
+                            txfOrderRouteID.setText(orders.getRouteId());
+                            String id = orders.getOrderClientid();
+                            for (Client client : ClientData.allclients) {
+                                if (client.getClientId().equalsIgnoreCase(id)) {
+                                    txfClientID.setText(client.getClientId());
+                                    txfClientName.setText(client.getName());
+                                    txfClientSurname.setText(client.getSurname());
+                                    txfClientAddress.setText(client.getAddress());
+                                    txfAddInfo.setText(client.getAddInfo());
+                                    txfClientContactNo.setText(client.getContactNum());
+                                    txfAltNum.setText(client.getAltNum());
+                                    txfClientEmail.setText(client.getEmail());
+                                    cmbSuburbs.setSelectedItem(client.getSuburb());
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case "Family Size":
+                    for (Orders orders : OrderData.allOrders) {
+                        if (searchFor.equalsIgnoreCase((orders.getFamilySize()))) {
+                            txfOrderID.setText(orders.getOrderid());
+                            txfOrderDuration.setText(orders.getDuration());
+                            spnOrderFamilySize.setValue(orders.getFamilySize());
+                            spnOrderStartingDate.setValue(orders.getStartingDate());
+                            txfOrderRouteID.setText(orders.getRouteId());
+                            String id = orders.getOrderClientid();
+                            for (Client client : ClientData.allclients) {
+                                if (client.getClientId().equalsIgnoreCase(id)) {
+                                    txfClientID.setText(client.getClientId());
+                                    txfClientName.setText(client.getName());
+                                    txfClientSurname.setText(client.getSurname());
+                                    txfClientAddress.setText(client.getAddress());
+                                    txfAddInfo.setText(client.getAddInfo());
+                                    txfClientContactNo.setText(client.getContactNum());
+                                    txfAltNum.setText(client.getAltNum());
+                                    txfClientEmail.setText(client.getEmail());
+                                    cmbSuburbs.setSelectedItem(client.getSuburb());
+                                }
+                            } 
+                        }
+                    }
+                    break;
             }
+        }
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
@@ -1066,7 +1156,6 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
         btnEditOrder.setEnabled(false);
         btnSave.setEnabled(true);
         editClicked = true;
-        txfOrderClientID.setEnabled(false);
     }//GEN-LAST:event_btnEditOrderActionPerformed
 
     private void txfOrderIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfOrderIDActionPerformed
@@ -1135,7 +1224,6 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
     private javax.swing.JLabel lblClientContactNo;
     private javax.swing.JLabel lblClientDetails;
     private javax.swing.JLabel lblClientID;
-    private javax.swing.JLabel lblClientID1;
     private javax.swing.JLabel lblClientName;
     private javax.swing.JLabel lblClientSurname;
     private javax.swing.JLabel lblDuration;
@@ -1175,7 +1263,6 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
     private javax.swing.JTextField txfClientID;
     private javax.swing.JTextField txfClientName;
     private javax.swing.JTextField txfClientSurname;
-    private javax.swing.JTextField txfOrderClientID;
     private javax.swing.JTextField txfOrderDuration;
     private javax.swing.JTextField txfOrderID;
     private javax.swing.JTextField txfOrderRouteID;

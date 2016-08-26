@@ -32,10 +32,15 @@ public class OrderData extends Orders {
                 Map<String, String> orderMap = orderds.getValue(Map.class);
                 o = new Orders();
                 o.setOrderid(orderds.getKey());
-                o.setActive(Boolean.parseBoolean(orderMap.get("Active")));
+                o.setActive(orderMap.get("Active"));
                 o.setStartingDate(orderMap.get("StartingDate"));
                 o.setDuration(orderMap.get("Duration"));
                 o.setFamilySize(orderMap.get("FamilySize"));
+                o.setMealid(orderMap.get(""));
+                o.setMealtype(orderMap.get("MealType"));
+                o.setQuantity(orderMap.get("Quantity"));
+                o.setAllergy(orderMap.get("Allergies"));
+                o.setExclusions(orderMap.get("Exclusions"));
 
                 allOrders.add(o);
             }

@@ -12,18 +12,18 @@ package DSC;
 public class Orders {
     
     private String orderid;
-    private boolean active;
+    private String active;
     private String duration;
     private String familySize;
     private String routeId;
     private String startingDate;
     private String clientid;
 
-    public boolean isActive() {
+    public String isActive() {
         return active;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(String active) {
         this.active = active;
     }
 
