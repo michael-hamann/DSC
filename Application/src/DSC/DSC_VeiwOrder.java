@@ -1,11 +1,15 @@
 
 package DSC;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+import static DSC.DBClass.ref;
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.Date;
+import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -23,7 +27,7 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
      */
     public DSC_VeiwOrder() {
         initComponents();
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);   
         txfClientID.setEnabled(false);
         txfOrderID.setEnabled(false);
         txfOrderClientID.setEnabled(false);
@@ -31,9 +35,10 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
         disableFieldsClient();
         disableFieldsOrder();
         btnSave.setEnabled(false);
+        ClientData.getData();
     }
     
-     public final void enableFieldsClient() {
+    public final void enableFieldsClient() {
         txfClientName.setEnabled(true);
         txfClientSurname.setEnabled(true);
         txfClientContactNo.setEnabled(true);
@@ -68,7 +73,7 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
         cmbSuburbs.setSelectedIndex(0);
     }
 
-     public final void enableFieldsOrder() {
+    public final void enableFieldsOrder() {
         spnOrderFamilySize.setEnabled(true);
         txfOrderDuration.setEnabled(true);
         btnOrderDateAdd.setEnabled(true);
@@ -108,38 +113,62 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
         return empty;
     }
 
-    ResultSet tbrs;
-    public void setTable(){
+    public void populateTable(){
         
-        try {
-//            Connection c = DBClass.getConnection();
-//            Statement stmt = c.createStatement();
-//            
-//            String q = "SELECT client_tb.Name, client_tb.Surname, order_tb.StartingDate,order_tb.FamilySize,"
-//                    + "order_tb.Duration FROM order_tb INNER JOIN client_tb ON order_tb.Client_ID = client_tb.ClientID ;";
-//            tbrs = stmt.executeQuery(q);
-//            tbrs.next();
-//            
-//            DefaultTableModel model = (DefaultTableModel) tblOrderTable.getModel();
-//            model.setRowCount(0);
-//            JOptionPane.showMessageDialog(rootPane, "table cleared");
-//            int columns = tbrs.getMetaData().getColumnCount();
-//        
-//            while(tbrs.next()){
-//                Object[] row = new Object[columns];
-//                for (int i = 1; i <= columns; i++){  
-//                     row[i - 1] = tbrs.getObject(i);
-//                 }
-//            ((DefaultTableModel) tblOrderTable.getModel()).insertRow(tbrs.getRow()-1,row);
-//            JOptionPane.showMessageDialog(rootPane, "table populated");
-//                 }
-//            model.fireTableDataChanged(); 
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
-        }
-          
-        }
-       
+//        for (Client c: ClientData.allclients) {
+//            Object[] row = { c.getName(), c.getSurname(),c.getContactNum(), c.getEmail(), c.getSuburb() ,
+//                 ,
+//                 , familySize };
+//
+//                        model.addRow(row);  
+//                model.fireTableDataChanged();
+//        }
+        
+        
+        Firebase tableRef = ref.child("Clients");
+        tableRef.addChildEventListener(new ChildEventListener() {
+            
+            @Override
+            public void onChildAdded(DataSnapshot ds, String string) {
+                
+                DefaultTableModel model = (DefaultTableModel) tblOrderTable.getModel();
+                        Map<String,String> map = ds.getValue(Map.class); 
+                        String name = map.get("Name");
+                        String surname = map.get("Surname");
+                        String contactNo = map.get("ContactNum");
+                        String email = map.get("Email");
+                        String suburb = map.get("Suburb");
+                        Boolean active = Boolean.parseBoolean(map.get("Active"));
+                        String duration = map.get("Duration");
+                        String familySize = map.get("FamilySize");
+                        
+                        Object[] row = { name, surname, contactNo, email, suburb ,active ,duration, familySize };
+
+                        model.addRow(row);  
+                model.fireTableDataChanged();
+            }
+
+            @Override
+            public void onCancelled(FirebaseError fe) {
+                JOptionPane.showMessageDialog(null, "ERROR: " + fe);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot ds, String string) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot ds) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot ds, String string) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        }); 
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -170,7 +199,6 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
         txfSearch = new javax.swing.JTextField();
         cmbSearchColumn = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        setTable();
         tblOrderTable = new javax.swing.JTable();
         btnDelete = new javax.swing.JButton();
         btnAdd = new javax.swing.JButton();
@@ -247,7 +275,7 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
             .addComponent(lblLogo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(pnlHeadingLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblName, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
+                .addComponent(lblName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -269,14 +297,14 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Name", "Surname", "FamilySize", "StartingDate", "Duration"
+                "Name", "Surname", "Contact Number", "Email", "Suburb", "Active", "Duration", "Family Size"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -288,6 +316,7 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(tblOrderTable);
+        populateTable();
 
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Bin.png"))); // NOI18N
         btnDelete.setText("Delete");
@@ -763,7 +792,7 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlBackground, javax.swing.GroupLayout.PREFERRED_SIZE, 779, Short.MAX_VALUE)
+            .addComponent(pnlBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -785,22 +814,6 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
         btnEditClient.setEnabled(false);
         editClicked = true;
         
-        ResultSet rs;
-      
-                 try {
-//                    Connection c = DBClass.getConnection();
-//                    Statement stmt = c.createStatement();
-//                    String query2 = "SELECT Suburb FROM suburb_tb;";
-//                    rs = stmt.executeQuery(query2);
-//                    rs.next();
-//                    if(cmbSuburbs.getItemCount()<2){
-//                         while(rs.next()){
-//                              cmbSuburbs.addItem(rs.getString("Suburb"));
-//                          }
-//                    }
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
-                }
         
     }//GEN-LAST:event_btnEditClientActionPerformed
 
@@ -1007,113 +1020,32 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-      if(txfSearch.getText().equals("")){
-          JOptionPane.showMessageDialog(rootPane, "Please enter search value!");
-      }else{
-        
-        ResultSet rs;
-        
-        try {
-//                    Connection c = DBClass.getConnection();
-//                    Statement stmt = c.createStatement();
-//                    String query2 = "SELECT Suburb FROM suburb_tb;";
-//                    rs = stmt.executeQuery(query2);
-//                    rs.next();
-//                    if(cmbSuburbs.getItemCount()<2){
-//                         while(rs.next()){
-//                              cmbSuburbs.addItem(rs.getString("Suburb"));
-//                          }
-//                    }
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
-                }
-       
-        
-        String column = (String) cmbSearchColumn.getSelectedItem();
+        //String column = (String) cmbSearchColumn.getSelectedItem();
         String searchFor = txfSearch.getText();
+                
+        if(txfSearch.getText().equals("")){
+          JOptionPane.showMessageDialog(rootPane, "Please enter search value!");
         
-        String searchElement = "SELECT * FROM doorstepchef.client_tb WHERE "+column+" LIKE '"+searchFor+"';";
-        ResultSet clientRS;
-        ResultSet orderRS;
-        
-        try {
-//            Connection c = DBClass.getConnection();
-//            Statement stmt = c.createStatement();
-//            clientRS = stmt.executeQuery(searchElement);
-//            clientRS.next();
-//             if(clientRS == null || !clientRS.first()){
-//                 //display no items found based on search
-//                 JOptionPane.showMessageDialog(rootPane, "No records found of '"+searchFor+"'!Please check that '"+column+"' is spelt correctly.");
-//            }else{
-//              
-//               //display searched items in client panel
-//               txfClientID.setText(clientRS.getString(1));
-//               txfClientName.setText(clientRS.getString(2));
-//               txfClientSurname.setText(clientRS.getString(3));
-//               txfClientAddress.setText(clientRS.getString(4));
-//               txfAddInfo.setText(clientRS.getString(5));
-//               txfClientContactNo.setText(clientRS.getString(6));
-//               txfAltNum.setText(clientRS.getString(7));
-//               txfClientEmail.setText(clientRS.getString(8));
-//               
-//              //get suburb name from suburb table using fk
-//               String findSuburbID = "SELECT SuburbID FROM client_tb WHERE ClientID LIKE '"+clientRS.getString(1)+"';";
-//               clientRS = stmt.executeQuery(findSuburbID);
-//               clientRS.next();
-//               String suburbID = clientRS.getString(1);
-//               
-//               String findsuburb = "SELECT Suburb FROM suburb_TB WHERE SuburbID = '"+suburbID+"';";
-//               clientRS = stmt.executeQuery(findsuburb);
-//               clientRS.next();
-//               String sub = clientRS.getString(1);
-//                for (int i = 0; i < cmbSuburbs.getItemCount(); i++) {
-//                    String item = cmbSuburbs.getItemAt(i);
-//                    if(item.equals(sub)){
-//                        cmbSuburbs.setSelectedIndex(i);
-//                        break;
-//                    }
-//                }
-//               cmbSuburbs.setSelectedItem(clientRS.getString(1));
-//               
-//               String findOrders = "SELECT * FROM order_tb WHERE Client_ID LIKE '"+txfClientID.getText()+ "';";
-//               orderRS = stmt.executeQuery(findOrders);
-//               orderRS.next();
-//               //display if any the order details
-//               if(!orderRS.first()){
-//                   JOptionPane.showMessageDialog(rootPane, "No orders found for '"+searchFor+"'.");
-//               }else{
-//                    txfOrderID.setText(orderRS.getString(1));
-//                    spnOrderFamilySize.setValue(orderRS.getInt(2));
-//                    spnOrderStartingDate.setValue(orderRS.getDate(3));
-//                    txfOrderRouteID.setText(orderRS.getString(4));
-//                    txfOrderDuration.setText(orderRS.getString(5));
-//                    txfOrderClientID.setText(orderRS.getString(6));
-//               }
-//          }
-          
-        String id = txfOrderID.getText();
-        DefaultTableModel model = (DefaultTableModel) tblMeals.getModel();
-        model.setRowCount(0);
-        
-        String findrec ="SELECT * FROM meal_tb WHERE OrderID LIKE '"+id+"';";
-       // orderRS = stmt.executeQuery(findrec);
-        
-     //   int columns = orderRS.getMetaData().getColumnCount();
-        
-//        while(orderRS.next()){
-//        Object[] row = new Object[columns];
-//        for (int i = 1; i <= columns; i++){  
-//                row[i - 1] = orderRS.getObject(i);
-//        }
-//        ((DefaultTableModel) tblMeals.getModel()).insertRow(orderRS.getRow()-1,row);
-//        }
-//        
-//        model.fireTableDataChanged();   
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        
- }
+        }else{
+//            
+//                txfClientID.setText(c.getClientId());
+//                txfClientName.setText(c.getName());
+//                txfClientSurname.setText(c.getSurname());
+//                txfClientAddress.setText(c.getAddress());
+//                txfAddInfo.setText(c.getAddInfo());
+//                txfClientContactNo.setText(c.getContactNum());
+//                txfAltNum.setText(c.getAltNum());
+//                txfClientEmail.setText(c.getEmail()); 
+//                cmbSuburbs.setSelectedItem(c.getSuburb());
+
+//                Orders o = OrderData.getOrders();
+//                txfOrderID.setText(o.getOrderid());
+//                txfOrderDuration.setText(o.getDuration());
+//                spnOrderFamilySize.setValue(o.getFamilySize());
+//                spnOrderStartingDate.setValue(o.getStartingDate());
+//                txfOrderRouteID.setText(o.getRouteId());
+//                
+            }
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
