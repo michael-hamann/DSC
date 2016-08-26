@@ -1,5 +1,6 @@
 package DSC;
 
+import static DSC.DBClass.getConnection;
 import javax.swing.JFrame;
 
 /**
@@ -14,7 +15,7 @@ public class DSC_Main extends javax.swing.JFrame {
     public DSC_Main() {
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        DBClass.getConnection("Website");
+        getConnection("Website");
         MainScreen_Charts.createBarGraph_Meals(pnlBarChart);
     }
 
@@ -46,12 +47,12 @@ public class DSC_Main extends javax.swing.JFrame {
         btnPackerRpt = new javax.swing.JButton();
         btnHandlerRpt = new javax.swing.JButton();
         lblGenerate = new javax.swing.JLabel();
-        pnlBarChart = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         btnChangeChart = new javax.swing.JButton();
         btnChangeStatistics = new javax.swing.JButton();
+        pnlBarChart = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("DSC");
@@ -237,8 +238,6 @@ public class DSC_Main extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        pnlBarChart.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -286,6 +285,8 @@ public class DSC_Main extends javax.swing.JFrame {
         });
 
         btnChangeStatistics.setText("Change Statistics");
+
+        pnlBarChart.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         javax.swing.GroupLayout pnlBackgroundLayout = new javax.swing.GroupLayout(pnlBackground);
         pnlBackground.setLayout(pnlBackgroundLayout);
@@ -372,11 +373,15 @@ public class DSC_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSuburbTblActionPerformed
 
     private void btnDriverRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDriverRptActionPerformed
+      
         DriverReport.getDriverData_Clientstb();
+        
     }//GEN-LAST:event_btnDriverRptActionPerformed
 
     private void btnChefRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChefRptActionPerformed
+
         ChefReport.getChefData_Ordertb(); // get data relavant to ChefReport
+
     }//GEN-LAST:event_btnChefRptActionPerformed
 
     private void btnPackerRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPackerRptActionPerformed
