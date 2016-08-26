@@ -29,7 +29,7 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
 //        btnSave.setText("Save");
 //        btnSave.setVisible(false);
         txfOrderID.setEnabled(false);
-        lstOrders.setSelectedIndex(0);
+//        lstOrders.setSelectedIndex(0);
     }
 
     public final void enableFields() {
@@ -67,16 +67,9 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("doorstepchef?zeroDateTimeBehavior=convertToNullPU").createEntityManager();
-        driverTbQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT d FROM DriverTb d");
-        driverTbList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(driverTbQuery.getResultList());
-        orderTbQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT o FROM OrderTb o");
-        orderTbList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : orderTbQuery.getResultList();
         pnlBackground = new javax.swing.JPanel();
         pnlDrivers = new javax.swing.JPanel();
         lblDrivers = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        lstOrders = new javax.swing.JList<>();
         btnAddOrder = new javax.swing.JButton();
         btnDeleteOrder = new javax.swing.JButton();
         pnlDetails = new javax.swing.JPanel();
@@ -110,14 +103,6 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
         lblDrivers.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblDrivers.setText("Orders:");
 
-        lstOrders.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lstOrders.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-
-        org.jdesktop.swingbinding.JListBinding jListBinding = org.jdesktop.swingbinding.SwingBindings.createJListBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, orderTbList, lstOrders);
-        bindingGroup.addBinding(jListBinding);
-
-        jScrollPane1.setViewportView(lstOrders);
-
         btnAddOrder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Add.png"))); // NOI18N
         btnAddOrder.setText(" Add");
         btnAddOrder.addActionListener(new java.awt.event.ActionListener() {
@@ -140,16 +125,12 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
             pnlDriversLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDriversLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlDriversLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(pnlDriversLayout.createSequentialGroup()
-                        .addComponent(lblDrivers, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAddOrder)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnDeleteOrder)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addComponent(lblDrivers, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnAddOrder)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnDeleteOrder)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlDriversLayout.setVerticalGroup(
             pnlDriversLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -160,9 +141,7 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
                     .addGroup(pnlDriversLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnDeleteOrder)
                         .addComponent(btnAddOrder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1)
-                .addContainerGap())
+                .addGap(318, 318, 318))
         );
 
         pnlDetails.setBackground(new java.awt.Color(0, 204, 51));
@@ -192,7 +171,7 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
         txfOrderID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfOrderID.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstOrders, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.orderID}"), txfOrderID, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, new javax.swing.JList(), org.jdesktop.beansbinding.ELProperty.create("${selectedElement.orderID}"), txfOrderID, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
         txfOrderID.addActionListener(new java.awt.event.ActionListener() {
@@ -204,19 +183,19 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
         txfOrderRouteID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfOrderRouteID.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstOrders, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.routeID}"), txfOrderRouteID, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, new javax.swing.JList(), org.jdesktop.beansbinding.ELProperty.create("${selectedElement.routeID}"), txfOrderRouteID, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
         txfOrderDuration.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfOrderDuration.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstOrders, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.duration}"), txfOrderDuration, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, new javax.swing.JList(), org.jdesktop.beansbinding.ELProperty.create("${selectedElement.duration}"), txfOrderDuration, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
         txfOrderClientID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfOrderClientID.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstOrders, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.clientID}"), txfOrderClientID, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, new javax.swing.JList(), org.jdesktop.beansbinding.ELProperty.create("${selectedElement.clientID}"), txfOrderClientID, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
         btnBack.setText("Back");
@@ -228,12 +207,12 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
 
         spnOrderFamilySize.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstOrders, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.familySize}"), spnOrderFamilySize, org.jdesktop.beansbinding.BeanProperty.create("value"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, new javax.swing.JList(), org.jdesktop.beansbinding.ELProperty.create("${selectedElement.familySize}"), spnOrderFamilySize, org.jdesktop.beansbinding.BeanProperty.create("value"));
         bindingGroup.addBinding(binding);
 
         spnOrderStartingDate.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(1470311210147L), null, null, java.util.Calendar.DAY_OF_WEEK));
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstOrders, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.startingDate}"), spnOrderStartingDate, org.jdesktop.beansbinding.BeanProperty.create("value"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, new javax.swing.JList(), org.jdesktop.beansbinding.ELProperty.create("${selectedElement.startingDate}"), spnOrderStartingDate, org.jdesktop.beansbinding.BeanProperty.create("value"));
         bindingGroup.addBinding(binding);
 
         btnSaveOrder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Save 2.png"))); // NOI18N
@@ -291,7 +270,7 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
                             .addComponent(txfOrderClientID, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(spnOrderFamilySize)
                             .addGroup(pnlDetailsLayout.createSequentialGroup()
-                                .addComponent(spnOrderStartingDate, javax.swing.GroupLayout.PREFERRED_SIZE, 109, Short.MAX_VALUE)
+                                .addComponent(spnOrderStartingDate, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnOrderDateAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -336,7 +315,7 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblClientID)
                     .addComponent(txfOrderClientID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBack)
                     .addComponent(btnSaveOrder)
@@ -390,7 +369,7 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
                     btnSaveOrder.setVisible(false);
                     btnEditOrder.setEnabled(true);
                     disableFields();
-                    lstOrders.setSelectedIndex(listIndex);
+                   // lstOrders.setSelectedIndex(listIndex);
                     editClicked = false;
                     break;
                 case JOptionPane.NO_OPTION:
@@ -463,7 +442,7 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSaveOrderActionPerformed
 
     private void btnEditOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditOrderActionPerformed
-        listIndex = lstOrders.getSelectedIndex();
+    //    listIndex = lstOrders.getSelectedIndex();
         enableFields();
         btnEditOrder.setEnabled(false);
         btnSaveOrder.setVisible(true);
@@ -509,7 +488,7 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
 
     private void btnDeleteOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteOrderActionPerformed
         int orderID = Integer.parseInt(txfOrderID.getText());
-        int elementIndex = lstOrders.getSelectedIndex();
+       // int elementIndex = lstOrders.getSelectedIndex();
 
         String message = "Are you sure you want to delete Orders: " + orderID + "?\n*Note all eals listed with this order will be deleted aswell.";
         int answer = JOptionPane.showConfirmDialog(this, message, "Confirm", JOptionPane.INFORMATION_MESSAGE);
@@ -590,10 +569,6 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
     private javax.swing.JButton btnOrderDateAdd;
     private javax.swing.JButton btnRemove;
     private javax.swing.JButton btnSaveOrder;
-    private java.util.List<DSC.DriverTb> driverTbList;
-    private javax.persistence.Query driverTbQuery;
-    private javax.persistence.EntityManager entityManager;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblClientID;
     private javax.swing.JLabel lblDrivers;
     private javax.swing.JLabel lblDuration;
@@ -602,9 +577,6 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
     private javax.swing.JLabel lblOrdersDetails;
     private javax.swing.JLabel lblRouteID;
     private javax.swing.JLabel lblStartingDate;
-    private javax.swing.JList<String> lstOrders;
-    private java.util.List<DSC.OrderTb> orderTbList;
-    private javax.persistence.Query orderTbQuery;
     private javax.swing.JPanel pnlBackground;
     private javax.swing.JPanel pnlDetails;
     private javax.swing.JPanel pnlDrivers;

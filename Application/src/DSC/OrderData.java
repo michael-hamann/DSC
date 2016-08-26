@@ -36,11 +36,11 @@ public class OrderData extends Orders {
                 o.setStartingDate(orderMap.get("StartingDate"));
                 o.setDuration(orderMap.get("Duration"));
                 o.setFamilySize(orderMap.get("FamilySize"));
-                o.setMealid(orderMap.get(""));
-                o.setMealtype(orderMap.get("MealType"));
-                o.setQuantity(orderMap.get("Quantity"));
-                o.setAllergy(orderMap.get("Allergies"));
-                o.setExclusions(orderMap.get("Exclusions"));
+//                o.setMealid(orderMap.get(""));
+//                o.setMealtype(orderMap.get("MealType"));
+//                o.setQuantity(orderMap.get("Quantity"));
+//                o.setAllergy(orderMap.get("Allergies"));
+//                o.setExclusions(orderMap.get("Exclusions"));
 
                 allOrders.add(o);
             }

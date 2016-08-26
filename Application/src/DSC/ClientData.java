@@ -32,7 +32,7 @@ public class ClientData extends Client{
                 Map<String,String> clientMap = ds.getValue(Map.class);
                 c = new Client();
                
-                c.setClientId(ds.getKey());
+               // c.setClientId(ds.getKey());
                 c.setName(clientMap.get("Name"));
                 c.setSurname(clientMap.get("Surname"));
                 c.setAddress(clientMap.get("Address"));

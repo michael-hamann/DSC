@@ -25,19 +25,13 @@ public class DSC_ClientTable extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("doorstepchef?zeroDateTimeBehavior=convertToNullPU").createEntityManager();
-        clientTbQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT c FROM ClientTb c");
-        clientTbList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : clientTbQuery.getResultList();
         pnlBackground = new javax.swing.JPanel();
         pnlHeading = new javax.swing.JPanel();
         lblLogo = new javax.swing.JLabel();
         lblName = new javax.swing.JLabel();
         pnlTable = new javax.swing.JPanel();
         pnlIndent = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblClientTable = new javax.swing.JTable();
         lblClient = new javax.swing.JLabel();
         pnlButtons = new javax.swing.JPanel();
         btnBack = new javax.swing.JButton();
@@ -83,52 +77,15 @@ public class DSC_ClientTable extends javax.swing.JFrame {
 
         pnlIndent.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
-        tblClientTable.getTableHeader().setReorderingAllowed(false);
-
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, clientTbList, tblClientTable);
-        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${clientID}"));
-        columnBinding.setColumnName("Client ID");
-        columnBinding.setColumnClass(Short.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${name}"));
-        columnBinding.setColumnName("Name");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${surname}"));
-        columnBinding.setColumnName("Surname");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${address}"));
-        columnBinding.setColumnName("Address");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${additionalInfo}"));
-        columnBinding.setColumnName("Additional Info");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${contactNumber}"));
-        columnBinding.setColumnName("Contact Number");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${alternativeNumber}"));
-        columnBinding.setColumnName("Alternative Number");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${email}"));
-        columnBinding.setColumnName("Email");
-        columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${orderID}"));
-        columnBinding.setColumnName("Order ID");
-        columnBinding.setColumnClass(Short.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${suburbID}"));
-        columnBinding.setColumnName("Suburb ID");
-        columnBinding.setColumnClass(Short.class);
-        bindingGroup.addBinding(jTableBinding);
-        jTableBinding.bind();
-        jScrollPane1.setViewportView(tblClientTable);
-
         javax.swing.GroupLayout pnlIndentLayout = new javax.swing.GroupLayout(pnlIndent);
         pnlIndent.setLayout(pnlIndentLayout);
         pnlIndentLayout.setHorizontalGroup(
             pnlIndentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         pnlIndentLayout.setVerticalGroup(
             pnlIndentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGap(0, 427, Short.MAX_VALUE)
         );
 
         lblClient.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -232,8 +189,6 @@ public class DSC_ClientTable extends javax.swing.JFrame {
             .addComponent(pnlBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        bindingGroup.bind();
-
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -244,8 +199,7 @@ public class DSC_ClientTable extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnClientDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientDetailsActionPerformed
-        new DSC_ClientDetails().setVisible(true);
-        this.dispose();
+        
     }//GEN-LAST:event_btnClientDetailsActionPerformed
 
     /**
@@ -286,10 +240,6 @@ public class DSC_ClientTable extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnClientDetails;
-    private java.util.List<DSC.ClientTb> clientTbList;
-    private javax.persistence.Query clientTbQuery;
-    private javax.persistence.EntityManager entityManager;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblClient;
     private javax.swing.JLabel lblLogo;
     private javax.swing.JLabel lblName;
@@ -298,7 +248,5 @@ public class DSC_ClientTable extends javax.swing.JFrame {
     private javax.swing.JPanel pnlHeading;
     private javax.swing.JPanel pnlIndent;
     private javax.swing.JPanel pnlTable;
-    private javax.swing.JTable tblClientTable;
-    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

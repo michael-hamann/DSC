@@ -1,50 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
-  <NonVisualComponents>
-    <Component class="javax.persistence.EntityManager" name="entityManager">
-      <Properties>
-        <Property name="persistenceUnit" type="java.lang.String" value="doorstepchef?zeroDateTimeBehavior=convertToNullPU"/>
-      </Properties>
-    </Component>
-    <Component class="javax.persistence.Query" name="driverTbQuery">
-      <Properties>
-        <Property name="query" type="java.lang.String" value="SELECT d FROM DriverTb d"/>
-        <Property name="entityManager" type="java.lang.Object" editor="org.netbeans.modules.form.j2ee.J2EEPropertyModifier$EMProperty$EntityManagerEditor">
-          <ComponentRef name="entityManager"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="java.util.List" name="driverTbList">
-      <Properties>
-        <Property name="query" type="java.lang.Object" editor="org.netbeans.modules.form.j2ee.J2EEPropertyModifier$QueryBeanProperty$QueryEditor">
-          <ComponentRef name="driverTbQuery"/>
-        </Property>
-        <Property name="observable" type="boolean" value="true"/>
-      </Properties>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;DSC.DriverTb&gt;"/>
-      </AuxValues>
-    </Component>
-    <Component class="javax.persistence.Query" name="orderTbQuery">
-      <Properties>
-        <Property name="query" type="java.lang.String" value="SELECT o FROM OrderTb o"/>
-        <Property name="entityManager" type="java.lang.Object" editor="org.netbeans.modules.form.j2ee.J2EEPropertyModifier$EMProperty$EntityManagerEditor">
-          <ComponentRef name="entityManager"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="java.util.List" name="orderTbList">
-      <Properties>
-        <Property name="query" type="java.lang.Object" editor="org.netbeans.modules.form.j2ee.J2EEPropertyModifier$QueryBeanProperty$QueryEditor">
-          <ComponentRef name="orderTbQuery"/>
-        </Property>
-      </Properties>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;DSC.OrderTb&gt;"/>
-      </AuxValues>
-    </Component>
-  </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="0"/>
     <Property name="title" type="java.lang.String" value="Driver Details"/>
@@ -128,18 +84,12 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane1" max="32767" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <Component id="lblDrivers" min="-2" pref="118" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="btnAddOrder" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="btnDeleteOrder" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          </Group>
-                      </Group>
+                      <Component id="lblDrivers" min="-2" pref="118" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnAddOrder" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnDeleteOrder" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -154,9 +104,7 @@
                               <Component id="btnAddOrder" alignment="3" max="32767" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" max="32767" attributes="0"/>
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="318" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -170,29 +118,6 @@
                 <Property name="text" type="java.lang.String" value="Orders:"/>
               </Properties>
             </Component>
-            <Container class="javax.swing.JScrollPane" name="jScrollPane1">
-              <AuxValues>
-                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-              </AuxValues>
-
-              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-              <SubComponents>
-                <Component class="javax.swing.JList" name="lstOrders">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Tahoma" size="12" style="0"/>
-                    </Property>
-                    <Property name="selectionMode" type="int" value="0"/>
-                  </Properties>
-                  <BindingProperties>
-                    <BindingProperty name="elements" source="orderTbList" target="lstOrders" targetPath="elements" updateStrategy="0" immediately="false"/>
-                  </BindingProperties>
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-                  </AuxValues>
-                </Component>
-              </SubComponents>
-            </Container>
             <Component class="javax.swing.JButton" name="btnAddOrder">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -312,7 +237,7 @@
                           <Component id="lblClientID" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txfOrderClientID" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="91" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="btnBack" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnSaveOrder" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -387,11 +312,6 @@
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="11"/>
               </Properties>
-              <BindingProperties>
-                <BindingProperty name="text" source="lstOrders" sourcePath="${selectedElement.orderID}" target="txfOrderID" targetPath="text" updateStrategy="0" immediately="false">
-                  <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
-                </BindingProperty>
-              </BindingProperties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txfOrderIDActionPerformed"/>
               </Events>
@@ -403,11 +323,6 @@
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="11"/>
               </Properties>
-              <BindingProperties>
-                <BindingProperty name="text" source="lstOrders" sourcePath="${selectedElement.routeID}" target="txfOrderRouteID" targetPath="text" updateStrategy="0" immediately="false">
-                  <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
-                </BindingProperty>
-              </BindingProperties>
             </Component>
             <Component class="javax.swing.JTextField" name="txfOrderDuration">
               <Properties>
@@ -416,11 +331,6 @@
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="11"/>
               </Properties>
-              <BindingProperties>
-                <BindingProperty name="text" source="lstOrders" sourcePath="${selectedElement.duration}" target="txfOrderDuration" targetPath="text" updateStrategy="0" immediately="false">
-                  <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
-                </BindingProperty>
-              </BindingProperties>
             </Component>
             <Component class="javax.swing.JTextField" name="txfOrderClientID">
               <Properties>
@@ -429,11 +339,6 @@
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="11"/>
               </Properties>
-              <BindingProperties>
-                <BindingProperty name="text" source="lstOrders" sourcePath="${selectedElement.clientID}" target="txfOrderClientID" targetPath="text" updateStrategy="0" immediately="false">
-                  <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
-                </BindingProperty>
-              </BindingProperties>
             </Component>
             <Component class="javax.swing.JButton" name="btnBack">
               <Properties>
@@ -449,9 +354,6 @@
                   <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
                 </Property>
               </Properties>
-              <BindingProperties>
-                <BindingProperty name="value" source="lstOrders" sourcePath="${selectedElement.familySize}" target="spnOrderFamilySize" targetPath="value" updateStrategy="0" immediately="false"/>
-              </BindingProperties>
             </Component>
             <Component class="javax.swing.JSpinner" name="spnOrderStartingDate">
               <Properties>
@@ -459,9 +361,6 @@
                   <SpinnerModel initial="1470311210147" stepSize="7" type="date"/>
                 </Property>
               </Properties>
-              <BindingProperties>
-                <BindingProperty name="value" source="lstOrders" sourcePath="${selectedElement.startingDate}" target="spnOrderStartingDate" targetPath="value" updateStrategy="0" immediately="false"/>
-              </BindingProperties>
             </Component>
             <Component class="javax.swing.JButton" name="btnSaveOrder">
               <Properties>

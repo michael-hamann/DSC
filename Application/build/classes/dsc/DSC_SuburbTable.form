@@ -1,31 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
-  <NonVisualComponents>
-    <Component class="javax.persistence.EntityManager" name="entityManager">
-      <Properties>
-        <Property name="persistenceUnit" type="java.lang.String" value="doorstepchef?zeroDateTimeBehavior=convertToNullPU"/>
-      </Properties>
-    </Component>
-    <Component class="javax.persistence.Query" name="suburbTbQuery">
-      <Properties>
-        <Property name="query" type="java.lang.String" value="SELECT s FROM SuburbTb s"/>
-        <Property name="entityManager" type="java.lang.Object" editor="org.netbeans.modules.form.j2ee.J2EEPropertyModifier$EMProperty$EntityManagerEditor">
-          <ComponentRef name="entityManager"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="java.util.List" name="suburbTbList">
-      <Properties>
-        <Property name="query" type="java.lang.Object" editor="org.netbeans.modules.form.j2ee.J2EEPropertyModifier$QueryBeanProperty$QueryEditor">
-          <ComponentRef name="suburbTbQuery"/>
-        </Property>
-      </Properties>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;DSC.SuburbTb&gt;"/>
-      </AuxValues>
-    </Component>
-  </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="title" type="java.lang.String" value="Suburb Table"/>
@@ -239,24 +214,6 @@
                           <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
                         </Property>
                       </Properties>
-                      <BindingProperties>
-                        <BindingProperty name="elements" source="suburbTbList" target="tblSuburbTable" targetPath="elements" updateStrategy="0" immediately="true">
-                          <Subbinding sourcePath="${routeID}">
-                            <BindingParameter name="NAME" value="Route ID"/>
-                            <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Short.class"/>
-                          </Subbinding>
-                          <Subbinding sourcePath="${suburb}">
-                            <BindingParameter name="NAME" value="Suburb"/>
-                            <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
-                            <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
-                          </Subbinding>
-                          <Subbinding sourcePath="${suburbID}">
-                            <BindingParameter name="NAME" value="Suburb ID"/>
-                            <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Short.class"/>
-                            <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
-                          </Subbinding>
-                        </BindingProperty>
-                      </BindingProperties>
                     </Component>
                   </SubComponents>
                 </Container>

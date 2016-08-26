@@ -19,6 +19,12 @@ public class Orders {
     private String startingDate;
     private String clientid;
 
+    private String mealid;
+    private String mealtype;
+    private String allergy;
+    private String exclusions;
+    private String quantity;
+    
     public String isActive() {
         return active;
     }
@@ -73,6 +79,46 @@ public class Orders {
 
     public void setClientid(String clientid) {
         this.clientid = clientid;
+    }
+
+    public String getMealid() {
+        return mealid;
+    }
+
+    public void setMealid(String mealid) {
+        this.mealid = mealid;
+    }
+
+    public String getMealtype() {
+        return mealtype;
+    }
+
+    public void setMealtype(String mealtype) {
+        this.mealtype = mealtype;
+    }
+
+    public String getAllergy() {
+        return allergy;
+    }
+
+    public void setAllergy(String allergy) {
+        this.allergy = allergy;
+    }
+
+    public String getExclusions() {
+        return exclusions;
+    }
+
+    public void setExclusions(String exclusions) {
+        this.exclusions = exclusions;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
     }
 
     

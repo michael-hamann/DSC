@@ -65,9 +65,6 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("doorstepchef?zeroDateTimeBehavior=convertToNullPU").createEntityManager();
-        driverTbQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT d FROM DriverTb d");
-        driverTbList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(driverTbQuery.getResultList());
         pnlBackground = new javax.swing.JPanel();
         pnlDrivers = new javax.swing.JPanel();
         lblDrivers = new javax.swing.JLabel();
@@ -106,10 +103,6 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
 
         lstDrivers.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lstDrivers.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-
-        org.jdesktop.swingbinding.JListBinding jListBinding = org.jdesktop.swingbinding.SwingBindings.createJListBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, driverTbList, lstDrivers);
-        bindingGroup.addBinding(jListBinding);
-
         jScrollPane1.setViewportView(lstDrivers);
 
         btnAddDriver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Add.png"))); // NOI18N
@@ -566,9 +559,6 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     private javax.swing.JButton btnDeleteDriver;
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnSave;
-    private java.util.List<DSC.DriverTb> driverTbList;
-    private javax.persistence.Query driverTbQuery;
-    private javax.persistence.EntityManager entityManager;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAddress;
     private javax.swing.JLabel lblContactNo;

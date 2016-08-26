@@ -26,11 +26,6 @@ public class DSC_OrderTable extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("doorstepchef?zeroDateTimeBehavior=convertToNullPU").createEntityManager();
-        mealTbQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT m FROM MealTb m");
-        mealTbList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : mealTbQuery.getResultList();
-        orderTbQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT o FROM OrderTb o");
-        orderTbList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : orderTbQuery.getResultList();
         pnlBackground = new javax.swing.JPanel();
         pnlHeading = new javax.swing.JPanel();
         lblLogo = new javax.swing.JLabel();
@@ -247,14 +242,9 @@ public class DSC_OrderTable extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnOrderDetails;
-    private javax.persistence.EntityManager entityManager;
     private javax.swing.JLabel lblLogo;
     private javax.swing.JLabel lblMeals;
     private javax.swing.JLabel lblName;
-    private java.util.List<DSC.MealTb> mealTbList;
-    private javax.persistence.Query mealTbQuery;
-    private java.util.List<DSC.OrderTb> orderTbList;
-    private javax.persistence.Query orderTbQuery;
     private javax.swing.JPanel pnlBackground;
     private javax.swing.JPanel pnlButtons;
     private javax.swing.JPanel pnlHeading;
