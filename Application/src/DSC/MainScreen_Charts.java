@@ -74,10 +74,10 @@ public class MainScreen_Charts extends JPanel {
                         }
 
                     }
-                   
+
                 }
-                
-                 DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+                DefaultCategoryDataset dataset = new DefaultCategoryDataset();
                 dataset.addValue(countLowCarb, "", "Low Carb");
                 dataset.addValue(countStandard, "", "Standard");
                 dataset.addValue(countKiddies, "", "Kiddies");
@@ -89,24 +89,13 @@ public class MainScreen_Charts extends JPanel {
                         dataset,
                         PlotOrientation.VERTICAL,
                         false, true, false);
-                
+
                 ChartPanel chartPanel = new ChartPanel(barChart);
+                chartPanel.setBounds(0, 0, pnlBarChart.getWidth(), pnlBarChart.getHeight());
+                pnlBarChart.add(chartPanel, BorderLayout.CENTER);
+                chartPanel.setSize(new Dimension(pnlBarChart.getWidth(), pnlBarChart.getHeight()));
+                chartPanel.repaint();
                 
-                chartPanel.setBounds(0,0,pnlBarChart.getWidth(),pnlBarChart.getHeight());
-
-                pnlBarChart.add(chartPanel,BorderLayout.WEST);
-                
-
-               // chartPanel.setBounds(0, 0, 1000, 580);
-
-                pnlBarChart.add(chartPanel);
-               // pnlBarChart.setBounds(180, 155, 1010,600);
-               pnlBarChart.repaint();
-               chartPanel.repaint();
-               pnlBarChart.setBounds(180, 155,chartPanel.getWidth(),chartPanel.getHeight());
-               pnlBarChart.setMaximumSize(new Dimension(50, 50));
-                pnlBarChart.repaint();
-              // chartPanel.repaint();
             }
 
             @Override
@@ -114,10 +103,7 @@ public class MainScreen_Charts extends JPanel {
                 JOptionPane.showMessageDialog(null, "ERROR: " + fe);
             }
         });
-        
-       
 
-                
     }
 
 }
