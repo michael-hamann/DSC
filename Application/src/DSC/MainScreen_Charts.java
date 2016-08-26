@@ -6,6 +6,7 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -93,16 +94,19 @@ public class MainScreen_Charts extends JPanel {
                 
                 chartPanel.setBounds(0,0,pnlBarChart.getWidth(),pnlBarChart.getHeight());
 
+                pnlBarChart.add(chartPanel,BorderLayout.WEST);
+                
+
+               // chartPanel.setBounds(0, 0, 1000, 580);
+
                 pnlBarChart.add(chartPanel);
+               // pnlBarChart.setBounds(180, 155, 1010,600);
+               pnlBarChart.repaint();
+               chartPanel.repaint();
+               pnlBarChart.setBounds(180, 155,chartPanel.getWidth(),chartPanel.getHeight());
+               pnlBarChart.setMaximumSize(new Dimension(50, 50));
                 pnlBarChart.repaint();
-
-                chartPanel.setBounds(0, 0, 1000, 580);
-
-                pnlBarChart.add(chartPanel);
-                pnlBarChart.setBounds(180, 155, 1010,600);
-
-                
-                
+              // chartPanel.repaint();
             }
 
             @Override
