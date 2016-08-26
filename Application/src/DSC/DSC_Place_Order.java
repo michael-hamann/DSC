@@ -57,28 +57,29 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         lblLogo = new javax.swing.JLabel();
         lblName = new javax.swing.JLabel();
         pnlClientInfo = new javax.swing.JPanel();
-        lblClientInfo = new javax.swing.JLabel();
-        lblClientName = new javax.swing.JLabel();
-        lblClientSurname = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         lblClientContactNumber = new javax.swing.JLabel();
-        lblClientAlternativeNumber = new javax.swing.JLabel();
+        txfClientSurname = new javax.swing.JTextField();
+        txfClientAdditionalInfo = new javax.swing.JTextField();
+        txfClientContactNumber = new javax.swing.JTextField();
+        txfClientEmail = new javax.swing.JTextField();
         lblClientEmail = new javax.swing.JLabel();
-        lblClientSuburb = new javax.swing.JLabel();
         lblClientCollection = new javax.swing.JLabel();
         lblClientAddress = new javax.swing.JLabel();
-        lblClientAddInfo = new javax.swing.JLabel();
-        txfClientName = new javax.swing.JTextField();
-        txfClientSurname = new javax.swing.JTextField();
-        txfClientContactNumber = new javax.swing.JTextField();
-        txfClientAlternativeNumber = new javax.swing.JTextField();
-        txfClientEmail = new javax.swing.JTextField();
-        txfClientAdditionalInfo = new javax.swing.JTextField();
-        ckbClientCollection = new javax.swing.JCheckBox();
+        lblClientSuburb = new javax.swing.JLabel();
         cmbClientSuburb = new javax.swing.JComboBox<>();
+        lblClientSurname = new javax.swing.JLabel();
+        ckbClientCollection = new javax.swing.JCheckBox();
+        lblClientName = new javax.swing.JLabel();
+        lblClientAlternativeNumber = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txaClientDeliveryAddress = new javax.swing.JTextArea();
+        lblClientAddInfo = new javax.swing.JLabel();
+        txfClientAlternativeNumber = new javax.swing.JTextField();
+        txfClientName = new javax.swing.JTextField();
+        lblClientInfo = new javax.swing.JLabel();
         pnlSurveyInfo = new javax.swing.JPanel();
-        lblSurveyInfo = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
         lblSurveyReason = new javax.swing.JLabel();
         lblSurveySource = new javax.swing.JLabel();
         lblSurveyComments = new javax.swing.JLabel();
@@ -86,33 +87,39 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         cmbSurveySource = new javax.swing.JComboBox<>();
         jScrollPane3 = new javax.swing.JScrollPane();
         txaSurveyComments = new javax.swing.JTextArea();
+        lblSurveyInfo = new javax.swing.JLabel();
         pnlOrderInfo = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblOrderMeals = new javax.swing.JTable();
-        btnBack = new javax.swing.JButton();
-        btnSave = new javax.swing.JButton();
         lblOrderInfo = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        cmbOrderDate = new javax.swing.JComboBox<>();
-        jLabel3 = new javax.swing.JLabel();
-        rbtAfternoon = new javax.swing.JRadioButton();
-        rbtLateAfternoon = new javax.swing.JRadioButton();
-        rbtEvening = new javax.swing.JRadioButton();
+        jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        rbtMonToFri = new javax.swing.JRadioButton();
+        rbtAfternoon = new javax.swing.JRadioButton();
         rbtMonToThur = new javax.swing.JRadioButton();
+        jLabel3 = new javax.swing.JLabel();
+        cmbOrderDate = new javax.swing.JComboBox<>();
+        rbtLateAfternoon = new javax.swing.JRadioButton();
+        rbtMonToFri = new javax.swing.JRadioButton();
+        jLabel2 = new javax.swing.JLabel();
+        rbtEvening = new javax.swing.JRadioButton();
+        pnlMealInfo = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
         btnAddMeal = new javax.swing.JButton();
         btnEditMeal = new javax.swing.JButton();
-        btnDeleteMeal = new javax.swing.JButton();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        tblOrderMeals = new javax.swing.JTable();
         txfMealsTotal = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        btnDeleteMeal = new javax.swing.JButton();
+        lblOrderInfo1 = new javax.swing.JLabel();
+        btnBack = new javax.swing.JButton();
+        btnSave = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Meals Table");
         setBackground(new java.awt.Color(0, 0, 0));
+        setMinimumSize(new java.awt.Dimension(915, 795));
 
         pnlBackground.setBackground(new java.awt.Color(0, 153, 0));
+        pnlBackground.setMinimumSize(new java.awt.Dimension(915, 795));
 
         pnlHeading.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -143,33 +150,22 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         pnlClientInfo.setBackground(new java.awt.Color(0, 204, 51));
         pnlClientInfo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        lblClientInfo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lblClientInfo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblClientInfo.setText("Client Info");
+        jPanel1.setBackground(new java.awt.Color(0, 204, 51));
 
-        lblClientName.setText("Name: ");
-
-        lblClientSurname.setText("Surname: ");
-
+        lblClientContactNumber.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblClientContactNumber.setText("Contact Number: ");
 
-        lblClientAlternativeNumber.setText("Alternative Number: ");
-
+        lblClientEmail.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblClientEmail.setText("E-Mail Address: ");
 
-        lblClientSuburb.setText("Suburb: ");
-
+        lblClientCollection.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblClientCollection.setText("Collection: ");
 
+        lblClientAddress.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblClientAddress.setText("Delivery Address: ");
 
-        lblClientAddInfo.setText("Additional Information: ");
-
-        ckbClientCollection.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                ckbClientCollectionStateChanged(evt);
-            }
-        });
+        lblClientSuburb.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblClientSuburb.setText("Suburb: ");
 
         cmbClientSuburb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Suburb" }));
         cmbClientSuburb.addItemListener(new java.awt.event.ItemListener() {
@@ -178,105 +174,141 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             }
         });
 
+        lblClientSurname.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblClientSurname.setText("Surname: ");
+
+        ckbClientCollection.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                ckbClientCollectionStateChanged(evt);
+            }
+        });
+
+        lblClientName.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblClientName.setText("Name: ");
+
+        lblClientAlternativeNumber.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblClientAlternativeNumber.setText("Alternative Number: ");
+
         txaClientDeliveryAddress.setColumns(20);
         txaClientDeliveryAddress.setRows(5);
         txaClientDeliveryAddress.setWrapStyleWord(true);
         jScrollPane2.setViewportView(txaClientDeliveryAddress);
 
+        lblClientAddInfo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblClientAddInfo.setText("Additional Information: ");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblClientContactNumber, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblClientSurname, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblClientName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblClientEmail, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblClientAlternativeNumber, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txfClientSurname)
+                    .addComponent(txfClientContactNumber)
+                    .addComponent(txfClientAlternativeNumber)
+                    .addComponent(txfClientName, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                    .addComponent(txfClientEmail))
+                .addGap(150, 150, 150))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblClientSuburb, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblClientAddress, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblClientAddInfo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblClientCollection, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(ckbClientCollection)
+                    .addComponent(cmbClientSuburb, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2)
+                    .addComponent(txfClientAdditionalInfo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txfClientName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblClientName))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblClientSurname)
+                    .addComponent(txfClientSurname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblClientContactNumber)
+                    .addComponent(txfClientContactNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblClientAlternativeNumber)
+                    .addComponent(txfClientAlternativeNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txfClientEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblClientEmail))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblClientCollection)
+                    .addComponent(ckbClientCollection))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblClientSuburb)
+                    .addComponent(cmbClientSuburb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblClientAddress))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txfClientAdditionalInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblClientAddInfo))
+                .addContainerGap())
+        );
+
+        lblClientInfo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblClientInfo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblClientInfo.setText("Client Info");
+
         javax.swing.GroupLayout pnlClientInfoLayout = new javax.swing.GroupLayout(pnlClientInfo);
         pnlClientInfo.setLayout(pnlClientInfoLayout);
         pnlClientInfoLayout.setHorizontalGroup(
             pnlClientInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblClientInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(pnlClientInfoLayout.createSequentialGroup()
-                .addGroup(pnlClientInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlClientInfoLayout.createSequentialGroup()
-                        .addGap(89, 89, 89)
-                        .addComponent(lblClientName)
-                        .addGap(18, 18, 18)
-                        .addComponent(txfClientName, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlClientInfoLayout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addGroup(pnlClientInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblClientAlternativeNumber)
-                            .addComponent(lblClientContactNumber)
-                            .addComponent(lblClientSurname))
-                        .addGap(18, 18, 18)
-                        .addGroup(pnlClientInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txfClientSurname, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txfClientContactNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txfClientAlternativeNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(pnlClientInfoLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(pnlClientInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblClientAddress)
-                            .addComponent(lblClientCollection)
-                            .addComponent(lblClientSuburb)
-                            .addComponent(lblClientAddInfo)
-                            .addComponent(lblClientEmail))
-                        .addGap(18, 18, 18)
-                        .addGroup(pnlClientInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txfClientEmail)
-                            .addComponent(ckbClientCollection)
-                            .addComponent(txfClientAdditionalInfo)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
-                            .addComponent(cmbClientSuburb, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(130, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlClientInfoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblClientInfo)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlClientInfoLayout.setVerticalGroup(
             pnlClientInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlClientInfoLayout.createSequentialGroup()
                 .addComponent(lblClientInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(pnlClientInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblClientName)
-                    .addComponent(txfClientName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(pnlClientInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblClientSurname)
-                    .addComponent(txfClientSurname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(pnlClientInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblClientContactNumber)
-                    .addComponent(txfClientContactNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(pnlClientInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblClientAlternativeNumber)
-                    .addComponent(txfClientAlternativeNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(pnlClientInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblClientEmail)
-                    .addComponent(txfClientEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(pnlClientInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblClientCollection)
-                    .addComponent(ckbClientCollection))
-                .addGap(18, 18, 18)
-                .addGroup(pnlClientInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblClientSuburb)
-                    .addComponent(cmbClientSuburb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(pnlClientInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblClientAddress)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(pnlClientInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblClientAddInfo)
-                    .addComponent(txfClientAdditionalInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pnlSurveyInfo.setBackground(new java.awt.Color(0, 204, 51));
         pnlSurveyInfo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        lblSurveyInfo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lblSurveyInfo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblSurveyInfo.setText("Survey Info");
+        jPanel2.setBackground(new java.awt.Color(0, 204, 51));
 
+        lblSurveyReason.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblSurveyReason.setText("Reason For Choosing: ");
 
+        lblSurveySource.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblSurveySource.setText("Refrence Source: ");
 
+        lblSurveyComments.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblSurveyComments.setText("Comments: ");
 
         cmbSurveyReason.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -288,159 +320,177 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         txaSurveyComments.setWrapStyleWord(true);
         jScrollPane3.setViewportView(txaSurveyComments);
 
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblSurveyComments, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblSurveySource, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(lblSurveyReason)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(cmbSurveySource, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cmbSurveyReason, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(41, 41, 41))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblSurveyReason)
+                    .addComponent(cmbSurveyReason, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmbSurveySource, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblSurveySource))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblSurveyComments)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        lblSurveyInfo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblSurveyInfo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblSurveyInfo.setText("Survey Info");
+
         javax.swing.GroupLayout pnlSurveyInfoLayout = new javax.swing.GroupLayout(pnlSurveyInfo);
         pnlSurveyInfo.setLayout(pnlSurveyInfoLayout);
         pnlSurveyInfoLayout.setHorizontalGroup(
             pnlSurveyInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblSurveyInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(pnlSurveyInfoLayout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlSurveyInfoLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(pnlSurveyInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblSurveyComments)
-                    .addComponent(lblSurveySource)
-                    .addComponent(lblSurveyReason))
-                .addGap(18, 18, 18)
-                .addGroup(pnlSurveyInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(pnlSurveyInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(cmbSurveySource, javax.swing.GroupLayout.Alignment.LEADING, 0, 150, Short.MAX_VALUE)
-                        .addComponent(cmbSurveyReason, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(127, 127, 127))
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(lblSurveyInfo)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlSurveyInfoLayout.setVerticalGroup(
             pnlSurveyInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlSurveyInfoLayout.createSequentialGroup()
                 .addComponent(lblSurveyInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlSurveyInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblSurveyReason)
-                    .addComponent(cmbSurveyReason, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlSurveyInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbSurveySource, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblSurveySource))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlSurveyInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblSurveyComments)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(11, 11, 11)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pnlOrderInfo.setBackground(new java.awt.Color(0, 204, 51));
         pnlOrderInfo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        tblOrderMeals.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(tblOrderMeals);
-        if (tblOrderMeals.getColumnModel().getColumnCount() > 0) {
-            tblOrderMeals.getColumnModel().getColumn(0).setHeaderValue("Title 1");
-            tblOrderMeals.getColumnModel().getColumn(1).setHeaderValue("Title 2");
-            tblOrderMeals.getColumnModel().getColumn(2).setHeaderValue("Title 3");
-            tblOrderMeals.getColumnModel().getColumn(3).setHeaderValue("Title 4");
-        }
-
-        btnBack.setText("Back");
-        btnBack.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBackActionPerformed(evt);
-            }
-        });
-
-        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Save 2.png"))); // NOI18N
-        btnSave.setText(" Save");
-        btnSave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSaveActionPerformed(evt);
-            }
-        });
-
         lblOrderInfo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblOrderInfo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblOrderInfo.setText("Order Info");
 
-        jPanel1.setBackground(new java.awt.Color(0, 204, 51));
+        jPanel3.setBackground(new java.awt.Color(0, 204, 51));
 
-        jLabel2.setText("Starting Date: ");
-
-        cmbOrderDate.setMaximumRowCount(4);
-        cmbOrderDate.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Date" }));
-
-        jLabel3.setText("TimeSlot: ");
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel4.setText("TimeFrame: ");
 
         rbgTimeSlots.add(rbtAfternoon);
         rbtAfternoon.setSelected(true);
         rbtAfternoon.setText("Afternoon");
 
+        rbgTimeFrames.add(rbtMonToThur);
+        rbtMonToThur.setText("Monday - Thursday");
+
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel3.setText("TimeSlot: ");
+
+        cmbOrderDate.setMaximumRowCount(4);
+        cmbOrderDate.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Date" }));
+
         rbgTimeSlots.add(rbtLateAfternoon);
         rbtLateAfternoon.setText("Late Afternoon");
-
-        rbgTimeSlots.add(rbtEvening);
-        rbtEvening.setText("Evening");
-
-        jLabel4.setText("TimeFrame: ");
 
         rbgTimeFrames.add(rbtMonToFri);
         rbtMonToFri.setSelected(true);
         rbtMonToFri.setText("Monday - Friday");
 
-        rbgTimeFrames.add(rbtMonToThur);
-        rbtMonToThur.setText("Monday - Thursday");
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel2.setText("Starting Date: ");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        rbgTimeSlots.add(rbtEvening);
+        rbtEvening.setText("Evening");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cmbOrderDate, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(rbtMonToThur)
-                            .addComponent(rbtEvening)
-                            .addComponent(rbtLateAfternoon)
-                            .addComponent(rbtAfternoon)
-                            .addComponent(rbtMonToFri))
-                        .addGap(0, 98, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cmbOrderDate, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rbtAfternoon)
+                    .addComponent(rbtLateAfternoon)
+                    .addComponent(rbtEvening)
+                    .addComponent(rbtMonToThur)
+                    .addComponent(rbtMonToFri))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(cmbOrderDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(rbtAfternoon))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(rbtLateAfternoon)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(rbtEvening)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(13, 13, 13)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(rbtMonToFri))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(rbtMonToThur)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout pnlOrderInfoLayout = new javax.swing.GroupLayout(pnlOrderInfo);
+        pnlOrderInfo.setLayout(pnlOrderInfoLayout);
+        pnlOrderInfoLayout.setHorizontalGroup(
+            pnlOrderInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlOrderInfoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblOrderInfo)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(pnlOrderInfoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+        pnlOrderInfoLayout.setVerticalGroup(
+            pnlOrderInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlOrderInfoLayout.createSequentialGroup()
+                .addComponent(lblOrderInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        pnlMealInfo.setBackground(new java.awt.Color(0, 204, 51));
+        pnlMealInfo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        jPanel4.setBackground(new java.awt.Color(0, 204, 51));
 
         btnAddMeal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Add.png"))); // NOI18N
         btnAddMeal.setText(" Add");
@@ -458,6 +508,33 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             }
         });
 
+        tblOrderMeals.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Quantity", "MealType", "Allergy", "Exception"
+            }
+        ));
+        tblOrderMeals.setColumnSelectionAllowed(true);
+        jScrollPane5.setViewportView(tblOrderMeals);
+        tblOrderMeals.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        if (tblOrderMeals.getColumnModel().getColumnCount() > 0) {
+            tblOrderMeals.getColumnModel().getColumn(0).setResizable(false);
+            tblOrderMeals.getColumnModel().getColumn(0).setPreferredWidth(10);
+            tblOrderMeals.getColumnModel().getColumn(1).setResizable(false);
+            tblOrderMeals.getColumnModel().getColumn(1).setPreferredWidth(20);
+            tblOrderMeals.getColumnModel().getColumn(2).setResizable(false);
+            tblOrderMeals.getColumnModel().getColumn(3).setResizable(false);
+        }
+
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setText("Total");
+        jLabel7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
         btnDeleteMeal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Bin.png"))); // NOI18N
         btnDeleteMeal.setText("Delete");
         btnDeleteMeal.addActionListener(new java.awt.event.ActionListener() {
@@ -466,61 +543,84 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setText("Total");
-
-        javax.swing.GroupLayout pnlOrderInfoLayout = new javax.swing.GroupLayout(pnlOrderInfo);
-        pnlOrderInfo.setLayout(pnlOrderInfoLayout);
-        pnlOrderInfoLayout.setHorizontalGroup(
-            pnlOrderInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblOrderInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(pnlOrderInfoLayout.createSequentialGroup()
-                .addGroup(pnlOrderInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlOrderInfoLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(pnlOrderInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 545, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlOrderInfoLayout.createSequentialGroup()
-                                .addComponent(txfMealsTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(pnlOrderInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlOrderInfoLayout.createSequentialGroup()
-                                        .addComponent(btnSave)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btnBack))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlOrderInfoLayout.createSequentialGroup()
-                                        .addComponent(btnDeleteMeal)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(btnEditMeal)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(btnAddMeal, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                    .addGroup(pnlOrderInfoLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel5)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txfMealsTotal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnDeleteMeal)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnEditMeal)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnAddMeal, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
-            .addGroup(pnlOrderInfoLayout.createSequentialGroup()
-                .addGap(51, 51, 51)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        pnlOrderInfoLayout.setVerticalGroup(
-            pnlOrderInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlOrderInfoLayout.createSequentialGroup()
-                .addComponent(lblOrderInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel5)
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlOrderInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddMeal)
                     .addComponent(btnEditMeal)
                     .addComponent(btnDeleteMeal)
                     .addComponent(txfMealsTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+        );
+
+        lblOrderInfo1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblOrderInfo1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblOrderInfo1.setText("Meals Info");
+
+        btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
+
+        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Save 2.png"))); // NOI18N
+        btnSave.setText(" Save");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlMealInfoLayout = new javax.swing.GroupLayout(pnlMealInfo);
+        pnlMealInfo.setLayout(pnlMealInfoLayout);
+        pnlMealInfoLayout.setHorizontalGroup(
+            pnlMealInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlMealInfoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblOrderInfo1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMealInfoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnSave)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlOrderInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(btnBack)
+                .addContainerGap())
+        );
+        pnlMealInfoLayout.setVerticalGroup(
+            pnlMealInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMealInfoLayout.createSequentialGroup()
+                .addComponent(lblOrderInfo1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17)
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlMealInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBack)
                     .addComponent(btnSave))
                 .addContainerGap())
@@ -533,11 +633,13 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             .addComponent(pnlHeading, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(pnlBackgroundLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnlClientInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pnlSurveyInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlOrderInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlOrderInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlMealInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlBackgroundLayout.setVerticalGroup(
@@ -547,10 +649,13 @@ public class DSC_Place_Order extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlBackgroundLayout.createSequentialGroup()
-                        .addComponent(pnlClientInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(pnlClientInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pnlSurveyInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(pnlOrderInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(pnlSurveyInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pnlBackgroundLayout.createSequentialGroup()
+                        .addComponent(pnlOrderInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pnlMealInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -568,66 +673,6 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        
-        String clientname = txfClientName.getText();
-        String clientSurname = txfClientSurname.getText();
-        String clientContactNumber = txfClientContactNumber.getText();
-        String clientAlternativeNumber = txfClientAlternativeNumber.getText();
-        String clientEmail = txfClientEmail.getText();
-        
-        
-    }//GEN-LAST:event_btnSaveActionPerformed
-
-    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        this.dispose();
-        new DSC_Main().setVisible(true);
-    }//GEN-LAST:event_btnBackActionPerformed
-
-    private void btnAddMealActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddMealActionPerformed
-
-        DSC_PlaceOrder_Mealpane pane = new DSC_PlaceOrder_Mealpane();
-        pane.setBack(this);
-        pane.setVisible(true);
-        pane.setFocusableWindowState(true);
-        this.setEnabled(false);
-
-    }//GEN-LAST:event_btnAddMealActionPerformed
-
-    private void btnEditMealActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditMealActionPerformed
-
-        int selectedIndex = tblOrderMeals.getSelectedRow();
-        if (selectedIndex == -1) {
-            JOptionPane.showMessageDialog(null, "Please select a meal to edit.");
-        } else {
-            Meal meal = new Meal((int) tblOrderMeals.getValueAt(selectedIndex, 0), tblOrderMeals.getValueAt(selectedIndex, 1).toString(), tblOrderMeals.getValueAt(selectedIndex, 2).toString(), tblOrderMeals.getValueAt(selectedIndex, 3).toString());
-
-            DSC_PlaceOrder_Mealpane pane = new DSC_PlaceOrder_Mealpane(meal, selectedIndex);
-            pane.setBack(this);
-            pane.setVisible(true);
-            pane.setFocusableWindowState(true);
-            this.setEnabled(false);
-        }
-
-    }//GEN-LAST:event_btnEditMealActionPerformed
-
-    private void btnDeleteMealActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteMealActionPerformed
-
-        int selectedIndex = tblOrderMeals.getSelectedRow();
-        if (selectedIndex == -1) {
-            JOptionPane.showMessageDialog(null, "Please select a meal to edit.");
-        } else {
-            orderMeals.remove(selectedIndex);
-            int total = 0;
-            for (Meal orderMeal : orderMeals) {
-                total += orderMeal.getQuantity();
-            }
-            txfMealsTotal.setText(total + "");
-            refreshTable();
-        }
-
-    }//GEN-LAST:event_btnDeleteMealActionPerformed
 
     private void cmbClientSuburbItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbClientSuburbItemStateChanged
         changeTimeSlots();
@@ -661,6 +706,91 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_ckbClientCollectionStateChanged
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+
+        String clientname = txfClientName.getText();
+        String clientSurname = txfClientSurname.getText();
+        String clientContactNumber = txfClientContactNumber.getText();
+        String clientAlternativeNumber = txfClientAlternativeNumber.getText();
+        String clientEmail = txfClientEmail.getText();
+        
+        String clientSuburb;
+        if (ckbClientCollection.isSelected()) {
+            clientSuburb = "Collection";
+            
+        }else{
+            clientSuburb = cmbClientSuburb.getSelectedItem().toString();
+        }
+        String clientAddress = txaClientDeliveryAddress.getText();
+        String clientAdditionalInfo = txfClientAdditionalInfo.getText();
+        
+        String orderDate = cmbOrderDate.getSelectedItem().toString();
+        String timeSlot;
+        if (rbtAfternoon.isSelected()) {
+            timeSlot = "Afternoon";
+        }else if (rbtLateAfternoon.isSelected()) {
+            timeSlot = "Late Afternoon";
+        }else if (rbtEvening.isSelected()) {
+            timeSlot = "Evening";
+        }
+        
+        String timeFrame;
+        if (rbtMonToFri.isSelected()) {
+            timeFrame = "Monday - Friday";
+        }else if (rbtMonToThur.isSelected()) {
+            timeFrame = "Monday - Thursday";
+        }
+        
+        
+        
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        this.dispose();
+        new DSC_Main().setVisible(true);
+    }//GEN-LAST:event_btnBackActionPerformed
+
+    private void btnDeleteMealActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteMealActionPerformed
+
+        int selectedIndex = tblOrderMeals.getSelectedRow();
+        if (selectedIndex == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a meal to edit.");
+        } else {
+            orderMeals.remove(selectedIndex);
+            int total = 0;
+            for (Meal orderMeal : orderMeals) {
+                total += orderMeal.getQuantity();
+            }
+            txfMealsTotal.setText(total + "");
+            refreshTable();
+        }
+    }//GEN-LAST:event_btnDeleteMealActionPerformed
+
+    private void btnEditMealActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditMealActionPerformed
+
+        int selectedIndex = tblOrderMeals.getSelectedRow();
+        if (selectedIndex == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a meal to edit.");
+        } else {
+            Meal meal = new Meal((int) tblOrderMeals.getValueAt(selectedIndex, 0), tblOrderMeals.getValueAt(selectedIndex, 1).toString(), tblOrderMeals.getValueAt(selectedIndex, 2).toString(), tblOrderMeals.getValueAt(selectedIndex, 3).toString());
+
+            DSC_PlaceOrder_Mealpane pane = new DSC_PlaceOrder_Mealpane(meal, selectedIndex);
+            pane.setBack(this);
+            pane.setVisible(true);
+            pane.setFocusableWindowState(true);
+            this.setEnabled(false);
+        }
+    }//GEN-LAST:event_btnEditMealActionPerformed
+
+    private void btnAddMealActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddMealActionPerformed
+
+        DSC_PlaceOrder_Mealpane pane = new DSC_PlaceOrder_Mealpane();
+        pane.setBack(this);
+        pane.setVisible(true);
+        pane.setFocusableWindowState(true);
+        this.setEnabled(false);
+    }//GEN-LAST:event_btnAddMealActionPerformed
 
     /**
      * @param args the command line arguments
@@ -711,11 +841,14 @@ public class DSC_Place_Order extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JLabel lblClientAddInfo;
     private javax.swing.JLabel lblClientAddress;
     private javax.swing.JLabel lblClientAlternativeNumber;
@@ -729,6 +862,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
     private javax.swing.JLabel lblLogo;
     private javax.swing.JLabel lblName;
     private javax.swing.JLabel lblOrderInfo;
+    private javax.swing.JLabel lblOrderInfo1;
     private javax.swing.JLabel lblSurveyComments;
     private javax.swing.JLabel lblSurveyInfo;
     private javax.swing.JLabel lblSurveyReason;
@@ -736,6 +870,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
     private javax.swing.JPanel pnlBackground;
     private javax.swing.JPanel pnlClientInfo;
     private javax.swing.JPanel pnlHeading;
+    private javax.swing.JPanel pnlMealInfo;
     private javax.swing.JPanel pnlOrderInfo;
     private javax.swing.JPanel pnlSurveyInfo;
     private javax.swing.ButtonGroup rbgTimeFrames;

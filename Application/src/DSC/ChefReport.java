@@ -5,7 +5,6 @@
  */
 package DSC;
 
-import static DSC.DBClass.ref;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -25,7 +24,7 @@ public class ChefReport {
 
     public static void getChefData_Ordertb() {
 
-        Firebase tableRef = ref.child("Orders");// Go to specific Table
+        Firebase tableRef = DBClass.getInstance("Website").child("Orders");// Go to specific Table
         tableRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot ds) {
