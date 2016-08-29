@@ -25,6 +25,7 @@ public class DSC_Main extends javax.swing.JFrame {
         if (getData) {
 
             MainScreen_Charts.createBarGraph_Meals(pnlBarChart, getData);
+            MainScreen_Charts.createBarGraphCompare_Meals(pnlBarChartCompare, getData);
             getData = false;
 
         }
@@ -54,7 +55,7 @@ public class DSC_Main extends javax.swing.JFrame {
         btnHandlerRpt = new javax.swing.JButton();
         lblGenerate = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
+        pnlBarChartCompare = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         btnChangeChart = new javax.swing.JButton();
         btnChangeStatistics = new javax.swing.JButton();
@@ -217,16 +218,16 @@ public class DSC_Main extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        pnlBarChartCompare.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout pnlBarChartCompareLayout = new javax.swing.GroupLayout(pnlBarChartCompare);
+        pnlBarChartCompare.setLayout(pnlBarChartCompareLayout);
+        pnlBarChartCompareLayout.setHorizontalGroup(
+            pnlBarChartCompareLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        pnlBarChartCompareLayout.setVerticalGroup(
+            pnlBarChartCompareLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
@@ -290,7 +291,7 @@ public class DSC_Main extends javax.swing.JFrame {
                     .addComponent(btnChangeStatistics, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlBarChartCompare, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlReports, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -306,7 +307,7 @@ public class DSC_Main extends javax.swing.JFrame {
                     .addComponent(pnlReports, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlBackgroundLayout.createSequentialGroup()
                         .addGroup(pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(pnlBarChartCompare, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(pnlBackgroundLayout.createSequentialGroup()
                                 .addComponent(btnChangeChart)
                                 .addGap(0, 0, Short.MAX_VALUE)))
@@ -380,6 +381,8 @@ public class DSC_Main extends javax.swing.JFrame {
         try {
 
             MainScreen_Charts.createBarGraph_Meals(pnlBarChart, getData);
+            MainScreen_Charts.createBarGraph_Meals(pnlBarChartCompare, getData);
+            
             pnlBarChart.repaint();
             
 
@@ -433,7 +436,6 @@ public class DSC_Main extends javax.swing.JFrame {
     private javax.swing.JButton btnPackerRpt;
     private javax.swing.JButton btnRouteView;
     private javax.swing.JButton btnViewOrders;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel lblGenerate;
@@ -442,6 +444,7 @@ public class DSC_Main extends javax.swing.JFrame {
     private javax.swing.JLabel lblView;
     private javax.swing.JPanel pnlBackground;
     private javax.swing.JPanel pnlBarChart;
+    private javax.swing.JPanel pnlBarChartCompare;
     private javax.swing.JPanel pnlHeading;
     private javax.swing.JPanel pnlReports;
     private javax.swing.JPanel pnlTables;
