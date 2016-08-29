@@ -25,11 +25,7 @@ public class DSC_SuburbTable extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("doorstepchef?zeroDateTimeBehavior=convertToNullPU").createEntityManager();
-        suburbTbQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT s FROM SuburbTb s");
-        suburbTbList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : suburbTbQuery.getResultList();
         pnlBackground = new javax.swing.JPanel();
         pnlHeading = new javax.swing.JPanel();
         lblLogo = new javax.swing.JLabel();
@@ -83,21 +79,6 @@ public class DSC_SuburbTable extends javax.swing.JFrame {
         pnlIndent.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
         tblSuburbTable.getTableHeader().setReorderingAllowed(false);
-
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, suburbTbList, tblSuburbTable);
-        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${routeID}"));
-        columnBinding.setColumnName("Route ID");
-        columnBinding.setColumnClass(Short.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${suburb}"));
-        columnBinding.setColumnName("Suburb");
-        columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${suburbID}"));
-        columnBinding.setColumnName("Suburb ID");
-        columnBinding.setColumnClass(Short.class);
-        columnBinding.setEditable(false);
-        bindingGroup.addBinding(jTableBinding);
-        jTableBinding.bind();
         jScrollPane1.setViewportView(tblSuburbTable);
 
         javax.swing.GroupLayout pnlIndentLayout = new javax.swing.GroupLayout(pnlIndent);
@@ -200,8 +181,6 @@ public class DSC_SuburbTable extends javax.swing.JFrame {
             .addComponent(pnlBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        bindingGroup.bind();
-
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -248,7 +227,6 @@ public class DSC_SuburbTable extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
-    private javax.persistence.EntityManager entityManager;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblLogo;
     private javax.swing.JLabel lblName;
@@ -258,9 +236,6 @@ public class DSC_SuburbTable extends javax.swing.JFrame {
     private javax.swing.JPanel pnlHeading;
     private javax.swing.JPanel pnlIndent;
     private javax.swing.JPanel pnlTable;
-    private java.util.List<DSC.SuburbTb> suburbTbList;
-    private javax.persistence.Query suburbTbQuery;
     private javax.swing.JTable tblSuburbTable;
-    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

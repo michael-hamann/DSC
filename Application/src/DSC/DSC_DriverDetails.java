@@ -63,11 +63,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("doorstepchef?zeroDateTimeBehavior=convertToNullPU").createEntityManager();
-        driverTbQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT d FROM DriverTb d");
-        driverTbList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(driverTbQuery.getResultList());
         pnlBackground = new javax.swing.JPanel();
         pnlDrivers = new javax.swing.JPanel();
         lblDrivers = new javax.swing.JLabel();
@@ -106,10 +102,6 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
 
         lstDrivers.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lstDrivers.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-
-        org.jdesktop.swingbinding.JListBinding jListBinding = org.jdesktop.swingbinding.SwingBindings.createJListBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, driverTbList, lstDrivers);
-        bindingGroup.addBinding(jListBinding);
-
         jScrollPane1.setViewportView(lstDrivers);
 
         btnAddDriver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Add.png"))); // NOI18N
@@ -185,38 +177,20 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         txfDriverID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfDriverID.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstDrivers, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.driverID}"), txfDriverID, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
         txfDriverName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfDriverName.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstDrivers, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.driverName}"), txfDriverName, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
 
         txfDriverSurname.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfDriverSurname.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstDrivers, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.driverSurame}"), txfDriverSurname, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
         txfContactNo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfContactNo.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstDrivers, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.contactNumber}"), txfContactNo, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
 
         txfAddress.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfAddress.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstDrivers, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.address}"), txfAddress, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
         txfVehicleReg.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfVehicleReg.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstDrivers, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.vehicleReg}"), txfVehicleReg, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
 
         btnBack.setText("Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
@@ -341,8 +315,6 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(pnlBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-
-        bindingGroup.bind();
 
         pack();
         setLocationRelativeTo(null);
@@ -566,9 +538,6 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     private javax.swing.JButton btnDeleteDriver;
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnSave;
-    private java.util.List<DSC.DriverTb> driverTbList;
-    private javax.persistence.Query driverTbQuery;
-    private javax.persistence.EntityManager entityManager;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAddress;
     private javax.swing.JLabel lblContactNo;
@@ -588,6 +557,5 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     private javax.swing.JTextField txfDriverName;
     private javax.swing.JTextField txfDriverSurname;
     private javax.swing.JTextField txfVehicleReg;
-    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

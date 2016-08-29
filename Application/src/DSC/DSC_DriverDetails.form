@@ -1,32 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
-  <NonVisualComponents>
-    <Component class="javax.persistence.EntityManager" name="entityManager">
-      <Properties>
-        <Property name="persistenceUnit" type="java.lang.String" value="doorstepchef?zeroDateTimeBehavior=convertToNullPU"/>
-      </Properties>
-    </Component>
-    <Component class="javax.persistence.Query" name="driverTbQuery">
-      <Properties>
-        <Property name="query" type="java.lang.String" value="SELECT d FROM DriverTb d"/>
-        <Property name="entityManager" type="java.lang.Object" editor="org.netbeans.modules.form.j2ee.J2EEPropertyModifier$EMProperty$EntityManagerEditor">
-          <ComponentRef name="entityManager"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="java.util.List" name="driverTbList">
-      <Properties>
-        <Property name="query" type="java.lang.Object" editor="org.netbeans.modules.form.j2ee.J2EEPropertyModifier$QueryBeanProperty$QueryEditor">
-          <ComponentRef name="driverTbQuery"/>
-        </Property>
-        <Property name="observable" type="boolean" value="true"/>
-      </Properties>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;DSC.DriverTb&gt;"/>
-      </AuxValues>
-    </Component>
-  </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="0"/>
     <Property name="title" type="java.lang.String" value="Driver Details"/>
@@ -164,9 +138,6 @@
                     </Property>
                     <Property name="selectionMode" type="int" value="0"/>
                   </Properties>
-                  <BindingProperties>
-                    <BindingProperty name="elements" source="driverTbList" target="lstDrivers" targetPath="elements" updateStrategy="0" immediately="false"/>
-                  </BindingProperties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                   </AuxValues>
@@ -357,11 +328,6 @@
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="11"/>
               </Properties>
-              <BindingProperties>
-                <BindingProperty name="text" source="lstDrivers" sourcePath="${selectedElement.driverID}" target="txfDriverID" targetPath="text" updateStrategy="0" immediately="false">
-                  <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
-                </BindingProperty>
-              </BindingProperties>
             </Component>
             <Component class="javax.swing.JTextField" name="txfDriverName">
               <Properties>
@@ -370,11 +336,6 @@
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="11"/>
               </Properties>
-              <BindingProperties>
-                <BindingProperty name="text" source="lstDrivers" sourcePath="${selectedElement.driverName}" target="txfDriverName" targetPath="text" updateStrategy="0" immediately="false">
-                  <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
-                </BindingProperty>
-              </BindingProperties>
             </Component>
             <Component class="javax.swing.JTextField" name="txfDriverSurname">
               <Properties>
@@ -383,11 +344,6 @@
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="11"/>
               </Properties>
-              <BindingProperties>
-                <BindingProperty name="text" source="lstDrivers" sourcePath="${selectedElement.driverSurame}" target="txfDriverSurname" targetPath="text" updateStrategy="0" immediately="false">
-                  <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
-                </BindingProperty>
-              </BindingProperties>
             </Component>
             <Component class="javax.swing.JTextField" name="txfContactNo">
               <Properties>
@@ -396,11 +352,6 @@
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="11"/>
               </Properties>
-              <BindingProperties>
-                <BindingProperty name="text" source="lstDrivers" sourcePath="${selectedElement.contactNumber}" target="txfContactNo" targetPath="text" updateStrategy="0" immediately="false">
-                  <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
-                </BindingProperty>
-              </BindingProperties>
             </Component>
             <Component class="javax.swing.JTextField" name="txfAddress">
               <Properties>
@@ -409,11 +360,6 @@
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="11"/>
               </Properties>
-              <BindingProperties>
-                <BindingProperty name="text" source="lstDrivers" sourcePath="${selectedElement.address}" target="txfAddress" targetPath="text" updateStrategy="0" immediately="false">
-                  <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
-                </BindingProperty>
-              </BindingProperties>
             </Component>
             <Component class="javax.swing.JTextField" name="txfVehicleReg">
               <Properties>
@@ -422,11 +368,6 @@
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="11"/>
               </Properties>
-              <BindingProperties>
-                <BindingProperty name="text" source="lstDrivers" sourcePath="${selectedElement.vehicleReg}" target="txfVehicleReg" targetPath="text" updateStrategy="0" immediately="false">
-                  <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
-                </BindingProperty>
-              </BindingProperties>
             </Component>
             <Component class="javax.swing.JButton" name="btnBack">
               <Properties>

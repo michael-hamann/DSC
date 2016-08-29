@@ -60,9 +60,6 @@ public class DSC_RouteView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("doorstepchef?zeroDateTimeBehavior=convertToNullPU").createEntityManager();
-        routeTbQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT r FROM RouteTb r");
-        routeTbList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : routeTbQuery.getResultList();
         pnlBackground = new javax.swing.JPanel();
         pnlHeading = new javax.swing.JPanel();
         lblLogo = new javax.swing.JLabel();
@@ -614,7 +611,6 @@ public class DSC_RouteView extends javax.swing.JFrame {
     private javax.swing.JCheckBox chbEvening;
     private javax.swing.JCheckBox chbLateAfternoon;
     private javax.swing.JComboBox<String> cmbSort;
-    private javax.persistence.EntityManager entityManager;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -637,8 +633,6 @@ public class DSC_RouteView extends javax.swing.JFrame {
     private javax.swing.JPanel pnlNew;
     private javax.swing.JPanel pnlRoutes;
     private javax.swing.JPanel pnlSuburbs;
-    private java.util.List<DSC.RouteTb> routeTbList;
-    private javax.persistence.Query routeTbQuery;
     private javax.swing.JTextField txfCurrDriver;
     private javax.swing.JTextField txfRouteID;
     private javax.swing.JTextField txfSuburbID;

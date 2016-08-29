@@ -30,7 +30,6 @@ public class DSC_Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        entityManager1 = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("doorstepchef?zeroDateTimeBehavior=convertToNullPU").createEntityManager();
         pnlBackground = new javax.swing.JPanel();
         pnlHeading = new javax.swing.JPanel();
         lblLogo = new javax.swing.JLabel();
@@ -423,7 +422,7 @@ public class DSC_Main extends javax.swing.JFrame {
 
     private void btnViewOrdersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewOrdersActionPerformed
         this.dispose();
-        new DSC_VeiwOrder().setVisible(true);
+        new DSC_ViewOrder().setVisible(true);
     }//GEN-LAST:event_btnViewOrdersActionPerformed
 
     private void btnChangeChartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeChartActionPerformed
@@ -488,7 +487,6 @@ public class DSC_Main extends javax.swing.JFrame {
     private javax.swing.JButton btnRouteView;
     private javax.swing.JButton btnSuburbTbl;
     private javax.swing.JButton btnViewOrders;
-    private javax.persistence.EntityManager entityManager1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

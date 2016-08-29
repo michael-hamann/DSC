@@ -1,3 +1,4 @@
+
 package DSC;
 
 import java.sql.ResultSet;
@@ -10,14 +11,14 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Aliens_Michael
  */
-public class DSC_VeiwOrder extends javax.swing.JFrame {
+public class DSC_ViewOrder extends javax.swing.JFrame {
 
     boolean editClicked = false;
 
     /**
      * Creates new form DSC_Main
      */
-    public DSC_VeiwOrder() {
+    public DSC_ViewOrder() {
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         txfClientID.setEnabled(false);
@@ -141,19 +142,6 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("doorstepchef?zeroDateTimeBehavior=convertToNullPU").createEntityManager();
-        mealTbQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT m FROM MealTb m");
-        mealTbList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : mealTbQuery.getResultList();
-        orderTbQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT o FROM OrderTb o");
-        orderTbList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : orderTbQuery.getResultList();
-        orderTbQuery1 = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT o FROM OrderTb o");
-        orderTbList1 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : orderTbQuery1.getResultList();
-        orderTbQuery2 = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT o FROM OrderTb o");
-        orderTbList2 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : orderTbQuery2.getResultList();
-        clientTbQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT c FROM ClientTb c");
-        clientTbList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : clientTbQuery.getResultList();
-        clientTbQuery1 = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT c FROM ClientTb c");
-        clientTbList1 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : clientTbQuery1.getResultList();
         pnlBackground = new javax.swing.JPanel();
         pnlHeading = new javax.swing.JPanel();
         lblLogo = new javax.swing.JLabel();
@@ -1179,14 +1167,18 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DSC_VeiwOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DSC_ViewOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DSC_VeiwOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DSC_ViewOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DSC_VeiwOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DSC_ViewOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DSC_VeiwOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DSC_ViewOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -1195,7 +1187,7 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DSC_VeiwOrder().setVisible(true);
+                new DSC_ViewOrder().setVisible(true);
             }
         });
     }
@@ -1210,13 +1202,8 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
     private javax.swing.JButton btnRemove;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnSearch;
-    private java.util.List<DSC.ClientTb> clientTbList;
-    private java.util.List<DSC.ClientTb> clientTbList1;
-    private javax.persistence.Query clientTbQuery;
-    private javax.persistence.Query clientTbQuery1;
     private javax.swing.JComboBox<String> cmbSearchColumn;
     private javax.swing.JComboBox<String> cmbSuburbs;
-    private javax.persistence.EntityManager entityManager;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblAltNum;
@@ -1238,14 +1225,6 @@ public class DSC_VeiwOrder extends javax.swing.JFrame {
     private javax.swing.JLabel lblStartingDate;
     private javax.swing.JLabel lblSuburb;
     private javax.swing.JLabel lblVehicleReg;
-    private java.util.List<DSC.MealTb> mealTbList;
-    private javax.persistence.Query mealTbQuery;
-    private java.util.List<DSC.OrderTb> orderTbList;
-    private java.util.List<DSC.OrderTb> orderTbList1;
-    private java.util.List<DSC.OrderTb> orderTbList2;
-    private javax.persistence.Query orderTbQuery;
-    private javax.persistence.Query orderTbQuery1;
-    private javax.persistence.Query orderTbQuery2;
     private javax.swing.JPanel pnlBackground;
     private javax.swing.JPanel pnlDetails;
     private javax.swing.JPanel pnlDetailsClient;

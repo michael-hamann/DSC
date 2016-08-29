@@ -184,9 +184,6 @@
                     </Property>
                     <Property name="selectionMode" type="int" value="0"/>
                   </Properties>
-                  <BindingProperties>
-                    <BindingProperty name="elements" source="orderTbList" target="lstOrders" targetPath="elements" updateStrategy="0" immediately="false"/>
-                  </BindingProperties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                   </AuxValues>
@@ -387,11 +384,6 @@
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="11"/>
               </Properties>
-              <BindingProperties>
-                <BindingProperty name="text" source="lstOrders" sourcePath="${selectedElement.orderID}" target="txfOrderID" targetPath="text" updateStrategy="0" immediately="false">
-                  <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
-                </BindingProperty>
-              </BindingProperties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txfOrderIDActionPerformed"/>
               </Events>
@@ -403,11 +395,6 @@
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="11"/>
               </Properties>
-              <BindingProperties>
-                <BindingProperty name="text" source="lstOrders" sourcePath="${selectedElement.routeID}" target="txfOrderRouteID" targetPath="text" updateStrategy="0" immediately="false">
-                  <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
-                </BindingProperty>
-              </BindingProperties>
             </Component>
             <Component class="javax.swing.JTextField" name="txfOrderDuration">
               <Properties>
@@ -416,11 +403,6 @@
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="11"/>
               </Properties>
-              <BindingProperties>
-                <BindingProperty name="text" source="lstOrders" sourcePath="${selectedElement.duration}" target="txfOrderDuration" targetPath="text" updateStrategy="0" immediately="false">
-                  <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
-                </BindingProperty>
-              </BindingProperties>
             </Component>
             <Component class="javax.swing.JTextField" name="txfOrderClientID">
               <Properties>
@@ -429,11 +411,6 @@
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="11"/>
               </Properties>
-              <BindingProperties>
-                <BindingProperty name="text" source="lstOrders" sourcePath="${selectedElement.clientID}" target="txfOrderClientID" targetPath="text" updateStrategy="0" immediately="false">
-                  <BindingParameter name="javax.swing.binding.ParameterKeys.TEXT_CHANGE_STRATEGY" value="javax.swing.binding.TextChangeStrategy.ON_TYPE"/>
-                </BindingProperty>
-              </BindingProperties>
             </Component>
             <Component class="javax.swing.JButton" name="btnBack">
               <Properties>
@@ -449,9 +426,6 @@
                   <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
                 </Property>
               </Properties>
-              <BindingProperties>
-                <BindingProperty name="value" source="lstOrders" sourcePath="${selectedElement.familySize}" target="spnOrderFamilySize" targetPath="value" updateStrategy="0" immediately="false"/>
-              </BindingProperties>
             </Component>
             <Component class="javax.swing.JSpinner" name="spnOrderStartingDate">
               <Properties>
@@ -459,9 +433,6 @@
                   <SpinnerModel initial="1470311210147" stepSize="7" type="date"/>
                 </Property>
               </Properties>
-              <BindingProperties>
-                <BindingProperty name="value" source="lstOrders" sourcePath="${selectedElement.startingDate}" target="spnOrderStartingDate" targetPath="value" updateStrategy="0" immediately="false"/>
-              </BindingProperties>
             </Component>
             <Component class="javax.swing.JButton" name="btnSaveOrder">
               <Properties>

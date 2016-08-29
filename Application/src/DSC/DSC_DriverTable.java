@@ -25,11 +25,7 @@ public class DSC_DriverTable extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("doorstepchef?zeroDateTimeBehavior=convertToNullPU").createEntityManager();
-        driverTbQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT d FROM DriverTb d");
-        driverTbList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : driverTbQuery.getResultList();
         pnlBackground = new javax.swing.JPanel();
         pnlHeading = new javax.swing.JPanel();
         lblLogo = new javax.swing.JLabel();
@@ -83,29 +79,6 @@ public class DSC_DriverTable extends javax.swing.JFrame {
 
         pnlIndent.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, driverTbList, tblDriver);
-        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${driverID}"));
-        columnBinding.setColumnName("Driver ID");
-        columnBinding.setColumnClass(Short.class);
-        columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${driverName}"));
-        columnBinding.setColumnName("Driver Name");
-        columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${driverSurame}"));
-        columnBinding.setColumnName("Driver Surname");
-        columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${contactNumber}"));
-        columnBinding.setColumnName("Contact Number");
-        columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${vehicleReg}"));
-        columnBinding.setColumnName("Vehicle Reg");
-        columnBinding.setColumnClass(String.class);
-        columnBinding.setEditable(false);
-        bindingGroup.addBinding(jTableBinding);
-        jTableBinding.bind();
         jScrollPane2.setViewportView(tblDriver);
         if (tblDriver.getColumnModel().getColumnCount() > 0) {
             tblDriver.getColumnModel().getColumn(0).setPreferredWidth(20);
@@ -223,8 +196,6 @@ public class DSC_DriverTable extends javax.swing.JFrame {
             .addComponent(pnlBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        bindingGroup.bind();
-
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -277,9 +248,6 @@ public class DSC_DriverTable extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnDriverDetails;
-    private java.util.List<DSC.DriverTb> driverTbList;
-    private javax.persistence.Query driverTbQuery;
-    private javax.persistence.EntityManager entityManager;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblDriver;
     private javax.swing.JLabel lblLogo;
@@ -290,6 +258,5 @@ public class DSC_DriverTable extends javax.swing.JFrame {
     private javax.swing.JPanel pnlIndent;
     private javax.swing.JPanel pnlTable;
     private javax.swing.JTable tblDriver;
-    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

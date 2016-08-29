@@ -65,7 +65,6 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("doorstepchef?zeroDateTimeBehavior=convertToNullPU").createEntityManager();
         driverTbQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT d FROM DriverTb d");
@@ -112,10 +111,6 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
 
         lstOrders.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lstOrders.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-
-        org.jdesktop.swingbinding.JListBinding jListBinding = org.jdesktop.swingbinding.SwingBindings.createJListBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, orderTbList, lstOrders);
-        bindingGroup.addBinding(jListBinding);
-
         jScrollPane1.setViewportView(lstOrders);
 
         btnAddOrder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Add.png"))); // NOI18N
@@ -191,10 +186,6 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
 
         txfOrderID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfOrderID.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstOrders, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.orderID}"), txfOrderID, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
         txfOrderID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txfOrderIDActionPerformed(evt);
@@ -204,20 +195,11 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
         txfOrderRouteID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfOrderRouteID.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstOrders, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.routeID}"), txfOrderRouteID, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
         txfOrderDuration.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfOrderDuration.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstOrders, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.duration}"), txfOrderDuration, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
         txfOrderClientID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfOrderClientID.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstOrders, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.clientID}"), txfOrderClientID, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
 
         btnBack.setText("Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
@@ -228,13 +210,7 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
 
         spnOrderFamilySize.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstOrders, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.familySize}"), spnOrderFamilySize, org.jdesktop.beansbinding.BeanProperty.create("value"));
-        bindingGroup.addBinding(binding);
-
         spnOrderStartingDate.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(1470311210147L), null, null, java.util.Calendar.DAY_OF_WEEK));
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstOrders, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.startingDate}"), spnOrderStartingDate, org.jdesktop.beansbinding.BeanProperty.create("value"));
-        bindingGroup.addBinding(binding);
 
         btnSaveOrder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Save 2.png"))); // NOI18N
         btnSaveOrder.setText(" Save");
@@ -375,8 +351,6 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(pnlBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-
-        bindingGroup.bind();
 
         pack();
         setLocationRelativeTo(null);
@@ -614,6 +588,5 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
     private javax.swing.JTextField txfOrderDuration;
     private javax.swing.JTextField txfOrderID;
     private javax.swing.JTextField txfOrderRouteID;
-    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }
