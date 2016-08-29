@@ -196,7 +196,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         btnBack = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Meals Table");
         setBackground(new java.awt.Color(0, 0, 0));
 
@@ -231,6 +231,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         pnlTable.setBackground(new java.awt.Color(0, 204, 51));
         pnlTable.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+        txfSearch.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfSearch.setMinimumSize(new java.awt.Dimension(6, 23));
         txfSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -238,6 +239,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             }
         });
 
+        cmbSearchColumn.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cmbSearchColumn.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Name", "Surname", "Contact Number", "Email", "Suburb", "Duration", "FamilySize" }));
         cmbSearchColumn.setPreferredSize(new java.awt.Dimension(115, 23));
 
@@ -267,6 +269,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tblOrderTable);
         populateTable();
 
+        btnDelete.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Bin.png"))); // NOI18N
         btnDelete.setText("Delete");
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
@@ -275,6 +278,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             }
         });
 
+        btnAdd.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Add.png"))); // NOI18N
         btnAdd.setText(" Add");
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -301,7 +305,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             .addGroup(pnlTableLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 989, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 983, Short.MAX_VALUE)
                     .addGroup(pnlTableLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(lblSearchBy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -311,10 +315,10 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         .addComponent(txfSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnDelete, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnAdd, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlTableLayout.setVerticalGroup(
@@ -385,6 +389,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         txfAddInfo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfAddInfo.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
+        btnEditClient.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnEditClient.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Edit 2.png"))); // NOI18N
         btnEditClient.setText(" Edit");
         btnEditClient.addActionListener(new java.awt.event.ActionListener() {
@@ -407,6 +412,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             }
         });
 
+        lblSuburb.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblSuburb.setText("Suburb:");
 
         txfAltNum.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -417,6 +423,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             }
         });
 
+        cmbSuburbs.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cmbSuburbs.setMaximumRowCount(10000);
         cmbSuburbs.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "None Selected" }));
 
@@ -546,10 +553,13 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         txfOrderDuration.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfOrderDuration.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
+        spnOrderFamilySize.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         spnOrderFamilySize.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
 
+        spnOrderStartingDate.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         spnOrderStartingDate.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(1470311210147L), null, null, java.util.Calendar.DAY_OF_WEEK));
 
+        btnEditOrder.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnEditOrder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Edit 2.png"))); // NOI18N
         btnEditOrder.setText(" Edit");
         btnEditOrder.addActionListener(new java.awt.event.ActionListener() {
@@ -558,6 +568,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             }
         });
 
+        btnOrderDateAdd.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnOrderDateAdd.setText("Add");
         btnOrderDateAdd.setName(""); // NOI18N
         btnOrderDateAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -566,6 +577,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             }
         });
 
+        btnRemove.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnRemove.setText("Remove");
         btnRemove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -588,23 +600,18 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             .addComponent(lblStartingDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblFamilySize, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblOrderID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
                         .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(pnlDetailsLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txfOrderRouteID, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
-                                    .addComponent(txfOrderDuration)
-                                    .addComponent(txfOrderID, javax.swing.GroupLayout.Alignment.TRAILING)))
-                            .addGroup(pnlDetailsLayout.createSequentialGroup()
-                                .addGap(35, 35, 35)
-                                .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(spnOrderFamilySize)
-                                    .addGroup(pnlDetailsLayout.createSequentialGroup()
-                                        .addComponent(spnOrderStartingDate, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(btnOrderDateAdd, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btnRemove))))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlDetailsLayout.createSequentialGroup()
+                                .addComponent(spnOrderStartingDate, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnOrderDateAdd, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnRemove))
+                            .addComponent(txfOrderID, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(spnOrderFamilySize, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txfOrderRouteID)
+                            .addComponent(txfOrderDuration, javax.swing.GroupLayout.Alignment.LEADING)))
                     .addGroup(pnlDetailsLayout.createSequentialGroup()
                         .addComponent(btnEditOrder)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -666,6 +673,10 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(tblMeals);
 
+        btnBack.setBackground(new java.awt.Color(255, 0, 0));
+        btnBack.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnBack.setForeground(new java.awt.Color(255, 255, 255));
+        btnBack.setMnemonic('B');
         btnBack.setText("Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -673,6 +684,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             }
         });
 
+        btnSave.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Save 2.png"))); // NOI18N
         btnSave.setText(" Save");
         btnSave.addActionListener(new java.awt.event.ActionListener() {

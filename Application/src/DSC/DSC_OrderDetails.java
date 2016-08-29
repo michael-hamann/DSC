@@ -113,6 +113,7 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
         lstOrders.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(lstOrders);
 
+        btnAddOrder.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnAddOrder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Add.png"))); // NOI18N
         btnAddOrder.setText(" Add");
         btnAddOrder.addActionListener(new java.awt.event.ActionListener() {
@@ -121,6 +122,7 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
             }
         });
 
+        btnDeleteOrder.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnDeleteOrder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Bin.png"))); // NOI18N
         btnDeleteOrder.setText("Delete");
         btnDeleteOrder.addActionListener(new java.awt.event.ActionListener() {
@@ -201,6 +203,10 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
         txfOrderClientID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfOrderClientID.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
+        btnBack.setBackground(new java.awt.Color(255, 0, 0));
+        btnBack.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnBack.setForeground(new java.awt.Color(255, 255, 255));
+        btnBack.setMnemonic('B');
         btnBack.setText("Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -208,10 +214,13 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
             }
         });
 
+        spnOrderFamilySize.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         spnOrderFamilySize.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
 
+        spnOrderStartingDate.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         spnOrderStartingDate.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(1470311210147L), null, null, java.util.Calendar.DAY_OF_WEEK));
 
+        btnSaveOrder.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnSaveOrder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Save 2.png"))); // NOI18N
         btnSaveOrder.setText(" Save");
         btnSaveOrder.addActionListener(new java.awt.event.ActionListener() {
@@ -220,6 +229,7 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
             }
         });
 
+        btnEditOrder.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnEditOrder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Edit 2.png"))); // NOI18N
         btnEditOrder.setText(" Edit");
         btnEditOrder.addActionListener(new java.awt.event.ActionListener() {
@@ -228,6 +238,7 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
             }
         });
 
+        btnOrderDateAdd.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnOrderDateAdd.setText("Add");
         btnOrderDateAdd.setName(""); // NOI18N
         btnOrderDateAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -236,6 +247,7 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
             }
         });
 
+        btnRemove.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnRemove.setText("Remove");
         btnRemove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -267,7 +279,7 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
                             .addComponent(txfOrderClientID, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(spnOrderFamilySize)
                             .addGroup(pnlDetailsLayout.createSequentialGroup()
-                                .addComponent(spnOrderStartingDate, javax.swing.GroupLayout.PREFERRED_SIZE, 109, Short.MAX_VALUE)
+                                .addComponent(spnOrderStartingDate, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnOrderDateAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -312,7 +324,7 @@ public class DSC_OrderDetails extends javax.swing.JFrame {
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblClientID)
                     .addComponent(txfOrderClientID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBack)
                     .addComponent(btnSaveOrder)

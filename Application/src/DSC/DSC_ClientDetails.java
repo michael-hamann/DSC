@@ -125,6 +125,7 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
         lstClient.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(lstClient);
 
+        btnAddClient.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnAddClient.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Add.png"))); // NOI18N
         btnAddClient.setText(" Add");
         btnAddClient.addActionListener(new java.awt.event.ActionListener() {
@@ -133,6 +134,7 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
             }
         });
 
+        btnDeleteClient.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnDeleteClient.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Bin.png"))); // NOI18N
         btnDeleteClient.setText("Delete");
         btnDeleteClient.addActionListener(new java.awt.event.ActionListener() {
@@ -218,6 +220,9 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
         txfAddInfo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfAddInfo.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
+        btnBack.setBackground(new java.awt.Color(255, 0, 0));
+        btnBack.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnBack.setForeground(new java.awt.Color(255, 255, 255));
         btnBack.setText("Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -225,6 +230,7 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
             }
         });
 
+        btnEditClient.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnEditClient.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Edit 2.png"))); // NOI18N
         btnEditClient.setText(" Edit");
         btnEditClient.addActionListener(new java.awt.event.ActionListener() {
@@ -233,6 +239,7 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
             }
         });
 
+        btnSaveClient.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnSaveClient.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Save 2.png"))); // NOI18N
         btnSaveClient.setText(" Save");
         btnSaveClient.addActionListener(new java.awt.event.ActionListener() {
@@ -255,6 +262,7 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
             }
         });
 
+        lblSuburb.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblSuburb.setText("Suburb:");
 
         txfSuburbID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -265,12 +273,15 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
             }
         });
 
+        btnView.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnView.setText("View Suburb");
         btnView.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnViewActionPerformed(evt);
             }
         });
+
+        txfSuburb.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         txfAltNum.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfAltNum.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
@@ -304,7 +315,7 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
                                         .addComponent(btnView, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))))
                             .addGroup(pnlDetailsClientLayout.createSequentialGroup()
                                 .addComponent(btnEditClient)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
                                 .addComponent(btnSaveClient)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnBack)))

@@ -39,7 +39,7 @@ public class DSC_ClientTable extends javax.swing.JFrame {
         btnBack = new javax.swing.JButton();
         btnClientDetails = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Client Table");
         setBackground(new java.awt.Color(0, 0, 0));
 
@@ -121,7 +121,7 @@ public class DSC_ClientTable extends javax.swing.JFrame {
         pnlButtons.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         btnBack.setBackground(new java.awt.Color(255, 0, 0));
-        btnBack.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnBack.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnBack.setForeground(new java.awt.Color(255, 255, 255));
         btnBack.setMnemonic('B');
         btnBack.setText("Back");
@@ -156,7 +156,7 @@ public class DSC_ClientTable extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(btnClientDetails)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnBack)
                 .addContainerGap())
         );
 

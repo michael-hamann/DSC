@@ -192,6 +192,10 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         txfVehicleReg.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfVehicleReg.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
+        btnBack.setBackground(new java.awt.Color(255, 0, 0));
+        btnBack.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnBack.setForeground(new java.awt.Color(255, 255, 255));
+        btnBack.setMnemonic('B');
         btnBack.setText("Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -199,6 +203,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
             }
         });
 
+        btnEdit.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Edit 2.png"))); // NOI18N
         btnEdit.setText(" Edit");
         btnEdit.addActionListener(new java.awt.event.ActionListener() {
@@ -207,6 +212,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
             }
         });
 
+        btnSave.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Save 2.png"))); // NOI18N
         btnSave.setText(" Save");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
@@ -241,7 +247,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                             .addComponent(txfVehicleReg, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addGroup(pnlDetailsLayout.createSequentialGroup()
                         .addComponent(btnEdit)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
                         .addComponent(btnSave)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnBack)))

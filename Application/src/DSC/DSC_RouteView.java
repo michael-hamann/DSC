@@ -100,7 +100,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
         btnDeleteSuburb = new javax.swing.JButton();
         btnAddSuburb = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Route Table");
         setBackground(new java.awt.Color(0, 0, 0));
 
@@ -273,7 +273,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
         );
         pnlNewLayout.setVerticalGroup(
             pnlNewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 139, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout pnlInfoLayout = new javax.swing.GroupLayout(pnlInfo);
@@ -401,11 +401,11 @@ public class DSC_RouteView extends javax.swing.JFrame {
                 .addComponent(pnlInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnBack)
                     .addComponent(btnEdit)
                     .addComponent(btnChangeDriver)
                     .addComponent(btnShowOther)
-                    .addComponent(btnSave))
+                    .addComponent(btnSave)
+                    .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
