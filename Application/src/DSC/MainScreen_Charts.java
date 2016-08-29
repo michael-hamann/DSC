@@ -33,6 +33,7 @@ public class MainScreen_Charts extends JPanel {
     private static int countStandard = 0;
     private static int countKiddies = 0;
     private static int countLowCarb = 0;
+    private static ChartPanel chartPanel;
 
     public static void createBarGraph_Meals(JPanel pnlBarChart) {
 
@@ -90,12 +91,12 @@ public class MainScreen_Charts extends JPanel {
                         PlotOrientation.VERTICAL,
                         false, true, false);
 
-                ChartPanel chartPanel = new ChartPanel(barChart);
+                chartPanel = new ChartPanel(barChart);
                 chartPanel.setBounds(0, 0, pnlBarChart.getWidth(), pnlBarChart.getHeight());
                 pnlBarChart.add(chartPanel, BorderLayout.CENTER);
                 chartPanel.setSize(new Dimension(pnlBarChart.getWidth(), pnlBarChart.getHeight()));
                 chartPanel.repaint();
-                
+
             }
 
             @Override
@@ -104,6 +105,13 @@ public class MainScreen_Charts extends JPanel {
             }
         });
 
+    }
+
+    public static void resizelistener() {
+        
+        chartPanel.repaint();
+        
+        
     }
 
 }
