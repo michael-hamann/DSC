@@ -10,15 +10,24 @@ import org.jfree.chart.ChartPanel;
  */
 public class DSC_Main extends javax.swing.JFrame {
 
+    public static boolean getData = true;
+    
     /**
      * Creates new form DSC_Main
      */
     public DSC_Main() {
         initComponents();
+        pnlBarChart.removeAll();
+        pnlBarChart.repaint();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         getConnection("Website");
-        MainScreen_Charts.createBarGraph_Meals(pnlBarChart);
 
+        if (getData) {
+
+            MainScreen_Charts.createBarGraph_Meals(pnlBarChart, getData);
+            getData = false;
+
+        }
     }
 
     /**
@@ -380,9 +389,7 @@ public class DSC_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClientTblActionPerformed
 
     private void btnDriverRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDriverRptActionPerformed
-
         DriverReport.getDriverData_Clientstb();
-
     }//GEN-LAST:event_btnDriverRptActionPerformed
 
     private void btnChefRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChefRptActionPerformed
@@ -414,11 +421,14 @@ public class DSC_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnChangeChartActionPerformed
 
     private void pnlBarChartresizeCheck(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_pnlBarChartresizeCheck
-        try{
-        MainScreen_Charts.createBarGraph_Meals(pnlBarChart);
-        pnlBarChart.repaint();
-        }catch(Exception e){
+        try {
+
+            MainScreen_Charts.createBarGraph_Meals(pnlBarChart, getData);
+            pnlBarChart.repaint();
             
+
+        } catch (Exception e) {
+
         }
 
     }//GEN-LAST:event_pnlBarChartresizeCheck

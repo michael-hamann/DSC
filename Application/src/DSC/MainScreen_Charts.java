@@ -1,25 +1,12 @@
 package DSC;
 
 import static DSC.DBClass.ref;
-import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Panel;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
@@ -30,20 +17,22 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 public class MainScreen_Charts extends JPanel {
 
+   
     private static int countStandard = 0;
     private static int countKiddies = 0;
     private static int countLowCarb = 0;
-    private static ChartPanel chartPanel;
 
-    public static void createBarGraph_Meals(JPanel pnlBarChart) {
+    public static void createBarGraph_Meals(JPanel pnlBarChart,boolean getData) {
 
         Firebase tableRef = ref.child("Orders");// Go to specific Table
+
         tableRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot ds) {
-
+                if(getData){
                 for (DataSnapshot Data : ds.getChildren()) {//entire database
-
+                    
+                    
                     boolean activeCheck = (boolean) Data.child("Active").getValue();
 
                     final String STANDARD = "Standard";
@@ -77,7 +66,7 @@ public class MainScreen_Charts extends JPanel {
                     }
 
                 }
-
+                }
                 DefaultCategoryDataset dataset = new DefaultCategoryDataset();
                 dataset.addValue(countLowCarb, "", "Low Carb");
                 dataset.addValue(countStandard, "", "Standard");
@@ -91,7 +80,7 @@ public class MainScreen_Charts extends JPanel {
                         PlotOrientation.VERTICAL,
                         false, true, false);
 
-                chartPanel = new ChartPanel(barChart);
+                ChartPanel chartPanel = new ChartPanel(barChart);
                 chartPanel.setBounds(0, 0, pnlBarChart.getWidth(), pnlBarChart.getHeight());
                 pnlBarChart.add(chartPanel, BorderLayout.CENTER);
                 chartPanel.setSize(new Dimension(pnlBarChart.getWidth(), pnlBarChart.getHeight()));
@@ -105,13 +94,6 @@ public class MainScreen_Charts extends JPanel {
             }
         });
 
-    }
-
-    public static void resizelistener() {
-        
-        chartPanel.repaint();
-        
-        
     }
 
 }
