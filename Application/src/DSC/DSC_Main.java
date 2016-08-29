@@ -1,8 +1,8 @@
+
 package DSC;
 
 import static DSC.DBClass.getConnection;
 import javax.swing.JFrame;
-import org.jfree.chart.ChartPanel;
 
 /**
  *
@@ -18,7 +18,6 @@ public class DSC_Main extends javax.swing.JFrame {
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         getConnection("Website");
         MainScreen_Charts.createBarGraph_Meals(pnlBarChart);
-
     }
 
     /**
@@ -404,7 +403,6 @@ public class DSC_Main extends javax.swing.JFrame {
         }catch(Exception e){
             
         }
-
     }//GEN-LAST:event_pnlBarChartresizeCheck
 
     /**
