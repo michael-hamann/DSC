@@ -34,8 +34,6 @@ public class DSC_Main extends javax.swing.JFrame {
         lblLogo = new javax.swing.JLabel();
         lblName = new javax.swing.JLabel();
         pnlTables = new javax.swing.JPanel();
-        btnMealsTbl = new javax.swing.JButton();
-        btnClientTbl = new javax.swing.JButton();
         lblView = new javax.swing.JLabel();
         btnRouteView = new javax.swing.JButton();
         btnViewOrders = new javax.swing.JButton();
@@ -89,25 +87,11 @@ public class DSC_Main extends javax.swing.JFrame {
         pnlTables.setBackground(new java.awt.Color(0, 204, 51));
         pnlTables.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        btnMealsTbl.setText("Meals Table");
-        btnMealsTbl.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMealsTblActionPerformed(evt);
-            }
-        });
-
-        btnClientTbl.setText("Client Table");
-        btnClientTbl.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnClientTblActionPerformed(evt);
-            }
-        });
-
         lblView.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblView.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblView.setText("View");
 
-        btnRouteView.setText("Route View");
+        btnRouteView.setText("View Route");
         btnRouteView.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRouteViewActionPerformed(evt);
@@ -128,8 +112,6 @@ public class DSC_Main extends javax.swing.JFrame {
             .addGroup(pnlTablesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlTablesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnMealsTbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnClientTbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnRouteView, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnViewOrders, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
@@ -142,10 +124,6 @@ public class DSC_Main extends javax.swing.JFrame {
                 .addComponent(lblView, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnViewOrders, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnMealsTbl, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnClientTbl, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnRouteView, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -352,16 +330,6 @@ public class DSC_Main extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnMealsTblActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMealsTblActionPerformed
-        this.dispose();
-        new DSC_MealsTable().setVisible(true);
-    }//GEN-LAST:event_btnMealsTblActionPerformed
-
-    private void btnClientTblActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientTblActionPerformed
-        this.dispose();
-        new DSC_ClientTable().setVisible(true);
-    }//GEN-LAST:event_btnClientTblActionPerformed
-
     private void btnDriverRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDriverRptActionPerformed
 
         DriverReport.getDriverData_Clientstb();
@@ -444,10 +412,8 @@ public class DSC_Main extends javax.swing.JFrame {
     private javax.swing.JButton btnChangeChart;
     private javax.swing.JButton btnChangeStatistics;
     private javax.swing.JButton btnChefRpt;
-    private javax.swing.JButton btnClientTbl;
     private javax.swing.JButton btnDriverRpt;
     private javax.swing.JButton btnHandlerRpt;
-    private javax.swing.JButton btnMealsTbl;
     private javax.swing.JButton btnPackerRpt;
     private javax.swing.JButton btnRouteView;
     private javax.swing.JButton btnViewOrders;
