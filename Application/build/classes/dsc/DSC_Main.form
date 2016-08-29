@@ -178,12 +178,11 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="btnDriverTbl" alignment="0" pref="150" max="32767" attributes="0"/>
                           <Component id="btnMealsTbl" alignment="0" max="32767" attributes="0"/>
                           <Component id="btnClientTbl" alignment="0" max="32767" attributes="0"/>
                           <Component id="lblView" alignment="0" max="32767" attributes="0"/>
                           <Component id="btnRouteView" alignment="1" max="32767" attributes="0"/>
-                          <Component id="btnViewOrders" alignment="1" max="32767" attributes="0"/>
+                          <Component id="btnViewOrders" alignment="1" pref="150" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -194,30 +193,20 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="lblView" min="-2" pref="46" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="btnDriverTbl" min="-2" pref="50" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnViewOrders" min="-2" pref="50" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnMealsTbl" min="-2" pref="50" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnClientTbl" min="-2" pref="50" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnRouteView" min="-2" pref="50" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="btnViewOrders" min="-2" pref="50" max="-2" attributes="0"/>
-                      <EmptySpace pref="97" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JButton" name="btnDriverTbl">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Driver Table"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDriverTblActionPerformed"/>
-              </Events>
-            </Component>
             <Component class="javax.swing.JButton" name="btnMealsTbl">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Meals Table"/>
@@ -240,7 +229,7 @@
                   <Font name="Tahoma" size="14" style="1"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="View Tables"/>
+                <Property name="text" type="java.lang.String" value="View"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="btnRouteView">
@@ -302,7 +291,7 @@
                       <Component id="btnPackerRpt" min="-2" pref="50" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnHandlerRpt" min="-2" pref="50" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="158" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

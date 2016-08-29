@@ -196,10 +196,12 @@ public class DSC_RouteView extends javax.swing.JFrame {
         pnlFields.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         btnBack.setBackground(new java.awt.Color(255, 0, 0));
-        btnBack.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnBack.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnBack.setForeground(new java.awt.Color(255, 255, 255));
         btnBack.setMnemonic('B');
         btnBack.setText("Back");
+        btnBack.setMaximumSize(new java.awt.Dimension(71, 23));
+        btnBack.setMinimumSize(new java.awt.Dimension(71, 23));
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBackActionPerformed(evt);
@@ -346,6 +348,11 @@ public class DSC_RouteView extends javax.swing.JFrame {
         btnChangeDriver.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnChangeDriver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/driver.gif"))); // NOI18N
         btnChangeDriver.setText("Change Driver");
+        btnChangeDriver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnChangeDriverActionPerformed(evt);
+            }
+        });
 
         btnShowOther.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnShowOther.setText("Show inactive");
@@ -378,10 +385,10 @@ public class DSC_RouteView extends javax.swing.JFrame {
                         .addComponent(btnChangeDriver)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnSave)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnEdit)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnBack))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFieldsLayout.createSequentialGroup()
                         .addComponent(lblSortBy)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -401,11 +408,11 @@ public class DSC_RouteView extends javax.swing.JFrame {
                 .addComponent(pnlInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEdit)
                     .addComponent(btnChangeDriver)
                     .addComponent(btnShowOther)
                     .addComponent(btnSave)
-                    .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEdit))
                 .addContainerGap())
         );
 
@@ -558,6 +565,11 @@ public class DSC_RouteView extends javax.swing.JFrame {
         btnEdit.setVisible(false);
         btnSave.setVisible(true);
     }//GEN-LAST:event_btnAddSuburbActionPerformed
+
+    private void btnChangeDriverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeDriverActionPerformed
+        this.dispose();
+        new DSC_DriverDetails().setVisible(true);
+    }//GEN-LAST:event_btnChangeDriverActionPerformed
 
     /**
      * @param args the command line arguments

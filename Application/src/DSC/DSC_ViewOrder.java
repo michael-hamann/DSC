@@ -674,7 +674,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         jScrollPane2.setViewportView(tblMeals);
 
         btnBack.setBackground(new java.awt.Color(255, 0, 0));
-        btnBack.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnBack.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnBack.setForeground(new java.awt.Color(255, 255, 255));
         btnBack.setMnemonic('B');
         btnBack.setText("Back");
@@ -711,7 +711,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBackgroundLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnSave)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnBack)))
                 .addContainerGap())
         );

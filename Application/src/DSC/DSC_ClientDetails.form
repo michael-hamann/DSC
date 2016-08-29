@@ -213,7 +213,7 @@
                                   </Group>
                                   <Group type="102" attributes="0">
                                       <Component id="btnEditClient" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace pref="74" max="32767" attributes="0"/>
+                                      <EmptySpace pref="188" max="32767" attributes="0"/>
                                       <Component id="btnSaveClient" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="btnBack" min="-2" max="-2" attributes="0"/>

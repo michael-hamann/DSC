@@ -315,7 +315,7 @@ public class DSC_ClientDetails extends javax.swing.JFrame {
                                         .addComponent(btnView, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))))
                             .addGroup(pnlDetailsClientLayout.createSequentialGroup()
                                 .addComponent(btnEditClient)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 188, Short.MAX_VALUE)
                                 .addComponent(btnSaveClient)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnBack)))
