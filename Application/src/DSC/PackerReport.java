@@ -18,11 +18,11 @@ import javax.swing.JOptionPane;
 public class PackerReport {
 
     public static void getData() {
-       Firebase tableRef = DBClass.getInstance("Website").child("");// Go to specific Table
+       Firebase tableRef = DBClass.getInstance().child("");// Go to specific Table
         tableRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot ds) {
-                Firebase tableRef = DBClass.getInstance("Website").child(""); // Go to specific Table
+                Firebase tableRef = DBClass.getInstance().child(""); // Go to specific Table
                 for (DataSnapshot Data : ds.getChildren()) {
                     System.out.println(Data + "\n");
                     System.out.println("\n\n" + Data.child("").getValue() + "\n\n");

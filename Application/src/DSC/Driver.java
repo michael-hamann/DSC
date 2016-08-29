@@ -10,6 +10,7 @@ package DSC;
  * @author Aliens_Ross
  */
 public class Driver {
+    private String driverID;
     private boolean address;
     private String contactNumber;
     private String driverName;
@@ -52,6 +53,14 @@ public class Driver {
 
     public void setVehicleRegistration(String vehicleRegistration) {
         this.vehicleRegistration = vehicleRegistration;
+    }
+
+    public String getID() {
+        return driverID;
+    }
+
+    public void setID(String driverID) {
+        this.driverID = driverID;
     }
     
     

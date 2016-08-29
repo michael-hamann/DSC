@@ -9,6 +9,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -22,6 +24,9 @@ public class DSC_Place_Order extends javax.swing.JFrame {
 
     private ArrayList<Meal> orderMeals = new ArrayList<>();
     private ArrayList<SuburbData> subList = new ArrayList<>();
+    private String clientID;
+    private Calendar[] orderDates = new Calendar[4];
+    private ArrayList<Route> routes = new ArrayList<>();
 
     /**
      * Creates new form DSC_Main
@@ -34,7 +39,6 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         refreshTable();
         getSuburbs();
         getDates();
-        
 
         rbtAfternoon.setEnabled(false);
         rbtEvening.setEnabled(false);
@@ -692,9 +696,9 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             rbtAfternoon.setSelected(true);
             rbtLateAfternoon.setEnabled(true);
             rbtEvening.setEnabled(true);
-            
-        }else{
-             txaClientDeliveryAddress.setText("");
+
+        } else {
+            txaClientDeliveryAddress.setText("");
             txfClientAdditionalInfo.setText("");
             cmbClientSuburb.setEnabled(true);
             txaClientDeliveryAddress.setEnabled(true);
@@ -704,7 +708,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             rbtEvening.setEnabled(false);
             changeTimeSlots();
         }
-        
+
     }//GEN-LAST:event_ckbClientCollectionStateChanged
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
@@ -714,36 +718,69 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         String clientContactNumber = txfClientContactNumber.getText();
         String clientAlternativeNumber = txfClientAlternativeNumber.getText();
         String clientEmail = txfClientEmail.getText();
-        
+
         String clientSuburb;
         if (ckbClientCollection.isSelected()) {
             clientSuburb = "Collection";
-            
-        }else{
+
+        } else {
             clientSuburb = cmbClientSuburb.getSelectedItem().toString();
         }
         String clientAddress = txaClientDeliveryAddress.getText();
         String clientAdditionalInfo = txfClientAdditionalInfo.getText();
-        
-        String orderDate = cmbOrderDate.getSelectedItem().toString();
-        String timeSlot;
+
+        Calendar orderDate = orderDates[cmbOrderDate.getSelectedIndex()];
+        String timeSlot = "";
         if (rbtAfternoon.isSelected()) {
             timeSlot = "Afternoon";
-        }else if (rbtLateAfternoon.isSelected()) {
+        } else if (rbtLateAfternoon.isSelected()) {
             timeSlot = "Late Afternoon";
-        }else if (rbtEvening.isSelected()) {
+        } else if (rbtEvening.isSelected()) {
             timeSlot = "Evening";
         }
-        
+
+        String routeID = "0";
+
+        for (Route route : routes) {
+            if (route.getSuburbs().contains(clientSuburb) && route.getTimeFrame().equals(timeSlot)) {
+                routeID = route.getID();
+            }
+        }
+
         String timeFrame;
         if (rbtMonToFri.isSelected()) {
             timeFrame = "Monday - Friday";
-        }else if (rbtMonToThur.isSelected()) {
+        } else if (rbtMonToThur.isSelected()) {
             timeFrame = "Monday - Thursday";
         }
-        
-        
-        
+
+        Client client = new Client(null, clientname, clientSurname, clientContactNumber,
+                clientAlternativeNumber, clientEmail, clientSuburb, clientAddress, clientAdditionalInfo);
+
+        Order order = new Order(null, true, client, timeSlot, orderDate, null, routeID, orderMeals);
+
+        String clientID = "";
+        Firebase ref = DBClass.getInstance().child("META-Data");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot ds) {
+                String clientID = ds.child("ClientID").getValue(Integer.class) + "";
+                String orderID = ds.child("OrderID").getValue(Integer.class) + "";
+                client.setID(clientID);
+                order.setID(orderID);
+
+                addToMetaData("OrderID", Integer.parseInt(orderID) + 1);
+                addToMetaData("ClientID", Integer.parseInt(clientID) + 1);
+                addDataToFirebase(order);
+            }
+
+            @Override
+            public void onCancelled(FirebaseError fe) {
+                JOptionPane.showMessageDialog(null, "ERROR: " + fe, "Database Err", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
@@ -924,13 +961,23 @@ public class DSC_Place_Order extends javax.swing.JFrame {
 
     private void getSuburbs() {
 
-        Firebase ref = DBClass.getInstance("Website").child("Routes");
+        Firebase ref = DBClass.getInstance().child("Routes");
         ref.orderByChild("Active").equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot ds) {
+
                 for (DataSnapshot dataSnapshot : ds.getChildren()) {
                     if (dataSnapshot.child("Active").getValue(boolean.class)) {
                         String subArr[] = dataSnapshot.child("Suburbs").getValue(String[].class);
+
+                        Route route = new Route();
+                        route.setID(dataSnapshot.getKey());
+                        route.setTimeFrame(dataSnapshot.child("TimeFrame").getValue(String.class));
+                        for (String string : subArr) {
+                            route.addSuburb(string);
+                        }
+                        routes.add(route);
+
                         if (subArr[0].equals("Collection")) {
                             continue;
                         }
@@ -957,7 +1004,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
 
                 String[] subArr = new String[subList.size()];
                 for (int i = 0; i < subArr.length; i++) {
-                        subArr[i] = subList.get(i).suburb;
+                    subArr[i] = subList.get(i).suburb;
                 }
                 try {
                     Arrays.sort(subArr);
@@ -965,6 +1012,10 @@ public class DSC_Place_Order extends javax.swing.JFrame {
                 }
                 cmbClientSuburb.setModel(new DefaultComboBoxModel<>(subArr));
                 changeTimeSlots();
+
+                for (Route route : routes) {
+                    System.out.println(route);
+                }
             }
 
             @Override
@@ -973,10 +1024,10 @@ public class DSC_Place_Order extends javax.swing.JFrame {
                 System.err.print("Database connection error (Suburb): " + fe);
             }
         });
-        
+
     }
-    
-    private void changeTimeSlots(){
+
+    private void changeTimeSlots() {
         String selectedSuburb = cmbClientSuburb.getSelectedItem().toString();
 
         rbtAfternoon.setEnabled(false);
@@ -1002,26 +1053,141 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         }
     }
 
-    public void getDates(){
+    public void getDates() {
         Calendar currentDate = Calendar.getInstance();
         int counter = 0;
         String[] weeks = new String[4];
-        while (counter<4) {            
+        while (counter < 4) {
             for (int i = 0; i < 7; i++) {
-                if (currentDate.get(Calendar.DAY_OF_WEEK)!=2) {
+                if (currentDate.get(Calendar.DAY_OF_WEEK) != 2) {
                     currentDate.add(Calendar.DAY_OF_WEEK, 1);
                 }
             }
-            
+            orderDates[counter] = (Calendar) currentDate.clone();
             DateFormat df = new SimpleDateFormat("dd MMMMM yyyy");
             weeks[counter] = df.format(currentDate.getTime());
             currentDate.add(Calendar.DAY_OF_WEEK, 1);
             counter++;
         }
-        
+
         cmbOrderDate.setModel(new DefaultComboBoxModel<>(weeks));
     }
-    
+
+    public void addToMetaData(String ids, int value) {
+        Firebase ref = DBClass.getInstance().child("META-Data");
+        ref.child(ids).setValue(value);
+    }
+
+    public void addDataToFirebase(Order order) {
+
+        Firebase ref = DBClass.getInstance().child("Clients");
+
+        ClientContainer client = new ClientContainer(
+                order.getClient().getAdditionalInfo(),
+                order.getClient().getAddress(),
+                order.getClient().getAlternativeNumber(),
+                order.getClient().getContactNumber(),
+                order.getClient().getEmail(),
+                order.getClient().getName(),
+                order.getClient().getSuburb(),
+                order.getClient().getSurname()
+        );
+
+        ref.child(order.getClient().getID()).setValue(client);
+
+        ref = DBClass.getInstance().child("Orders");
+
+        MealContainer meals[] = new MealContainer[order.getMeals().size()];
+        int totalMeals = 0;
+        for (int i = 0; i < order.getMeals().size(); i++) {
+            meals[i] = new MealContainer(
+                    order.getMeals().get(i).getAllergies(),
+                    order.getMeals().get(i).getExclutions(),
+                    order.getMeals().get(i).getMealType(),
+                    order.getMeals().get(i).getQuantity()
+            );
+            totalMeals += order.getMeals().get(i).getQuantity();
+        }
+        
+        OrderContainer orderContainer = new OrderContainer(
+                true,
+                order.getClient().getID(),
+                order.getDuration(),
+                "-",
+                totalMeals,
+                order.getRoute(),
+                new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'").format(order.getStartingDate().getTime()),
+                meals
+        );
+        
+        ref.child(order.getID()).setValue(orderContainer);
+
+    }
+
+    class ClientContainer {
+
+        public String AdditionalInfo;
+        public String Address;
+        public String AlternativeNumber;
+        public String ContactNum;
+        public String Email;
+        public String Name;
+        public String Suburb;
+        public String Surname;
+
+        public ClientContainer(String AdditionalInfo, String Address, String AlternativeNumber, String ContactNum, String Email, String Name, String Suburb, String Surname) {
+            this.AdditionalInfo = AdditionalInfo;
+            this.Address = Address;
+            this.AlternativeNumber = AlternativeNumber;
+            this.ContactNum = ContactNum;
+            this.Email = Email;
+            this.Name = Name;
+            this.Suburb = Suburb;
+            this.Surname = Surname;
+        }
+
+    }
+
+    class OrderContainer {
+
+        public boolean Active;
+        public String ClientID;
+        public String Duration;
+        public String EndDate;
+        public int FamilySize;
+        public String RouteID;
+        public String StartingDate;
+        public MealContainer[] meals;
+
+        public OrderContainer(boolean Active, String ClientID, String Duration, String EndDate, int FamilySize, String RouteID, String StartingDate, MealContainer[] meals) {
+            this.Active = Active;
+            this.ClientID = ClientID;
+            this.Duration = Duration;
+            this.EndDate = EndDate;
+            this.FamilySize = FamilySize;
+            this.RouteID = RouteID;
+            this.StartingDate = StartingDate;
+            this.meals = meals;
+        }
+
+    }
+
+    class MealContainer {
+
+        public String Allergies;
+        public String Exclusions;
+        public String MealType;
+        public int Quantity;
+
+        public MealContainer(String Allergies, String Exclusions, String MealType, int Quantity) {
+            this.Allergies = Allergies;
+            this.Exclusions = Exclusions;
+            this.MealType = MealType;
+            this.Quantity = Quantity;
+        }
+
+    }
+
     class SuburbData {
 
         public String suburb;

@@ -33,15 +33,13 @@ public class Client {
         this.additionalInfo = additionalInfo;
     }
 
-    public String getClientID() {
+    public String getID() {
         return clientID;
     }
 
-    public void setClientID(String clientID) {
+    public void setID(String clientID) {
         this.clientID = clientID;
     }
-
-    
 
     public String getName() {
         return name;
