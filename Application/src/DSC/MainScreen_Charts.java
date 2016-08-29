@@ -1,3 +1,4 @@
+
 package DSC;
 
 import static DSC.DBClass.ref;
@@ -15,6 +16,10 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
+/**
+ *
+ * @author Aliens_Keanu
+ */
 public class MainScreen_Charts extends JPanel {
 
    

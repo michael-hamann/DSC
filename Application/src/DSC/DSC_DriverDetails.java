@@ -352,7 +352,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
             }
         } else {
             this.dispose();
-            new DSC_DriverTable().setVisible(true);
+            new DSC_RouteView().setVisible(true);
         }
     }//GEN-LAST:event_btnBackActionPerformed
 
