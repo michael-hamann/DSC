@@ -2,7 +2,6 @@ package DSC;
 
 import static DSC.DBClass.getConnection;
 import javax.swing.JFrame;
-import org.jfree.chart.ChartPanel;
 
 /**
  *
@@ -49,18 +48,19 @@ public class DSC_Main extends javax.swing.JFrame {
         lblView = new javax.swing.JLabel();
         btnRouteView = new javax.swing.JButton();
         btnViewOrders = new javax.swing.JButton();
+        btnChangeChart = new javax.swing.JButton();
+        btnChangeStatistics = new javax.swing.JButton();
         pnlReports = new javax.swing.JPanel();
         btnDriverRpt = new javax.swing.JButton();
         btnChefRpt = new javax.swing.JButton();
         btnPackerRpt = new javax.swing.JButton();
         btnHandlerRpt = new javax.swing.JButton();
         lblGenerate = new javax.swing.JLabel();
-        pnlPieChart = new javax.swing.JPanel();
-        pnlBarChartInActive = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        btnChangeChart = new javax.swing.JButton();
-        btnChangeStatistics = new javax.swing.JButton();
+        pnlMainChartBackground = new javax.swing.JPanel();
         pnlBarChartActive = new javax.swing.JPanel();
+        pnlPieChart = new javax.swing.JPanel();
+        pnlTextStatistics = new javax.swing.JPanel();
+        pnlBarChartInActive = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("DSC");
@@ -80,11 +80,11 @@ public class DSC_Main extends javax.swing.JFrame {
         pnlHeadingLayout.setHorizontalGroup(
             pnlHeadingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlHeadingLayout.createSequentialGroup()
-                .addContainerGap(70, Short.MAX_VALUE)
+                .addContainerGap(384, Short.MAX_VALUE)
                 .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addContainerGap(385, Short.MAX_VALUE))
         );
         pnlHeadingLayout.setVerticalGroup(
             pnlHeadingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -117,6 +117,20 @@ public class DSC_Main extends javax.swing.JFrame {
             }
         });
 
+        btnChangeChart.setText("Change Chart");
+        btnChangeChart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnChangeChartActionPerformed(evt);
+            }
+        });
+
+        btnChangeStatistics.setText("Change Statistics");
+        btnChangeStatistics.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnChangeStatisticsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlTablesLayout = new javax.swing.GroupLayout(pnlTables);
         pnlTables.setLayout(pnlTablesLayout);
         pnlTablesLayout.setHorizontalGroup(
@@ -126,7 +140,13 @@ public class DSC_Main extends javax.swing.JFrame {
                 .addGroup(pnlTablesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnRouteView, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnViewOrders, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
+                    .addComponent(btnViewOrders, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTablesLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnChangeStatistics, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlTablesLayout.createSequentialGroup()
+                        .addComponent(btnChangeChart, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnlTablesLayout.setVerticalGroup(
@@ -138,6 +158,10 @@ public class DSC_Main extends javax.swing.JFrame {
                 .addComponent(btnViewOrders, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnRouteView, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(btnChangeChart)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnChangeStatistics)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -187,7 +211,7 @@ public class DSC_Main extends javax.swing.JFrame {
                     .addComponent(btnChefRpt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnPackerRpt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnHandlerRpt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblGenerate, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
+                    .addComponent(lblGenerate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlReportsLayout.setVerticalGroup(
@@ -203,61 +227,11 @@ public class DSC_Main extends javax.swing.JFrame {
                 .addComponent(btnPackerRpt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnHandlerRpt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(158, Short.MAX_VALUE))
+                .addContainerGap(684, Short.MAX_VALUE))
         );
 
-        pnlPieChart.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        javax.swing.GroupLayout pnlPieChartLayout = new javax.swing.GroupLayout(pnlPieChart);
-        pnlPieChart.setLayout(pnlPieChartLayout);
-        pnlPieChartLayout.setHorizontalGroup(
-            pnlPieChartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        pnlPieChartLayout.setVerticalGroup(
-            pnlPieChartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        pnlBarChartInActive.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        javax.swing.GroupLayout pnlBarChartInActiveLayout = new javax.swing.GroupLayout(pnlBarChartInActive);
-        pnlBarChartInActive.setLayout(pnlBarChartInActiveLayout);
-        pnlBarChartInActiveLayout.setHorizontalGroup(
-            pnlBarChartInActiveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        pnlBarChartInActiveLayout.setVerticalGroup(
-            pnlBarChartInActiveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        btnChangeChart.setText("Change Chart");
-        btnChangeChart.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnChangeChartActionPerformed(evt);
-            }
-        });
-
-        btnChangeStatistics.setText("Change Statistics");
-        btnChangeStatistics.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnChangeStatisticsActionPerformed(evt);
-            }
-        });
+        pnlMainChartBackground.setBackground(new java.awt.Color(0, 153, 0));
+        pnlMainChartBackground.setBorder(null);
 
         pnlBarChartActive.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         pnlBarChartActive.addHierarchyBoundsListener(new java.awt.event.HierarchyBoundsListener() {
@@ -279,6 +253,70 @@ public class DSC_Main extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
+        pnlPieChart.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout pnlPieChartLayout = new javax.swing.GroupLayout(pnlPieChart);
+        pnlPieChart.setLayout(pnlPieChartLayout);
+        pnlPieChartLayout.setHorizontalGroup(
+            pnlPieChartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        pnlPieChartLayout.setVerticalGroup(
+            pnlPieChartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        pnlTextStatistics.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout pnlTextStatisticsLayout = new javax.swing.GroupLayout(pnlTextStatistics);
+        pnlTextStatistics.setLayout(pnlTextStatisticsLayout);
+        pnlTextStatisticsLayout.setHorizontalGroup(
+            pnlTextStatisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        pnlTextStatisticsLayout.setVerticalGroup(
+            pnlTextStatisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        pnlBarChartInActive.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout pnlBarChartInActiveLayout = new javax.swing.GroupLayout(pnlBarChartInActive);
+        pnlBarChartInActive.setLayout(pnlBarChartInActiveLayout);
+        pnlBarChartInActiveLayout.setHorizontalGroup(
+            pnlBarChartInActiveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        pnlBarChartInActiveLayout.setVerticalGroup(
+            pnlBarChartInActiveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout pnlMainChartBackgroundLayout = new javax.swing.GroupLayout(pnlMainChartBackground);
+        pnlMainChartBackground.setLayout(pnlMainChartBackgroundLayout);
+        pnlMainChartBackgroundLayout.setHorizontalGroup(
+            pnlMainChartBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMainChartBackgroundLayout.createSequentialGroup()
+                .addGroup(pnlMainChartBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlBarChartActive, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlPieChart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(10, 10, 10)
+                .addGroup(pnlMainChartBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlTextStatistics, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlBarChartInActive, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        );
+        pnlMainChartBackgroundLayout.setVerticalGroup(
+            pnlMainChartBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMainChartBackgroundLayout.createSequentialGroup()
+                .addGroup(pnlMainChartBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlBarChartInActive, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlBarChartActive, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(7, 7, 7)
+                .addGroup(pnlMainChartBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlPieChart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlTextStatistics, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        );
+
         javax.swing.GroupLayout pnlBackgroundLayout = new javax.swing.GroupLayout(pnlBackground);
         pnlBackground.setLayout(pnlBackgroundLayout);
         pnlBackgroundLayout.setHorizontalGroup(
@@ -288,17 +326,7 @@ public class DSC_Main extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(pnlTables, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlBarChartActive, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlPieChart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnChangeChart, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnChangeStatistics, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlBarChartInActive, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(pnlMainChartBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlReports, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -311,24 +339,7 @@ public class DSC_Main extends javax.swing.JFrame {
                 .addGroup(pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnlTables, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pnlReports, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(pnlBackgroundLayout.createSequentialGroup()
-                        .addGroup(pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(pnlBarChartInActive, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(pnlBackgroundLayout.createSequentialGroup()
-                                .addComponent(btnChangeChart)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGroup(pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlBackgroundLayout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(pnlBackgroundLayout.createSequentialGroup()
-                                .addGap(17, 17, 17)
-                                .addComponent(btnChangeStatistics)
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(pnlBackgroundLayout.createSequentialGroup()
-                        .addComponent(pnlBarChartActive, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pnlPieChart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(pnlMainChartBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -388,29 +399,13 @@ public class DSC_Main extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnChangeChartActionPerformed
 
-    private void pnlBarChartActiveresizeCheck(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_pnlBarChartActiveresizeCheck
-        try {
-
-            if (checkGraph) {
-
-                MainScreen_Charts.createBarGraph_ActiveAndInActiveMeals(pnlBarChartActive, pnlBarChartInActive, pnlPieChart, getData);
-                pnlBarChartActive.repaint();
-                pnlBarChartInActive.repaint();
-                pnlPieChart.repaint();
-
-            } else {
-
-            }
-
-        } catch (Exception e) {
-
-        }
-
-    }//GEN-LAST:event_pnlBarChartActiveresizeCheck
-
     private void btnChangeStatisticsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeStatisticsActionPerformed
 
     }//GEN-LAST:event_btnChangeStatisticsActionPerformed
+
+    private void pnlBarChartActiveresizeCheck(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_pnlBarChartActiveresizeCheck
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pnlBarChartActiveresizeCheck
 
     /**
      * @param args the command line arguments
@@ -456,7 +451,6 @@ public class DSC_Main extends javax.swing.JFrame {
     private javax.swing.JButton btnPackerRpt;
     private javax.swing.JButton btnRouteView;
     private javax.swing.JButton btnViewOrders;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel lblGenerate;
     private javax.swing.JLabel lblLogo;
     private javax.swing.JLabel lblName;
@@ -465,8 +459,10 @@ public class DSC_Main extends javax.swing.JFrame {
     private javax.swing.JPanel pnlBarChartActive;
     private javax.swing.JPanel pnlBarChartInActive;
     private javax.swing.JPanel pnlHeading;
+    private javax.swing.JPanel pnlMainChartBackground;
     private javax.swing.JPanel pnlPieChart;
     private javax.swing.JPanel pnlReports;
     private javax.swing.JPanel pnlTables;
+    private javax.swing.JPanel pnlTextStatistics;
     // End of variables declaration//GEN-END:variables
 }
