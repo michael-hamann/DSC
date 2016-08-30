@@ -29,7 +29,7 @@ public class MainScreen_Charts extends JPanel {
     private static int countKiddies2 = 0;
     private static int countLowCarb2 = 0;
 
-    public static void createBarGraph_Meals(JPanel pnlBarChart, boolean getData) {
+    public static void createBarGraph_Meals(JPanel pnlBarChart, JPanel pnlBarChartCompare, boolean getData) {
 
         Firebase tableRef = ref.child("Orders");// Go to specific Table
 
@@ -67,6 +67,24 @@ public class MainScreen_Charts extends JPanel {
 
                                 }
 
+                                if (activeCheck == false && Data3.child("MealType").getValue().equals(STANDARD)) {
+
+                                    countStandard2++;
+
+                                }
+
+                                if (activeCheck == false && Data3.child("MealType").getValue().equals(LOW_CARB)) {
+
+                                    countLowCarb2++;
+
+                                }
+
+                                if (activeCheck == false && Data3.child("MealType").getValue().equals(KIDDIES)) {
+
+                                    countKiddies2++;
+
+                                }
+
                             }
 
                         }
@@ -92,79 +110,24 @@ public class MainScreen_Charts extends JPanel {
                 chartPanel.setSize(new Dimension(pnlBarChart.getWidth(), pnlBarChart.getHeight()));
                 chartPanel.repaint();
 
-            }
+                DefaultCategoryDataset datasetCompare = new DefaultCategoryDataset();
+                datasetCompare.addValue(countLowCarb2, "", "Low Carb");
+                datasetCompare.addValue(countStandard2, "", "Standard");
+                datasetCompare.addValue(countKiddies2, "", "Kiddies");
 
-            @Override
-            public void onCancelled(FirebaseError fe) {
-                JOptionPane.showMessageDialog(null, "ERROR: " + fe);
-            }
-        });
-
-    }
-
-    public static void createBarGraphCompare_Meals(JPanel pnlBarChart, boolean getData) {
-
-        Firebase tableRef = ref.child("Orders");// Go to specific Table
-
-        tableRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot ds) {
-                if (getData) {
-                    for (DataSnapshot Data : ds.getChildren()) {//entire database
-
-                        boolean activeCheck = (boolean) Data.child("Active").getValue();
-
-                        final String STANDARD = "Standard";
-                        final String LOW_CARB = "Low Carb";
-                        final String KIDDIES = "Kiddies";
-
-                        for (DataSnapshot Data2 : Data.getChildren()) {
-
-                            for (DataSnapshot Data3 : Data2.getChildren()) {
-
-                                if (activeCheck == false && Data3.child("MealType").getValue().equals(STANDARD)) {
-
-                                    countStandard2++;
-
-                                }
-
-                                if (activeCheck == false && Data3.child("MealType").getValue().equals(LOW_CARB)) {
-
-                                    countLowCarb2++;
-
-                                }
-
-                                if (activeCheck == false && Data3.child("MealType").getValue().equals(KIDDIES)) {
-
-                                    countKiddies2++;
-
-                                }
-
-                            }
-
-                        }
-
-                    }
-                }
-
-                DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-                dataset.addValue(countLowCarb2, "", "Low Carb");
-                dataset.addValue(countStandard2, "", "Standard");
-                dataset.addValue(countKiddies2, "", "Kiddies");
-
-                JFreeChart barChart = ChartFactory.createBarChart(
+                JFreeChart barChartCompare = ChartFactory.createBarChart(
                         "Comparison of Total Meals Between Weeks",
                         "Meal Types",
                         "Number Of Meals",
-                        dataset,
+                        datasetCompare,
                         PlotOrientation.VERTICAL,
                         false, true, false);
 
-                ChartPanel chartPanel = new ChartPanel(barChart);
-                chartPanel.setBounds(0, 0, pnlBarChart.getWidth(), pnlBarChart.getHeight());
-                pnlBarChart.add(chartPanel, BorderLayout.CENTER);
-                chartPanel.setSize(new Dimension(pnlBarChart.getWidth(), pnlBarChart.getHeight()));
-                chartPanel.repaint();
+                ChartPanel chartPanelCompare = new ChartPanel(barChartCompare);
+                chartPanelCompare.setBounds(0, 0, pnlBarChartCompare.getWidth(), pnlBarChartCompare.getHeight());
+                pnlBarChartCompare.add(chartPanelCompare, BorderLayout.CENTER);
+                chartPanelCompare.setSize(new Dimension(pnlBarChartCompare.getWidth(), pnlBarChartCompare.getHeight()));
+                chartPanelCompare.repaint();
 
             }
 
@@ -175,5 +138,4 @@ public class MainScreen_Charts extends JPanel {
         });
 
     }
-
 }

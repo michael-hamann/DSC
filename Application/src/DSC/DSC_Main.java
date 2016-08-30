@@ -24,8 +24,8 @@ public class DSC_Main extends javax.swing.JFrame {
 
         if (getData) {
 
-            MainScreen_Charts.createBarGraph_Meals(pnlBarChart, getData);
-            MainScreen_Charts.createBarGraphCompare_Meals(pnlBarChartCompare, getData);
+            MainScreen_Charts.createBarGraph_Meals(pnlBarChart,pnlBarChartCompare, getData);
+           
             getData = false;
 
         }
@@ -380,8 +380,8 @@ public class DSC_Main extends javax.swing.JFrame {
     private void pnlBarChartresizeCheck(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_pnlBarChartresizeCheck
         try {
 
-            MainScreen_Charts.createBarGraph_Meals(pnlBarChart, getData);
-            MainScreen_Charts.createBarGraph_Meals(pnlBarChartCompare, getData);
+            MainScreen_Charts.createBarGraph_Meals(pnlBarChart, pnlBarChartCompare,getData);
+            
             
             pnlBarChart.repaint();
             
