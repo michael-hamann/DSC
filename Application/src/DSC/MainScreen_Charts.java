@@ -24,8 +24,8 @@ public class MainScreen_Charts extends JPanel {
     private static int countStandard = 0;
     private static int countKiddies = 0;
     private static int countLowCarb = 0;
-    
-     private static int countStandard2 = 0;
+
+    private static int countStandard2 = 0;
     private static int countKiddies2 = 0;
     private static int countLowCarb2 = 0;
 
@@ -146,7 +146,7 @@ public class MainScreen_Charts extends JPanel {
 
                     }
                 }
-                
+
                 DefaultCategoryDataset dataset = new DefaultCategoryDataset();
                 dataset.addValue(countLowCarb2, "", "Low Carb");
                 dataset.addValue(countStandard2, "", "Standard");
