@@ -1,7 +1,6 @@
 
 package DSC;
 
-import static DSC.DBClass.ref;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -112,16 +111,16 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
     public void populateTable() {
        
-        Firebase tableRef = ref.child("Clients");// Go to specific Table
+        Firebase tableRef = DBClass.getInstance().child("Clients");// Go to specific Table
         tableRef.addListenerForSingleValueEvent(new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot ds) {
             for (DataSnapshot Data : ds.getChildren()) {
                 Client c = new Client();
-                c.setClientId(Data.getKey());
+                c.setID(Data.getKey());
                 c.setName((String)Data.child("Name").getValue());
                 c.setSurname((String) Data.child("Surname").getValue());
-                c.setContactNum((String) Data.child("ContactNum").getValue());
+                c.setContactNumber((String) Data.child("ContactNum").getValue());
                 c.setEmail((String) Data.child("Email").getValue());
                 c.setSuburb((String) Data.child("Suburb").getValue());
                 allclients.add(c);
@@ -138,7 +137,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 //                }
            DefaultTableModel model = (DefaultTableModel) tblOrderTable.getModel();
         
-           Object[] row = {c.getName(), c.getSurname(),c.getContactNum(), c.getEmail(), c.getSuburb()};
+           Object[] row = {c.getName(), c.getSurname(),c.getContactNumber(), c.getEmail(), c.getSuburb()};
            model.addRow(row);
            model.fireTableDataChanged();
         }
@@ -960,16 +959,16 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 case "Name":
                     for (Client client : allclients) {
                         if (searchFor.equalsIgnoreCase(client.getName())) {
-                            txfClientID.setText(client.getClientId());
+                            txfClientID.setText(client.getID());
                             txfClientName.setText(client.getName());
                             txfClientSurname.setText(client.getSurname());
                             txfClientAddress.setText(client.getAddress());
-                            txfAddInfo.setText(client.getAddInfo());
-                            txfClientContactNo.setText(client.getContactNum());
-                            txfAltNum.setText(client.getAltNum());
+                            txfAddInfo.setText(client.getAdditionalInfo());
+                            txfClientContactNo.setText(client.getContactNumber());
+                            txfAltNum.setText(client.getAlternativeNumber());
                             txfClientEmail.setText(client.getEmail());
                             cmbSuburbs.setSelectedItem(client.getSuburb());
-                            String id = client.getClientId();
+                            String id = client.getID();
                             for (Orders orders : allorders) {
                                 if (id.equalsIgnoreCase(orders.getOrderClientid())) {
                                     txfOrderID.setText(orders.getOrderid());
@@ -985,16 +984,16 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 case "Surname":
                     for (Client client : allclients) {
                         if (searchFor.equalsIgnoreCase(client.getSurname())) {
-                            txfClientID.setText(client.getClientId());
+                           txfClientID.setText(client.getID());
                             txfClientName.setText(client.getName());
                             txfClientSurname.setText(client.getSurname());
                             txfClientAddress.setText(client.getAddress());
-                            txfAddInfo.setText(client.getAddInfo());
-                            txfClientContactNo.setText(client.getContactNum());
-                            txfAltNum.setText(client.getAltNum());
+                            txfAddInfo.setText(client.getAdditionalInfo());
+                            txfClientContactNo.setText(client.getContactNumber());
+                            txfAltNum.setText(client.getAlternativeNumber());
                             txfClientEmail.setText(client.getEmail());
                             cmbSuburbs.setSelectedItem(client.getSuburb());
-                            String id = client.getClientId();
+                            String id = client.getID();
                             for (Orders orders : allorders) {
                                 if (id.equalsIgnoreCase(orders.getOrderClientid())) {
                                     txfOrderID.setText(orders.getOrderid());
@@ -1009,17 +1008,17 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     break;
                 case "Contact Number":
                     for (Client client : allclients) {
-                        if (searchFor.equalsIgnoreCase(client.getContactNum())) {
-                            txfClientID.setText(client.getClientId());
+                        if (searchFor.equalsIgnoreCase(client.getContactNumber())) {
+                           txfClientID.setText(client.getID());
                             txfClientName.setText(client.getName());
                             txfClientSurname.setText(client.getSurname());
                             txfClientAddress.setText(client.getAddress());
-                            txfAddInfo.setText(client.getAddInfo());
-                            txfClientContactNo.setText(client.getContactNum());
-                            txfAltNum.setText(client.getAltNum());
+                            txfAddInfo.setText(client.getAdditionalInfo());
+                            txfClientContactNo.setText(client.getContactNumber());
+                            txfAltNum.setText(client.getAlternativeNumber());
                             txfClientEmail.setText(client.getEmail());
                             cmbSuburbs.setSelectedItem(client.getSuburb());
-                            String id = client.getClientId();
+                            String id = client.getID();
                             for (Orders orders : allorders) {
                                 if (id.equalsIgnoreCase(orders.getOrderClientid())) {
                                     txfOrderID.setText(orders.getOrderid());
@@ -1035,16 +1034,16 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 case "Email":
                     for (Client client : allclients) {
                         if (searchFor.equalsIgnoreCase(client.getEmail())) {
-                            txfClientID.setText(client.getClientId());
+                            txfClientID.setText(client.getID());
                             txfClientName.setText(client.getName());
                             txfClientSurname.setText(client.getSurname());
                             txfClientAddress.setText(client.getAddress());
-                            txfAddInfo.setText(client.getAddInfo());
-                            txfClientContactNo.setText(client.getContactNum());
-                            txfAltNum.setText(client.getAltNum());
+                            txfAddInfo.setText(client.getAdditionalInfo());
+                            txfClientContactNo.setText(client.getContactNumber());
+                            txfAltNum.setText(client.getAlternativeNumber());
                             txfClientEmail.setText(client.getEmail());
                             cmbSuburbs.setSelectedItem(client.getSuburb());
-                            String id = client.getClientId();
+                            String id = client.getID();
                             for (Orders orders : allorders) {
                                 if (id.equalsIgnoreCase(orders.getOrderClientid())) {
                                     txfOrderID.setText(orders.getOrderid());
@@ -1060,16 +1059,16 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 case "Suburb":
                     for (Client client : allclients) {
                         if (searchFor.equalsIgnoreCase(client.getSuburb())) {
-                            txfClientID.setText(client.getClientId());
+                            txfClientID.setText(client.getID());
                             txfClientName.setText(client.getName());
                             txfClientSurname.setText(client.getSurname());
                             txfClientAddress.setText(client.getAddress());
-                            txfAddInfo.setText(client.getAddInfo());
-                            txfClientContactNo.setText(client.getContactNum());
-                            txfAltNum.setText(client.getAltNum());
+                            txfAddInfo.setText(client.getAdditionalInfo());
+                            txfClientContactNo.setText(client.getContactNumber());
+                            txfAltNum.setText(client.getAlternativeNumber());
                             txfClientEmail.setText(client.getEmail());
                             cmbSuburbs.setSelectedItem(client.getSuburb());
-                            String id = client.getClientId();
+                            String id = client.getID();
                             for (Orders orders : allorders) {
                                 if (id.equalsIgnoreCase(orders.getOrderClientid())) {
                                     txfOrderID.setText(orders.getOrderid());
@@ -1092,14 +1091,14 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             txfOrderRouteID.setText(orders.getRouteId());
                             String id = orders.getOrderClientid();
                             for (Client client :allclients) {
-                                if (client.getClientId().equalsIgnoreCase(id)) {
-                                    txfClientID.setText(client.getClientId());
+                                if (client.getID().equalsIgnoreCase(id)) {
+                                    txfClientID.setText(client.getID());
                                     txfClientName.setText(client.getName());
                                     txfClientSurname.setText(client.getSurname());
                                     txfClientAddress.setText(client.getAddress());
-                                    txfAddInfo.setText(client.getAddInfo());
-                                    txfClientContactNo.setText(client.getContactNum());
-                                    txfAltNum.setText(client.getAltNum());
+                                    txfAddInfo.setText(client.getAdditionalInfo());
+                                    txfClientContactNo.setText(client.getContactNumber());
+                                    txfAltNum.setText(client.getAlternativeNumber());
                                     txfClientEmail.setText(client.getEmail());
                                     cmbSuburbs.setSelectedItem(client.getSuburb());
                                 }
@@ -1117,14 +1116,14 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             txfOrderRouteID.setText(orders.getRouteId());
                             String id = orders.getOrderClientid();
                             for (Client client : allclients) {
-                                if (client.getClientId().equalsIgnoreCase(id)) {
-                                    txfClientID.setText(client.getClientId());
+                               if (client.getID().equalsIgnoreCase(id)) {
+                                    txfClientID.setText(client.getID());
                                     txfClientName.setText(client.getName());
                                     txfClientSurname.setText(client.getSurname());
                                     txfClientAddress.setText(client.getAddress());
-                                    txfAddInfo.setText(client.getAddInfo());
-                                    txfClientContactNo.setText(client.getContactNum());
-                                    txfAltNum.setText(client.getAltNum());
+                                    txfAddInfo.setText(client.getAdditionalInfo());
+                                    txfClientContactNo.setText(client.getContactNumber());
+                                    txfAltNum.setText(client.getAlternativeNumber());
                                     txfClientEmail.setText(client.getEmail());
                                     cmbSuburbs.setSelectedItem(client.getSuburb());
                                 }
