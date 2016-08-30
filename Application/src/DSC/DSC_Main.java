@@ -274,12 +274,11 @@ public class DSC_Main extends javax.swing.JFrame {
 
     private void btnMealsTblActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMealsTblActionPerformed
         this.dispose();
-        new DSC_MealsTable().setVisible(true);
+
     }//GEN-LAST:event_btnMealsTblActionPerformed
 
     private void btnClientTblActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientTblActionPerformed
         this.dispose();
-        new DSC_ClientTable().setVisible(true);
     }//GEN-LAST:event_btnClientTblActionPerformed
 
     private void btnSuburbTblActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuburbTblActionPerformed
