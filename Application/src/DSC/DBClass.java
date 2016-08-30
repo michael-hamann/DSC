@@ -44,4 +44,12 @@ public class DBClass {
         String token = tokenGenerator.createToken(payload);
         return token;
     }
+
+    public static boolean connectionMade() {
+        if (ref == null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
