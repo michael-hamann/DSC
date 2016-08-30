@@ -82,7 +82,7 @@ public class DSC_PlaceOrder_Mealpane extends javax.swing.JFrame {
         cmbMealType.setMaximumRowCount(3);
         cmbMealType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Standard", "Low Carb", "Kiddies" }));
 
-        spnQuantity.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+        spnQuantity.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
 
         btnCancel.setText("Cancel");
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
