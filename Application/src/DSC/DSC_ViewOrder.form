@@ -182,11 +182,13 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="cmbSearchColumn" alignment="3" max="32767" attributes="0"/>
-                              <Component id="lblSearchBy" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txfSearch" alignment="3" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="btnSearch" alignment="0" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="cmbSearchColumn" alignment="3" max="32767" attributes="0"/>
+                                  <Component id="lblSearchBy" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txfSearch" alignment="3" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
                           <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                               <Component id="btnAdd" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -210,9 +212,6 @@
                   <Dimension value="[6, 23]"/>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txfSearchActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JComboBox" name="cmbSearchColumn">
               <Properties>
@@ -259,7 +258,7 @@
                         <Column editable="false" title="Family Size" type="java.lang.Integer"/>
                       </Table>
                     </Property>
-                    <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="populateTable();">
+                    <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                       <TableColumnModel selectionModel="0">
                         <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                           <Title/>
@@ -307,6 +306,9 @@
                       <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                     </Property>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_allCodePost" type="java.lang.String" value="populateTable();"/>
+                  </AuxValues>
                 </Component>
               </SubComponents>
             </Container>
@@ -350,11 +352,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="btnSearch">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/PICS/search.png"/>
-                </Property>
-              </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSearchActionPerformed"/>
               </Events>
@@ -577,9 +574,6 @@
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="11"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txfClientContactNoActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="txfClientAddress">
               <Properties>
@@ -634,9 +628,6 @@
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="11"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txfClientEmailActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="lblSuburb">
               <Properties>
@@ -653,9 +644,6 @@
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="11"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txfAltNumActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JComboBox" name="cmbSuburbs">
               <Properties>
@@ -822,9 +810,6 @@
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="11"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txfOrderIDActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="txfOrderRouteID">
               <Properties>

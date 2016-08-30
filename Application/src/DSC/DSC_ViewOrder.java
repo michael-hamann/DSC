@@ -1,7 +1,13 @@
 
 package DSC;
 
+import static DSC.DBClass.ref;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -9,13 +15,14 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Aliens_Michael
+ * @author Aliens_Amina
  */
 public class DSC_ViewOrder extends javax.swing.JFrame {
 
     boolean editClicked = false;
     boolean addClicked = false;
-
+    ArrayList<Client> allclients = new ArrayList<>();
+    ArrayList<Orders> allorders= new ArrayList<>();
     /**
      * Creates new form DSC_Main
      */
@@ -28,7 +35,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         disableFieldsClient();
         disableFieldsOrder();
         btnSave.setEnabled(false);
-        ClientData.getData();
+       
     }
 
     public final void enableFieldsClient() {
@@ -104,36 +111,48 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     }
 
     public void populateTable() {
-        ClientData.getData();
-        OrderData.getOrders();
-
-        DefaultTableModel model = (DefaultTableModel) tblOrderTable.getModel();
-        for (Client c : ClientData.allclients) {
-            String clientid = c.getClientId();
-            String name = c.getName();
-            String surname = c.getSurname();
-            String contactNum = c.getContactNum();
-            String email = c.getEmail();
-            String suburb = c.getSuburb();
-
-            String active = "";
-            String duration = "";
-            String familySize = "";
-
-            for (Orders o : OrderData.allOrders) {
-                String id = o.getOrderClientid();
-                if (clientid.equals(id)) {
-                    duration = o.getDuration();
-                    familySize = o.getFamilySize();
-                    active = o.isActive();
-                }
-            }
-            Object[] row = {name, surname, contactNum, email, suburb, active, duration, familySize};
-            model.addRow(row);
-            model.fireTableDataChanged();
+       
+        Firebase tableRef = ref.child("Clients");// Go to specific Table
+        tableRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot ds) {
+            for (DataSnapshot Data : ds.getChildren()) {
+                Client c = new Client();
+                c.setClientId(Data.getKey());
+                c.setName((String)Data.child("Name").getValue());
+                c.setSurname((String) Data.child("Surname").getValue());
+                c.setContactNum((String) Data.child("ContactNum").getValue());
+                c.setEmail((String) Data.child("Email").getValue());
+                c.setSuburb((String) Data.child("Suburb").getValue());
+                allclients.add(c);
+                
+//                String famSize = "";
+//                String duration = "";
+//           
+//                for (Orders o : allorders) {
+//                    if(o.getOrderClientid().equals(c.getClientId())){
+//                        famSize = o.getFamilySize();
+//                        duration = o.getDuration();
+//                        break;
+//                    }
+//                }
+           DefaultTableModel model = (DefaultTableModel) tblOrderTable.getModel();
+        
+           Object[] row = {c.getName(), c.getSurname(),c.getContactNum(), c.getEmail(), c.getSuburb()};
+           model.addRow(row);
+           model.fireTableDataChanged();
         }
+            System.out.println(allclients);
     }
 
+    @Override
+    public void onCancelled(FirebaseError fe) {
+        JOptionPane.showMessageDialog(null, "ERROR: " + fe);
+    }
+    });
+       }
+    
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -234,11 +253,6 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
         txfSearch.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfSearch.setMinimumSize(new java.awt.Dimension(6, 23));
-        txfSearch.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txfSearchActionPerformed(evt);
-            }
-        });
 
         cmbSearchColumn.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cmbSearchColumn.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Name", "Surname", "Contact Number", "Email", "Suburb", "Duration", "FamilySize" }));
@@ -292,7 +306,6 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         lblSearchBy.setText("Search by :");
         lblSearchBy.setMaximumSize(new java.awt.Dimension(62, 23));
 
-        btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/search.png"))); // NOI18N
         btnSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSearchActionPerformed(evt);
@@ -326,11 +339,12 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             .addGroup(pnlTableLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cmbSearchColumn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblSearchBy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txfSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(btnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cmbSearchColumn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblSearchBy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txfSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnAdd)
                         .addComponent(btnDelete)))
@@ -374,11 +388,6 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
         txfClientContactNo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfClientContactNo.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        txfClientContactNo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txfClientContactNoActionPerformed(evt);
-            }
-        });
 
         txfClientAddress.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfClientAddress.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
@@ -403,22 +412,12 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
         txfClientEmail.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfClientEmail.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        txfClientEmail.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txfClientEmailActionPerformed(evt);
-            }
-        });
 
         lblSuburb.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblSuburb.setText("Suburb:");
 
         txfAltNum.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfAltNum.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        txfAltNum.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txfAltNumActionPerformed(evt);
-            }
-        });
 
         cmbSuburbs.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cmbSuburbs.setMaximumRowCount(10000);
@@ -538,11 +537,6 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
         txfOrderID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfOrderID.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        txfOrderID.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txfOrderIDActionPerformed(evt);
-            }
-        });
 
         txfOrderRouteID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfOrderRouteID.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
@@ -745,28 +739,12 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txfSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfSearchActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txfSearchActionPerformed
-
-    private void txfClientContactNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfClientContactNoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txfClientContactNoActionPerformed
-
     private void btnEditClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditClientActionPerformed
         btnSave.setEnabled(true);
         enableFieldsClient();
         btnEditClient.setEnabled(false);
         editClicked = true;
     }//GEN-LAST:event_btnEditClientActionPerformed
-
-    private void txfClientEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfClientEmailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txfClientEmailActionPerformed
-
-    private void txfAltNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfAltNumActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txfAltNumActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         String name = txfClientName.getText() + " " + txfClientSurname.getText();
@@ -978,9 +956,9 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Please enter search value!");
 
         } else {
-            switch (searchFor) {
+            switch (column) {
                 case "Name":
-                    for (Client client : ClientData.allclients) {
+                    for (Client client : allclients) {
                         if (searchFor.equalsIgnoreCase(client.getName())) {
                             txfClientID.setText(client.getClientId());
                             txfClientName.setText(client.getName());
@@ -992,7 +970,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             txfClientEmail.setText(client.getEmail());
                             cmbSuburbs.setSelectedItem(client.getSuburb());
                             String id = client.getClientId();
-                            for (Orders orders : OrderData.allOrders) {
+                            for (Orders orders : allorders) {
                                 if (id.equalsIgnoreCase(orders.getOrderClientid())) {
                                     txfOrderID.setText(orders.getOrderid());
                                     txfOrderDuration.setText(orders.getDuration());
@@ -1005,7 +983,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     }
                     break;
                 case "Surname":
-                    for (Client client : ClientData.allclients) {
+                    for (Client client : allclients) {
                         if (searchFor.equalsIgnoreCase(client.getSurname())) {
                             txfClientID.setText(client.getClientId());
                             txfClientName.setText(client.getName());
@@ -1017,7 +995,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             txfClientEmail.setText(client.getEmail());
                             cmbSuburbs.setSelectedItem(client.getSuburb());
                             String id = client.getClientId();
-                            for (Orders orders : OrderData.allOrders) {
+                            for (Orders orders : allorders) {
                                 if (id.equalsIgnoreCase(orders.getOrderClientid())) {
                                     txfOrderID.setText(orders.getOrderid());
                                     txfOrderDuration.setText(orders.getDuration());
@@ -1030,7 +1008,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     }
                     break;
                 case "Contact Number":
-                    for (Client client : ClientData.allclients) {
+                    for (Client client : allclients) {
                         if (searchFor.equalsIgnoreCase(client.getContactNum())) {
                             txfClientID.setText(client.getClientId());
                             txfClientName.setText(client.getName());
@@ -1042,7 +1020,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             txfClientEmail.setText(client.getEmail());
                             cmbSuburbs.setSelectedItem(client.getSuburb());
                             String id = client.getClientId();
-                            for (Orders orders : OrderData.allOrders) {
+                            for (Orders orders : allorders) {
                                 if (id.equalsIgnoreCase(orders.getOrderClientid())) {
                                     txfOrderID.setText(orders.getOrderid());
                                     txfOrderDuration.setText(orders.getDuration());
@@ -1055,7 +1033,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     }
                     break;
                 case "Email":
-                    for (Client client : ClientData.allclients) {
+                    for (Client client : allclients) {
                         if (searchFor.equalsIgnoreCase(client.getEmail())) {
                             txfClientID.setText(client.getClientId());
                             txfClientName.setText(client.getName());
@@ -1067,7 +1045,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             txfClientEmail.setText(client.getEmail());
                             cmbSuburbs.setSelectedItem(client.getSuburb());
                             String id = client.getClientId();
-                            for (Orders orders : OrderData.allOrders) {
+                            for (Orders orders : allorders) {
                                 if (id.equalsIgnoreCase(orders.getOrderClientid())) {
                                     txfOrderID.setText(orders.getOrderid());
                                     txfOrderDuration.setText(orders.getDuration());
@@ -1080,7 +1058,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     }
                     break;
                 case "Suburb":
-                    for (Client client : ClientData.allclients) {
+                    for (Client client : allclients) {
                         if (searchFor.equalsIgnoreCase(client.getSuburb())) {
                             txfClientID.setText(client.getClientId());
                             txfClientName.setText(client.getName());
@@ -1092,7 +1070,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             txfClientEmail.setText(client.getEmail());
                             cmbSuburbs.setSelectedItem(client.getSuburb());
                             String id = client.getClientId();
-                            for (Orders orders : OrderData.allOrders) {
+                            for (Orders orders : allorders) {
                                 if (id.equalsIgnoreCase(orders.getOrderClientid())) {
                                     txfOrderID.setText(orders.getOrderid());
                                     txfOrderDuration.setText(orders.getDuration());
@@ -1105,7 +1083,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     }
                     break;
                 case "Duration":
-                    for (Orders orders : OrderData.allOrders) {
+                    for (Orders orders : allorders) {
                         if (searchFor.equalsIgnoreCase((orders.getDuration()))) {
                             txfOrderID.setText(orders.getOrderid());
                             txfOrderDuration.setText(orders.getDuration());
@@ -1113,7 +1091,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             spnOrderStartingDate.setValue(orders.getStartingDate());
                             txfOrderRouteID.setText(orders.getRouteId());
                             String id = orders.getOrderClientid();
-                            for (Client client : ClientData.allclients) {
+                            for (Client client :allclients) {
                                 if (client.getClientId().equalsIgnoreCase(id)) {
                                     txfClientID.setText(client.getClientId());
                                     txfClientName.setText(client.getName());
@@ -1130,7 +1108,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     }
                     break;
                 case "Family Size":
-                    for (Orders orders : OrderData.allOrders) {
+                    for (Orders orders : allorders) {
                         if (searchFor.equalsIgnoreCase((orders.getFamilySize()))) {
                             txfOrderID.setText(orders.getOrderid());
                             txfOrderDuration.setText(orders.getDuration());
@@ -1138,7 +1116,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             spnOrderStartingDate.setValue(orders.getStartingDate());
                             txfOrderRouteID.setText(orders.getRouteId());
                             String id = orders.getOrderClientid();
-                            for (Client client : ClientData.allclients) {
+                            for (Client client : allclients) {
                                 if (client.getClientId().equalsIgnoreCase(id)) {
                                     txfClientID.setText(client.getClientId());
                                     txfClientName.setText(client.getName());
@@ -1176,10 +1154,6 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         btnSave.setEnabled(true);
         editClicked = true;
     }//GEN-LAST:event_btnEditOrderActionPerformed
-
-    private void txfOrderIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfOrderIDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txfOrderIDActionPerformed
 
     /**
      * @param args the command line arguments

@@ -5,7 +5,8 @@
  */
 package DSC;
 
-import static DSC.OrderData.o;
+import java.util.Date;
+
 
 /**
  *
@@ -19,7 +20,7 @@ public class Orders {
     private String familySize;
     private String routeId;
     private String startingDate;
-    private String clientid;
+    private String orderclientid;
     
     private String Mealid;
     private String Mealtype;
@@ -68,14 +69,6 @@ public class Orders {
     private String Exclusions;
     
 
-    public String isActive() {
-        return active;
-    }
-
-    public void setActive(String active) {
-        this.active = active;
-    }
-
     public String getDuration() {
         return duration;
     }
@@ -100,14 +93,7 @@ public class Orders {
         this.routeId = routeId;
     }
 
-    public String getStartingDate() {
-        return startingDate;
-    }
-
-    public void setStartingDate(String startingDate) {
-        this.startingDate = startingDate;
-    }
-
+   
     public String getOrderid() {
         return orderid;
     }
@@ -117,11 +103,27 @@ public class Orders {
     }
 
     public String getOrderClientid() {
-        return clientid;
+        return orderclientid;
     }
 
-    public void setClientid(String clientid) {
-        this.clientid = clientid;
+    public void setOrderClientid(String orderclientid) {
+        this.orderclientid = orderclientid;
+    }
+
+    public String getActive() {
+        return active;
+    }
+
+    public void setActive(String active) {
+        this.active = active;
+    }
+
+    public String getStartingDate() {
+        return startingDate;
+    }
+
+    public void setStartingDate(String startingDate) {
+        this.startingDate = startingDate;
     }
 
     
