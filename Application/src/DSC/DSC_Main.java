@@ -284,7 +284,6 @@ public class DSC_Main extends javax.swing.JFrame {
 
     private void btnSuburbTblActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuburbTblActionPerformed
         this.dispose();
-        new DSC_SuburbTable().setVisible(true);
     }//GEN-LAST:event_btnSuburbTblActionPerformed
 
     private void btnDriverRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDriverRptActionPerformed
@@ -314,7 +313,7 @@ public class DSC_Main extends javax.swing.JFrame {
 
     private void btnViewOrdersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewOrdersActionPerformed
         this.dispose();
-        new DSC_VeiwOrder().setVisible(true);
+        new DSC_ViewOrder().setVisible(true);
     }//GEN-LAST:event_btnViewOrdersActionPerformed
 
     /**

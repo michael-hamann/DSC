@@ -5,7 +5,6 @@
  */
 package DSC;
 
-import static DSC.DBClass.ref;
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -24,7 +23,7 @@ public class OrderData extends Orders {
 
     public static void getOrders() {
         allOrders = new ArrayList<>();
-        Firebase orderref = ref.child("Orders");
+        Firebase orderref = DBClass.getInstance().child("Orders");
         orderref.addChildEventListener(new ChildEventListener() {
 
             @Override

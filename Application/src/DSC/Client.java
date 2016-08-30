@@ -21,6 +21,9 @@ public class Client {
     private String address;
     private String additionalInfo;
 
+    public Client() {
+    }
+
     public Client(String clientID, String name, String surname, String contactNumber, String alternativeNumber, String email, String suburb, String address, String additionalInfo) {
         this.clientID = clientID;
         this.name = name;
