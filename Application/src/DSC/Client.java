@@ -34,11 +34,11 @@ public class Client {
         this.additionalInfo = additionalInfo;
     }
 
-    public String getID() {
+    public String getClientID() {
         return clientID;
     }
 
-    public void setID(String clientID) {
+    public void setClientID(String clientID) {
         this.clientID = clientID;
 =======
  * @author Amina
@@ -63,6 +63,8 @@ public class Client {
         this.clientId = clientId;
 >>>>>>> refs/remotes/origin/master
     }
+
+    
 
     public String getName() {
         return name;

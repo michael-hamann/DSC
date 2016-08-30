@@ -17,10 +17,10 @@ public class DBClass {
 
     private static Firebase ref;
 
-    public static Firebase getInstance() {
+    public static Firebase getInstance(String uid) {
         if (ref == null) {
             ref = new Firebase("https://dsc-database.firebaseio.com/");
-            ref.authWithCustomToken(genToken("Website"), new Firebase.AuthResultHandler() {
+            ref.authWithCustomToken(genToken(uid), new Firebase.AuthResultHandler() {
                 @Override
                 public void onAuthenticated(AuthData ad) {
                     System.out.println("Database succesfully connected!");

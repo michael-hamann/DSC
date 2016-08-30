@@ -14,7 +14,7 @@ public class DSC_Main extends javax.swing.JFrame {
      * Creates new form DSC_Main
      */
     public DSC_Main() {
-        DBClass.getInstance();
+        DBClass.getInstance("Website");
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         getConnection("Website");
