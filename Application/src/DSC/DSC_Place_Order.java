@@ -534,6 +534,8 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             tblOrderMeals.getColumnModel().getColumn(3).setResizable(false);
         }
 
+        txfMealsTotal.setEditable(false);
+
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("Total");
         jLabel7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
