@@ -56,79 +56,44 @@ public class MainScreen_Charts extends JPanel {
                         for (DataSnapshot Data2 : Data.getChildren()) {
 
                             familySizeCheck = (long) Data.child("FamilySize").getValue();
-
                             if (familySizeCheck == 1) {
-
                                 countFamilySize_1++;
-
                             }
-
                             if (familySizeCheck == 2) {
-
                                 countFamilySize_2++;
-
                             }
-
                             if (familySizeCheck == 3) {
-
                                 countFamilySize_3++;
-
                             }
-
                             if (familySizeCheck == 4) {
-
                                 countFamilySize_4++;
-
                             }
-
                             if (familySizeCheck == 5) {
-
                                 countFamilySize_5++;
-
                             }
-
                             if (familySizeCheck == 6) {
-
                                 countFamilySize_6++;
-
                             }
 
                             for (DataSnapshot Data3 : Data2.getChildren()) {
 
                                 if (activeCheck == true && Data3.child("MealType").getValue().equals(STANDARD)) {
-
                                     countStandardActive++;
-
                                 }
-
                                 if (activeCheck == true && Data3.child("MealType").getValue().equals(LOW_CARB)) {
-
                                     countLowCarbActive++;
-
                                 }
-
                                 if (activeCheck == true && Data3.child("MealType").getValue().equals(KIDDIES)) {
-
                                     countKiddiesActive++;
-
                                 }
-
                                 if (activeCheck == false && Data3.child("MealType").getValue().equals(STANDARD)) {
-
                                     countStandardInActive++;
-
                                 }
-
                                 if (activeCheck == false && Data3.child("MealType").getValue().equals(LOW_CARB)) {
-
                                     countLowCarbInActive++;
-
                                 }
-
                                 if (activeCheck == false && Data3.child("MealType").getValue().equals(KIDDIES)) {
-
                                     countKiddiesInActive++;
-
                                 }
 
                             }

@@ -25,7 +25,7 @@ public class DSC_Main extends javax.swing.JFrame {
 
         if (getData) {
 
-            MainScreen_Charts.createBarGraph_ActiveAndInActiveMeals(pnlBarChartActive, pnlBarChartInActive,pnlPieChart, getData);
+            MainScreen_Charts.createBarGraph_ActiveAndInActiveMeals(pnlBarChartActive, pnlBarChartInActive, pnlPieChart, getData);
 
             getData = false;
 
@@ -356,9 +356,7 @@ public class DSC_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDriverRptActionPerformed
 
     private void btnChefRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChefRptActionPerformed
-
         ChefReport.getChefData_Ordertb(); // get data relavant to ChefReport
-
     }//GEN-LAST:event_btnChefRptActionPerformed
 
     private void btnPackerRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPackerRptActionPerformed
@@ -394,16 +392,14 @@ public class DSC_Main extends javax.swing.JFrame {
         try {
 
             if (checkGraph) {
-                
-                MainScreen_Charts.createBarGraph_ActiveAndInActiveMeals(pnlBarChartActive, pnlBarChartInActive,pnlPieChart, getData);
+
+                MainScreen_Charts.createBarGraph_ActiveAndInActiveMeals(pnlBarChartActive, pnlBarChartInActive, pnlPieChart, getData);
                 pnlBarChartActive.repaint();
                 pnlBarChartInActive.repaint();
                 pnlPieChart.repaint();
-                
+
             } else {
 
-                
-                
             }
 
         } catch (Exception e) {
@@ -413,10 +409,7 @@ public class DSC_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_pnlBarChartActiveresizeCheck
 
     private void btnChangeStatisticsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeStatisticsActionPerformed
-       
-        pnlPieChart.removeAll();
-        pnlPieChart.repaint();
-        
+
     }//GEN-LAST:event_btnChangeStatisticsActionPerformed
 
     /**
