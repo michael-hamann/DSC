@@ -60,9 +60,6 @@ public class DSC_RouteView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("doorstepchef?zeroDateTimeBehavior=convertToNullPU").createEntityManager();
-        routeTbQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT r FROM RouteTb r");
-        routeTbList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : routeTbQuery.getResultList();
         pnlBackground = new javax.swing.JPanel();
         pnlHeading = new javax.swing.JPanel();
         lblLogo = new javax.swing.JLabel();
@@ -103,7 +100,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
         btnDeleteSuburb = new javax.swing.JButton();
         btnAddSuburb = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Route Table");
         setBackground(new java.awt.Color(0, 0, 0));
 
@@ -199,10 +196,12 @@ public class DSC_RouteView extends javax.swing.JFrame {
         pnlFields.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         btnBack.setBackground(new java.awt.Color(255, 0, 0));
-        btnBack.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnBack.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnBack.setForeground(new java.awt.Color(255, 255, 255));
         btnBack.setMnemonic('B');
         btnBack.setText("Back");
+        btnBack.setMaximumSize(new java.awt.Dimension(71, 23));
+        btnBack.setMinimumSize(new java.awt.Dimension(71, 23));
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBackActionPerformed(evt);
@@ -276,7 +275,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
         );
         pnlNewLayout.setVerticalGroup(
             pnlNewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 139, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout pnlInfoLayout = new javax.swing.GroupLayout(pnlInfo);
@@ -349,6 +348,11 @@ public class DSC_RouteView extends javax.swing.JFrame {
         btnChangeDriver.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnChangeDriver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/driver.gif"))); // NOI18N
         btnChangeDriver.setText("Change Driver");
+        btnChangeDriver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnChangeDriverActionPerformed(evt);
+            }
+        });
 
         btnShowOther.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnShowOther.setText("Show inactive");
@@ -381,10 +385,10 @@ public class DSC_RouteView extends javax.swing.JFrame {
                         .addComponent(btnChangeDriver)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnSave)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnEdit)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnBack))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFieldsLayout.createSequentialGroup()
                         .addComponent(lblSortBy)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -404,11 +408,11 @@ public class DSC_RouteView extends javax.swing.JFrame {
                 .addComponent(pnlInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnBack)
-                    .addComponent(btnEdit)
                     .addComponent(btnChangeDriver)
                     .addComponent(btnShowOther)
-                    .addComponent(btnSave))
+                    .addComponent(btnSave)
+                    .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEdit))
                 .addContainerGap())
         );
 
@@ -562,6 +566,11 @@ public class DSC_RouteView extends javax.swing.JFrame {
         btnSave.setVisible(true);
     }//GEN-LAST:event_btnAddSuburbActionPerformed
 
+    private void btnChangeDriverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeDriverActionPerformed
+        this.dispose();
+        new DSC_DriverDetails().setVisible(true);
+    }//GEN-LAST:event_btnChangeDriverActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -614,7 +623,6 @@ public class DSC_RouteView extends javax.swing.JFrame {
     private javax.swing.JCheckBox chbEvening;
     private javax.swing.JCheckBox chbLateAfternoon;
     private javax.swing.JComboBox<String> cmbSort;
-    private javax.persistence.EntityManager entityManager;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -637,8 +645,6 @@ public class DSC_RouteView extends javax.swing.JFrame {
     private javax.swing.JPanel pnlNew;
     private javax.swing.JPanel pnlRoutes;
     private javax.swing.JPanel pnlSuburbs;
-    private java.util.List<DSC.RouteTb> routeTbList;
-    private javax.persistence.Query routeTbQuery;
     private javax.swing.JTextField txfCurrDriver;
     private javax.swing.JTextField txfRouteID;
     private javax.swing.JTextField txfSuburbID;

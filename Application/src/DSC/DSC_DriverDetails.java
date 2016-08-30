@@ -63,7 +63,6 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         pnlBackground = new javax.swing.JPanel();
         pnlDrivers = new javax.swing.JPanel();
@@ -178,39 +177,25 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         txfDriverID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfDriverID.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstDrivers, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.driverID}"), txfDriverID, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
         txfDriverName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfDriverName.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstDrivers, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.driverName}"), txfDriverName, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
 
         txfDriverSurname.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfDriverSurname.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstDrivers, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.driverSurame}"), txfDriverSurname, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
         txfContactNo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfContactNo.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstDrivers, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.contactNumber}"), txfContactNo, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
 
         txfAddress.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfAddress.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstDrivers, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.address}"), txfAddress, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
         txfVehicleReg.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfVehicleReg.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstDrivers, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.vehicleReg}"), txfVehicleReg, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
+        btnBack.setBackground(new java.awt.Color(255, 0, 0));
+        btnBack.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnBack.setForeground(new java.awt.Color(255, 255, 255));
+        btnBack.setMnemonic('B');
         btnBack.setText("Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -218,6 +203,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
             }
         });
 
+        btnEdit.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Edit 2.png"))); // NOI18N
         btnEdit.setText(" Edit");
         btnEdit.addActionListener(new java.awt.event.ActionListener() {
@@ -226,6 +212,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
             }
         });
 
+        btnSave.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Save 2.png"))); // NOI18N
         btnSave.setText(" Save");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
@@ -260,7 +247,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                             .addComponent(txfVehicleReg, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addGroup(pnlDetailsLayout.createSequentialGroup()
                         .addComponent(btnEdit)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
                         .addComponent(btnSave)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnBack)))
@@ -335,8 +322,6 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
             .addComponent(pnlBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        bindingGroup.bind();
-
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -367,7 +352,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
             }
         } else {
             this.dispose();
-            new DSC_DriverTable().setVisible(true);
+            new DSC_RouteView().setVisible(true);
         }
     }//GEN-LAST:event_btnBackActionPerformed
 
@@ -578,6 +563,5 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     private javax.swing.JTextField txfDriverName;
     private javax.swing.JTextField txfDriverSurname;
     private javax.swing.JTextField txfVehicleReg;
-    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }
