@@ -1,6 +1,5 @@
 package DSC;
 
-import static DSC.DBClass.ref;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -39,7 +38,7 @@ public class MainScreen_Charts extends JPanel {
 
     public static void createBarGraph_ActiveAndInActiveMeals(JPanel pnlBarChartActive, JPanel pnlBarChartInActive, JPanel pnlPieChart, boolean getData) {
 
-        Firebase tableRef = ref.child("Orders");// Go to specific Table
+        Firebase tableRef = DBClass.getInstance().child("Orders");// Go to specific Table
 
         tableRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

@@ -5,7 +5,6 @@
  */
 package DSC;
 
-import static DSC.DBClass.ref;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -31,7 +30,7 @@ public class DriverReport {
 
     public static void getDriverData_Clientstb() {
 
-        tableRef = ref.child("Clients");// Go to specific Table]\
+        tableRef = DBClass.getInstance().child("Clients");// Go to specific Table]\
 
         tableRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -68,7 +67,7 @@ public class DriverReport {
 
     public static void getDriverData_Orderstb() {
 
-        tableRef = ref.child("Orders");// Go to specific Table]\
+        tableRef = DBClass.getInstance().child("Orders");// Go to specific Table]\
 
         tableRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

@@ -1,6 +1,5 @@
 package DSC;
 
-import static DSC.DBClass.getConnection;
 import javax.swing.JFrame;
 
 /**
@@ -16,15 +15,15 @@ public class DSC_Main extends javax.swing.JFrame {
      * Creates new form DSC_Main
      */
     public DSC_Main() {
+        DBClass.getInstance();
         initComponents();
         pnlBarChartActive.removeAll();
         pnlBarChartActive.repaint();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        getConnection("Website");
 
         if (getData) {
 
-            MainScreen_Charts.createBarGraph_ActiveAndInActiveMeals(pnlBarChartActive, pnlBarChartInActive, pnlPieChart, getData);
+       //     MainScreen_Charts.createBarGraph_ActiveAndInActiveMeals(pnlBarChartActive, pnlBarChartInActive, pnlPieChart, getData);
 
             getData = false;
 
@@ -406,20 +405,20 @@ public class DSC_Main extends javax.swing.JFrame {
     private void pnlBarChartActiveresizeCheck(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_pnlBarChartActiveresizeCheck
         try {
 
-           if (checkGraph) {
+            if (checkGraph) {
 
-               MainScreen_Charts.createBarGraph_ActiveAndInActiveMeals(pnlBarChartActive, pnlBarChartInActive, pnlPieChart, getData);
-               pnlBarChartActive.repaint();
-               pnlBarChartInActive.repaint();
-               pnlPieChart.repaint();
+                MainScreen_Charts.createBarGraph_ActiveAndInActiveMeals(pnlBarChartActive, pnlBarChartInActive, pnlPieChart, getData);
+                pnlBarChartActive.repaint();
+                pnlBarChartInActive.repaint();
+                pnlPieChart.repaint();
 
-           } else {
+            } else {
 
-           }
+            }
 
-       } catch (Exception e) {
+        } catch (Exception e) {
 
-       }
+        }
     }//GEN-LAST:event_pnlBarChartActiveresizeCheck
 
     /**

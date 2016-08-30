@@ -1,7 +1,10 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package DSC;
 
-import static DSC.DBClass.ref;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -35,7 +38,7 @@ public class ChefReport {
     
     public static void getChefData_Ordertb() {
 
-        Firebase tableRef = ref.child("Orders");// Go to specific Table
+        Firebase tableRef = DBClass.getInstance().child("Orders");// Go to specific Table
         tableRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot ds) {

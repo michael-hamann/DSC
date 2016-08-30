@@ -5,7 +5,6 @@
  */
 package DSC;
 
-import static DSC.DBClass.ref;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -19,11 +18,11 @@ import javax.swing.JOptionPane;
 public class PackerReport {
 
     public static void getData() {
-       Firebase tableRef = ref.child("");// Go to specific Table
+       Firebase tableRef = DBClass.getInstance().child("");// Go to specific Table
         tableRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot ds) {
-                Firebase tableRef = ref.child(""); // Go to specific Table
+                Firebase tableRef = DBClass.getInstance().child(""); // Go to specific Table
                 for (DataSnapshot Data : ds.getChildren()) {
                     System.out.println(Data + "\n");
                     System.out.println("\n\n" + Data.child("").getValue() + "\n\n");
