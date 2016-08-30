@@ -14,7 +14,6 @@ import javax.swing.table.DefaultTableModel;
 public class DSC_ViewOrder extends javax.swing.JFrame {
 
     boolean editClicked = false;
-    boolean addClicked = false;
 
     /**
      * Creates new form DSC_Main
@@ -85,7 +84,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     public final void clearFieldsOrder() {
         txfOrderID.setText(null);
         spnOrderFamilySize.setValue(0);
-        spnOrderStartingDate.setValue("");
+        spnOrderStartingDate.setValue(null);
         txfOrderRouteID.setText(null);
         txfOrderDuration.setText(null);
     }
@@ -109,10 +108,10 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
         DefaultTableModel model = (DefaultTableModel) tblOrderTable.getModel();
         for (Client c : ClientData.allclients) {
-            String clientid = c.getID();
+            String clientid = c.getClientId();
             String name = c.getName();
             String surname = c.getSurname();
-            String contactNum = c.getContactNumber();
+            String contactNum = c.getContactNum();
             String email = c.getEmail();
             String suburb = c.getSuburb();
 
@@ -306,19 +305,20 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             .addGroup(pnlTableLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 983, Short.MAX_VALUE)
                     .addGroup(pnlTableLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(lblSearchBy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(cmbSearchColumn, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txfSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txfSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlTableLayout.setVerticalGroup(
@@ -328,14 +328,17 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(cmbSearchColumn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblSearchBy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txfSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblSearchBy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txfSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlTableLayout.createSequentialGroup()
+                        .addGap(0, 114, Short.MAX_VALUE)
                         .addComponent(btnAdd)
-                        .addComponent(btnDelete)))
-                .addGap(11, 11, 11)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnDelete))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -704,7 +707,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(pnlDetails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBackgroundLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnSave)
@@ -754,10 +757,13 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_txfClientContactNoActionPerformed
 
     private void btnEditClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditClientActionPerformed
+
         btnSave.setEnabled(true);
         enableFieldsClient();
         btnEditClient.setEnabled(false);
         editClicked = true;
+
+
     }//GEN-LAST:event_btnEditClientActionPerformed
 
     private void txfClientEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfClientEmailActionPerformed
@@ -812,15 +818,8 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     break;
             }
         } else {
-            btnSave.setText("Add");
-            btnSave.setEnabled(true);
-            enableFieldsClient();
-            enableFieldsOrder();
-            clearFieldsClient();
-            clearFieldsOrder();
-            btnEditClient.setVisible(false);
-            btnEditOrder.setVisible(false);
-            addClicked = true;
+            this.dispose();
+
         }
     }//GEN-LAST:event_btnAddActionPerformed
 
@@ -933,29 +932,10 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             switch (ans) {
                 case JOptionPane.YES_OPTION:
                     btnSave.setEnabled(false);
+                    btnEditOrder.setEnabled(true);
                     disableFieldsClient();
                     disableFieldsOrder();
-                    btnEditOrder.setEnabled(true);
                     editClicked = false;
-                    break;
-                case JOptionPane.NO_OPTION:
-                    break;
-                default:
-                    break;
-            }
-        } else if (addClicked){
-            int ans = JOptionPane.showConfirmDialog(this, "Do you wish to discard unsaved order?");
-            switch (ans) {
-                case JOptionPane.YES_OPTION:
-                    btnSave.setText("Save");
-                    btnSave.setEnabled(false);
-                    clearFieldsClient();
-                    clearFieldsOrder();
-                    disableFieldsClient();
-                    disableFieldsOrder();
-                    btnEditClient.setEnabled(true);
-                    btnEditOrder.setEnabled(true);
-                    addClicked = false;
                     break;
                 case JOptionPane.NO_OPTION:
                     break;
@@ -966,8 +946,8 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             this.dispose();
             new DSC_Main().setVisible(true);
         }
-        btnEditClient.setVisible(true);
-        btnEditOrder.setVisible(true);
+        btnEditClient.setEnabled(true);
+        btnEditOrder.setEnabled(true);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
@@ -982,16 +962,16 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 case "Name":
                     for (Client client : ClientData.allclients) {
                         if (searchFor.equalsIgnoreCase(client.getName())) {
-                            txfClientID.setText(client.getID());
+                            txfClientID.setText(client.getClientId());
                             txfClientName.setText(client.getName());
                             txfClientSurname.setText(client.getSurname());
                             txfClientAddress.setText(client.getAddress());
-                            txfAddInfo.setText(client.getAdditionalInfo());
-                            txfClientContactNo.setText(client.getContactNumber());
-                            txfAltNum.setText(client.getAlternativeNumber());
+                            txfAddInfo.setText(client.getAddInfo());
+                            txfClientContactNo.setText(client.getContactNum());
+                            txfAltNum.setText(client.getAltNum());
                             txfClientEmail.setText(client.getEmail());
                             cmbSuburbs.setSelectedItem(client.getSuburb());
-                            String id = client.getID();
+                            String id = client.getClientId();
                             for (Orders orders : OrderData.allOrders) {
                                 if (id.equalsIgnoreCase(orders.getOrderClientid())) {
                                     txfOrderID.setText(orders.getOrderid());
@@ -1007,16 +987,16 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 case "Surname":
                     for (Client client : ClientData.allclients) {
                         if (searchFor.equalsIgnoreCase(client.getSurname())) {
-                            txfClientID.setText(client.getID());
+                            txfClientID.setText(client.getClientId());
                             txfClientName.setText(client.getName());
                             txfClientSurname.setText(client.getSurname());
                             txfClientAddress.setText(client.getAddress());
-                            txfAddInfo.setText(client.getAdditionalInfo());
-                            txfClientContactNo.setText(client.getContactNumber());
-                            txfAltNum.setText(client.getAlternativeNumber());
+                            txfAddInfo.setText(client.getAddInfo());
+                            txfClientContactNo.setText(client.getContactNum());
+                            txfAltNum.setText(client.getAltNum());
                             txfClientEmail.setText(client.getEmail());
                             cmbSuburbs.setSelectedItem(client.getSuburb());
-                            String id = client.getID();
+                            String id = client.getClientId();
                             for (Orders orders : OrderData.allOrders) {
                                 if (id.equalsIgnoreCase(orders.getOrderClientid())) {
                                     txfOrderID.setText(orders.getOrderid());
@@ -1031,17 +1011,17 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     break;
                 case "Contact Number":
                     for (Client client : ClientData.allclients) {
-                        if (searchFor.equalsIgnoreCase(client.getContactNumber())) {
-                            txfClientID.setText(client.getID());
+                        if (searchFor.equalsIgnoreCase(client.getContactNum())) {
+                            txfClientID.setText(client.getClientId());
                             txfClientName.setText(client.getName());
                             txfClientSurname.setText(client.getSurname());
                             txfClientAddress.setText(client.getAddress());
-                            txfAddInfo.setText(client.getAdditionalInfo());
-                            txfClientContactNo.setText(client.getContactNumber());
-                            txfAltNum.setText(client.getAlternativeNumber());
+                            txfAddInfo.setText(client.getAddInfo());
+                            txfClientContactNo.setText(client.getContactNum());
+                            txfAltNum.setText(client.getAltNum());
                             txfClientEmail.setText(client.getEmail());
                             cmbSuburbs.setSelectedItem(client.getSuburb());
-                            String id = client.getID();
+                            String id = client.getClientId();
                             for (Orders orders : OrderData.allOrders) {
                                 if (id.equalsIgnoreCase(orders.getOrderClientid())) {
                                     txfOrderID.setText(orders.getOrderid());
@@ -1057,16 +1037,16 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 case "Email":
                     for (Client client : ClientData.allclients) {
                         if (searchFor.equalsIgnoreCase(client.getEmail())) {
-                            txfClientID.setText(client.getID());
+                            txfClientID.setText(client.getClientId());
                             txfClientName.setText(client.getName());
                             txfClientSurname.setText(client.getSurname());
                             txfClientAddress.setText(client.getAddress());
-                            txfAddInfo.setText(client.getAdditionalInfo());
-                            txfClientContactNo.setText(client.getContactNumber());
-                            txfAltNum.setText(client.getAlternativeNumber());
+                            txfAddInfo.setText(client.getAddInfo());
+                            txfClientContactNo.setText(client.getContactNum());
+                            txfAltNum.setText(client.getAltNum());
                             txfClientEmail.setText(client.getEmail());
                             cmbSuburbs.setSelectedItem(client.getSuburb());
-                            String id = client.getID();
+                            String id = client.getClientId();
                             for (Orders orders : OrderData.allOrders) {
                                 if (id.equalsIgnoreCase(orders.getOrderClientid())) {
                                     txfOrderID.setText(orders.getOrderid());
@@ -1082,16 +1062,16 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 case "Suburb":
                     for (Client client : ClientData.allclients) {
                         if (searchFor.equalsIgnoreCase(client.getSuburb())) {
-                            txfClientID.setText(client.getID());
+                            txfClientID.setText(client.getClientId());
                             txfClientName.setText(client.getName());
                             txfClientSurname.setText(client.getSurname());
                             txfClientAddress.setText(client.getAddress());
-                            txfAddInfo.setText(client.getAdditionalInfo());
-                            txfClientContactNo.setText(client.getContactNumber());
-                            txfAltNum.setText(client.getAlternativeNumber());
+                            txfAddInfo.setText(client.getAddInfo());
+                            txfClientContactNo.setText(client.getContactNum());
+                            txfAltNum.setText(client.getAltNum());
                             txfClientEmail.setText(client.getEmail());
                             cmbSuburbs.setSelectedItem(client.getSuburb());
-                            String id = client.getID();
+                            String id = client.getClientId();
                             for (Orders orders : OrderData.allOrders) {
                                 if (id.equalsIgnoreCase(orders.getOrderClientid())) {
                                     txfOrderID.setText(orders.getOrderid());
@@ -1114,14 +1094,14 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             txfOrderRouteID.setText(orders.getRouteId());
                             String id = orders.getOrderClientid();
                             for (Client client : ClientData.allclients) {
-                                if (client.getID().equalsIgnoreCase(id)) {
-                                    txfClientID.setText(client.getID());
+                                if (client.getClientId().equalsIgnoreCase(id)) {
+                                    txfClientID.setText(client.getClientId());
                                     txfClientName.setText(client.getName());
                                     txfClientSurname.setText(client.getSurname());
                                     txfClientAddress.setText(client.getAddress());
-                                    txfAddInfo.setText(client.getAdditionalInfo());
-                                    txfClientContactNo.setText(client.getContactNumber());
-                                    txfAltNum.setText(client.getAlternativeNumber());
+                                    txfAddInfo.setText(client.getAddInfo());
+                                    txfClientContactNo.setText(client.getContactNum());
+                                    txfAltNum.setText(client.getAltNum());
                                     txfClientEmail.setText(client.getEmail());
                                     cmbSuburbs.setSelectedItem(client.getSuburb());
                                 }
@@ -1139,14 +1119,14 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             txfOrderRouteID.setText(orders.getRouteId());
                             String id = orders.getOrderClientid();
                             for (Client client : ClientData.allclients) {
-                                if (client.getID().equalsIgnoreCase(id)) {
-                                    txfClientID.setText(client.getID());
+                                if (client.getClientId().equalsIgnoreCase(id)) {
+                                    txfClientID.setText(client.getClientId());
                                     txfClientName.setText(client.getName());
                                     txfClientSurname.setText(client.getSurname());
                                     txfClientAddress.setText(client.getAddress());
-                                    txfAddInfo.setText(client.getAdditionalInfo());
-                                    txfClientContactNo.setText(client.getContactNumber());
-                                    txfAltNum.setText(client.getAlternativeNumber());
+                                    txfAddInfo.setText(client.getAddInfo());
+                                    txfClientContactNo.setText(client.getContactNum());
+                                    txfAltNum.setText(client.getAltNum());
                                     txfClientEmail.setText(client.getEmail());
                                     cmbSuburbs.setSelectedItem(client.getSuburb());
                                 }
@@ -1171,6 +1151,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_btnOrderDateAddActionPerformed
 
     private void btnEditOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditOrderActionPerformed
+
         enableFieldsOrder();
         btnEditOrder.setEnabled(false);
         btnSave.setEnabled(true);

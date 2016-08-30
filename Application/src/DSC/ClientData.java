@@ -1,6 +1,11 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package DSC;
 
+import static DSC.DBClass.ref;
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -19,7 +24,7 @@ public class ClientData extends Client{
     
     public static void getData(){
             allclients = new ArrayList<>();
-            Firebase clientref = DBClass.getInstance().child("Clients");
+            Firebase clientref = ref.child("Clients");
             clientref.addChildEventListener(new ChildEventListener() {
             
             @Override
@@ -27,14 +32,14 @@ public class ClientData extends Client{
                 Map<String,String> clientMap = ds.getValue(Map.class);
                 c = new Client();
                
-                c.setID(ds.getKey());
+                c.setClientId(ds.getKey());
                 c.setName(clientMap.get("Name"));
                 c.setSurname(clientMap.get("Surname"));
                 c.setAddress(clientMap.get("Address"));
-                c.setAlternativeNumber(clientMap.get("Alternative Number"));
-                c.setContactNumber(clientMap.get("ContactNum"));
+                c.setAltNum(clientMap.get("Alternative Number"));
+                c.setContactNum(clientMap.get("ContactNum"));
                 c.setEmail(clientMap.get("Email"));
-                c.setAdditionalInfo(clientMap.get("Additional Information"));
+                c.setAddInfo(clientMap.get("Additional Information"));
                 c.setSuburb(clientMap.get("Suburb"));
                 allclients.add(c);
             }

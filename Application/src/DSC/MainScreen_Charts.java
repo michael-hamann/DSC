@@ -1,11 +1,25 @@
 package DSC;
 
+import static DSC.DBClass.ref;
+import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Panel;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
@@ -23,7 +37,7 @@ public class MainScreen_Charts extends JPanel {
 
     public static void createBarGraph_Meals(JPanel pnlBarChart) {
 
-        Firebase tableRef = DBClass.getInstance().child("Orders");// Go to specific Table
+        Firebase tableRef = ref.child("Orders");// Go to specific Table
         tableRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot ds) {
