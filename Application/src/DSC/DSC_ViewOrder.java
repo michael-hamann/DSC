@@ -14,6 +14,7 @@ import javax.swing.table.DefaultTableModel;
 public class DSC_ViewOrder extends javax.swing.JFrame {
 
     boolean editClicked = false;
+    boolean addClicked = false;
 
     /**
      * Creates new form DSC_Main
@@ -84,7 +85,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     public final void clearFieldsOrder() {
         txfOrderID.setText(null);
         spnOrderFamilySize.setValue(0);
-        spnOrderStartingDate.setValue(null);
+        spnOrderStartingDate.setValue("");
         txfOrderRouteID.setText(null);
         txfOrderDuration.setText(null);
     }
@@ -305,20 +306,19 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             .addGroup(pnlTableLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 983, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(pnlTableLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(lblSearchBy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(cmbSearchColumn, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txfSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txfSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         pnlTableLayout.setVerticalGroup(
@@ -328,17 +328,14 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(cmbSearchColumn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblSearchBy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txfSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlTableLayout.createSequentialGroup()
-                        .addGap(0, 114, Short.MAX_VALUE)
+                        .addComponent(lblSearchBy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txfSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnAdd)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnDelete))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addComponent(btnDelete)))
+                .addGap(11, 11, 11)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -707,7 +704,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(pnlDetails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBackgroundLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnSave)
@@ -757,13 +754,10 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_txfClientContactNoActionPerformed
 
     private void btnEditClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditClientActionPerformed
-
         btnSave.setEnabled(true);
         enableFieldsClient();
         btnEditClient.setEnabled(false);
         editClicked = true;
-
-
     }//GEN-LAST:event_btnEditClientActionPerformed
 
     private void txfClientEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfClientEmailActionPerformed
@@ -818,8 +812,15 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     break;
             }
         } else {
-            this.dispose();
-
+            btnSave.setText("Add");
+            btnSave.setEnabled(true);
+            enableFieldsClient();
+            enableFieldsOrder();
+            clearFieldsClient();
+            clearFieldsOrder();
+            btnEditClient.setVisible(false);
+            btnEditOrder.setVisible(false);
+            addClicked = true;
         }
     }//GEN-LAST:event_btnAddActionPerformed
 
@@ -932,10 +933,29 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             switch (ans) {
                 case JOptionPane.YES_OPTION:
                     btnSave.setEnabled(false);
-                    btnEditOrder.setEnabled(true);
                     disableFieldsClient();
                     disableFieldsOrder();
+                    btnEditOrder.setEnabled(true);
                     editClicked = false;
+                    break;
+                case JOptionPane.NO_OPTION:
+                    break;
+                default:
+                    break;
+            }
+        } else if (addClicked){
+            int ans = JOptionPane.showConfirmDialog(this, "Do you wish to discard unsaved order?");
+            switch (ans) {
+                case JOptionPane.YES_OPTION:
+                    btnSave.setText("Save");
+                    btnSave.setEnabled(false);
+                    clearFieldsClient();
+                    clearFieldsOrder();
+                    disableFieldsClient();
+                    disableFieldsOrder();
+                    btnEditClient.setEnabled(true);
+                    btnEditOrder.setEnabled(true);
+                    addClicked = false;
                     break;
                 case JOptionPane.NO_OPTION:
                     break;
@@ -946,8 +966,8 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             this.dispose();
             new DSC_Main().setVisible(true);
         }
-        btnEditClient.setEnabled(true);
-        btnEditOrder.setEnabled(true);
+        btnEditClient.setVisible(true);
+        btnEditOrder.setVisible(true);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
@@ -1151,7 +1171,6 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_btnOrderDateAddActionPerformed
 
     private void btnEditOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditOrderActionPerformed
-
         enableFieldsOrder();
         btnEditOrder.setEnabled(false);
         btnSave.setEnabled(true);
