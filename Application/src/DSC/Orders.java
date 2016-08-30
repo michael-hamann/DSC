@@ -5,6 +5,8 @@
  */
 package DSC;
 
+import static DSC.OrderData.o;
+
 /**
  *
  * @author Amina
@@ -18,6 +20,53 @@ public class Orders {
     private String routeId;
     private String startingDate;
     private String clientid;
+    
+    private String Mealid;
+    private String Mealtype;
+
+    public String getMealid() {
+        return Mealid;
+    }
+
+    public void setMealid(String Mealid) {
+        this.Mealid = Mealid;
+    }
+
+    public String getMealtype() {
+        return Mealtype;
+    }
+
+    public void setMealtype(String Mealtype) {
+        this.Mealtype = Mealtype;
+    }
+
+    public String getQuantity() {
+        return Quantity;
+    }
+
+    public void setQuantity(String Quantity) {
+        this.Quantity = Quantity;
+    }
+
+    public String getAllergy() {
+        return Allergy;
+    }
+
+    public void setAllergy(String Allergy) {
+        this.Allergy = Allergy;
+    }
+
+    public String getExclusions() {
+        return Exclusions;
+    }
+
+    public void setExclusions(String Exclusions) {
+        this.Exclusions = Exclusions;
+    }
+    private String Quantity;
+    private String Allergy;
+    private String Exclusions;
+    
 
     public String isActive() {
         return active;
