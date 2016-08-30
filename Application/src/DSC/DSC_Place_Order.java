@@ -9,6 +9,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -41,7 +43,6 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         rbtAfternoon.setEnabled(false);
         rbtEvening.setEnabled(false);
         rbtLateAfternoon.setEnabled(false);
-
     }
 
     /**
@@ -712,40 +713,11 @@ public class DSC_Place_Order extends javax.swing.JFrame {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
 
-        btnSave.setEnabled(false);
-        boolean allGood = true;
-        String invalid = "";
-
         String clientname = txfClientName.getText();
-        if (clientname.isEmpty()) {
-            invalid += "\nName";
-            allGood = false;
-        }
-
         String clientSurname = txfClientSurname.getText();
-        if (clientSurname.isEmpty()) {
-            invalid += "\nSurname";
-            allGood = false;
-        }
-
         String clientContactNumber = txfClientContactNumber.getText();
-        if ((clientContactNumber.isEmpty() || clientContactNumber.length() != 10 || !clientContactNumber.matches("[0-9]+"))) {
-            invalid += "\nContact Number";
-            allGood = false;
-        }
-
         String clientAlternativeNumber = txfClientAlternativeNumber.getText();
-        if (((clientAlternativeNumber.length() != 0 || clientContactNumber.length() != 10) || !clientContactNumber.matches("[0-9]+"))) {
-            invalid += "\nAlternative Contact Number";
-            allGood = false;
-        }
-
         String clientEmail = txfClientEmail.getText();
-
-        if (clientEmail.isEmpty() || !clientEmail.matches("^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")) {
-            invalid += "\nEmail Address";
-            allGood = false;
-        }
 
         String clientSuburb;
         if (ckbClientCollection.isSelected()) {
@@ -755,11 +727,6 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             clientSuburb = cmbClientSuburb.getSelectedItem().toString();
         }
         String clientAddress = txaClientDeliveryAddress.getText();
-        if (clientAddress.isEmpty()) {
-            invalid += "\nAddress";
-            allGood = false;
-        }
-
         String clientAdditionalInfo = txfClientAdditionalInfo.getText();
 
         Calendar orderDate = orderDates[cmbOrderDate.getSelectedIndex()];
@@ -787,40 +754,31 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             timeFrame = "Monday - Thursday";
         }
 
-        if (orderMeals.isEmpty()) {
-            invalid += "\nNo Meals Created";
-            allGood = false;
-        }
-
         Client client = new Client(null, clientname, clientSurname, clientContactNumber,
                 clientAlternativeNumber, clientEmail, clientSuburb, clientAddress, clientAdditionalInfo);
 
         Order order = new Order(null, true, client, timeSlot, orderDate, null, routeID, orderMeals);
 
-        if (allGood) {
-            String clientID = "";
-            Firebase ref = DBClass.getInstance().child("META-Data");
-            ref.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot ds) {
-                    String clientID = ds.child("ClientID").getValue(Integer.class) + "";
-                    String orderID = ds.child("OrderID").getValue(Integer.class) + "";
-                    client.setID(clientID);
-                    order.setID(orderID);
+        String clientID = "";
+        Firebase ref = DBClass.getInstance().child("META-Data");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot ds) {
+                String clientID = ds.child("ClientID").getValue(Integer.class) + "";
+                String orderID = ds.child("OrderID").getValue(Integer.class) + "";
+                client.setID(clientID);
+                order.setID(orderID);
 
-                    addToMetaData("OrderID", Integer.parseInt(orderID) + 1);
-                    addToMetaData("ClientID", Integer.parseInt(clientID) + 1);
-                    addDataToFirebase(order);
-                }
+                addToMetaData("OrderID", Integer.parseInt(orderID) + 1);
+                addToMetaData("ClientID", Integer.parseInt(clientID) + 1);
+                addDataToFirebase(order);
+            }
 
-                @Override
-                public void onCancelled(FirebaseError fe) {
-                    JOptionPane.showMessageDialog(null, "ERROR: " + fe, "Database Err", JOptionPane.ERROR_MESSAGE);
-                }
-            });
-        } else {
-            JOptionPane.showMessageDialog(null, "Please fill in the following fields: " + invalid, "Warning", JOptionPane.WARNING_MESSAGE);
-        }
+            @Override
+            public void onCancelled(FirebaseError fe) {
+                JOptionPane.showMessageDialog(null, "ERROR: " + fe, "Database Err", JOptionPane.ERROR_MESSAGE);
+            }
+        });
 
 
     }//GEN-LAST:event_btnSaveActionPerformed
@@ -844,7 +802,6 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             txfMealsTotal.setText(total + "");
             refreshTable();
         }
-
     }//GEN-LAST:event_btnDeleteMealActionPerformed
 
     private void btnEditMealActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditMealActionPerformed
@@ -861,7 +818,6 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             pane.setFocusableWindowState(true);
             this.setEnabled(false);
         }
-
     }//GEN-LAST:event_btnEditMealActionPerformed
 
     private void btnAddMealActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddMealActionPerformed
@@ -887,24 +843,16 @@ public class DSC_Place_Order extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DSC_Place_Order.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
+            java.util.logging.Logger.getLogger(DSC_Place_Order.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DSC_Place_Order.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
+            java.util.logging.Logger.getLogger(DSC_Place_Order.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DSC_Place_Order.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
+            java.util.logging.Logger.getLogger(DSC_Place_Order.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DSC_Place_Order.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DSC_Place_Order.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -1019,16 +967,12 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             public void onDataChange(DataSnapshot ds) {
 
                 for (DataSnapshot dataSnapshot : ds.getChildren()) {
-                    if (dataSnapshot.child("Active").getValue(boolean.class
-                    )) {
-                        String subArr[] = dataSnapshot.child("Suburbs").getValue(String[].class
-                        );
+                    if (dataSnapshot.child("Active").getValue(boolean.class)) {
+                        String subArr[] = dataSnapshot.child("Suburbs").getValue(String[].class);
 
                         Route route = new Route();
                         route.setID(dataSnapshot.getKey());
-                        route
-                                .setTimeFrame(dataSnapshot.child("TimeFrame").getValue(String.class
-                                ));
+                        route.setTimeFrame(dataSnapshot.child("TimeFrame").getValue(String.class));
                         for (String string : subArr) {
                             route.addSuburb(string);
                         }
@@ -1039,26 +983,20 @@ public class DSC_Place_Order extends javax.swing.JFrame {
                         }
                         for (String string : subArr) {
                             boolean found = false;
-
                             for (SuburbData suburbData : subList) {
                                 if (suburbData.suburb.equals(string)) {
-                                    if (dataSnapshot.child("TimeFrame").getValue(String.class
-                                    ).equals("Afternoon")) {
+                                    if (dataSnapshot.child("TimeFrame").getValue(String.class).equals("Afternoon")) {
                                         suburbData.afternoon = true;
-
-                                    } else if (dataSnapshot.child("TimeFrame").getValue(String.class
-                                    ).equals("Late Afternoon")) {
+                                    } else if (dataSnapshot.child("TimeFrame").getValue(String.class).equals("Late Afternoon")) {
                                         suburbData.lateAfternoon = true;
                                     } else {
                                         suburbData.evening = true;
                                     }
                                     found = true;
-
                                 }
                             }
                             if (!found) {
-                                subList.add(new SuburbData(string, dataSnapshot.child("TimeFrame").getValue(String.class
-                                )));
+                                subList.add(new SuburbData(string, dataSnapshot.child("TimeFrame").getValue(String.class)));
                             }
                         }
                     }
@@ -1074,6 +1012,10 @@ public class DSC_Place_Order extends javax.swing.JFrame {
                 }
                 cmbClientSuburb.setModel(new DefaultComboBoxModel<>(subArr));
                 changeTimeSlots();
+
+                for (Route route : routes) {
+                    System.out.println(route);
+                }
             }
 
             @Override
@@ -1138,7 +1080,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
 
     public void addDataToFirebase(Order order) {
 
-        Firebase ref = DBClass.getInstance().child("Clientss");
+        Firebase ref = DBClass.getInstance().child("Clients");
 
         ClientContainer client = new ClientContainer(
                 order.getClient().getAdditionalInfo(),
@@ -1166,7 +1108,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             );
             totalMeals += order.getMeals().get(i).getQuantity();
         }
-
+        
         OrderContainer orderContainer = new OrderContainer(
                 true,
                 order.getClient().getID(),
@@ -1177,7 +1119,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
                 new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'").format(order.getStartingDate().getTime()),
                 meals
         );
-
+        
         ref.child(order.getID()).setValue(orderContainer);
 
     }
