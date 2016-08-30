@@ -1,6 +1,5 @@
 package DSC;
 
-import static DSC.DBClass.getConnection;
 import javax.swing.JFrame;
 import org.jfree.chart.ChartPanel;
 
@@ -14,10 +13,9 @@ public class DSC_Main extends javax.swing.JFrame {
      * Creates new form DSC_Main
      */
     public DSC_Main() {
-        DBClass.getInstance("Website");
+        DBClass.getInstance();
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        getConnection("Website");
         MainScreen_Charts.createBarGraph_Meals(pnlBarChart);
 
     }
@@ -36,10 +34,7 @@ public class DSC_Main extends javax.swing.JFrame {
         lblLogo = new javax.swing.JLabel();
         lblName = new javax.swing.JLabel();
         pnlTables = new javax.swing.JPanel();
-<<<<<<< HEAD
         btnPlaceOrder = new javax.swing.JButton();
-=======
->>>>>>> refs/remotes/origin/master
         btnMealsTbl = new javax.swing.JButton();
         btnClientTbl = new javax.swing.JButton();
         lblView = new javax.swing.JLabel();
@@ -95,7 +90,6 @@ public class DSC_Main extends javax.swing.JFrame {
         pnlTables.setBackground(new java.awt.Color(0, 204, 51));
         pnlTables.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-<<<<<<< HEAD
         btnPlaceOrder.setText("Place Order");
         btnPlaceOrder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -103,8 +97,6 @@ public class DSC_Main extends javax.swing.JFrame {
             }
         });
 
-=======
->>>>>>> refs/remotes/origin/master
         btnMealsTbl.setText("Meals Table");
         btnMealsTbl.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -144,10 +136,7 @@ public class DSC_Main extends javax.swing.JFrame {
             .addGroup(pnlTablesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlTablesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-<<<<<<< HEAD
                     .addComponent(btnPlaceOrder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-=======
->>>>>>> refs/remotes/origin/master
                     .addComponent(btnMealsTbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnClientTbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -160,13 +149,10 @@ public class DSC_Main extends javax.swing.JFrame {
             .addGroup(pnlTablesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblView, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-<<<<<<< HEAD
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnPlaceOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-=======
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnViewOrders, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
->>>>>>> refs/remotes/origin/master
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnMealsTbl, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -377,14 +363,11 @@ public class DSC_Main extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-<<<<<<< HEAD
     private void btnPlaceOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlaceOrderActionPerformed
         this.dispose();
         new DSC_Place_Order().setVisible(true);
     }//GEN-LAST:event_btnPlaceOrderActionPerformed
 
-=======
->>>>>>> refs/remotes/origin/master
     private void btnMealsTblActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMealsTblActionPerformed
         this.dispose();
         new DSC_MealsTable().setVisible(true);
@@ -486,12 +469,9 @@ public class DSC_Main extends javax.swing.JFrame {
     private javax.swing.JButton btnPlaceOrder;
     private javax.swing.JButton btnRouteView;
     private javax.swing.JButton btnViewOrders;
-<<<<<<< HEAD
-=======
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
->>>>>>> refs/remotes/origin/master
     private javax.swing.JLabel lblGenerate;
     private javax.swing.JLabel lblLogo;
     private javax.swing.JLabel lblName;

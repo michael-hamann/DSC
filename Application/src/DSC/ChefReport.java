@@ -38,7 +38,7 @@ public class ChefReport {
     
     public static void getChefData_Ordertb() {
 
-        Firebase tableRef = DBClass.getInstance("Website").child("Orders");// Go to specific Table
+        Firebase tableRef = DBClass.getInstance().child("Orders");// Go to specific Table
         tableRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot ds) {

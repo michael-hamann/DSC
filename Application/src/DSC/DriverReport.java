@@ -30,7 +30,7 @@ public class DriverReport {
 
     public static void getDriverData_Clientstb() {
 
-        tableRef = DBClass.getInstance("Website").child("Clients");// Go to specific Table]\
+        tableRef = DBClass.getInstance().child("Clients");// Go to specific Table]\
 
         tableRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -67,7 +67,7 @@ public class DriverReport {
 
     public static void getDriverData_Orderstb() {
 
-        tableRef = DBClass.getInstance("Website").child("Orders");// Go to specific Table]\
+        tableRef = DBClass.getInstance().child("Orders");// Go to specific Table]\
 
         tableRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

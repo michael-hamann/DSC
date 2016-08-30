@@ -22,6 +22,9 @@ public class DSC_Place_Order extends javax.swing.JFrame {
 
     private ArrayList<Meal> orderMeals = new ArrayList<>();
     private ArrayList<SuburbData> subList = new ArrayList<>();
+    private String clientID;
+    private Calendar[] orderDates = new Calendar[4];
+    private ArrayList<Route> routes = new ArrayList<>();
 
     /**
      * Creates new form DSC_Main
@@ -34,11 +37,11 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         refreshTable();
         getSuburbs();
         getDates();
-        
 
         rbtAfternoon.setEnabled(false);
         rbtEvening.setEnabled(false);
         rbtLateAfternoon.setEnabled(false);
+
     }
 
     /**
@@ -692,9 +695,9 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             rbtAfternoon.setSelected(true);
             rbtLateAfternoon.setEnabled(true);
             rbtEvening.setEnabled(true);
-            
-        }else{
-             txaClientDeliveryAddress.setText("");
+
+        } else {
+            txaClientDeliveryAddress.setText("");
             txfClientAdditionalInfo.setText("");
             cmbClientSuburb.setEnabled(true);
             txaClientDeliveryAddress.setEnabled(true);
@@ -704,46 +707,122 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             rbtEvening.setEnabled(false);
             changeTimeSlots();
         }
-        
+
     }//GEN-LAST:event_ckbClientCollectionStateChanged
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
 
+        btnSave.setEnabled(false);
+        boolean allGood = true;
+        String invalid = "";
+
         String clientname = txfClientName.getText();
+        if (clientname.isEmpty()) {
+            invalid += "\nName";
+            allGood = false;
+        }
+
         String clientSurname = txfClientSurname.getText();
+        if (clientSurname.isEmpty()) {
+            invalid += "\nSurname";
+            allGood = false;
+        }
+
         String clientContactNumber = txfClientContactNumber.getText();
+        if ((clientContactNumber.isEmpty() || clientContactNumber.length() != 10 || !clientContactNumber.matches("[0-9]+"))) {
+            invalid += "\nContact Number";
+            allGood = false;
+        }
+
         String clientAlternativeNumber = txfClientAlternativeNumber.getText();
+        if (((clientAlternativeNumber.length() != 0 || clientContactNumber.length() != 10) || !clientContactNumber.matches("[0-9]+"))) {
+            invalid += "\nAlternative Contact Number";
+            allGood = false;
+        }
+
         String clientEmail = txfClientEmail.getText();
-        
+
+        if (clientEmail.isEmpty() || !clientEmail.matches("^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")) {
+            invalid += "\nEmail Address";
+            allGood = false;
+        }
+
         String clientSuburb;
         if (ckbClientCollection.isSelected()) {
             clientSuburb = "Collection";
-            
-        }else{
+
+        } else {
             clientSuburb = cmbClientSuburb.getSelectedItem().toString();
         }
         String clientAddress = txaClientDeliveryAddress.getText();
+        if (clientAddress.isEmpty()) {
+            invalid += "\nAddress";
+            allGood = false;
+        }
+
         String clientAdditionalInfo = txfClientAdditionalInfo.getText();
-        
-        String orderDate = cmbOrderDate.getSelectedItem().toString();
-        String timeSlot;
+
+        Calendar orderDate = orderDates[cmbOrderDate.getSelectedIndex()];
+        String timeSlot = "";
         if (rbtAfternoon.isSelected()) {
             timeSlot = "Afternoon";
-        }else if (rbtLateAfternoon.isSelected()) {
+        } else if (rbtLateAfternoon.isSelected()) {
             timeSlot = "Late Afternoon";
-        }else if (rbtEvening.isSelected()) {
+        } else if (rbtEvening.isSelected()) {
             timeSlot = "Evening";
         }
-        
+
+        String routeID = "0";
+
+        for (Route route : routes) {
+            if (route.getSuburbs().contains(clientSuburb) && route.getTimeFrame().equals(timeSlot)) {
+                routeID = route.getID();
+            }
+        }
+
         String timeFrame;
         if (rbtMonToFri.isSelected()) {
             timeFrame = "Monday - Friday";
-        }else if (rbtMonToThur.isSelected()) {
+        } else if (rbtMonToThur.isSelected()) {
             timeFrame = "Monday - Thursday";
         }
-        
-        
-        
+
+        if (orderMeals.isEmpty()) {
+            invalid += "\nNo Meals Created";
+            allGood = false;
+        }
+
+        Client client = new Client(null, clientname, clientSurname, clientContactNumber,
+                clientAlternativeNumber, clientEmail, clientSuburb, clientAddress, clientAdditionalInfo);
+
+        Order order = new Order(null, true, client, timeSlot, orderDate, null, routeID, orderMeals);
+
+        if (allGood) {
+            String clientID = "";
+            Firebase ref = DBClass.getInstance().child("META-Data");
+            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot ds) {
+                    String clientID = ds.child("ClientID").getValue(Integer.class) + "";
+                    String orderID = ds.child("OrderID").getValue(Integer.class) + "";
+                    client.setID(clientID);
+                    order.setID(orderID);
+
+                    addToMetaData("OrderID", Integer.parseInt(orderID) + 1);
+                    addToMetaData("ClientID", Integer.parseInt(clientID) + 1);
+                    addDataToFirebase(order);
+                }
+
+                @Override
+                public void onCancelled(FirebaseError fe) {
+                    JOptionPane.showMessageDialog(null, "ERROR: " + fe, "Database Err", JOptionPane.ERROR_MESSAGE);
+                }
+            });
+        } else {
+            JOptionPane.showMessageDialog(null, "Please fill in the following fields: " + invalid, "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+
+
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
@@ -765,6 +844,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             txfMealsTotal.setText(total + "");
             refreshTable();
         }
+
     }//GEN-LAST:event_btnDeleteMealActionPerformed
 
     private void btnEditMealActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditMealActionPerformed
@@ -781,6 +861,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             pane.setFocusableWindowState(true);
             this.setEnabled(false);
         }
+
     }//GEN-LAST:event_btnEditMealActionPerformed
 
     private void btnAddMealActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddMealActionPerformed
@@ -806,16 +887,24 @@ public class DSC_Place_Order extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DSC_Place_Order.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DSC_Place_Order.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DSC_Place_Order.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DSC_Place_Order.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DSC_Place_Order.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DSC_Place_Order.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DSC_Place_Order.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DSC_Place_Order.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -924,32 +1013,52 @@ public class DSC_Place_Order extends javax.swing.JFrame {
 
     private void getSuburbs() {
 
-        Firebase ref = DBClass.getInstance("Website").child("Routes");
+        Firebase ref = DBClass.getInstance().child("Routes");
         ref.orderByChild("Active").equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot ds) {
+
                 for (DataSnapshot dataSnapshot : ds.getChildren()) {
-                    if (dataSnapshot.child("Active").getValue(boolean.class)) {
-                        String subArr[] = dataSnapshot.child("Suburbs").getValue(String[].class);
+                    if (dataSnapshot.child("Active").getValue(boolean.class
+                    )) {
+                        String subArr[] = dataSnapshot.child("Suburbs").getValue(String[].class
+                        );
+
+                        Route route = new Route();
+                        route.setID(dataSnapshot.getKey());
+                        route
+                                .setTimeFrame(dataSnapshot.child("TimeFrame").getValue(String.class
+                                ));
+                        for (String string : subArr) {
+                            route.addSuburb(string);
+                        }
+                        routes.add(route);
+
                         if (subArr[0].equals("Collection")) {
                             continue;
                         }
                         for (String string : subArr) {
                             boolean found = false;
+
                             for (SuburbData suburbData : subList) {
                                 if (suburbData.suburb.equals(string)) {
-                                    if (dataSnapshot.child("TimeFrame").getValue(String.class).equals("Afternoon")) {
+                                    if (dataSnapshot.child("TimeFrame").getValue(String.class
+                                    ).equals("Afternoon")) {
                                         suburbData.afternoon = true;
-                                    } else if (dataSnapshot.child("TimeFrame").getValue(String.class).equals("Late Afternoon")) {
+
+                                    } else if (dataSnapshot.child("TimeFrame").getValue(String.class
+                                    ).equals("Late Afternoon")) {
                                         suburbData.lateAfternoon = true;
                                     } else {
                                         suburbData.evening = true;
                                     }
                                     found = true;
+
                                 }
                             }
                             if (!found) {
-                                subList.add(new SuburbData(string, dataSnapshot.child("TimeFrame").getValue(String.class)));
+                                subList.add(new SuburbData(string, dataSnapshot.child("TimeFrame").getValue(String.class
+                                )));
                             }
                         }
                     }
@@ -957,7 +1066,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
 
                 String[] subArr = new String[subList.size()];
                 for (int i = 0; i < subArr.length; i++) {
-                        subArr[i] = subList.get(i).suburb;
+                    subArr[i] = subList.get(i).suburb;
                 }
                 try {
                     Arrays.sort(subArr);
@@ -973,10 +1082,10 @@ public class DSC_Place_Order extends javax.swing.JFrame {
                 System.err.print("Database connection error (Suburb): " + fe);
             }
         });
-        
+
     }
-    
-    private void changeTimeSlots(){
+
+    private void changeTimeSlots() {
         String selectedSuburb = cmbClientSuburb.getSelectedItem().toString();
 
         rbtAfternoon.setEnabled(false);
@@ -1002,26 +1111,141 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         }
     }
 
-    public void getDates(){
+    public void getDates() {
         Calendar currentDate = Calendar.getInstance();
         int counter = 0;
         String[] weeks = new String[4];
-        while (counter<4) {            
+        while (counter < 4) {
             for (int i = 0; i < 7; i++) {
-                if (currentDate.get(Calendar.DAY_OF_WEEK)!=2) {
+                if (currentDate.get(Calendar.DAY_OF_WEEK) != 2) {
                     currentDate.add(Calendar.DAY_OF_WEEK, 1);
                 }
             }
-            
+            orderDates[counter] = (Calendar) currentDate.clone();
             DateFormat df = new SimpleDateFormat("dd MMMMM yyyy");
             weeks[counter] = df.format(currentDate.getTime());
             currentDate.add(Calendar.DAY_OF_WEEK, 1);
             counter++;
         }
-        
+
         cmbOrderDate.setModel(new DefaultComboBoxModel<>(weeks));
     }
-    
+
+    public void addToMetaData(String ids, int value) {
+        Firebase ref = DBClass.getInstance().child("META-Data");
+        ref.child(ids).setValue(value);
+    }
+
+    public void addDataToFirebase(Order order) {
+
+        Firebase ref = DBClass.getInstance().child("Clientss");
+
+        ClientContainer client = new ClientContainer(
+                order.getClient().getAdditionalInfo(),
+                order.getClient().getAddress(),
+                order.getClient().getAlternativeNumber(),
+                order.getClient().getContactNumber(),
+                order.getClient().getEmail(),
+                order.getClient().getName(),
+                order.getClient().getSuburb(),
+                order.getClient().getSurname()
+        );
+
+        ref.child(order.getClient().getID()).setValue(client);
+
+        ref = DBClass.getInstance().child("Orders");
+
+        MealContainer meals[] = new MealContainer[order.getMeals().size()];
+        int totalMeals = 0;
+        for (int i = 0; i < order.getMeals().size(); i++) {
+            meals[i] = new MealContainer(
+                    order.getMeals().get(i).getAllergies(),
+                    order.getMeals().get(i).getExclutions(),
+                    order.getMeals().get(i).getMealType(),
+                    order.getMeals().get(i).getQuantity()
+            );
+            totalMeals += order.getMeals().get(i).getQuantity();
+        }
+
+        OrderContainer orderContainer = new OrderContainer(
+                true,
+                order.getClient().getID(),
+                order.getDuration(),
+                "-",
+                totalMeals,
+                order.getRoute(),
+                new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'").format(order.getStartingDate().getTime()),
+                meals
+        );
+
+        ref.child(order.getID()).setValue(orderContainer);
+
+    }
+
+    class ClientContainer {
+
+        public String AdditionalInfo;
+        public String Address;
+        public String AlternativeNumber;
+        public String ContactNum;
+        public String Email;
+        public String Name;
+        public String Suburb;
+        public String Surname;
+
+        public ClientContainer(String AdditionalInfo, String Address, String AlternativeNumber, String ContactNum, String Email, String Name, String Suburb, String Surname) {
+            this.AdditionalInfo = AdditionalInfo;
+            this.Address = Address;
+            this.AlternativeNumber = AlternativeNumber;
+            this.ContactNum = ContactNum;
+            this.Email = Email;
+            this.Name = Name;
+            this.Suburb = Suburb;
+            this.Surname = Surname;
+        }
+
+    }
+
+    class OrderContainer {
+
+        public boolean Active;
+        public String ClientID;
+        public String Duration;
+        public String EndDate;
+        public int FamilySize;
+        public String RouteID;
+        public String StartingDate;
+        public MealContainer[] meals;
+
+        public OrderContainer(boolean Active, String ClientID, String Duration, String EndDate, int FamilySize, String RouteID, String StartingDate, MealContainer[] meals) {
+            this.Active = Active;
+            this.ClientID = ClientID;
+            this.Duration = Duration;
+            this.EndDate = EndDate;
+            this.FamilySize = FamilySize;
+            this.RouteID = RouteID;
+            this.StartingDate = StartingDate;
+            this.meals = meals;
+        }
+
+    }
+
+    class MealContainer {
+
+        public String Allergies;
+        public String Exclusions;
+        public String MealType;
+        public int Quantity;
+
+        public MealContainer(String Allergies, String Exclusions, String MealType, int Quantity) {
+            this.Allergies = Allergies;
+            this.Exclusions = Exclusions;
+            this.MealType = MealType;
+            this.Quantity = Quantity;
+        }
+
+    }
+
     class SuburbData {
 
         public String suburb;
