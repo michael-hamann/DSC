@@ -49,6 +49,7 @@ public class DSC_Main extends javax.swing.JFrame {
         btnViewOrders = new javax.swing.JButton();
         btnChangeChart = new javax.swing.JButton();
         btnChangeStatistics = new javax.swing.JButton();
+        btnPlaceOrder = new javax.swing.JButton();
         pnlReports = new javax.swing.JPanel();
         btnDriverRpt = new javax.swing.JButton();
         btnChefRpt = new javax.swing.JButton();
@@ -130,6 +131,13 @@ public class DSC_Main extends javax.swing.JFrame {
             }
         });
 
+        btnPlaceOrder.setText("Place Order");
+        btnPlaceOrder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPlaceOrderActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlTablesLayout = new javax.swing.GroupLayout(pnlTables);
         pnlTables.setLayout(pnlTablesLayout);
         pnlTablesLayout.setHorizontalGroup(
@@ -140,6 +148,7 @@ public class DSC_Main extends javax.swing.JFrame {
                     .addComponent(lblView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnRouteView, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnViewOrders, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnPlaceOrder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlTablesLayout.createSequentialGroup()
                         .addGroup(pnlTablesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnChangeChart, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -153,13 +162,15 @@ public class DSC_Main extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(lblView, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnPlaceOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnViewOrders, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnRouteView, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(btnChangeChart)
-                .addGap(18, 18, 18)
-                .addComponent(btnChangeStatistics)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnChangeChart, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnChangeStatistics, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -419,6 +430,11 @@ public class DSC_Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_pnlBarChartActiveresizeCheck
 
+    private void btnPlaceOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlaceOrderActionPerformed
+        this.dispose();
+        new DSC_Place_Order().setVisible(true);
+    }//GEN-LAST:event_btnPlaceOrderActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -461,6 +477,7 @@ public class DSC_Main extends javax.swing.JFrame {
     private javax.swing.JButton btnDriverRpt;
     private javax.swing.JButton btnHandlerRpt;
     private javax.swing.JButton btnPackerRpt;
+    private javax.swing.JButton btnPlaceOrder;
     private javax.swing.JButton btnRouteView;
     private javax.swing.JButton btnViewOrders;
     private javax.swing.JLabel lblGenerate;
