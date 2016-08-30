@@ -420,7 +420,28 @@ public class DSC_Main extends javax.swing.JFrame {
             
         }
 
+<<<<<<< HEAD
     }//GEN-LAST:event_pnlBarChartresizeCheck
+=======
+    private void pnlBarChartActiveresizeCheck(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_pnlBarChartActiveresizeCheck
+        try {
+
+           if (checkGraph) {
+
+               MainScreen_Charts.createBarGraph_ActiveAndInActiveMeals(pnlBarChartActive, pnlBarChartInActive, pnlPieChart, getData);
+               pnlBarChartActive.repaint();
+               pnlBarChartInActive.repaint();
+               pnlPieChart.repaint();
+
+           } else {
+
+           }
+
+       } catch (Exception e) {
+
+       }
+    }//GEN-LAST:event_pnlBarChartActiveresizeCheck
+>>>>>>> refs/remotes/origin/master
 
     /**
      * @param args the command line arguments
