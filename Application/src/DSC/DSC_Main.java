@@ -404,7 +404,22 @@ public class DSC_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnChangeStatisticsActionPerformed
 
     private void pnlBarChartActiveresizeCheck(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_pnlBarChartActiveresizeCheck
-        // TODO add your handling code here:
+        try {
+
+           if (checkGraph) {
+
+               MainScreen_Charts.createBarGraph_ActiveAndInActiveMeals(pnlBarChartActive, pnlBarChartInActive, pnlPieChart, getData);
+               pnlBarChartActive.repaint();
+               pnlBarChartInActive.repaint();
+               pnlPieChart.repaint();
+
+           } else {
+
+           }
+
+       } catch (Exception e) {
+
+       }
     }//GEN-LAST:event_pnlBarChartActiveresizeCheck
 
     /**
