@@ -9,12 +9,16 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
@@ -22,6 +26,16 @@ import javax.swing.JOptionPane;
  */
 public class ChefReport {
 
+//    XSSFWorkbook workbook = new XSSFWorkbook();
+//    XSSFSheet spreadsheet = workbook.createSheet(name);
+//        
+//    try {
+//        FileOutputStream out = new FileOutputStream(new File(name + ".xlsx"));
+//        workbook.write(out);
+//    } catch (IOException e) {
+//        JOptionPane.showMessageDialog(null, e.getMessage());
+//    }
+    
     public static void getChefData_Ordertb() {
 
         Firebase tableRef = DBClass.getInstance().child("Orders");// Go to specific Table
