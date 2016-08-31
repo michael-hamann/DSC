@@ -20,14 +20,6 @@ public class DSC_Main extends javax.swing.JFrame {
         pnlBarChartActive.removeAll();
         pnlBarChartActive.repaint();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-
-        if (getData) {
-
-       //     MainScreen_Charts.createBarGraph_ActiveAndInActiveMeals(pnlBarChartActive, pnlBarChartInActive, pnlPieChart, getData);
-
-            getData = false;
-
-        }
     }
 
     /**
@@ -414,12 +406,13 @@ public class DSC_Main extends javax.swing.JFrame {
     private void pnlBarChartActiveresizeCheck(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_pnlBarChartActiveresizeCheck
         try {
 
-            if (checkGraph) {
+            if (getData) {
 
                 MainScreen_Charts.createBarGraph_ActiveAndInActiveMeals(pnlBarChartActive, pnlBarChartInActive, pnlPieChart, getData);
                 pnlBarChartActive.repaint();
                 pnlBarChartInActive.repaint();
                 pnlPieChart.repaint();
+                getData = false;
 
             } else {
 
