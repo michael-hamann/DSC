@@ -6,6 +6,7 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
@@ -36,7 +37,7 @@ public class MainScreen_Charts extends JPanel {
     private static int countFamilySize_5 = 0;
     private static int countFamilySize_6 = 0;
 
-    public static void createBarGraph_ActiveAndInActiveMeals(JPanel pnlBarChartActive, JPanel pnlBarChartInActive, JPanel pnlPieChart, boolean getData) {
+    public static void createBarGraph_ActiveAndInActiveMeals(JPanel pnlBarChartActive, JPanel pnlBarChartInActive, JPanel pnlPieChart,JLabel lblStandardTotal,JLabel lblLowCarbTotal,JLabel lblKiddiesTotal,JLabel lblKiddiesTotalInActive,JLabel lblStandardTotalInActive,JLabel lblLowCarbTotalInActive, boolean getData) {
 
         Firebase tableRef = DBClass.getInstance().child("Orders");// Go to specific Table
 
@@ -55,6 +56,7 @@ public class MainScreen_Charts extends JPanel {
                         for (DataSnapshot Data2 : Data.getChildren()) {
 
                             familySizeCheck = (long) Data.child("FamilySize").getValue();
+                            
                             if (familySizeCheck == 1) {
                                 countFamilySize_1++;
                             }
@@ -154,6 +156,14 @@ public class MainScreen_Charts extends JPanel {
                 pnlPieChart.add(chartPanel_FamilySize, BorderLayout.CENTER);
                 chartPanel_FamilySize.setSize(new Dimension(pnlPieChart.getWidth(), pnlPieChart.getHeight()));
                 chartPanel_FamilySize.repaint();
+                
+                lblStandardTotal.setText(countStandardActive+"");
+                lblLowCarbTotal.setText(countLowCarbActive+"");
+                lblKiddiesTotal.setText(countKiddiesActive+"");
+                
+                lblKiddiesTotalInActive.setText(countKiddiesInActive+"");
+                lblStandardTotalInActive.setText(countStandardInActive+"");
+                lblLowCarbTotalInActive.setText(countLowCarbInActive+"");
 
             }
 
@@ -164,4 +174,7 @@ public class MainScreen_Charts extends JPanel {
         });
 
     }
+    
+    
+    
 }
