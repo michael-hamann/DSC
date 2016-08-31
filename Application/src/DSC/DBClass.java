@@ -20,7 +20,7 @@ public class DBClass {
     public static Firebase getInstance() {
         if (ref == null) {
             ref = new Firebase("https://dsc-database.firebaseio.com/");
-            ref.authWithCustomToken(genToken("Website"), new Firebase.AuthResultHandler() {
+            ref.authWithCustomToken(genToken("Desktop"), new Firebase.AuthResultHandler() {
                 @Override
                 public void onAuthenticated(AuthData ad) {
                     System.out.println("Database succesfully connected!");
