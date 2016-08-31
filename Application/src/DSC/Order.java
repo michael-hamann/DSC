@@ -21,6 +21,7 @@ public class Order {
     private Calendar endDate;
     private String route;
     private ArrayList<Meal> meals;
+    private String clientID;
 
     public Order(String orderID, boolean active, Client client, String duration, Calendar startingDate, Calendar endDate, String route, ArrayList<Meal> meals) {
         this.orderID = orderID;
@@ -97,6 +98,14 @@ public class Order {
 
     public void setRoute(String route) {
         this.route = route;
+    }
+
+    public String getClientID() {
+        return clientID;
+    }
+
+    public void setClientID(String clientID) {
+        this.clientID = clientID;
     }
     
     
