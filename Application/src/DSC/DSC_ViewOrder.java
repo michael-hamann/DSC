@@ -182,13 +182,14 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 
                 Order o = new Order(Data.getKey(),Data.child("Active").getValue(boolean.class), allclients.get(0),
                         Data.child("Duration").getValue(String.class), null ,end, Data.child("RouteID").getValue(String.class), 
-                        allmeals);
-                System.out.println(o);
+                        allmeals, Data.child("FamilySize").getValue(String.class));
+                
                 allorders.add(o);
                 for (DataSnapshot Data2 : Data.getChildren()) { 
                     Meal m = new Meal(Data2.child("Quantity").getValue(int.class), Data2.child("MealType").getValue(String.class),
                             Data2.child("Allergies").getValue(String.class),Data2.child("Exclutions").getValue(String.class));
                     allmeals.add(m);
+                    System.out.println(m.getAllergies()+ " " + m.getMealType()+" " + m.getMealType());
                 }
                 o.setMeals(allmeals);
                  
@@ -761,22 +762,15 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Meal ID", "Meal type", "Allergy", "Exclusions", "Quantity", "Order ID"
+                "Meal type", "Quantity", "Allergy", "Exclusions"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, true, true, true, true, false
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
             }
         });
         jScrollPane2.setViewportView(tblMeals);
@@ -1039,7 +1033,8 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         String column = (String) cmbSearchColumn.getSelectedItem();
         String searchFor = txfSearch.getText();
-
+        DefaultTableModel mealmodel = (DefaultTableModel) tblMeals.getModel();
+        
         if (txfSearch.getText().equals("")) {
             JOptionPane.showMessageDialog(rootPane, "Please enter search value!");
 
@@ -1047,7 +1042,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             switch (column) {
                 case "Name":
                     for (Order orders : allorders) {
-                        if (searchFor.equalsIgnoreCase(orders.getClient().getID())) {
+                        if (searchFor.equalsIgnoreCase(orders.getClient().getName())) {
                             txfClientID.setText(orders.getClient().getID());
                             txfClientName.setText(orders.getClient().getName());
                             txfClientSurname.setText(orders.getClient().getSurname());
@@ -1059,162 +1054,139 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             cmbSuburbs.setSelectedItem(orders.getClient().getSuburb());
                             txfOrderID.setText(orders.getID());
                             txfOrderDuration.setText(orders.getDuration());
-                            //spnOrderFamilySize.setValue(orders.getFamilySize());
-                            spnOrderStartingDate.setValue(orders.getStartingDate());
+                            //spnOrderFamilySize.setValue(Integer.parseInt(orders.getFamilySize()));
+                            //spnOrderStartingDate.setValue(orders.getStartingDate());
                             txfOrderRouteID.setText(orders.getRoute());
+                            for (Meal meals : orders.getMeals()) {
+                                Object[] row = {meals.getMealType(), meals.getQuantity(),meals.getAllergies(), meals.getExclutions()};
+                                mealmodel.addRow(row);
+                               
+                            }
+                             mealmodel.fireTableDataChanged();
                         }
                     }
                     break;
                 case "Surname":
-                    for (Client client : allclients) {
-                        if (searchFor.equalsIgnoreCase(client.getSurname())) {
-                            txfClientID.setText(client.getID());
-                            txfClientName.setText(client.getName());
-                            txfClientSurname.setText(client.getSurname());
-                            txfClientAddress.setText(client.getAddress());
-                            txfAddInfo.setText(client.getAdditionalInfo());
-                            txfClientContactNo.setText(client.getContactNumber());
-                            txfAltNum.setText(client.getAlternativeNumber());
-                            txfClientEmail.setText(client.getEmail());
-                            cmbSuburbs.setSelectedItem(client.getSuburb());
-                            String id = client.getID();
-//                            for (Order orders : allorders) {
-//                                if (id.equalsIgnoreCase(orders.getOrderClientid())) {
-//                                    txfOrderID.setText(orders.getID());
-//                                    txfOrderDuration.setText(orders.getDuration());
-//                                    spnOrderFamilySize.setValue(orders.getFamilySize());
-//                                    spnOrderStartingDate.setValue(orders.getStartingDate());
-//                                    txfOrderRouteID.setText(orders.getRouteId());
-//                                }
-//                            }
+                    for (Order orders : allorders) {
+                        if (searchFor.equalsIgnoreCase(orders.getClient().getSurname())) {
+                            txfClientID.setText(orders.getClient().getID());
+                            txfClientName.setText(orders.getClient().getName());
+                            txfClientSurname.setText(orders.getClient().getSurname());
+                            txfClientAddress.setText(orders.getClient().getAddress());
+                            txfAddInfo.setText(orders.getClient().getAdditionalInfo());
+                            txfClientContactNo.setText(orders.getClient().getContactNumber());
+                            txfAltNum.setText(orders.getClient().getAlternativeNumber());
+                            txfClientEmail.setText(orders.getClient().getEmail());
+                            cmbSuburbs.setSelectedItem(orders.getClient().getSuburb());
+                            txfOrderID.setText(orders.getID());
+                            txfOrderDuration.setText(orders.getDuration());
+                            //spnOrderFamilySize.setValue(Integer.parseInt(orders.getFamilySize()));
+                            //spnOrderStartingDate.setValue(orders.getStartingDate());
+                            txfOrderRouteID.setText(orders.getRoute());
                         }
                     }
                     break;
                 case "Contact Number":
-                    for (Client client : allclients) {
-                        if (searchFor.equalsIgnoreCase(client.getContactNumber())) {
-                           txfClientID.setText(client.getID());
-                            txfClientName.setText(client.getName());
-                            txfClientSurname.setText(client.getSurname());
-                            txfClientAddress.setText(client.getAddress());
-                            txfAddInfo.setText(client.getAdditionalInfo());
-                            txfClientContactNo.setText(client.getContactNumber());
-                            txfAltNum.setText(client.getAlternativeNumber());
-                            txfClientEmail.setText(client.getEmail());
-                            cmbSuburbs.setSelectedItem(client.getSuburb());
-                            String id = client.getID();
-//                            for (Order orders : allorders) {
-//                                if (id.equalsIgnoreCase(orders.getOrderClientid())) {
-//                                    txfOrderID.setText(orders.getID());
-//                                    txfOrderDuration.setText(orders.getDuration());
-//                                    spnOrderFamilySize.setValue(orders.getFamilySize());
-//                                    spnOrderStartingDate.setValue(orders.getStartingDate());
-//                                    txfOrderRouteID.setText(orders.getRouteId());
-//                                }
-//                            }
+                    for (Order orders : allorders) {
+                        if (searchFor.equalsIgnoreCase(orders.getClient().getContactNumber())) {
+                           txfClientID.setText(orders.getClient().getID());
+                            txfClientName.setText(orders.getClient().getName());
+                            txfClientSurname.setText(orders.getClient().getSurname());
+                            txfClientAddress.setText(orders.getClient().getAddress());
+                            txfAddInfo.setText(orders.getClient().getAdditionalInfo());
+                            txfClientContactNo.setText(orders.getClient().getContactNumber());
+                            txfAltNum.setText(orders.getClient().getAlternativeNumber());
+                            txfClientEmail.setText(orders.getClient().getEmail());
+                            cmbSuburbs.setSelectedItem(orders.getClient().getSuburb());
+                            txfOrderID.setText(orders.getID());
+                            txfOrderDuration.setText(orders.getDuration());
+                            //spnOrderFamilySize.setValue(Integer.parseInt(orders.getFamilySize()));
+                            //spnOrderStartingDate.setValue(orders.getStartingDate());
+                            txfOrderRouteID.setText(orders.getRoute());
                         }
                     }
                     break;
                 case "Email":
-                    for (Client client : allclients) {
-                        if (searchFor.equalsIgnoreCase(client.getEmail())) {
-                            txfClientID.setText(client.getID());
-                            txfClientName.setText(client.getName());
-                            txfClientSurname.setText(client.getSurname());
-                            txfClientAddress.setText(client.getAddress());
-                            txfAddInfo.setText(client.getAdditionalInfo());
-                            txfClientContactNo.setText(client.getContactNumber());
-                            txfAltNum.setText(client.getAlternativeNumber());
-                            txfClientEmail.setText(client.getEmail());
-                            cmbSuburbs.setSelectedItem(client.getSuburb());
-                            String id = client.getID();
-//                            for (Order orders : allorders) {
-//                                if (id.equalsIgnoreCase(orders.getOrderClientid())) {
-//                                    txfOrderID.setText(orders.getID());
-//                                    txfOrderDuration.setText(orders.getDuration());
-//                                    spnOrderFamilySize.setValue(orders.getFamilySize());
-//                                    spnOrderStartingDate.setValue(orders.getStartingDate());
-//                                    txfOrderRouteID.setText(orders.getRouteId());
-//                                }
-//                            }
+                    for (Order orders : allorders) {
+                        if (searchFor.equalsIgnoreCase(orders.getClient().getEmail())) {
+                            txfClientID.setText(orders.getClient().getID());
+                            txfClientName.setText(orders.getClient().getName());
+                            txfClientSurname.setText(orders.getClient().getSurname());
+                            txfClientAddress.setText(orders.getClient().getAddress());
+                            txfAddInfo.setText(orders.getClient().getAdditionalInfo());
+                            txfClientContactNo.setText(orders.getClient().getContactNumber());
+                            txfAltNum.setText(orders.getClient().getAlternativeNumber());
+                            txfClientEmail.setText(orders.getClient().getEmail());
+                            cmbSuburbs.setSelectedItem(orders.getClient().getSuburb());
+                            txfOrderID.setText(orders.getID());
+                            txfOrderDuration.setText(orders.getDuration());
+                            //spnOrderFamilySize.setValue(Integer.parseInt(orders.getFamilySize()));
+                            //spnOrderStartingDate.setValue(orders.getStartingDate());
+                            txfOrderRouteID.setText(orders.getRoute());
                         }
                     }
                     break;
                 case "Suburb":
-                    for (Client client : allclients) {
-                        if (searchFor.equalsIgnoreCase(client.getSuburb())) {
-                            txfClientID.setText(client.getID());
-                            txfClientName.setText(client.getName());
-                            txfClientSurname.setText(client.getSurname());
-                            txfClientAddress.setText(client.getAddress());
-                            txfAddInfo.setText(client.getAdditionalInfo());
-                            txfClientContactNo.setText(client.getContactNumber());
-                            txfAltNum.setText(client.getAlternativeNumber());
-                            txfClientEmail.setText(client.getEmail());
-                            cmbSuburbs.setSelectedItem(client.getSuburb());
-                            String id = client.getID();
-//                            for (Order orders : allorders) {
-//                                if (id.equalsIgnoreCase(orders.getOrderClientid())) {
-//                                    txfOrderID.setText(orders.getID());
-//                                    txfOrderDuration.setText(orders.getDuration());
-//                                    spnOrderFamilySize.setValue(orders.getFamilySize());
-//                                    spnOrderStartingDate.setValue(orders.getStartingDate());
-//                                    txfOrderRouteID.setText(orders.getRouteId());
-//                                }
-//                            }
+                    for (Order orders : allorders) {
+                        if (searchFor.equalsIgnoreCase(orders.getClient().getSuburb())) {
+                            txfClientID.setText(orders.getClient().getID());
+                            txfClientName.setText(orders.getClient().getName());
+                            txfClientSurname.setText(orders.getClient().getSurname());
+                            txfClientAddress.setText(orders.getClient().getAddress());
+                            txfAddInfo.setText(orders.getClient().getAdditionalInfo());
+                            txfClientContactNo.setText(orders.getClient().getContactNumber());
+                            txfAltNum.setText(orders.getClient().getAlternativeNumber());
+                            txfClientEmail.setText(orders.getClient().getEmail());
+                            cmbSuburbs.setSelectedItem(orders.getClient().getSuburb());
+                            txfOrderID.setText(orders.getID());
+                            txfOrderDuration.setText(orders.getDuration());
+                            //spnOrderFamilySize.setValue(Integer.parseInt(orders.getFamilySize()));
+                            //spnOrderStartingDate.setValue(orders.getStartingDate());
+                            txfOrderRouteID.setText(orders.getRoute());
                         }
                     }
                     break;
-//                case "Duration":
-//                    for (Order orders : allorders) {
-//                        if (searchFor.equalsIgnoreCase((orders.getDuration()))) {
-//                            txfOrderID.setText(orders.getID());
-//                            txfOrderDuration.setText(orders.getDuration());
-//                            spnOrderFamilySize.setValue(orders.getFamilySize());
-//                            spnOrderStartingDate.setValue(orders.getStartingDate());
-//                            txfOrderRouteID.setText(orders.getRouteId());
-//                            String id = orders.getOrderClientid();
-//                            for (Client client :allclients) {
-//                                if (client.getID().equalsIgnoreCase(id)) {
-//                                    txfClientID.setText(client.getID());
-//                                    txfClientName.setText(client.getName());
-//                                    txfClientSurname.setText(client.getSurname());
-//                                    txfClientAddress.setText(client.getAddress());
-//                                    txfAddInfo.setText(client.getAdditionalInfo());
-//                                    txfClientContactNo.setText(client.getContactNumber());
-//                                    txfAltNum.setText(client.getAlternativeNumber());
-//                                    txfClientEmail.setText(client.getEmail());
-//                                    cmbSuburbs.setSelectedItem(client.getSuburb());
-//                                }
-//                            }
-//                        }
-//                    }
- //                   break;
-//                case "Family Size":
-//                    for (Order orders : allorders) {
-//                        if (searchFor.equalsIgnoreCase((orders.getFamilySize()))) {
-//                            txfOrderID.setText(orders.getOrderid());
-//                            txfOrderDuration.setText(orders.getDuration());
-//                            spnOrderFamilySize.setValue(orders.getFamilySize());
-//                            spnOrderStartingDate.setValue(orders.getStartingDate());
-//                            txfOrderRouteID.setText(orders.getRouteId());
-//                            String id = orders.getOrderClientid();
-//                            for (Client client : allclients) {
-//                               if (client.getID().equalsIgnoreCase(id)) {
-//                                    txfClientID.setText(client.getID());
-//                                    txfClientName.setText(client.getName());
-//                                    txfClientSurname.setText(client.getSurname());
-//                                    txfClientAddress.setText(client.getAddress());
-//                                    txfAddInfo.setText(client.getAdditionalInfo());
-//                                    txfClientContactNo.setText(client.getContactNumber());
-//                                    txfAltNum.setText(client.getAlternativeNumber());
-//                                    txfClientEmail.setText(client.getEmail());
-//                                    cmbSuburbs.setSelectedItem(client.getSuburb());
-//                                }
-//                            } 
-//                        }
-//                    }
-//                    break;
+                case "Duration":
+                    for (Order orders : allorders) {
+                        if (searchFor.equalsIgnoreCase((orders.getDuration()))) {
+                            txfClientID.setText(orders.getClient().getID());
+                            txfClientName.setText(orders.getClient().getName());
+                            txfClientSurname.setText(orders.getClient().getSurname());
+                            txfClientAddress.setText(orders.getClient().getAddress());
+                            txfAddInfo.setText(orders.getClient().getAdditionalInfo());
+                            txfClientContactNo.setText(orders.getClient().getContactNumber());
+                            txfAltNum.setText(orders.getClient().getAlternativeNumber());
+                            txfClientEmail.setText(orders.getClient().getEmail());
+                            cmbSuburbs.setSelectedItem(orders.getClient().getSuburb());
+                            txfOrderID.setText(orders.getID());
+                            txfOrderDuration.setText(orders.getDuration());
+                            //spnOrderFamilySize.setValue(Integer.parseInt(orders.getFamilySize()));
+                            //spnOrderStartingDate.setValue(orders.getStartingDate());
+                            txfOrderRouteID.setText(orders.getRoute());
+                           
+                        }
+                    }
+                    break;
+                case "Family Size":
+                    for (Order orders : allorders) {
+                        if (searchFor.equalsIgnoreCase((orders.getFamilySize()))) {
+                           txfClientID.setText(orders.getClient().getID());
+                            txfClientName.setText(orders.getClient().getName());
+                            txfClientSurname.setText(orders.getClient().getSurname());
+                            txfClientAddress.setText(orders.getClient().getAddress());
+                            txfAddInfo.setText(orders.getClient().getAdditionalInfo());
+                            txfClientContactNo.setText(orders.getClient().getContactNumber());
+                            txfAltNum.setText(orders.getClient().getAlternativeNumber());
+                            txfClientEmail.setText(orders.getClient().getEmail());
+                            cmbSuburbs.setSelectedItem(orders.getClient().getSuburb());
+                            txfOrderID.setText(orders.getID());
+                            txfOrderDuration.setText(orders.getDuration());
+                            //spnOrderFamilySize.setValue(Integer.parseInt(orders.getFamilySize()));
+                            //spnOrderStartingDate.setValue(orders.getStartingDate());
+                            txfOrderRouteID.setText(orders.getRoute());
+                        }
+                    }
+                    break;
             }
         }
     }//GEN-LAST:event_btnSearchActionPerformed

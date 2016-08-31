@@ -797,7 +797,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         Client client = new Client(null, clientname, clientSurname, clientContactNumber,
                 clientAlternativeNumber, clientEmail, clientSuburb, clientAddress, clientAdditionalInfo);
 
-        Order order = new Order(null, true, client, timeSlot, orderDate, null, routeID, orderMeals);
+        Order order = new Order(null, true, client, timeSlot, orderDate, null, routeID, orderMeals,null);
 
         if (allGood) {
             String clientID = "";

@@ -20,10 +20,11 @@ public class Order {
     private Calendar startingDate;
     private Calendar endDate;
     private String route;
+    private String familySize;
     private ArrayList<Meal> meals;
     private String clientID;
 
-    public Order(String orderID, boolean active, Client client, String duration, Calendar startingDate, Calendar endDate, String route, ArrayList<Meal> meals) {
+    public Order(String orderID, boolean active, Client client, String duration, Calendar startingDate, Calendar endDate, String route, ArrayList<Meal> meals, String familySize) {
         this.orderID = orderID;
         this.active = active;
         this.client = client;
@@ -106,6 +107,14 @@ public class Order {
 
     public void setClientID(String clientID) {
         this.clientID = clientID;
+    }
+
+    public String getFamilySize() {
+        return familySize;
+    }
+
+    public void setFamilySize(String familySize) {
+        this.familySize = familySize;
     }
     
     
