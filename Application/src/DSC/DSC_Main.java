@@ -329,12 +329,12 @@ public class DSC_Main extends javax.swing.JFrame {
             .addGap(0, 492, Short.MAX_VALUE)
         );
 
-        pnlTextStats.setBackground(new java.awt.Color(0, 0, 0));
+        pnlTextStats.setBackground(new java.awt.Color(102, 102, 102));
         pnlTextStats.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         pnlTextStats.setForeground(new java.awt.Color(255, 255, 255));
         pnlTextStats.setMinimumSize(new java.awt.Dimension(30, 30));
 
-        pnlMealTypeStats.setBackground(new java.awt.Color(0, 0, 0));
+        pnlMealTypeStats.setBackground(new java.awt.Color(102, 102, 102));
         pnlMealTypeStats.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Meal Type Stats", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(255, 255, 255))); // NOI18N
         pnlMealTypeStats.setForeground(new java.awt.Color(255, 255, 255));
 
@@ -354,6 +354,7 @@ public class DSC_Main extends javax.swing.JFrame {
         jLabel28.setForeground(new java.awt.Color(255, 255, 255));
         jLabel28.setText("Meal Type");
 
+        jLabel29.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(255, 255, 255));
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel29.setText("Total");
@@ -484,15 +485,16 @@ public class DSC_Main extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        pnlFamilySizeStats.setBackground(new java.awt.Color(0, 0, 0));
+        pnlFamilySizeStats.setBackground(new java.awt.Color(102, 102, 102));
         pnlFamilySizeStats.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Family Size Stats", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(255, 255, 255))); // NOI18N
 
+        jLabel25.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         jLabel25.setForeground(new java.awt.Color(255, 255, 255));
         jLabel25.setText("Family size");
 
         lblSingleFamilySize.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         lblSingleFamilySize.setForeground(new java.awt.Color(255, 255, 255));
-        lblSingleFamilySize.setText("Single  (1)");
+        lblSingleFamilySize.setText("Single   (1)");
 
         lblCoupleFamilySize.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         lblCoupleFamilySize.setForeground(new java.awt.Color(255, 255, 255));
@@ -544,6 +546,7 @@ public class DSC_Main extends javax.swing.JFrame {
         lblSixFamilySizeTotal.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lblSixFamilySizeTotal.setText("0");
 
+        jLabel40.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         jLabel40.setForeground(new java.awt.Color(255, 255, 255));
         jLabel40.setText("Orders Of Family Size");
 
