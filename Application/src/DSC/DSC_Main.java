@@ -764,10 +764,10 @@ public class DSC_Main extends javax.swing.JFrame {
          */
         try {
 
-            MainScreen_Charts.createBarGraph_ActiveAndInActiveMeals(pnlBarChartActive, pnlBarChartInActive, pnlPieChart, lblStandardTotal, lblLowCarbTotal, 
-                                                                    lblKiddiesTotal, lblKiddiesTotalinActive, lblStandardTotalInActive, lblLowCarbTotalInActive,lblSingleFamilySizeTotal,
-                                                                    lblCoupleFamilySizeTotal,lblThreeFamilySizeTotal,lblFourFamilySizeTotal,lblFiveFamilySizeTotal,
-                                                                    lblSixFamilySizeTotal,lblMoreThanSixFamilySizeTotal, getData);
+            MainScreen_Charts.createBarGraph_ActiveAndInActiveMeals(pnlBarChartActive, pnlBarChartInActive, pnlPieChart, lblStandardTotal, lblLowCarbTotal,
+                    lblKiddiesTotal, lblKiddiesTotalinActive, lblStandardTotalInActive, lblLowCarbTotalInActive, lblSingleFamilySizeTotal,
+                    lblCoupleFamilySizeTotal, lblThreeFamilySizeTotal, lblFourFamilySizeTotal, lblFiveFamilySizeTotal,
+                    lblSixFamilySizeTotal, lblMoreThanSixFamilySizeTotal, getData);
             getData = false;
             pnlBarChartActive.repaint();
             pnlBarChartInActive.repaint();
@@ -814,6 +814,16 @@ public class DSC_Main extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new DSC_Main().setVisible(true);
+
+                try {
+
+                    Thread.sleep(7000);
+                    
+                } catch (Exception e) {
+
+                }
+                
+
             }
         });
     }
