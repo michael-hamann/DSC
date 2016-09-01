@@ -24,7 +24,7 @@ public class DSC_PlaceOrder_Mealpane extends javax.swing.JFrame {
         spnQuantity.setValue(meal.getQuantity());
         cmbMealType.setSelectedItem(meal.getMealType());
         txfAllergy.setText(meal.getAllergies());
-        txfExceptions.setText(meal.getExclutions());
+        txfExclusions.setText(meal.getExclusions());
 
         this.index = index;
     }
@@ -49,9 +49,9 @@ public class DSC_PlaceOrder_Mealpane extends javax.swing.JFrame {
         lblQuantity = new javax.swing.JLabel();
         lblMealType = new javax.swing.JLabel();
         lblAllergy = new javax.swing.JLabel();
-        lblException = new javax.swing.JLabel();
+        lblExclusions = new javax.swing.JLabel();
         txfAllergy = new javax.swing.JTextField();
-        txfExceptions = new javax.swing.JTextField();
+        txfExclusions = new javax.swing.JTextField();
         cmbMealType = new javax.swing.JComboBox<>();
         spnQuantity = new javax.swing.JSpinner();
         btnCancel = new javax.swing.JButton();
@@ -77,7 +77,7 @@ public class DSC_PlaceOrder_Mealpane extends javax.swing.JFrame {
 
         lblAllergy.setText("Allergy: ");
 
-        lblException.setText("Exceptions: ");
+        lblExclusions.setText("Exclusions:");
 
         cmbMealType.setMaximumRowCount(3);
         cmbMealType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Standard", "Low Carb", "Kiddies" }));
@@ -113,11 +113,11 @@ public class DSC_PlaceOrder_Mealpane extends javax.swing.JFrame {
                                     .addComponent(lblMealType)
                                     .addComponent(lblQuantity)
                                     .addComponent(lblAllergy)
-                                    .addComponent(lblException))
+                                    .addComponent(lblExclusions))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txfAllergy, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txfExceptions, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txfExclusions, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                         .addComponent(spnQuantity, javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(cmbMealType, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -151,8 +151,8 @@ public class DSC_PlaceOrder_Mealpane extends javax.swing.JFrame {
                     .addComponent(txfAllergy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(44, 44, 44)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblException)
-                    .addComponent(txfExceptions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblExclusions)
+                    .addComponent(txfExclusions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancel)
@@ -201,12 +201,12 @@ public class DSC_PlaceOrder_Mealpane extends javax.swing.JFrame {
             allergy = "-";
         }
 
-        String exception = txfExceptions.getText();
-        if (exception.equals("")) {
-            exception = "-";
+        String exclusions = txfExclusions.getText();
+        if (exclusions.equals("")) {
+            exclusions = "-";
         }
 
-        Meal meal = new Meal(quantity, mealtype, allergy, exception);
+        Meal meal = new Meal(quantity, mealtype, allergy, exclusions);
 
         if (index == -1) {
             pane.addMealToList(meal);
@@ -269,12 +269,12 @@ public class DSC_PlaceOrder_Mealpane extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblAllergy;
-    private javax.swing.JLabel lblException;
+    private javax.swing.JLabel lblExclusions;
     private javax.swing.JLabel lblMealType;
     private javax.swing.JLabel lblQuantity;
     private javax.swing.JSpinner spnQuantity;
     private javax.swing.JTextField txfAllergy;
-    private javax.swing.JTextField txfExceptions;
+    private javax.swing.JTextField txfExclusions;
     // End of variables declaration//GEN-END:variables
 
     public void setBack(DSC_Place_Order pane) {

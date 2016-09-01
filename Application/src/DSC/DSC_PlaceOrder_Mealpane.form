@@ -90,12 +90,12 @@
                                           <Component id="lblMealType" min="-2" max="-2" attributes="0"/>
                                           <Component id="lblQuantity" min="-2" max="-2" attributes="0"/>
                                           <Component id="lblAllergy" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lblException" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblExclusions" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="txfAllergy" min="-2" pref="300" max="-2" attributes="0"/>
-                                          <Component id="txfExceptions" min="-2" pref="300" max="-2" attributes="0"/>
+                                          <Component id="txfExclusions" min="-2" pref="300" max="-2" attributes="0"/>
                                           <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                                               <Component id="spnQuantity" alignment="0" max="32767" attributes="0"/>
                                               <Component id="cmbMealType" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
@@ -142,8 +142,8 @@
                       </Group>
                       <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblException" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txfExceptions" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblExclusions" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txfExclusions" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -179,14 +179,14 @@
                 <Property name="text" type="java.lang.String" value="Allergy: "/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblException">
+            <Component class="javax.swing.JLabel" name="lblExclusions">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Exceptions: "/>
+                <Property name="text" type="java.lang.String" value="Exclusions:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txfAllergy">
             </Component>
-            <Component class="javax.swing.JTextField" name="txfExceptions">
+            <Component class="javax.swing.JTextField" name="txfExclusions">
             </Component>
             <Component class="javax.swing.JComboBox" name="cmbMealType">
               <Properties>

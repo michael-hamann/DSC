@@ -519,7 +519,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Quantity", "MealType", "Allergy", "Exception"
+                "Quantity", "MealType", "Allergy", "Exclusions"
             }
         ));
         tblOrderMeals.setColumnSelectionAllowed(true);
@@ -991,7 +991,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
 
         tblOrderMeals.setModel(new DefaultTableModel(
                 mealsArr,
-                new String[]{"Quantity", "MealType", "Allergy", "Exclutions"}
+                new String[]{"Quantity", "MealType", "Allergy", "Exclusions"}
         ));
     }
 
@@ -1162,7 +1162,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         for (int i = 0; i < order.getMeals().size(); i++) {
             meals[i] = new MealContainer(
                     order.getMeals().get(i).getAllergies(),
-                    order.getMeals().get(i).getExclutions(),
+                    order.getMeals().get(i).getExclusions(),
                     order.getMeals().get(i).getMealType(),
                     order.getMeals().get(i).getQuantity()
             );

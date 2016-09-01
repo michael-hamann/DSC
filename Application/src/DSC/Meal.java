@@ -13,13 +13,13 @@ public class Meal {
     private int quantity;
     private String mealType;
     private String allergies;
-    private String Exclutions;
+    private String Exclusions;
 
     public Meal(int quantity, String mealType, String allergies, String Exclutions) {
         this.quantity = quantity;
         this.mealType = mealType;
         this.allergies = allergies;
-        this.Exclutions = Exclutions;
+        this.Exclusions = Exclusions;
     }
 
     public int getQuantity() {
@@ -46,16 +46,16 @@ public class Meal {
         this.allergies = allergies;
     }
 
-    public String getExclutions() {
-        return Exclutions;
+    public String getExclusions() {
+        return Exclusions;
     }
 
     public void setExclutions(String Exclutions) {
-        this.Exclutions = Exclutions;
+        this.Exclusions = Exclusions;
     }
     
     public Object[] returnObj(){
-        return new Object[]{getQuantity(),getMealType(),getAllergies(),getExclutions()};
+        return new Object[]{getQuantity(),getMealType(),getAllergies(),getExclusions()};
     }
     
     

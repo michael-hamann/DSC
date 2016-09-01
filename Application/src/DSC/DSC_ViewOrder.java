@@ -1058,7 +1058,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             //spnOrderStartingDate.setValue(orders.getStartingDate());
                             txfOrderRouteID.setText(orders.getRoute());
                             for (Meal meals : orders.getMeals()) {
-                                Object[] row = {meals.getMealType(), meals.getQuantity(),meals.getAllergies(), meals.getExclutions()};
+                                Object[] row = {meals.getMealType(), meals.getQuantity(),meals.getAllergies(), meals.getExclusions()};
                                 mealmodel.addRow(row);
                                
                             }

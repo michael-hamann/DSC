@@ -887,7 +887,7 @@
                             <Column editable="true" title="Quantity" type="java.lang.Object"/>
                             <Column editable="true" title="MealType" type="java.lang.Object"/>
                             <Column editable="true" title="Allergy" type="java.lang.Object"/>
-                            <Column editable="true" title="Exception" type="java.lang.Object"/>
+                            <Column editable="true" title="Exclusions" type="java.lang.Object"/>
                           </Table>
                         </Property>
                         <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
