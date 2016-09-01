@@ -5,6 +5,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -22,6 +23,9 @@ import org.jfree.data.general.DefaultPieDataset;
  */
 public class MainScreen_Charts extends JPanel {
 
+    /*
+    *Static counters for Specific Items.
+     */
     private static int countStandardActive = 0;
     private static int countKiddiesActive = 0;
     private static int countLowCarbActive = 0;
@@ -36,8 +40,16 @@ public class MainScreen_Charts extends JPanel {
     private static int countFamilySize_4 = 0;
     private static int countFamilySize_5 = 0;
     private static int countFamilySize_6 = 0;
+    private static int countFamilySizeMoreThanSix = 0;
+    static final String STANDARD = "Standard";
+    static final String LOW_CARB = "Low Carb";
+    static final String KIDDIES = "Kiddies";
 
-    public static void createBarGraph_ActiveAndInActiveMeals(JPanel pnlBarChartActive, JPanel pnlBarChartInActive, JPanel pnlPieChart,JLabel lblStandardTotal,JLabel lblLowCarbTotal,JLabel lblKiddiesTotal,JLabel lblKiddiesTotalInActive,JLabel lblStandardTotalInActive,JLabel lblLowCarbTotalInActive, boolean getData) {
+    public static void createBarGraph_ActiveAndInActiveMeals(JPanel pnlBarChartActive, 
+            JPanel pnlBarChartInActive, JPanel pnlPieChart, JLabel lblStandardTotal, JLabel lblLowCarbTotal, JLabel lblKiddiesTotal, 
+            JLabel lblKiddiesTotalInActive, JLabel lblStandardTotalInActive, 
+            JLabel lblLowCarbTotalInActive,JLabel lblSingleFamilySizeTotal,JLabel lblCoupleFamilySizeTotal,JLabel lblThreeFamilySizeTotal,JLabel lblFourFamilySizeTotal,JLabel lblFiveFamilySizeTotal,
+            JLabel lblSixFamilySizeTotal,JLabel lblMoreThanSixFamilySizeTotal, boolean getData) {
 
         Firebase tableRef = DBClass.getInstance().child("Orders");// Go to specific Table
 
@@ -49,14 +61,11 @@ public class MainScreen_Charts extends JPanel {
 
                         boolean activeCheck = (boolean) Data.child("Active").getValue();
                         long familySizeCheck;
-                        final String STANDARD = "Standard";
-                        final String LOW_CARB = "Low Carb";
-                        final String KIDDIES = "Kiddies";
 
                         for (DataSnapshot Data2 : Data.getChildren()) {
 
-                            familySizeCheck = (long) Data.child("FamilySize").getValue();
-                            
+                            familySizeCheck = (long) Data.child("FamilySize").getValue();// gets family size from database
+
                             if (familySizeCheck == 1) {
                                 countFamilySize_1++;
                             }
@@ -74,6 +83,9 @@ public class MainScreen_Charts extends JPanel {
                             }
                             if (familySizeCheck == 6) {
                                 countFamilySize_6++;
+                            }
+                            if (familySizeCheck >6) {
+                                countFamilySizeMoreThanSix++;
                             }
 
                             for (DataSnapshot Data3 : Data2.getChildren()) {
@@ -103,6 +115,12 @@ public class MainScreen_Charts extends JPanel {
 
                     }
                 }
+
+                /*
+                *Creates BarGraph For all Active Meals.
+                 */
+                
+                
                 DefaultCategoryDataset dataset_Chart1 = new DefaultCategoryDataset();
                 dataset_Chart1.addValue(countLowCarbActive, "", "Low Carb ( " + countLowCarbActive + " )");
                 dataset_Chart1.addValue(countStandardActive, "", "Standard ( " + countStandardActive + " )");
@@ -117,11 +135,15 @@ public class MainScreen_Charts extends JPanel {
                         false, true, false);
 
                 ChartPanel chartPanel_1 = new ChartPanel(barChart);
+                chartPanel_1.setBackground(Color.DARK_GRAY);
                 chartPanel_1.setBounds(0, 0, pnlBarChartActive.getWidth(), pnlBarChartActive.getHeight());
                 pnlBarChartActive.add(chartPanel_1, BorderLayout.CENTER);
                 chartPanel_1.setSize(new Dimension(pnlBarChartActive.getWidth(), pnlBarChartActive.getHeight()));
                 chartPanel_1.repaint();
 
+                /*
+                *Creates BarGraph For all In-Active Meals.
+                 */
                 DefaultCategoryDataset dataset_Chart2 = new DefaultCategoryDataset();
                 dataset_Chart2.addValue(countLowCarbInActive, "", "Low Carb( " + countLowCarbInActive + " )");
                 dataset_Chart2.addValue(countStandardInActive, "", "Standard( " + countStandardInActive + " )");
@@ -136,11 +158,15 @@ public class MainScreen_Charts extends JPanel {
                         false, true, false);
 
                 ChartPanel chartPanelCompare = new ChartPanel(barChart_2);
+                chartPanelCompare.setBackground(Color.DARK_GRAY);
                 chartPanelCompare.setBounds(0, 0, pnlBarChartInActive.getWidth(), pnlBarChartInActive.getHeight());
                 pnlBarChartInActive.add(chartPanelCompare, BorderLayout.CENTER);
                 chartPanelCompare.setSize(new Dimension(pnlBarChartInActive.getWidth(), pnlBarChartInActive.getHeight()));
                 chartPanelCompare.repaint();
 
+                /*
+                *Creates PieChart For Family Size chosen per Order.
+                 */
                 DefaultPieDataset datasetPieChart = new DefaultPieDataset();
                 datasetPieChart.setValue("FamilySize_1", countFamilySize_1);
                 datasetPieChart.setValue("FamilySize_2", countFamilySize_2);
@@ -152,19 +178,35 @@ public class MainScreen_Charts extends JPanel {
                 JFreeChart pieChart = ChartFactory.createPieChart("PieChart", datasetPieChart, true, false, false);
 
                 ChartPanel chartPanel_FamilySize = new ChartPanel(pieChart);
+                chartPanel_FamilySize.setBackground(Color.DARK_GRAY);
                 chartPanel_FamilySize.setBounds(0, 0, pnlPieChart.getWidth(), pnlPieChart.getHeight());
                 pnlPieChart.add(chartPanel_FamilySize, BorderLayout.CENTER);
                 chartPanel_FamilySize.setSize(new Dimension(pnlPieChart.getWidth(), pnlPieChart.getHeight()));
                 chartPanel_FamilySize.repaint();
-                
-                lblStandardTotal.setText(countStandardActive+"");
-                lblLowCarbTotal.setText(countLowCarbActive+"");
-                lblKiddiesTotal.setText(countKiddiesActive+"");
-                
-                lblKiddiesTotalInActive.setText(countKiddiesInActive+"");
-                lblStandardTotalInActive.setText(countStandardInActive+"");
-                lblLowCarbTotalInActive.setText(countLowCarbInActive+"");
 
+                /*
+                *Insert values to Text Statistics.
+                 */
+                lblStandardTotal.setText(countStandardActive + "");
+                lblLowCarbTotal.setText(countLowCarbActive + "");
+                lblKiddiesTotal.setText(countKiddiesActive + "");
+
+                lblKiddiesTotalInActive.setText(countKiddiesInActive + "");
+                lblStandardTotalInActive.setText(countStandardInActive + "");
+                lblLowCarbTotalInActive.setText(countLowCarbInActive + "");
+
+                lblSingleFamilySizeTotal.setText(countFamilySize_1+"");
+                lblCoupleFamilySizeTotal.setText(countFamilySize_2+"");
+                lblThreeFamilySizeTotal.setText(countFamilySize_3+"");
+                lblFourFamilySizeTotal.setText(countFamilySize_4+"");
+                lblFiveFamilySizeTotal.setText(countFamilySize_5+"");
+                lblSixFamilySizeTotal.setText(countFamilySize_6+"");
+                lblMoreThanSixFamilySizeTotal.setText(countFamilySizeMoreThanSix+"");
+                        
+                pnlBarChartActive.setBackground(Color.DARK_GRAY);
+                pnlBarChartInActive.setBackground(Color.DARK_GRAY);
+                pnlPieChart.setBackground(Color.DARK_GRAY);
+                
             }
 
             @Override
@@ -174,7 +216,5 @@ public class MainScreen_Charts extends JPanel {
         });
 
     }
-    
-    
-    
+
 }
