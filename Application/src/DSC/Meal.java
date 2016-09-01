@@ -15,7 +15,7 @@ public class Meal {
     private String allergies;
     private String Exclusions;
 
-    public Meal(int quantity, String mealType, String allergies, String Exclutions) {
+    public Meal(int quantity, String mealType, String allergies, String Exclusions) {
         this.quantity = quantity;
         this.mealType = mealType;
         this.allergies = allergies;
