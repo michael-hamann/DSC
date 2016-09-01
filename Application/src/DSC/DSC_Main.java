@@ -134,6 +134,7 @@ public class DSC_Main extends javax.swing.JFrame {
         lblView.setText("View");
 
         btnRouteView.setText("Route View");
+        btnRouteView.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnRouteView.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRouteViewActionPerformed(evt);
@@ -141,6 +142,7 @@ public class DSC_Main extends javax.swing.JFrame {
         });
 
         btnViewOrders.setText("View Orders");
+        btnViewOrders.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnViewOrders.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnViewOrdersActionPerformed(evt);
@@ -148,6 +150,7 @@ public class DSC_Main extends javax.swing.JFrame {
         });
 
         btnChangeChart.setText("Change Chart");
+        btnChangeChart.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnChangeChart.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnChangeChartActionPerformed(evt);
@@ -162,6 +165,7 @@ public class DSC_Main extends javax.swing.JFrame {
         });
 
         btnPlaceOrder.setText("Place Order");
+        btnPlaceOrder.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnPlaceOrder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPlaceOrderActionPerformed(evt);
@@ -325,7 +329,7 @@ public class DSC_Main extends javax.swing.JFrame {
         pnlTextStats.setForeground(new java.awt.Color(255, 255, 255));
 
         pnlMealTypeStats.setBackground(new java.awt.Color(0, 0, 0));
-        pnlMealTypeStats.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Meal Type Stats", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(255, 255, 255))); // NOI18N
+        pnlMealTypeStats.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Meal Type Stats", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
         pnlMealTypeStats.setForeground(new java.awt.Color(255, 255, 255));
 
         lblStandardMeal.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
@@ -475,7 +479,7 @@ public class DSC_Main extends javax.swing.JFrame {
         );
 
         pnlFamilySizeStats.setBackground(new java.awt.Color(0, 0, 0));
-        pnlFamilySizeStats.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Family Size Stats", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(255, 255, 255))); // NOI18N
+        pnlFamilySizeStats.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Family Size Stats", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
 
         jLabel25.setForeground(new java.awt.Color(255, 255, 255));
         jLabel25.setText("Family size");
