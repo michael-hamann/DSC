@@ -822,6 +822,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             });
         } else {
             JOptionPane.showMessageDialog(null, "Please fill in the following fields: " + invalid, "Warning", JOptionPane.WARNING_MESSAGE);
+            btnSave.setEnabled(true);
         }
 
 
