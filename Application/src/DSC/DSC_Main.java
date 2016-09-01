@@ -1,6 +1,7 @@
 package DSC;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -825,11 +826,25 @@ public class DSC_Main extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DSC_Main().setVisible(true);
-
+                DSC_Main main = new DSC_Main();
+                DBClass.getInstance();
                 try {
-
-                    Thread.sleep(7000);
+                    for (int i = 0; i < 10; i++) {
+                        if (!DBClass.connected) {
+                            Thread.sleep(500);
+                        }else{
+                            break;
+                        }
+                    }
+                    if (!DBClass.connected) {
+                        JOptionPane.showMessageDialog(null, "Could Not Connect To Database.\nYou will only be able to add orders.\nThey will be added to the database as soon as a connection can be made.", "Database Connection", JOptionPane.ERROR_MESSAGE);
+                        System.err.println("Could Not Connect To Database.");
+                        System.out.println(DBClass.connected);
+                        System.exit(1);
+                    }else{
+                        main.setVisible(true);
+                        main.toFront();
+                    }
                     
                 } catch (Exception e) {
 
