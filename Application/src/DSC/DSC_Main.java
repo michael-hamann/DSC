@@ -112,11 +112,11 @@ public class DSC_Main extends javax.swing.JFrame {
         pnlHeadingLayout.setHorizontalGroup(
             pnlHeadingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlHeadingLayout.createSequentialGroup()
-                .addContainerGap(384, Short.MAX_VALUE)
+                .addContainerGap(386, Short.MAX_VALUE)
                 .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(385, Short.MAX_VALUE))
+                .addContainerGap(387, Short.MAX_VALUE))
         );
         pnlHeadingLayout.setVerticalGroup(
             pnlHeadingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -332,6 +332,7 @@ public class DSC_Main extends javax.swing.JFrame {
         pnlTextStats.setBackground(new java.awt.Color(0, 0, 0));
         pnlTextStats.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         pnlTextStats.setForeground(new java.awt.Color(255, 255, 255));
+        pnlTextStats.setMinimumSize(new java.awt.Dimension(30, 30));
 
         pnlMealTypeStats.setBackground(new java.awt.Color(0, 0, 0));
         pnlMealTypeStats.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Meal Type Stats", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(255, 255, 255))); // NOI18N
@@ -781,6 +782,9 @@ public class DSC_Main extends javax.swing.JFrame {
             pnlBarChartActive.repaint();
             pnlBarChartInActive.repaint();
             pnlPieChart.repaint();
+            pnlMealTypeStats.repaint();
+            pnlFamilySizeStats.repaint();
+            pnlTextStats.repaint();
 
         } catch (Exception e) {
 
@@ -832,7 +836,7 @@ public class DSC_Main extends javax.swing.JFrame {
                     for (int i = 0; i < 10; i++) {
                         if (!DBClass.connected) {
                             Thread.sleep(500);
-                        }else{
+                        } else {
                             break;
                         }
                     }
@@ -841,15 +845,14 @@ public class DSC_Main extends javax.swing.JFrame {
                         System.err.println("Could Not Connect To Database.");
                         System.out.println(DBClass.connected);
                         System.exit(1);
-                    }else{
+                    } else {
                         main.setVisible(true);
                         main.toFront();
                     }
-                    
+
                 } catch (Exception e) {
 
                 }
-                
 
             }
         });
