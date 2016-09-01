@@ -50,7 +50,7 @@ public class Meal {
         return Exclusions;
     }
 
-    public void setExclutions(String Exclutions) {
+    public void setExclutions(String Exclusions) {
         this.Exclusions = Exclusions;
     }
     
