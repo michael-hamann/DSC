@@ -222,6 +222,50 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         }
     }
 
+    public void setTextFields(String col, String find, Order order, DefaultTableModel d) {
+
+        DefaultTableModel mealmodel = (DefaultTableModel) tblMeals.getModel();
+        mealmodel.setRowCount(0);
+
+        txfClientID.setText(order.getClient().getID());
+        txfClientName.setText(order.getClient().getName());
+        txfClientSurname.setText(order.getClient().getSurname());
+        txfClientAddress.setText(order.getClient().getAddress());
+        txfAddInfo.setText(order.getClient().getAdditionalInfo());
+        txfClientContactNo.setText(order.getClient().getContactNumber());
+        txfAltNum.setText(order.getClient().getAlternativeNumber());
+        txfClientEmail.setText(order.getClient().getEmail());
+        cmbSuburbs.setSelectedItem(order.getClient().getSuburb());
+        txfOrderID.setText(order.getID());
+        txfOrderDuration.setText(order.getDuration());
+        //spnOrderFamilySize.setValue(orders.getFamilySize());
+        //spnOrderStartingDate.setValue(orders.getStartingDate());
+        txfOrderRouteID.setText(order.getRoute());
+
+        for (Meal meals : order.getMeals()) {
+            mealmodel.addRow(meals.returnObj());
+        }
+        mealmodel.fireTableDataChanged();
+        activate(order.isActive());
+        
+//        tblOrderTable.addMouseListener(new java.awt.event.MouseAdapter() {
+//        @Override
+//         public void mouseClicked(java.awt.event.MouseEvent evt) {
+//                int row = tblOrderTable.rowAtPoint(evt.getPoint());
+//                int col = tblOrderTable.columnAtPoint(evt.getPoint());
+//                if (row >= 0 && col >= 0) {
+//           
+//                }
+//    }
+//});
+
+        Object[] row = {order.getClient().getName(), order.getClient().getSurname(), order.getClient().getContactNumber(),
+            order.getClient().getEmail(), order.getClient().getSuburb(), order.isActive(), order.getDuration(), order.getFamilySize()};
+        d.addRow(row);
+        d.fireTableDataChanged();
+
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -853,6 +897,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEditClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditClientActionPerformed
+        btnDelete.setEnabled(false);
         btnSave.setEnabled(true);
         enableFieldsClient();
         btnEditClient.setEnabled(false);
@@ -987,6 +1032,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             btnEditClient.setEnabled(true);
             editClicked = false;
         }
+        btnDelete.setEnabled(true);
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
@@ -994,8 +1040,11 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             int ans = JOptionPane.showConfirmDialog(this, "Do you wish to discard unsaved changes?");
             switch (ans) {
                 case JOptionPane.YES_OPTION:
-                    this.dispose();
-                    new DSC_Main().setVisible(true);
+                    disableFieldsClient();
+                    disableFieldsOrder();
+                    btnEditClient.setEnabled(true);
+                    btnEditOrder.setEnabled(true);
+                    btnDelete.setEnabled(true);
                     break;
                 case JOptionPane.NO_OPTION:
                     btnSave.setEnabled(true);
@@ -1015,172 +1064,55 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         String searchFor = txfSearch.getText();
         String veiw = (String) cmbVeiw.getSelectedItem();
 
-        DefaultTableModel mealmodel = (DefaultTableModel) tblMeals.getModel();
-        mealmodel.setRowCount(0);
-        
-        DefaultTableModel model = (DefaultTableModel)tblOrderTable.getModel();
+        DefaultTableModel model = (DefaultTableModel) tblOrderTable.getModel();
         model.setRowCount(0);
-
         if (txfSearch.getText().equals("")) {
             JOptionPane.showMessageDialog(rootPane, "Please enter search value!");
 
         } else {
             switch (veiw) {
                 case "All":
+                    model.setRowCount(0);
                     switch (column) {
                         case "Name":
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getName())) {
-                                    txfClientID.setText(orders.getClient().getID());
-                                    txfClientName.setText(orders.getClient().getName());
-                                    txfClientSurname.setText(orders.getClient().getSurname());
-                                    txfClientAddress.setText(orders.getClient().getAddress());
-                                    txfAddInfo.setText(orders.getClient().getAdditionalInfo());
-                                    txfClientContactNo.setText(orders.getClient().getContactNumber());
-                                    txfAltNum.setText(orders.getClient().getAlternativeNumber());
-                                    txfClientEmail.setText(orders.getClient().getEmail());
-                                    cmbSuburbs.setSelectedItem(orders.getClient().getSuburb());
-                                    txfOrderID.setText(orders.getID());
-                                    txfOrderDuration.setText(orders.getDuration());
-                                    //spnOrderFamilySize.setValue(orders.getFamilySize());
-                                    //spnOrderStartingDate.setValue(orders.getStartingDate());
-                                    txfOrderRouteID.setText(orders.getRoute());
-                                    for (Meal meals : orders.getMeals()) {
-                                        mealmodel.addRow(meals.returnObj());
-                                    }
-                                    mealmodel.fireTableDataChanged();
-                                    activate(orders.isActive());
-//                                    Object[] row = {orders.getClient().getName(), orders.getClient().getSurname(), orders.getClient().getContactNumber(),
-//                                    orders.getClient().getEmail(), orders.getClient().getSuburb(), orders.isActive(), orders.getDuration(), orders.getFamilySize()};
-//                                    model.addRow(row);
-//                                    model.fireTableDataChanged();
-                    
-                
+                                    setTextFields(column, searchFor, orders, model);
                                 }
                             }
                             break;
                         case "Surname":
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getSurname())) {
-                                    txfClientID.setText(orders.getClient().getID());
-                                    txfClientName.setText(orders.getClient().getName());
-                                    txfClientSurname.setText(orders.getClient().getSurname());
-                                    txfClientAddress.setText(orders.getClient().getAddress());
-                                    txfAddInfo.setText(orders.getClient().getAdditionalInfo());
-                                    txfClientContactNo.setText(orders.getClient().getContactNumber());
-                                    txfAltNum.setText(orders.getClient().getAlternativeNumber());
-                                    txfClientEmail.setText(orders.getClient().getEmail());
-                                    cmbSuburbs.setSelectedItem(orders.getClient().getSuburb());
-                                    txfOrderID.setText(orders.getID());
-                                    txfOrderDuration.setText(orders.getDuration());
-                                    //spnOrderFamilySize.setValue(Integer.parseInt(orders.getFamilySize()));
-                                    //spnOrderStartingDate.setValue(orders.getStartingDate());
-                                    txfOrderRouteID.setText(orders.getRoute());
-                                    for (Meal meals : orders.getMeals()) {
-                                        mealmodel.addRow(meals.returnObj());
-                                    }
-                                    mealmodel.fireTableDataChanged();
-                                    activate(orders.isActive());
+                                    setTextFields(column, searchFor, orders, model);
                                 }
                             }
                             break;
                         case "Contact Number":
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getContactNumber())) {
-                                    txfClientID.setText(orders.getClient().getID());
-                                    txfClientName.setText(orders.getClient().getName());
-                                    txfClientSurname.setText(orders.getClient().getSurname());
-                                    txfClientAddress.setText(orders.getClient().getAddress());
-                                    txfAddInfo.setText(orders.getClient().getAdditionalInfo());
-                                    txfClientContactNo.setText(orders.getClient().getContactNumber());
-                                    txfAltNum.setText(orders.getClient().getAlternativeNumber());
-                                    txfClientEmail.setText(orders.getClient().getEmail());
-                                    cmbSuburbs.setSelectedItem(orders.getClient().getSuburb());
-                                    txfOrderID.setText(orders.getID());
-                                    txfOrderDuration.setText(orders.getDuration());
-                                    //spnOrderFamilySize.setValue(Integer.parseInt(orders.getFamilySize()));
-                                    //spnOrderStartingDate.setValue(orders.getStartingDate());
-                                    txfOrderRouteID.setText(orders.getRoute());
-                                    for (Meal meals : orders.getMeals()) {
-                                        mealmodel.addRow(meals.returnObj());
-                                    }
-                                    mealmodel.fireTableDataChanged();
-                                    activate(orders.isActive());
+                                    setTextFields(column, searchFor, orders, model);
                                 }
                             }
                             break;
                         case "Email":
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getEmail())) {
-                                    txfClientID.setText(orders.getClient().getID());
-                                    txfClientName.setText(orders.getClient().getName());
-                                    txfClientSurname.setText(orders.getClient().getSurname());
-                                    txfClientAddress.setText(orders.getClient().getAddress());
-                                    txfAddInfo.setText(orders.getClient().getAdditionalInfo());
-                                    txfClientContactNo.setText(orders.getClient().getContactNumber());
-                                    txfAltNum.setText(orders.getClient().getAlternativeNumber());
-                                    txfClientEmail.setText(orders.getClient().getEmail());
-                                    cmbSuburbs.setSelectedItem(orders.getClient().getSuburb());
-                                    txfOrderID.setText(orders.getID());
-                                    txfOrderDuration.setText(orders.getDuration());
-                                    //spnOrderFamilySize.setValue(Integer.parseInt(orders.getFamilySize()));
-                                    //spnOrderStartingDate.setValue(orders.getStartingDate());
-                                    txfOrderRouteID.setText(orders.getRoute());
-                                    for (Meal meals : orders.getMeals()) {
-                                        mealmodel.addRow(meals.returnObj());
-                                    }
-                                    mealmodel.fireTableDataChanged();
-                                    activate(orders.isActive());
+                                    setTextFields(column, searchFor, orders, model);
                                 }
                             }
                             break;
                         case "Suburb":
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getSuburb())) {
-                                    txfClientID.setText(orders.getClient().getID());
-                                    txfClientName.setText(orders.getClient().getName());
-                                    txfClientSurname.setText(orders.getClient().getSurname());
-                                    txfClientAddress.setText(orders.getClient().getAddress());
-                                    txfAddInfo.setText(orders.getClient().getAdditionalInfo());
-                                    txfClientContactNo.setText(orders.getClient().getContactNumber());
-                                    txfAltNum.setText(orders.getClient().getAlternativeNumber());
-                                    txfClientEmail.setText(orders.getClient().getEmail());
-                                    cmbSuburbs.setSelectedItem(orders.getClient().getSuburb());
-                                    txfOrderID.setText(orders.getID());
-                                    txfOrderDuration.setText(orders.getDuration());
-                                    //spnOrderFamilySize.setValue(Integer.parseInt(orders.getFamilySize()));
-                                    //spnOrderStartingDate.setValue(orders.getStartingDate());
-                                    txfOrderRouteID.setText(orders.getRoute());
-                                    for (Meal meals : orders.getMeals()) {
-                                        mealmodel.addRow(meals.returnObj());
-                                    }
-                                    mealmodel.fireTableDataChanged();
-                                    activate(orders.isActive());
+                                    setTextFields(column, searchFor, orders, model);
                                 }
                             }
                             break;
                         case "Duration":
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase((orders.getDuration()))) {
-                                    txfClientID.setText(orders.getClient().getID());
-                                    txfClientName.setText(orders.getClient().getName());
-                                    txfClientSurname.setText(orders.getClient().getSurname());
-                                    txfClientAddress.setText(orders.getClient().getAddress());
-                                    txfAddInfo.setText(orders.getClient().getAdditionalInfo());
-                                    txfClientContactNo.setText(orders.getClient().getContactNumber());
-                                    txfAltNum.setText(orders.getClient().getAlternativeNumber());
-                                    txfClientEmail.setText(orders.getClient().getEmail());
-                                    cmbSuburbs.setSelectedItem(orders.getClient().getSuburb());
-                                    txfOrderID.setText(orders.getID());
-                                    txfOrderDuration.setText(orders.getDuration());
-                                    //spnOrderFamilySize.setValue(Integer.parseInt(orders.getFamilySize()));
-                                    //spnOrderStartingDate.setValue(orders.getStartingDate());
-                                    txfOrderRouteID.setText(orders.getRoute());
-                                    for (Meal meals : orders.getMeals()) {
-                                        mealmodel.addRow(meals.returnObj());
-                                    }
-                                    mealmodel.fireTableDataChanged();
-                                    activate(orders.isActive());
+                                    setTextFields(column, searchFor, orders, model);
 
                                 }
                             }
@@ -1188,25 +1120,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         case "Family Size":
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase((orders.getFamilySize()))) {
-                                    txfClientID.setText(orders.getClient().getID());
-                                    txfClientName.setText(orders.getClient().getName());
-                                    txfClientSurname.setText(orders.getClient().getSurname());
-                                    txfClientAddress.setText(orders.getClient().getAddress());
-                                    txfAddInfo.setText(orders.getClient().getAdditionalInfo());
-                                    txfClientContactNo.setText(orders.getClient().getContactNumber());
-                                    txfAltNum.setText(orders.getClient().getAlternativeNumber());
-                                    txfClientEmail.setText(orders.getClient().getEmail());
-                                    cmbSuburbs.setSelectedItem(orders.getClient().getSuburb());
-                                    txfOrderID.setText(orders.getID());
-                                    txfOrderDuration.setText(orders.getDuration());
-                                    //spnOrderFamilySize.setValue(Integer.parseInt(orders.getFamilySize()));
-                                    //spnOrderStartingDate.setValue(orders.getStartingDate());
-                                    txfOrderRouteID.setText(orders.getRoute());
-                                    for (Meal meals : orders.getMeals()) {
-                                        mealmodel.addRow(meals.returnObj());
-                                    }
-                                    mealmodel.fireTableDataChanged();
-                                    activate(orders.isActive());
+                                    setTextFields(column, searchFor, orders, model);
                                 }
                             }
                             break;
@@ -1221,25 +1135,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getName())) {
                                     if (orders.isActive()) {
-                                        txfClientID.setText(orders.getClient().getID());
-                                        txfClientName.setText(orders.getClient().getName());
-                                        txfClientSurname.setText(orders.getClient().getSurname());
-                                        txfClientAddress.setText(orders.getClient().getAddress());
-                                        txfAddInfo.setText(orders.getClient().getAdditionalInfo());
-                                        txfClientContactNo.setText(orders.getClient().getContactNumber());
-                                        txfAltNum.setText(orders.getClient().getAlternativeNumber());
-                                        txfClientEmail.setText(orders.getClient().getEmail());
-                                        cmbSuburbs.setSelectedItem(orders.getClient().getSuburb());
-                                        txfOrderID.setText(orders.getID());
-                                        txfOrderDuration.setText(orders.getDuration());
-                                        //spnOrderFamilySize.setValue(orders.getFamilySize());
-                                        //spnOrderStartingDate.setValue(orders.getStartingDate());
-                                        txfOrderRouteID.setText(orders.getRoute());
-                                        for (Meal meals : orders.getMeals()) {
-                                            mealmodel.addRow(meals.returnObj());
-                                        }
-                                        mealmodel.fireTableDataChanged();
-                                        activate(orders.isActive());
+                                        setTextFields(column, searchFor, orders, model);
                                     }
                                 }
                             }
@@ -1248,25 +1144,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getSurname())) {
                                     if (orders.isActive()) {
-                                        txfClientID.setText(orders.getClient().getID());
-                                        txfClientName.setText(orders.getClient().getName());
-                                        txfClientSurname.setText(orders.getClient().getSurname());
-                                        txfClientAddress.setText(orders.getClient().getAddress());
-                                        txfAddInfo.setText(orders.getClient().getAdditionalInfo());
-                                        txfClientContactNo.setText(orders.getClient().getContactNumber());
-                                        txfAltNum.setText(orders.getClient().getAlternativeNumber());
-                                        txfClientEmail.setText(orders.getClient().getEmail());
-                                        cmbSuburbs.setSelectedItem(orders.getClient().getSuburb());
-                                        txfOrderID.setText(orders.getID());
-                                        txfOrderDuration.setText(orders.getDuration());
-                                        //spnOrderFamilySize.setValue(Integer.parseInt(orders.getFamilySize()));
-                                        //spnOrderStartingDate.setValue(orders.getStartingDate());
-                                        txfOrderRouteID.setText(orders.getRoute());
-                                        for (Meal meals : orders.getMeals()) {
-                                            mealmodel.addRow(meals.returnObj());
-                                        }
-                                        mealmodel.fireTableDataChanged();
-                                        activate(orders.isActive());
+                                        setTextFields(column, searchFor, orders, model);
                                     }
                                 }
                             }
@@ -1275,25 +1153,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getContactNumber())) {
                                     if (orders.isActive()) {
-                                        txfClientID.setText(orders.getClient().getID());
-                                        txfClientName.setText(orders.getClient().getName());
-                                        txfClientSurname.setText(orders.getClient().getSurname());
-                                        txfClientAddress.setText(orders.getClient().getAddress());
-                                        txfAddInfo.setText(orders.getClient().getAdditionalInfo());
-                                        txfClientContactNo.setText(orders.getClient().getContactNumber());
-                                        txfAltNum.setText(orders.getClient().getAlternativeNumber());
-                                        txfClientEmail.setText(orders.getClient().getEmail());
-                                        cmbSuburbs.setSelectedItem(orders.getClient().getSuburb());
-                                        txfOrderID.setText(orders.getID());
-                                        txfOrderDuration.setText(orders.getDuration());
-                                        //spnOrderFamilySize.setValue(Integer.parseInt(orders.getFamilySize()));
-                                        //spnOrderStartingDate.setValue(orders.getStartingDate());
-                                        txfOrderRouteID.setText(orders.getRoute());
-                                        for (Meal meals : orders.getMeals()) {
-                                            mealmodel.addRow(meals.returnObj());
-                                        }
-                                        mealmodel.fireTableDataChanged();
-                                        activate(orders.isActive());
+                                        setTextFields(column, searchFor, orders, model);
                                     }
                                 }
                             }
@@ -1302,25 +1162,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getEmail())) {
                                     if (orders.isActive()) {
-                                        txfClientID.setText(orders.getClient().getID());
-                                        txfClientName.setText(orders.getClient().getName());
-                                        txfClientSurname.setText(orders.getClient().getSurname());
-                                        txfClientAddress.setText(orders.getClient().getAddress());
-                                        txfAddInfo.setText(orders.getClient().getAdditionalInfo());
-                                        txfClientContactNo.setText(orders.getClient().getContactNumber());
-                                        txfAltNum.setText(orders.getClient().getAlternativeNumber());
-                                        txfClientEmail.setText(orders.getClient().getEmail());
-                                        cmbSuburbs.setSelectedItem(orders.getClient().getSuburb());
-                                        txfOrderID.setText(orders.getID());
-                                        txfOrderDuration.setText(orders.getDuration());
-                                        //spnOrderFamilySize.setValue(Integer.parseInt(orders.getFamilySize()));
-                                        //spnOrderStartingDate.setValue(orders.getStartingDate());
-                                        txfOrderRouteID.setText(orders.getRoute());
-                                        for (Meal meals : orders.getMeals()) {
-                                            mealmodel.addRow(meals.returnObj());
-                                        }
-                                        mealmodel.fireTableDataChanged();
-                                        activate(orders.isActive());
+                                        setTextFields(column, searchFor, orders, model);
                                     }
                                 }
                             }
@@ -1329,25 +1171,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getSuburb())) {
                                     if (orders.isActive()) {
-                                        txfClientID.setText(orders.getClient().getID());
-                                        txfClientName.setText(orders.getClient().getName());
-                                        txfClientSurname.setText(orders.getClient().getSurname());
-                                        txfClientAddress.setText(orders.getClient().getAddress());
-                                        txfAddInfo.setText(orders.getClient().getAdditionalInfo());
-                                        txfClientContactNo.setText(orders.getClient().getContactNumber());
-                                        txfAltNum.setText(orders.getClient().getAlternativeNumber());
-                                        txfClientEmail.setText(orders.getClient().getEmail());
-                                        cmbSuburbs.setSelectedItem(orders.getClient().getSuburb());
-                                        txfOrderID.setText(orders.getID());
-                                        txfOrderDuration.setText(orders.getDuration());
-                                        //spnOrderFamilySize.setValue(Integer.parseInt(orders.getFamilySize()));
-                                        //spnOrderStartingDate.setValue(orders.getStartingDate());
-                                        txfOrderRouteID.setText(orders.getRoute());
-                                        for (Meal meals : orders.getMeals()) {
-                                            mealmodel.addRow(meals.returnObj());
-                                        }
-                                        mealmodel.fireTableDataChanged();
-                                        activate(orders.isActive());
+                                        setTextFields(column, searchFor, orders, model);
                                     }
                                 }
                             }
@@ -1356,25 +1180,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase((orders.getDuration()))) {
                                     if (orders.isActive()) {
-                                        txfClientID.setText(orders.getClient().getID());
-                                        txfClientName.setText(orders.getClient().getName());
-                                        txfClientSurname.setText(orders.getClient().getSurname());
-                                        txfClientAddress.setText(orders.getClient().getAddress());
-                                        txfAddInfo.setText(orders.getClient().getAdditionalInfo());
-                                        txfClientContactNo.setText(orders.getClient().getContactNumber());
-                                        txfAltNum.setText(orders.getClient().getAlternativeNumber());
-                                        txfClientEmail.setText(orders.getClient().getEmail());
-                                        cmbSuburbs.setSelectedItem(orders.getClient().getSuburb());
-                                        txfOrderID.setText(orders.getID());
-                                        txfOrderDuration.setText(orders.getDuration());
-                                        //spnOrderFamilySize.setValue(Integer.parseInt(orders.getFamilySize()));
-                                        //spnOrderStartingDate.setValue(orders.getStartingDate());
-                                        txfOrderRouteID.setText(orders.getRoute());
-                                        for (Meal meals : orders.getMeals()) {
-                                            mealmodel.addRow(meals.returnObj());
-                                        }
-                                        mealmodel.fireTableDataChanged();
-                                        activate(orders.isActive());
+                                        setTextFields(column, searchFor, orders, model);
                                     }
                                 }
                             }
@@ -1383,25 +1189,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase((orders.getFamilySize()))) {
                                     if (orders.isActive()) {
-                                        txfClientID.setText(orders.getClient().getID());
-                                        txfClientName.setText(orders.getClient().getName());
-                                        txfClientSurname.setText(orders.getClient().getSurname());
-                                        txfClientAddress.setText(orders.getClient().getAddress());
-                                        txfAddInfo.setText(orders.getClient().getAdditionalInfo());
-                                        txfClientContactNo.setText(orders.getClient().getContactNumber());
-                                        txfAltNum.setText(orders.getClient().getAlternativeNumber());
-                                        txfClientEmail.setText(orders.getClient().getEmail());
-                                        cmbSuburbs.setSelectedItem(orders.getClient().getSuburb());
-                                        txfOrderID.setText(orders.getID());
-                                        txfOrderDuration.setText(orders.getDuration());
-                                        //spnOrderFamilySize.setValue(Integer.parseInt(orders.getFamilySize()));
-                                        //spnOrderStartingDate.setValue(orders.getStartingDate());
-                                        txfOrderRouteID.setText(orders.getRoute());
-                                        for (Meal meals : orders.getMeals()) {
-                                            mealmodel.addRow(meals.returnObj());
-                                        }
-                                        mealmodel.fireTableDataChanged();
-                                        activate(orders.isActive());
+                                        setTextFields(column, searchFor, orders, model);
                                     }
                                 }
                             }
@@ -1412,31 +1200,15 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
                     break;
                 case "Inactive":
-                     switch (column) {
+                    model.setRowCount(0);
+
+                    switch (column) {
                         case "Name":
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getName())) {
                                     if (orders.isActive()) {
-                                        }else{
-                                        txfClientID.setText(orders.getClient().getID());
-                                        txfClientName.setText(orders.getClient().getName());
-                                        txfClientSurname.setText(orders.getClient().getSurname());
-                                        txfClientAddress.setText(orders.getClient().getAddress());
-                                        txfAddInfo.setText(orders.getClient().getAdditionalInfo());
-                                        txfClientContactNo.setText(orders.getClient().getContactNumber());
-                                        txfAltNum.setText(orders.getClient().getAlternativeNumber());
-                                        txfClientEmail.setText(orders.getClient().getEmail());
-                                        cmbSuburbs.setSelectedItem(orders.getClient().getSuburb());
-                                        txfOrderID.setText(orders.getID());
-                                        txfOrderDuration.setText(orders.getDuration());
-                                        //spnOrderFamilySize.setValue(orders.getFamilySize());
-                                        //spnOrderStartingDate.setValue(orders.getStartingDate());
-                                        txfOrderRouteID.setText(orders.getRoute());
-                                        for (Meal meals : orders.getMeals()) {
-                                            mealmodel.addRow(meals.returnObj());
-                                        }
-                                        mealmodel.fireTableDataChanged();
-                                        activate(orders.isActive());
+                                    } else {
+                                        setTextFields(column, searchFor, orders, model);
                                     }
                                 }
                             }
@@ -1445,26 +1217,8 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getSurname())) {
                                     if (orders.isActive()) {
-                                        }else{
-                                        txfClientID.setText(orders.getClient().getID());
-                                        txfClientName.setText(orders.getClient().getName());
-                                        txfClientSurname.setText(orders.getClient().getSurname());
-                                        txfClientAddress.setText(orders.getClient().getAddress());
-                                        txfAddInfo.setText(orders.getClient().getAdditionalInfo());
-                                        txfClientContactNo.setText(orders.getClient().getContactNumber());
-                                        txfAltNum.setText(orders.getClient().getAlternativeNumber());
-                                        txfClientEmail.setText(orders.getClient().getEmail());
-                                        cmbSuburbs.setSelectedItem(orders.getClient().getSuburb());
-                                        txfOrderID.setText(orders.getID());
-                                        txfOrderDuration.setText(orders.getDuration());
-                                        //spnOrderFamilySize.setValue(Integer.parseInt(orders.getFamilySize()));
-                                        //spnOrderStartingDate.setValue(orders.getStartingDate());
-                                        txfOrderRouteID.setText(orders.getRoute());
-                                        for (Meal meals : orders.getMeals()) {
-                                            mealmodel.addRow(meals.returnObj());
-                                        }
-                                        mealmodel.fireTableDataChanged();
-                                        activate(orders.isActive());
+                                    } else {
+                                        setTextFields(column, searchFor, orders, model);
                                     }
                                 }
                             }
@@ -1473,26 +1227,8 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getContactNumber())) {
                                     if (orders.isActive()) {
-                                        }else{
-                                        txfClientID.setText(orders.getClient().getID());
-                                        txfClientName.setText(orders.getClient().getName());
-                                        txfClientSurname.setText(orders.getClient().getSurname());
-                                        txfClientAddress.setText(orders.getClient().getAddress());
-                                        txfAddInfo.setText(orders.getClient().getAdditionalInfo());
-                                        txfClientContactNo.setText(orders.getClient().getContactNumber());
-                                        txfAltNum.setText(orders.getClient().getAlternativeNumber());
-                                        txfClientEmail.setText(orders.getClient().getEmail());
-                                        cmbSuburbs.setSelectedItem(orders.getClient().getSuburb());
-                                        txfOrderID.setText(orders.getID());
-                                        txfOrderDuration.setText(orders.getDuration());
-                                        //spnOrderFamilySize.setValue(Integer.parseInt(orders.getFamilySize()));
-                                        //spnOrderStartingDate.setValue(orders.getStartingDate());
-                                        txfOrderRouteID.setText(orders.getRoute());
-                                        for (Meal meals : orders.getMeals()) {
-                                            mealmodel.addRow(meals.returnObj());
-                                        }
-                                        mealmodel.fireTableDataChanged();
-                                        activate(orders.isActive());
+                                    } else {
+                                        setTextFields(column, searchFor, orders, model);
                                     }
                                 }
                             }
@@ -1501,26 +1237,8 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getEmail())) {
                                     if (orders.isActive()) {
-                                        }else{
-                                        txfClientID.setText(orders.getClient().getID());
-                                        txfClientName.setText(orders.getClient().getName());
-                                        txfClientSurname.setText(orders.getClient().getSurname());
-                                        txfClientAddress.setText(orders.getClient().getAddress());
-                                        txfAddInfo.setText(orders.getClient().getAdditionalInfo());
-                                        txfClientContactNo.setText(orders.getClient().getContactNumber());
-                                        txfAltNum.setText(orders.getClient().getAlternativeNumber());
-                                        txfClientEmail.setText(orders.getClient().getEmail());
-                                        cmbSuburbs.setSelectedItem(orders.getClient().getSuburb());
-                                        txfOrderID.setText(orders.getID());
-                                        txfOrderDuration.setText(orders.getDuration());
-                                        //spnOrderFamilySize.setValue(Integer.parseInt(orders.getFamilySize()));
-                                        //spnOrderStartingDate.setValue(orders.getStartingDate());
-                                        txfOrderRouteID.setText(orders.getRoute());
-                                        for (Meal meals : orders.getMeals()) {
-                                            mealmodel.addRow(meals.returnObj());
-                                        }
-                                        mealmodel.fireTableDataChanged();
-                                        activate(orders.isActive());
+                                    } else {
+                                        setTextFields(column, searchFor, orders, model);
                                     }
                                 }
                             }
@@ -1529,26 +1247,8 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getSuburb())) {
                                     if (orders.isActive()) {
-                                        }else{
-                                        txfClientID.setText(orders.getClient().getID());
-                                        txfClientName.setText(orders.getClient().getName());
-                                        txfClientSurname.setText(orders.getClient().getSurname());
-                                        txfClientAddress.setText(orders.getClient().getAddress());
-                                        txfAddInfo.setText(orders.getClient().getAdditionalInfo());
-                                        txfClientContactNo.setText(orders.getClient().getContactNumber());
-                                        txfAltNum.setText(orders.getClient().getAlternativeNumber());
-                                        txfClientEmail.setText(orders.getClient().getEmail());
-                                        cmbSuburbs.setSelectedItem(orders.getClient().getSuburb());
-                                        txfOrderID.setText(orders.getID());
-                                        txfOrderDuration.setText(orders.getDuration());
-                                        //spnOrderFamilySize.setValue(Integer.parseInt(orders.getFamilySize()));
-                                        //spnOrderStartingDate.setValue(orders.getStartingDate());
-                                        txfOrderRouteID.setText(orders.getRoute());
-                                        for (Meal meals : orders.getMeals()) {
-                                            mealmodel.addRow(meals.returnObj());
-                                        }
-                                        mealmodel.fireTableDataChanged();
-                                        activate(orders.isActive());
+                                    } else {
+                                        setTextFields(column, searchFor, orders, model);
                                     }
                                 }
                             }
@@ -1557,26 +1257,8 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase((orders.getDuration()))) {
                                     if (orders.isActive()) {
-                                    }else{
-                                        txfClientID.setText(orders.getClient().getID());
-                                        txfClientName.setText(orders.getClient().getName());
-                                        txfClientSurname.setText(orders.getClient().getSurname());
-                                        txfClientAddress.setText(orders.getClient().getAddress());
-                                        txfAddInfo.setText(orders.getClient().getAdditionalInfo());
-                                        txfClientContactNo.setText(orders.getClient().getContactNumber());
-                                        txfAltNum.setText(orders.getClient().getAlternativeNumber());
-                                        txfClientEmail.setText(orders.getClient().getEmail());
-                                        cmbSuburbs.setSelectedItem(orders.getClient().getSuburb());
-                                        txfOrderID.setText(orders.getID());
-                                        txfOrderDuration.setText(orders.getDuration());
-                                        //spnOrderFamilySize.setValue(Integer.parseInt(orders.getFamilySize()));
-                                        //spnOrderStartingDate.setValue(orders.getStartingDate());
-                                        txfOrderRouteID.setText(orders.getRoute());
-                                        for (Meal meals : orders.getMeals()) {
-                                            mealmodel.addRow(meals.returnObj());
-                                        }
-                                        mealmodel.fireTableDataChanged();
-                                        activate(orders.isActive());
+                                    } else {
+                                        setTextFields(column, searchFor, orders, model);
                                     }
                                 }
                             }
@@ -1585,32 +1267,14 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase((orders.getFamilySize()))) {
                                     if (orders.isActive()) {
-                                    }else{
-                                        txfClientID.setText(orders.getClient().getID());
-                                        txfClientName.setText(orders.getClient().getName());
-                                        txfClientSurname.setText(orders.getClient().getSurname());
-                                        txfClientAddress.setText(orders.getClient().getAddress());
-                                        txfAddInfo.setText(orders.getClient().getAdditionalInfo());
-                                        txfClientContactNo.setText(orders.getClient().getContactNumber());
-                                        txfAltNum.setText(orders.getClient().getAlternativeNumber());
-                                        txfClientEmail.setText(orders.getClient().getEmail());
-                                        cmbSuburbs.setSelectedItem(orders.getClient().getSuburb());
-                                        txfOrderID.setText(orders.getID());
-                                        txfOrderDuration.setText(orders.getDuration());
-                                        //spnOrderFamilySize.setValue(Integer.parseInt(orders.getFamilySize()));
-                                        //spnOrderStartingDate.setValue(orders.getStartingDate());
-                                        txfOrderRouteID.setText(orders.getRoute());
-                                        for (Meal meals : orders.getMeals()) {
-                                            mealmodel.addRow(meals.returnObj());
-                                        }
-                                        mealmodel.fireTableDataChanged();
-                                        activate(orders.isActive());
+                                    } else {
+                                        setTextFields(column, searchFor, orders, model);
                                     }
                                 }
                             }
                             break;
-                  
-                     }
+
+                    }
             }
         }
     }//GEN-LAST:event_btnSearchActionPerformed
@@ -1628,6 +1292,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_btnOrderDateAddActionPerformed
 
     private void btnEditOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditOrderActionPerformed
+        btnDelete.setEnabled(false);
         enableFieldsOrder();
         btnEditOrder.setEnabled(false);
         btnSave.setEnabled(true);
