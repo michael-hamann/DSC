@@ -12,7 +12,7 @@ import java.util.Calendar;
  *
  * @author Aliens_Ross
  */
-public class Route {
+public class Route implements java.io.Serializable{
 
     private String routeID;
     private boolean active;
