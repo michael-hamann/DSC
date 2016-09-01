@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 public class DBClass {
 
     private static Firebase ref;
+    public static boolean connected = false;
 
     public static Firebase getInstance() {
         if (ref == null) {
@@ -24,6 +25,7 @@ public class DBClass {
                 @Override
                 public void onAuthenticated(AuthData ad) {
                     System.out.println("Database succesfully connected!");
+                    connected = true;
                 }
 
                 @Override
@@ -43,13 +45,5 @@ public class DBClass {
         TokenGenerator tokenGenerator = new TokenGenerator("9zeiksdYSEyETtuUDSlXiTRAo23KTQBv2mIfrMyp");
         String token = tokenGenerator.createToken(payload);
         return token;
-    }
-
-    public static boolean connectionMade() {
-        if (ref == null) {
-            return true;
-        } else {
-            return false;
-        }
     }
 }
