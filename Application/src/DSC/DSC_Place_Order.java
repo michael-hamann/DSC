@@ -1141,7 +1141,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
 
     public void addDataToFirebase(Order order) {
 
-        Firebase ref = DBClass.getInstance().child("Clientss");
+        Firebase ref = DBClass.getInstance().child("Clients");
 
         ClientContainer client = new ClientContainer(
                 order.getClient().getAdditionalInfo(),
