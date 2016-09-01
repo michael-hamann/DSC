@@ -145,13 +145,9 @@
                           <Component id="btnRouteView" alignment="1" max="32767" attributes="0"/>
                           <Component id="btnViewOrders" alignment="1" max="32767" attributes="0"/>
                           <Component id="btnPlaceOrder" alignment="0" max="32767" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="btnChangeChart" min="-2" pref="151" max="-2" attributes="0"/>
-                                  <Component id="btnChangeStatistics" alignment="0" min="-2" pref="151" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          </Group>
+                          <Component id="btnChangeChart" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnChangeStatistics" max="32767" attributes="0"/>
+                          <Component id="btnAddNewSuburb" alignment="0" pref="161" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -172,6 +168,8 @@
                       <Component id="btnChangeChart" min="-2" pref="51" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnChangeStatistics" min="-2" pref="52" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="btnAddNewSuburb" min="-2" pref="52" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -237,6 +235,14 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPlaceOrderActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnAddNewSuburb">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Create New Suburb"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddNewSuburbActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
@@ -389,7 +395,7 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="536" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="531" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -439,7 +445,7 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="598" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="597" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -812,7 +818,7 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="lblSingleFamilySize" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" pref="221" max="32767" attributes="0"/>
+                                      <EmptySpace type="unrelated" pref="216" max="32767" attributes="0"/>
                                       <Component id="lblSingleFamilySizeTotal" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" attributes="0">
