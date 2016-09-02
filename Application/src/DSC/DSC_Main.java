@@ -856,6 +856,7 @@ public class DSC_Main extends javax.swing.JFrame {
                     for (int i = 0; i < 10; i++) {
                         if (!DBClass.connected) {
                             Thread.sleep(500);
+                        } else {
                             break;
                         }
                     }
