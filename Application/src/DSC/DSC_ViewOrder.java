@@ -21,6 +21,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     boolean editClicked = false;
     ArrayList<Client> allclients = new ArrayList<>();
     ArrayList<Order> allorders = new ArrayList<>();
+    ArrayList<Order> orders1 = new ArrayList<>();
 
     /**
      * Creates new form DSC_Main
@@ -178,10 +179,10 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     }
                     Order o = new Order(Data.getKey(), Data.child("Active").getValue(boolean.class), allclients.get(0),
                             Data.child("Duration").getValue(String.class), null, end, Data.child("RouteID").getValue(String.class),
-                            allmeals, Data.child("FamilySize").getValue(String.class));
+                            allmeals, Data.child("FamilySize").getValue(int.class));
 
                     allorders.add(o);
-
+                    System.out.println(o.getFamilySize());
                     String clientID = Data.child("ClientID").getValue(String.class);
                     for (Client c : allclients) {
                         if (c.getID().equals(clientID)) {
@@ -213,57 +214,51 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     public void callSuburbs() {
 
     }
+ 
+    public void setOrderTB(String col, String find, Order order, DefaultTableModel d) {
 
-    public void activate(Boolean active) {
-        if (active) {
-            btnDeactivate.setEnabled(true);
-        } else {
-            btnDeactivate.setEnabled(false);
-        }
-    }
-
-    public void setTextFields(String col, String find, Order order, DefaultTableModel d) {
-
-        DefaultTableModel mealmodel = (DefaultTableModel) tblMeals.getModel();
-        mealmodel.setRowCount(0);
-
-        txfClientID.setText(order.getClient().getID());
-        txfClientName.setText(order.getClient().getName());
-        txfClientSurname.setText(order.getClient().getSurname());
-        txfClientAddress.setText(order.getClient().getAddress());
-        txfAddInfo.setText(order.getClient().getAdditionalInfo());
-        txfClientContactNo.setText(order.getClient().getContactNumber());
-        txfAltNum.setText(order.getClient().getAlternativeNumber());
-        txfClientEmail.setText(order.getClient().getEmail());
-        cmbSuburbs.setSelectedItem(order.getClient().getSuburb());
-        txfOrderID.setText(order.getID());
-        txfOrderDuration.setText(order.getDuration());
-        //spnOrderFamilySize.setValue(orders.getFamilySize());
-        //spnOrderStartingDate.setValue(orders.getStartingDate());
-        txfOrderRouteID.setText(order.getRoute());
-
-        for (Meal meals : order.getMeals()) {
-            mealmodel.addRow(meals.returnObj());
-        }
-        mealmodel.fireTableDataChanged();
-        activate(order.isActive());
-        
-//        tblOrderTable.addMouseListener(new java.awt.event.MouseAdapter() {
-//        @Override
-//         public void mouseClicked(java.awt.event.MouseEvent evt) {
-//                int row = tblOrderTable.rowAtPoint(evt.getPoint());
-//                int col = tblOrderTable.columnAtPoint(evt.getPoint());
-//                if (row >= 0 && col >= 0) {
-//           
-//                }
-//    }
-//});
-
+        orders1.add(order);
         Object[] row = {order.getClient().getName(), order.getClient().getSurname(), order.getClient().getContactNumber(),
             order.getClient().getEmail(), order.getClient().getSuburb(), order.isActive(), order.getDuration(), order.getFamilySize()};
         d.addRow(row);
         d.fireTableDataChanged();
 
+    }
+
+    public void setTextFields() {
+
+        DefaultTableModel mealmodel = (DefaultTableModel) tblMeals.getModel();
+
+        tblOrderTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mealmodel.setRowCount(0);
+
+                int row = tblOrderTable.rowAtPoint(evt.getPoint());
+                
+                txfClientID.setText(orders1.get(row).getClient().getID());
+                txfClientName.setText(orders1.get(row).getClient().getName());
+                txfClientSurname.setText(orders1.get(row).getClient().getSurname());
+                txfClientAddress.setText(orders1.get(row).getClient().getAddress());
+                txfAddInfo.setText(orders1.get(row).getClient().getAdditionalInfo());
+                txfClientContactNo.setText(orders1.get(row).getClient().getContactNumber());
+                txfAltNum.setText(orders1.get(row).getClient().getAlternativeNumber());
+                txfClientEmail.setText(orders1.get(row).getClient().getEmail());
+                cmbSuburbs.setSelectedItem(orders1.get(row).getClient().getSuburb());
+                txfOrderID.setText(orders1.get(row).getID());
+                txfOrderDuration.setText(orders1.get(row).getDuration());
+                //spnOrderFamilySize.setValue(orders.getFamilySize());
+                //spnOrderStartingDate.setValue(orders.getStartingDate());
+                txfOrderRouteID.setText(orders1.get(row).getRoute());
+
+                for (Meal meals : orders1.get(row).getMeals()) {
+                    mealmodel.addRow(meals.returnObj());
+                }
+                mealmodel.fireTableDataChanged();
+                
+            }
+        });
     }
 
     /**
@@ -420,6 +415,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         lblSearchBy.setText("Search by :");
         lblSearchBy.setMaximumSize(new java.awt.Dimension(62, 23));
 
+        btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/search.png"))); // NOI18N
         btnSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSearchActionPerformed(evt);
@@ -1066,6 +1062,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
         DefaultTableModel model = (DefaultTableModel) tblOrderTable.getModel();
         model.setRowCount(0);
+
         if (txfSearch.getText().equals("")) {
             JOptionPane.showMessageDialog(rootPane, "Please enter search value!");
 
@@ -1077,50 +1074,50 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         case "Name":
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getName())) {
-                                    setTextFields(column, searchFor, orders, model);
+                                    setOrderTB(column, searchFor, orders, model);
                                 }
                             }
                             break;
                         case "Surname":
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getSurname())) {
-                                    setTextFields(column, searchFor, orders, model);
+                                    setOrderTB(column, searchFor, orders, model);
                                 }
                             }
                             break;
                         case "Contact Number":
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getContactNumber())) {
-                                    setTextFields(column, searchFor, orders, model);
+                                    setOrderTB(column, searchFor, orders, model);
                                 }
                             }
                             break;
                         case "Email":
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getEmail())) {
-                                    setTextFields(column, searchFor, orders, model);
+                                    setOrderTB(column, searchFor, orders, model);
                                 }
                             }
                             break;
                         case "Suburb":
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getSuburb())) {
-                                    setTextFields(column, searchFor, orders, model);
+                                    setOrderTB(column, searchFor, orders, model);
                                 }
                             }
                             break;
                         case "Duration":
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase((orders.getDuration()))) {
-                                    setTextFields(column, searchFor, orders, model);
+                                    setOrderTB(column, searchFor, orders, model);
 
                                 }
                             }
                             break;
                         case "Family Size":
                             for (Order orders : allorders) {
-                                if (searchFor.equalsIgnoreCase((orders.getFamilySize()))) {
-                                    setTextFields(column, searchFor, orders, model);
+                                if ((Integer.parseInt(searchFor))==orders.getFamilySize()) {
+                                    setOrderTB(column, searchFor, orders, model);
                                 }
                             }
                             break;
@@ -1135,7 +1132,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getName())) {
                                     if (orders.isActive()) {
-                                        setTextFields(column, searchFor, orders, model);
+                                        setOrderTB(column, searchFor, orders, model);
                                     }
                                 }
                             }
@@ -1144,7 +1141,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getSurname())) {
                                     if (orders.isActive()) {
-                                        setTextFields(column, searchFor, orders, model);
+                                        setOrderTB(column, searchFor, orders, model);
                                     }
                                 }
                             }
@@ -1153,7 +1150,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getContactNumber())) {
                                     if (orders.isActive()) {
-                                        setTextFields(column, searchFor, orders, model);
+                                        setOrderTB(column, searchFor, orders, model);
                                     }
                                 }
                             }
@@ -1162,7 +1159,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getEmail())) {
                                     if (orders.isActive()) {
-                                        setTextFields(column, searchFor, orders, model);
+                                        setOrderTB(column, searchFor, orders, model);
                                     }
                                 }
                             }
@@ -1171,7 +1168,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getSuburb())) {
                                     if (orders.isActive()) {
-                                        setTextFields(column, searchFor, orders, model);
+                                        setOrderTB(column, searchFor, orders, model);
                                     }
                                 }
                             }
@@ -1180,16 +1177,16 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase((orders.getDuration()))) {
                                     if (orders.isActive()) {
-                                        setTextFields(column, searchFor, orders, model);
+                                        setOrderTB(column, searchFor, orders, model);
                                     }
                                 }
                             }
                             break;
                         case "Family Size":
                             for (Order orders : allorders) {
-                                if (searchFor.equalsIgnoreCase((orders.getFamilySize()))) {
+                                if ((Integer.parseInt(searchFor))==orders.getFamilySize()) {
                                     if (orders.isActive()) {
-                                        setTextFields(column, searchFor, orders, model);
+                                        setOrderTB(column, searchFor, orders, model);
                                     }
                                 }
                             }
@@ -1208,7 +1205,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getName())) {
                                     if (orders.isActive()) {
                                     } else {
-                                        setTextFields(column, searchFor, orders, model);
+                                        setOrderTB(column, searchFor, orders, model);
                                     }
                                 }
                             }
@@ -1218,7 +1215,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getSurname())) {
                                     if (orders.isActive()) {
                                     } else {
-                                        setTextFields(column, searchFor, orders, model);
+                                        setOrderTB(column, searchFor, orders, model);
                                     }
                                 }
                             }
@@ -1228,7 +1225,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getContactNumber())) {
                                     if (orders.isActive()) {
                                     } else {
-                                        setTextFields(column, searchFor, orders, model);
+                                        setOrderTB(column, searchFor, orders, model);
                                     }
                                 }
                             }
@@ -1238,7 +1235,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getEmail())) {
                                     if (orders.isActive()) {
                                     } else {
-                                        setTextFields(column, searchFor, orders, model);
+                                        setOrderTB(column, searchFor, orders, model);
                                     }
                                 }
                             }
@@ -1248,7 +1245,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getSuburb())) {
                                     if (orders.isActive()) {
                                     } else {
-                                        setTextFields(column, searchFor, orders, model);
+                                        setOrderTB(column, searchFor, orders, model);
                                     }
                                 }
                             }
@@ -1258,17 +1255,17 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                                 if (searchFor.equalsIgnoreCase((orders.getDuration()))) {
                                     if (orders.isActive()) {
                                     } else {
-                                        setTextFields(column, searchFor, orders, model);
+                                        setOrderTB(column, searchFor, orders, model);
                                     }
                                 }
                             }
                             break;
                         case "Family Size":
                             for (Order orders : allorders) {
-                                if (searchFor.equalsIgnoreCase((orders.getFamilySize()))) {
+                                if((Integer.parseInt(searchFor))==orders.getFamilySize()) {
                                     if (orders.isActive()) {
                                     } else {
-                                        setTextFields(column, searchFor, orders, model);
+                                        setOrderTB(column, searchFor, orders, model);
                                     }
                                 }
                             }
@@ -1277,6 +1274,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     }
             }
         }
+        setTextFields();
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
