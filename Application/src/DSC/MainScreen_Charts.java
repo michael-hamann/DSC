@@ -45,11 +45,11 @@ public class MainScreen_Charts extends JPanel {
     static final String LOW_CARB = "Low Carb";
     static final String KIDDIES = "Kiddies";
 
-    public static void createBarGraph_ActiveAndInActiveMeals(JPanel pnlBarChartActive, 
-            JPanel pnlBarChartInActive, JPanel pnlPieChart, JLabel lblStandardTotal, JLabel lblLowCarbTotal, JLabel lblKiddiesTotal, 
-            JLabel lblKiddiesTotalInActive, JLabel lblStandardTotalInActive, 
-            JLabel lblLowCarbTotalInActive,JLabel lblSingleFamilySizeTotal,JLabel lblCoupleFamilySizeTotal,JLabel lblThreeFamilySizeTotal,JLabel lblFourFamilySizeTotal,JLabel lblFiveFamilySizeTotal,
-            JLabel lblSixFamilySizeTotal,JLabel lblMoreThanSixFamilySizeTotal, boolean getData) {
+    public static void createBarGraph_ActiveAndInActiveMeals(JPanel pnlBarChartActive,
+            JPanel pnlBarChartInActive, JPanel pnlPieChart, JLabel lblStandardTotal, JLabel lblLowCarbTotal, JLabel lblKiddiesTotal,
+            JLabel lblKiddiesTotalInActive, JLabel lblStandardTotalInActive,
+            JLabel lblLowCarbTotalInActive, JLabel lblSingleFamilySizeTotal, JLabel lblCoupleFamilySizeTotal, JLabel lblThreeFamilySizeTotal, JLabel lblFourFamilySizeTotal, JLabel lblFiveFamilySizeTotal,
+            JLabel lblSixFamilySizeTotal, JLabel lblMoreThanSixFamilySizeTotal, boolean getData) {
 
         Firebase tableRef = DBClass.getInstance().child("Orders");// Go to specific Table
 
@@ -84,7 +84,7 @@ public class MainScreen_Charts extends JPanel {
                             if (familySizeCheck == 6) {
                                 countFamilySize_6++;
                             }
-                            if (familySizeCheck >6) {
+                            if (familySizeCheck > 6) {
                                 countFamilySizeMoreThanSix++;
                             }
 
@@ -119,8 +119,6 @@ public class MainScreen_Charts extends JPanel {
                 /*
                 *Creates BarGraph For all Active Meals.
                  */
-                
-                
                 DefaultCategoryDataset dataset_Chart1 = new DefaultCategoryDataset();
                 dataset_Chart1.addValue(countLowCarbActive, "", "Low Carb ( " + countLowCarbActive + " )");
                 dataset_Chart1.addValue(countStandardActive, "", "Standard ( " + countStandardActive + " )");
@@ -195,18 +193,18 @@ public class MainScreen_Charts extends JPanel {
                 lblStandardTotalInActive.setText(countStandardInActive + "");
                 lblLowCarbTotalInActive.setText(countLowCarbInActive + "");
 
-                lblSingleFamilySizeTotal.setText(countFamilySize_1+"");
-                lblCoupleFamilySizeTotal.setText(countFamilySize_2+"");
-                lblThreeFamilySizeTotal.setText(countFamilySize_3+"");
-                lblFourFamilySizeTotal.setText(countFamilySize_4+"");
-                lblFiveFamilySizeTotal.setText(countFamilySize_5+"");
-                lblSixFamilySizeTotal.setText(countFamilySize_6+"");
-                lblMoreThanSixFamilySizeTotal.setText(countFamilySizeMoreThanSix+"");
-                        
+                lblSingleFamilySizeTotal.setText(countFamilySize_1 + "");
+                lblCoupleFamilySizeTotal.setText(countFamilySize_2 + "");
+                lblThreeFamilySizeTotal.setText(countFamilySize_3 + "");
+                lblFourFamilySizeTotal.setText(countFamilySize_4 + "");
+                lblFiveFamilySizeTotal.setText(countFamilySize_5 + "");
+                lblSixFamilySizeTotal.setText(countFamilySize_6 + "");
+                lblMoreThanSixFamilySizeTotal.setText(countFamilySizeMoreThanSix + "");
+
                 pnlBarChartActive.setBackground(Color.DARK_GRAY);
                 pnlBarChartInActive.setBackground(Color.DARK_GRAY);
                 pnlPieChart.setBackground(Color.DARK_GRAY);
-                
+
             }
 
             @Override

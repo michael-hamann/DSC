@@ -1,4 +1,3 @@
-
 package DSC;
 
 import com.firebase.client.DataSnapshot;
@@ -6,13 +5,9 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import java.sql.ResultSet;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -24,10 +19,9 @@ import javax.swing.table.DefaultTableModel;
 public class DSC_ViewOrder extends javax.swing.JFrame {
 
     boolean editClicked = false;
-    boolean addClicked = false;
     ArrayList<Client> allclients = new ArrayList<>();
-    ArrayList<Order> allorders= new ArrayList<>();
-    
+    ArrayList<Order> allorders = new ArrayList<>();
+
     /**
      * Creates new form DSC_Main
      */
@@ -40,8 +34,9 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         disableFieldsClient();
         disableFieldsOrder();
         btnSave.setEnabled(false);
+        cmbVeiw.setSelectedItem("Active");
+        callSuburbs();
         setOrders();
-       
     }
 
     public final void enableFieldsClient() {
@@ -87,7 +82,6 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         spnEndDate.setEnabled(true);
         btnEndDateAdd.setEnabled(true);
         btnEndDateRemove.setEnabled(true);
-        chbActive.setEnabled(true);
     }
 
     public final void disableFieldsOrder() {
@@ -100,7 +94,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         spnEndDate.setEnabled(false);
         btnEndDateAdd.setEnabled(false);
         btnEndDateRemove.setEnabled(false);
-       
+
     }
 
     public final void clearFieldsOrder() {
@@ -125,46 +119,42 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         return empty;
     }
 
-    public void populateTable() {
-       
+    public void setClients() {
+
         Firebase tableRef = DBClass.getInstance().child("Clients");// Go to specific Table
         tableRef.addListenerForSingleValueEvent(new ValueEventListener() {
-        @Override
-        public void onDataChange(DataSnapshot ds) {
-            for (DataSnapshot Data : ds.getChildren()) {
-                Client c = new Client();
-                c.setID(Data.getKey());
-                c.setName((String)Data.child("Name").getValue());
-                c.setSurname((String) Data.child("Surname").getValue());
-                c.setContactNumber((String) Data.child("ContactNum").getValue());
-                c.setEmail((String) Data.child("Email").getValue());
-                c.setSuburb((String) Data.child("Suburb").getValue());
-                allclients.add(c);
-          
-           DefaultTableModel model = (DefaultTableModel) tblOrderTable.getModel();
-        
-           Object[] row = {c.getName(), c.getSurname(),c.getContactNumber(), c.getEmail(), c.getSuburb()};
-           model.addRow(row);
-           model.fireTableDataChanged();
-        }
+            @Override
+            public void onDataChange(DataSnapshot ds) {
+                for (DataSnapshot Data : ds.getChildren()) {
+                    Client c = new Client();
+                    c.setID(Data.getKey());
+                    c.setName((String) Data.child("Name").getValue());
+                    c.setSurname((String) Data.child("Surname").getValue());
+                    c.setContactNumber((String) Data.child("ContactNum").getValue());
+                    c.setEmail((String) Data.child("Email").getValue());
+                    c.setSuburb((String) Data.child("Suburb").getValue());
+                    allclients.add(c);
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError fe) {
+                JOptionPane.showMessageDialog(null, "ERROR: " + fe);
+            }
+        });
     }
 
-    @Override
-    public void onCancelled(FirebaseError fe) {
-        JOptionPane.showMessageDialog(null, "ERROR: " + fe);
-    }
-    });
-       }
-    
-    public void setOrders(){
+    public void setOrders() {
         Firebase tr = DBClass.getInstance().child("Orders");// Go to specific Table
         tr.addListenerForSingleValueEvent(new ValueEventListener() {
-        @Override
-        public void onDataChange(DataSnapshot ds) {
-            for (DataSnapshot Data : ds.getChildren()) {  
-                ArrayList<Meal> allmeals = new ArrayList<>();               
-                Calendar end ;
-                
+            @Override
+            public void onDataChange(DataSnapshot ds) {
+                for (DataSnapshot Data : ds.getChildren()) {
+                    ArrayList<Meal> allmeals = new ArrayList<>();
+                    Calendar end;
+
 //               SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-ddEhh:mm:ss.SSSZ");
 //                try {
 //                    Date date = sdf.parse(Data.child("StartingDate").getValue(String.class));
@@ -173,58 +163,109 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 //                }
 //                 
 //                Calendar start = sdf.getCalendar();
-                
-                if(Data.child("EndDate").getValue().equals("-")){
-                    end = null;
-                }else{
-                    end = (Calendar) Data.child("EndDate").getValue();
+                    if (Data.child("EndDate").getValue().equals("-")) {
+                        end = null;
+                    } else {
+                        end = (Calendar) Data.child("EndDate").getValue();
+                    }
+
+                    for (DataSnapshot Data2 : Data.getChildren()) {
+                        for (DataSnapshot Data3 : Data2.getChildren()) {
+                            Meal m = new Meal(Data3.child("Quantity").getValue(int.class), Data3.child("MealType").getValue(String.class),
+                                    Data3.child("Allergies").getValue(String.class), Data3.child("Exclusions").getValue(String.class));
+                            allmeals.add(m);
+                        }
+                    }
+                    Order o = new Order(Data.getKey(), Data.child("Active").getValue(boolean.class), allclients.get(0),
+                            Data.child("Duration").getValue(String.class), null, end, Data.child("RouteID").getValue(String.class),
+                            allmeals, Data.child("FamilySize").getValue(String.class));
+
+                    allorders.add(o);
+
+                    String clientID = Data.child("ClientID").getValue(String.class);
+                    for (Client c : allclients) {
+                        if (c.getID().equals(clientID)) {
+                            o.setClient(c);
+                            break;
+                        }
+                    }
+
                 }
-                
-                Order o = new Order(Data.getKey(),Data.child("Active").getValue(boolean.class), allclients.get(0),
-                        Data.child("Duration").getValue(String.class), null ,end, Data.child("RouteID").getValue(String.class), 
-                        allmeals, Data.child("FamilySize").getValue(String.class));
-                
-                allorders.add(o);
-                for (DataSnapshot Data2 : Data.getChildren()) { 
-                    Meal m = new Meal(Data2.child("Quantity").getValue(int.class), Data2.child("MealType").getValue(String.class),
-                            Data2.child("Allergies").getValue(String.class),Data2.child("Exclutions").getValue(String.class));
-                    allmeals.add(m);
-                    System.out.println(m.getAllergies()+ " " + m.getMealType()+" " + m.getMealType());
-                }
-                o.setMeals(allmeals);
-                 
-                String clientID = Data.child("ClientID").getValue(String.class);
-                for (Client c : allclients) {
-                    if(c.getID().equals(clientID)){
-                        o.setClient(c);
-                        break;
+                DefaultTableModel model = (DefaultTableModel) tblOrderTable.getModel();
+                for (Order o : allorders) {
+                    if (o.isActive()) {
+                        Object[] row = {o.getClient().getName(), o.getClient().getSurname(), o.getClient().getContactNumber(),
+                            o.getClient().getEmail(), o.getClient().getSuburb(), o.isActive(), o.getDuration(), o.getFamilySize()};
+                        model.addRow(row);
+                        model.fireTableDataChanged();
                     }
                 }
             }
-        }
-        @Override
-        public void onCancelled(FirebaseError fe) {
-            JOptionPane.showMessageDialog(null, "ERROR: " + fe);
-        }
+
+            @Override
+            public void onCancelled(FirebaseError fe) {
+                JOptionPane.showMessageDialog(null, "ERROR: " + fe);
+            }
         });
+
     }
-    
-    public void callSuburbs(){
-        Firebase tr = DBClass.getInstance().child("Routes");// Go to specific Table
-        tr.addListenerForSingleValueEvent(new ValueEventListener() {
-        @Override
-        public void onDataChange(DataSnapshot ds) {
-            for (DataSnapshot Data : ds.getChildren()) { 
-                
-            }  
-                }
-        @Override
-                public void onCancelled(FirebaseError fe) {
-                    JOptionPane.showMessageDialog(null, "ERROR: " + fe);
-                }
-                });
+
+    public void callSuburbs() {
+
     }
-   
+
+    public void activate(Boolean active) {
+        if (active) {
+            btnDeactivate.setEnabled(true);
+        } else {
+            btnDeactivate.setEnabled(false);
+        }
+    }
+
+    public void setTextFields(String col, String find, Order order, DefaultTableModel d) {
+
+        DefaultTableModel mealmodel = (DefaultTableModel) tblMeals.getModel();
+        mealmodel.setRowCount(0);
+
+        txfClientID.setText(order.getClient().getID());
+        txfClientName.setText(order.getClient().getName());
+        txfClientSurname.setText(order.getClient().getSurname());
+        txfClientAddress.setText(order.getClient().getAddress());
+        txfAddInfo.setText(order.getClient().getAdditionalInfo());
+        txfClientContactNo.setText(order.getClient().getContactNumber());
+        txfAltNum.setText(order.getClient().getAlternativeNumber());
+        txfClientEmail.setText(order.getClient().getEmail());
+        cmbSuburbs.setSelectedItem(order.getClient().getSuburb());
+        txfOrderID.setText(order.getID());
+        txfOrderDuration.setText(order.getDuration());
+        //spnOrderFamilySize.setValue(orders.getFamilySize());
+        //spnOrderStartingDate.setValue(orders.getStartingDate());
+        txfOrderRouteID.setText(order.getRoute());
+
+        for (Meal meals : order.getMeals()) {
+            mealmodel.addRow(meals.returnObj());
+        }
+        mealmodel.fireTableDataChanged();
+        activate(order.isActive());
+        
+//        tblOrderTable.addMouseListener(new java.awt.event.MouseAdapter() {
+//        @Override
+//         public void mouseClicked(java.awt.event.MouseEvent evt) {
+//                int row = tblOrderTable.rowAtPoint(evt.getPoint());
+//                int col = tblOrderTable.columnAtPoint(evt.getPoint());
+//                if (row >= 0 && col >= 0) {
+//           
+//                }
+//    }
+//});
+
+        Object[] row = {order.getClient().getName(), order.getClient().getSurname(), order.getClient().getContactNumber(),
+            order.getClient().getEmail(), order.getClient().getSuburb(), order.isActive(), order.getDuration(), order.getFamilySize()};
+        d.addRow(row);
+        d.fireTableDataChanged();
+
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -246,6 +287,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         btnDelete = new javax.swing.JButton();
         lblSearchBy = new javax.swing.JLabel();
         btnSearch = new javax.swing.JButton();
+        cmbVeiw = new javax.swing.JComboBox<>();
         pnlDetailsClient = new javax.swing.JPanel();
         lblClientDetails = new javax.swing.JLabel();
         lblClientID = new javax.swing.JLabel();
@@ -286,8 +328,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         btnEndDateAdd = new javax.swing.JButton();
         btnEndDateRemove = new javax.swing.JButton();
         lblEndDate = new javax.swing.JLabel();
-        lblOrderID1 = new javax.swing.JLabel();
-        chbActive = new javax.swing.JCheckBox();
+        btnDeactivate = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblMeals = new javax.swing.JTable();
         btnBack = new javax.swing.JButton();
@@ -330,6 +371,11 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
         txfSearch.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfSearch.setMinimumSize(new java.awt.Dimension(6, 23));
+        txfSearch.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                txfSearchPropertyChange(evt);
+            }
+        });
 
         cmbSearchColumn.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cmbSearchColumn.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Name", "Surname", "Contact Number", "Email", "Suburb", "Duration", "FamilySize" }));
@@ -359,7 +405,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(tblOrderTable);
-        populateTable();
+        setClients();
 
         btnDelete.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Bin.png"))); // NOI18N
@@ -374,12 +420,13 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         lblSearchBy.setText("Search by :");
         lblSearchBy.setMaximumSize(new java.awt.Dimension(62, 23));
 
-        btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/search.png"))); // NOI18N
         btnSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSearchActionPerformed(evt);
             }
         });
+
+        cmbVeiw.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Active", "Inactive" }));
 
         javax.swing.GroupLayout pnlTableLayout = new javax.swing.GroupLayout(pnlTable);
         pnlTable.setLayout(pnlTableLayout);
@@ -397,6 +444,8 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         .addComponent(txfSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(cmbVeiw, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -412,7 +461,9 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             .addComponent(cmbSearchColumn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblSearchBy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txfSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(btnDelete))
+                    .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnDelete)
+                        .addComponent(cmbVeiw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(11, 11, 11)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
                 .addContainerGap())
@@ -664,10 +715,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         lblEndDate.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblEndDate.setText("End Date:");
 
-        lblOrderID1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblOrderID1.setText("Active:");
-
-        chbActive.setBackground(new java.awt.Color(0, 204, 51));
+        btnDeactivate.setText("Deactivate");
 
         javax.swing.GroupLayout pnlDetailsLayout = new javax.swing.GroupLayout(pnlDetails);
         pnlDetails.setLayout(pnlDetailsLayout);
@@ -676,10 +724,13 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             .addGroup(pnlDetailsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblOrdersDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(pnlDetailsLayout.createSequentialGroup()
+                        .addComponent(lblOrdersDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(89, 89, 89))
                     .addGroup(pnlDetailsLayout.createSequentialGroup()
                         .addComponent(btnEditOrder)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnDeactivate))
                     .addGroup(pnlDetailsLayout.createSequentialGroup()
                         .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblEndDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -688,7 +739,6 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                                 .addComponent(lblRouteID, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(pnlDetailsLayout.createSequentialGroup()
                                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(lblOrderID1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(lblDuration, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(lblStartingDate, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(lblFamilySize, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -703,7 +753,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnEndDateRemove))
                             .addGroup(pnlDetailsLayout.createSequentialGroup()
-                                .addComponent(spnOrderStartingDate, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(spnOrderStartingDate, javax.swing.GroupLayout.PREFERRED_SIZE, 95, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnOrderDateAdd, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -711,21 +761,14 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             .addComponent(txfOrderID)
                             .addComponent(spnOrderFamilySize)
                             .addComponent(txfOrderRouteID, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txfOrderDuration)
-                            .addGroup(pnlDetailsLayout.createSequentialGroup()
-                                .addComponent(chbActive)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                            .addComponent(txfOrderDuration))))
                 .addContainerGap())
         );
         pnlDetailsLayout.setVerticalGroup(
             pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDetailsLayout.createSequentialGroup()
                 .addComponent(lblOrdersDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(chbActive)
-                    .addComponent(lblOrderID1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(27, 27, 27)
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblOrderID)
                     .addComponent(txfOrderID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -753,8 +796,10 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDuration)
                     .addComponent(txfOrderDuration, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(47, 47, 47)
-                .addComponent(btnEditOrder)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEditOrder)
+                    .addComponent(btnDeactivate))
                 .addContainerGap())
         );
 
@@ -763,7 +808,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Meal type", "Quantity", "Allergy", "Exclusions"
+                "Quantity", "Meal type", "Allergy", "Exclusions"
             }
         ) {
             Class[] types = new Class [] {
@@ -852,6 +897,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEditClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditClientActionPerformed
+        btnDelete.setEnabled(false);
         btnSave.setEnabled(true);
         enableFieldsClient();
         btnEditClient.setEnabled(false);
@@ -986,6 +1032,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             btnEditClient.setEnabled(true);
             editClicked = false;
         }
+        btnDelete.setEnabled(true);
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
@@ -993,201 +1040,241 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             int ans = JOptionPane.showConfirmDialog(this, "Do you wish to discard unsaved changes?");
             switch (ans) {
                 case JOptionPane.YES_OPTION:
-                    btnSave.setEnabled(false);
-                    disableFieldsClient();
-                    disableFieldsOrder();
-                    btnEditOrder.setEnabled(true);
-                    editClicked = false;
-                    break;
-                case JOptionPane.NO_OPTION:
-                    break;
-                default:
-                    break;
-            }
-        } else if (addClicked){
-            int ans = JOptionPane.showConfirmDialog(this, "Do you wish to discard unsaved order?");
-            switch (ans) {
-                case JOptionPane.YES_OPTION:
-                    btnSave.setText("Save");
-                    btnSave.setEnabled(false);
-                    clearFieldsClient();
-                    clearFieldsOrder();
                     disableFieldsClient();
                     disableFieldsOrder();
                     btnEditClient.setEnabled(true);
                     btnEditOrder.setEnabled(true);
-                    addClicked = false;
+                    btnDelete.setEnabled(true);
                     break;
                 case JOptionPane.NO_OPTION:
+                    btnSave.setEnabled(true);
                     break;
                 default:
+                    btnSave.setEnabled(true);
                     break;
             }
         } else {
             this.dispose();
             new DSC_Main().setVisible(true);
         }
-        btnEditClient.setVisible(true);
-        btnEditOrder.setVisible(true);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         String column = (String) cmbSearchColumn.getSelectedItem();
         String searchFor = txfSearch.getText();
-        DefaultTableModel mealmodel = (DefaultTableModel) tblMeals.getModel();
-        
+        String veiw = (String) cmbVeiw.getSelectedItem();
+
+        DefaultTableModel model = (DefaultTableModel) tblOrderTable.getModel();
+        model.setRowCount(0);
         if (txfSearch.getText().equals("")) {
             JOptionPane.showMessageDialog(rootPane, "Please enter search value!");
 
         } else {
-            switch (column) {
-                case "Name":
-                    for (Order orders : allorders) {
-                        if (searchFor.equalsIgnoreCase(orders.getClient().getName())) {
-                            txfClientID.setText(orders.getClient().getID());
-                            txfClientName.setText(orders.getClient().getName());
-                            txfClientSurname.setText(orders.getClient().getSurname());
-                            txfClientAddress.setText(orders.getClient().getAddress());
-                            txfAddInfo.setText(orders.getClient().getAdditionalInfo());
-                            txfClientContactNo.setText(orders.getClient().getContactNumber());
-                            txfAltNum.setText(orders.getClient().getAlternativeNumber());
-                            txfClientEmail.setText(orders.getClient().getEmail());
-                            cmbSuburbs.setSelectedItem(orders.getClient().getSuburb());
-                            txfOrderID.setText(orders.getID());
-                            txfOrderDuration.setText(orders.getDuration());
-                            //spnOrderFamilySize.setValue(Integer.parseInt(orders.getFamilySize()));
-                            //spnOrderStartingDate.setValue(orders.getStartingDate());
-                            txfOrderRouteID.setText(orders.getRoute());
-                            for (Meal meals : orders.getMeals()) {
-                                Object[] row = {meals.getMealType(), meals.getQuantity(),meals.getAllergies(), meals.getExclusions()};
-                                mealmodel.addRow(row);
-                               
+            switch (veiw) {
+                case "All":
+                    model.setRowCount(0);
+                    switch (column) {
+                        case "Name":
+                            for (Order orders : allorders) {
+                                if (searchFor.equalsIgnoreCase(orders.getClient().getName())) {
+                                    setTextFields(column, searchFor, orders, model);
+                                }
                             }
-                             mealmodel.fireTableDataChanged();
-                        }
+                            break;
+                        case "Surname":
+                            for (Order orders : allorders) {
+                                if (searchFor.equalsIgnoreCase(orders.getClient().getSurname())) {
+                                    setTextFields(column, searchFor, orders, model);
+                                }
+                            }
+                            break;
+                        case "Contact Number":
+                            for (Order orders : allorders) {
+                                if (searchFor.equalsIgnoreCase(orders.getClient().getContactNumber())) {
+                                    setTextFields(column, searchFor, orders, model);
+                                }
+                            }
+                            break;
+                        case "Email":
+                            for (Order orders : allorders) {
+                                if (searchFor.equalsIgnoreCase(orders.getClient().getEmail())) {
+                                    setTextFields(column, searchFor, orders, model);
+                                }
+                            }
+                            break;
+                        case "Suburb":
+                            for (Order orders : allorders) {
+                                if (searchFor.equalsIgnoreCase(orders.getClient().getSuburb())) {
+                                    setTextFields(column, searchFor, orders, model);
+                                }
+                            }
+                            break;
+                        case "Duration":
+                            for (Order orders : allorders) {
+                                if (searchFor.equalsIgnoreCase((orders.getDuration()))) {
+                                    setTextFields(column, searchFor, orders, model);
+
+                                }
+                            }
+                            break;
+                        case "Family Size":
+                            for (Order orders : allorders) {
+                                if (searchFor.equalsIgnoreCase((orders.getFamilySize()))) {
+                                    setTextFields(column, searchFor, orders, model);
+                                }
+                            }
+                            break;
+                        default:
+                            JOptionPane.showMessageDialog(rootPane, "'" + searchFor + "' not found!");
                     }
+
                     break;
-                case "Surname":
-                    for (Order orders : allorders) {
-                        if (searchFor.equalsIgnoreCase(orders.getClient().getSurname())) {
-                            txfClientID.setText(orders.getClient().getID());
-                            txfClientName.setText(orders.getClient().getName());
-                            txfClientSurname.setText(orders.getClient().getSurname());
-                            txfClientAddress.setText(orders.getClient().getAddress());
-                            txfAddInfo.setText(orders.getClient().getAdditionalInfo());
-                            txfClientContactNo.setText(orders.getClient().getContactNumber());
-                            txfAltNum.setText(orders.getClient().getAlternativeNumber());
-                            txfClientEmail.setText(orders.getClient().getEmail());
-                            cmbSuburbs.setSelectedItem(orders.getClient().getSuburb());
-                            txfOrderID.setText(orders.getID());
-                            txfOrderDuration.setText(orders.getDuration());
-                            //spnOrderFamilySize.setValue(Integer.parseInt(orders.getFamilySize()));
-                            //spnOrderStartingDate.setValue(orders.getStartingDate());
-                            txfOrderRouteID.setText(orders.getRoute());
-                        }
+                case "Active":
+                    switch (column) {
+                        case "Name":
+                            for (Order orders : allorders) {
+                                if (searchFor.equalsIgnoreCase(orders.getClient().getName())) {
+                                    if (orders.isActive()) {
+                                        setTextFields(column, searchFor, orders, model);
+                                    }
+                                }
+                            }
+                            break;
+                        case "Surname":
+                            for (Order orders : allorders) {
+                                if (searchFor.equalsIgnoreCase(orders.getClient().getSurname())) {
+                                    if (orders.isActive()) {
+                                        setTextFields(column, searchFor, orders, model);
+                                    }
+                                }
+                            }
+                            break;
+                        case "Contact Number":
+                            for (Order orders : allorders) {
+                                if (searchFor.equalsIgnoreCase(orders.getClient().getContactNumber())) {
+                                    if (orders.isActive()) {
+                                        setTextFields(column, searchFor, orders, model);
+                                    }
+                                }
+                            }
+                            break;
+                        case "Email":
+                            for (Order orders : allorders) {
+                                if (searchFor.equalsIgnoreCase(orders.getClient().getEmail())) {
+                                    if (orders.isActive()) {
+                                        setTextFields(column, searchFor, orders, model);
+                                    }
+                                }
+                            }
+                            break;
+                        case "Suburb":
+                            for (Order orders : allorders) {
+                                if (searchFor.equalsIgnoreCase(orders.getClient().getSuburb())) {
+                                    if (orders.isActive()) {
+                                        setTextFields(column, searchFor, orders, model);
+                                    }
+                                }
+                            }
+                            break;
+                        case "Duration":
+                            for (Order orders : allorders) {
+                                if (searchFor.equalsIgnoreCase((orders.getDuration()))) {
+                                    if (orders.isActive()) {
+                                        setTextFields(column, searchFor, orders, model);
+                                    }
+                                }
+                            }
+                            break;
+                        case "Family Size":
+                            for (Order orders : allorders) {
+                                if (searchFor.equalsIgnoreCase((orders.getFamilySize()))) {
+                                    if (orders.isActive()) {
+                                        setTextFields(column, searchFor, orders, model);
+                                    }
+                                }
+                            }
+                            break;
+                        default:
+                            JOptionPane.showMessageDialog(rootPane, "'" + searchFor + "' not found!");
                     }
+
                     break;
-                case "Contact Number":
-                    for (Order orders : allorders) {
-                        if (searchFor.equalsIgnoreCase(orders.getClient().getContactNumber())) {
-                           txfClientID.setText(orders.getClient().getID());
-                            txfClientName.setText(orders.getClient().getName());
-                            txfClientSurname.setText(orders.getClient().getSurname());
-                            txfClientAddress.setText(orders.getClient().getAddress());
-                            txfAddInfo.setText(orders.getClient().getAdditionalInfo());
-                            txfClientContactNo.setText(orders.getClient().getContactNumber());
-                            txfAltNum.setText(orders.getClient().getAlternativeNumber());
-                            txfClientEmail.setText(orders.getClient().getEmail());
-                            cmbSuburbs.setSelectedItem(orders.getClient().getSuburb());
-                            txfOrderID.setText(orders.getID());
-                            txfOrderDuration.setText(orders.getDuration());
-                            //spnOrderFamilySize.setValue(Integer.parseInt(orders.getFamilySize()));
-                            //spnOrderStartingDate.setValue(orders.getStartingDate());
-                            txfOrderRouteID.setText(orders.getRoute());
-                        }
+                case "Inactive":
+                    model.setRowCount(0);
+
+                    switch (column) {
+                        case "Name":
+                            for (Order orders : allorders) {
+                                if (searchFor.equalsIgnoreCase(orders.getClient().getName())) {
+                                    if (orders.isActive()) {
+                                    } else {
+                                        setTextFields(column, searchFor, orders, model);
+                                    }
+                                }
+                            }
+                            break;
+                        case "Surname":
+                            for (Order orders : allorders) {
+                                if (searchFor.equalsIgnoreCase(orders.getClient().getSurname())) {
+                                    if (orders.isActive()) {
+                                    } else {
+                                        setTextFields(column, searchFor, orders, model);
+                                    }
+                                }
+                            }
+                            break;
+                        case "Contact Number":
+                            for (Order orders : allorders) {
+                                if (searchFor.equalsIgnoreCase(orders.getClient().getContactNumber())) {
+                                    if (orders.isActive()) {
+                                    } else {
+                                        setTextFields(column, searchFor, orders, model);
+                                    }
+                                }
+                            }
+                            break;
+                        case "Email":
+                            for (Order orders : allorders) {
+                                if (searchFor.equalsIgnoreCase(orders.getClient().getEmail())) {
+                                    if (orders.isActive()) {
+                                    } else {
+                                        setTextFields(column, searchFor, orders, model);
+                                    }
+                                }
+                            }
+                            break;
+                        case "Suburb":
+                            for (Order orders : allorders) {
+                                if (searchFor.equalsIgnoreCase(orders.getClient().getSuburb())) {
+                                    if (orders.isActive()) {
+                                    } else {
+                                        setTextFields(column, searchFor, orders, model);
+                                    }
+                                }
+                            }
+                            break;
+                        case "Duration":
+                            for (Order orders : allorders) {
+                                if (searchFor.equalsIgnoreCase((orders.getDuration()))) {
+                                    if (orders.isActive()) {
+                                    } else {
+                                        setTextFields(column, searchFor, orders, model);
+                                    }
+                                }
+                            }
+                            break;
+                        case "Family Size":
+                            for (Order orders : allorders) {
+                                if (searchFor.equalsIgnoreCase((orders.getFamilySize()))) {
+                                    if (orders.isActive()) {
+                                    } else {
+                                        setTextFields(column, searchFor, orders, model);
+                                    }
+                                }
+                            }
+                            break;
+
                     }
-                    break;
-                case "Email":
-                    for (Order orders : allorders) {
-                        if (searchFor.equalsIgnoreCase(orders.getClient().getEmail())) {
-                            txfClientID.setText(orders.getClient().getID());
-                            txfClientName.setText(orders.getClient().getName());
-                            txfClientSurname.setText(orders.getClient().getSurname());
-                            txfClientAddress.setText(orders.getClient().getAddress());
-                            txfAddInfo.setText(orders.getClient().getAdditionalInfo());
-                            txfClientContactNo.setText(orders.getClient().getContactNumber());
-                            txfAltNum.setText(orders.getClient().getAlternativeNumber());
-                            txfClientEmail.setText(orders.getClient().getEmail());
-                            cmbSuburbs.setSelectedItem(orders.getClient().getSuburb());
-                            txfOrderID.setText(orders.getID());
-                            txfOrderDuration.setText(orders.getDuration());
-                            //spnOrderFamilySize.setValue(Integer.parseInt(orders.getFamilySize()));
-                            //spnOrderStartingDate.setValue(orders.getStartingDate());
-                            txfOrderRouteID.setText(orders.getRoute());
-                        }
-                    }
-                    break;
-                case "Suburb":
-                    for (Order orders : allorders) {
-                        if (searchFor.equalsIgnoreCase(orders.getClient().getSuburb())) {
-                            txfClientID.setText(orders.getClient().getID());
-                            txfClientName.setText(orders.getClient().getName());
-                            txfClientSurname.setText(orders.getClient().getSurname());
-                            txfClientAddress.setText(orders.getClient().getAddress());
-                            txfAddInfo.setText(orders.getClient().getAdditionalInfo());
-                            txfClientContactNo.setText(orders.getClient().getContactNumber());
-                            txfAltNum.setText(orders.getClient().getAlternativeNumber());
-                            txfClientEmail.setText(orders.getClient().getEmail());
-                            cmbSuburbs.setSelectedItem(orders.getClient().getSuburb());
-                            txfOrderID.setText(orders.getID());
-                            txfOrderDuration.setText(orders.getDuration());
-                            //spnOrderFamilySize.setValue(Integer.parseInt(orders.getFamilySize()));
-                            //spnOrderStartingDate.setValue(orders.getStartingDate());
-                            txfOrderRouteID.setText(orders.getRoute());
-                        }
-                    }
-                    break;
-                case "Duration":
-                    for (Order orders : allorders) {
-                        if (searchFor.equalsIgnoreCase((orders.getDuration()))) {
-                            txfClientID.setText(orders.getClient().getID());
-                            txfClientName.setText(orders.getClient().getName());
-                            txfClientSurname.setText(orders.getClient().getSurname());
-                            txfClientAddress.setText(orders.getClient().getAddress());
-                            txfAddInfo.setText(orders.getClient().getAdditionalInfo());
-                            txfClientContactNo.setText(orders.getClient().getContactNumber());
-                            txfAltNum.setText(orders.getClient().getAlternativeNumber());
-                            txfClientEmail.setText(orders.getClient().getEmail());
-                            cmbSuburbs.setSelectedItem(orders.getClient().getSuburb());
-                            txfOrderID.setText(orders.getID());
-                            txfOrderDuration.setText(orders.getDuration());
-                            //spnOrderFamilySize.setValue(Integer.parseInt(orders.getFamilySize()));
-                            //spnOrderStartingDate.setValue(orders.getStartingDate());
-                            txfOrderRouteID.setText(orders.getRoute());
-                           
-                        }
-                    }
-                    break;
-                case "Family Size":
-                    for (Order orders : allorders) {
-                        if (searchFor.equalsIgnoreCase((orders.getFamilySize()))) {
-                           txfClientID.setText(orders.getClient().getID());
-                            txfClientName.setText(orders.getClient().getName());
-                            txfClientSurname.setText(orders.getClient().getSurname());
-                            txfClientAddress.setText(orders.getClient().getAddress());
-                            txfAddInfo.setText(orders.getClient().getAdditionalInfo());
-                            txfClientContactNo.setText(orders.getClient().getContactNumber());
-                            txfAltNum.setText(orders.getClient().getAlternativeNumber());
-                            txfClientEmail.setText(orders.getClient().getEmail());
-                            cmbSuburbs.setSelectedItem(orders.getClient().getSuburb());
-                            txfOrderID.setText(orders.getID());
-                            txfOrderDuration.setText(orders.getDuration());
-                            //spnOrderFamilySize.setValue(Integer.parseInt(orders.getFamilySize()));
-                            //spnOrderStartingDate.setValue(orders.getStartingDate());
-                            txfOrderRouteID.setText(orders.getRoute());
-                        }
-                    }
-                    break;
             }
         }
     }//GEN-LAST:event_btnSearchActionPerformed
@@ -1205,6 +1292,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_btnOrderDateAddActionPerformed
 
     private void btnEditOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditOrderActionPerformed
+        btnDelete.setEnabled(false);
         enableFieldsOrder();
         btnEditOrder.setEnabled(false);
         btnSave.setEnabled(true);
@@ -1212,9 +1300,9 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditOrderActionPerformed
 
     private void btnEndDateAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEndDateAddActionPerformed
-       Date date = (Date) spnOrderStartingDate.getValue();
-       date.setDate(date.getDate() + 7);
-       spnOrderStartingDate.setValue(date);
+        Date date = (Date) spnOrderStartingDate.getValue();
+        date.setDate(date.getDate() + 7);
+        spnOrderStartingDate.setValue(date);
     }//GEN-LAST:event_btnEndDateAddActionPerformed
 
     private void btnEndDateRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEndDateRemoveActionPerformed
@@ -1222,6 +1310,10 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         date.setDate(date.getDate() - 7);
         spnOrderStartingDate.setValue(date);
     }//GEN-LAST:event_btnEndDateRemoveActionPerformed
+
+    private void txfSearchPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_txfSearchPropertyChange
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfSearchPropertyChange
 
     /**
      * @param args the command line arguments
@@ -1267,6 +1359,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnDeactivate;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEditClient;
     private javax.swing.JButton btnEditOrder;
@@ -1276,9 +1369,9 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     private javax.swing.JButton btnRemove;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnSearch;
-    private javax.swing.JCheckBox chbActive;
     private javax.swing.JComboBox<String> cmbSearchColumn;
     private javax.swing.JComboBox<String> cmbSuburbs;
+    private javax.swing.JComboBox<String> cmbVeiw;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblAltNum;
@@ -1295,7 +1388,6 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     private javax.swing.JLabel lblLogo;
     private javax.swing.JLabel lblName;
     private javax.swing.JLabel lblOrderID;
-    private javax.swing.JLabel lblOrderID1;
     private javax.swing.JLabel lblOrdersDetails;
     private javax.swing.JLabel lblRouteID;
     private javax.swing.JLabel lblSearchBy;
