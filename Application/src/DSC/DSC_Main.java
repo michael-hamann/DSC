@@ -1,7 +1,21 @@
 package DSC;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
@@ -14,6 +28,7 @@ public class DSC_Main extends javax.swing.JFrame {
      */
     public static boolean getData = true;
     public static boolean checkGraph = true;
+    
 
     /**
      * Creates new form DSC_Main
@@ -727,7 +742,11 @@ public class DSC_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDriverTblActionPerformed
 
     private void btnDriverRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDriverRptActionPerformed
-        DriverReport.getDriverData_Clientstb();
+        // DriverReport.getDriverData_Clientstb();
+        
+        Reports.createDriverReport();
+
+
     }//GEN-LAST:event_btnDriverRptActionPerformed
 
     private void btnChefRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChefRptActionPerformed
@@ -837,7 +856,6 @@ public class DSC_Main extends javax.swing.JFrame {
                     for (int i = 0; i < 10; i++) {
                         if (!DBClass.connected) {
                             Thread.sleep(500);
-                        }else{
                             break;
                         }
                     }
@@ -845,15 +863,14 @@ public class DSC_Main extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, "Could Not Connect To Database.\nYou will only be able to add orders.\nThey will be added to the database as soon as a connection can be made.", "Database Connection", JOptionPane.ERROR_MESSAGE);
                         System.err.println("Could Not Connect To Database.");
                         new DSC_Place_Order(false);
-                    }else{
+                    } else {
                         main.setVisible(true);
                         main.toFront();
                     }
-                    
+
                 } catch (Exception e) {
 
                 }
-                
 
             }
         });
