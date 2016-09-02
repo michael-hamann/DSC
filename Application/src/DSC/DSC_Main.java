@@ -785,9 +785,6 @@ public class DSC_Main extends javax.swing.JFrame {
             pnlBarChartActive.repaint();
             pnlBarChartInActive.repaint();
             pnlPieChart.repaint();
-            pnlMealTypeStats.repaint();
-            pnlFamilySizeStats.repaint();
-            pnlTextStats.repaint();
 
         } catch (Exception e) {
 
@@ -796,11 +793,12 @@ public class DSC_Main extends javax.swing.JFrame {
 
     private void btnPlaceOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlaceOrderActionPerformed
         this.dispose();
-        new DSC_Place_Order().setVisible(true);
+        new DSC_Place_Order(true).setVisible(true);
     }//GEN-LAST:event_btnPlaceOrderActionPerformed
 
     private void btnAddNewSuburbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddNewSuburbActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        new DSC_Place_Order(false).setVisible(true);
     }//GEN-LAST:event_btnAddNewSuburbActionPerformed
 
     /**
@@ -839,23 +837,23 @@ public class DSC_Main extends javax.swing.JFrame {
                     for (int i = 0; i < 10; i++) {
                         if (!DBClass.connected) {
                             Thread.sleep(500);
-                        } else {
+                        }else{
                             break;
                         }
                     }
                     if (!DBClass.connected) {
                         JOptionPane.showMessageDialog(null, "Could Not Connect To Database.\nYou will only be able to add orders.\nThey will be added to the database as soon as a connection can be made.", "Database Connection", JOptionPane.ERROR_MESSAGE);
                         System.err.println("Could Not Connect To Database.");
-                        System.out.println(DBClass.connected);
-                        System.exit(1);
-                    } else {
+                        new DSC_Place_Order(false);
+                    }else{
                         main.setVisible(true);
                         main.toFront();
                     }
-
+                    
                 } catch (Exception e) {
 
                 }
+                
 
             }
         });

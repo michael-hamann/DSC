@@ -84,9 +84,7 @@ public class MainScreen_Charts extends JPanel {
                             if (familySizeCheck == 6) {
                                 countFamilySize_6++;
                             }
-                            if (familySizeCheck > 6) {
-                                countFamilySizeMoreThanSix++;
-                            }
+                            
 
                             for (DataSnapshot Data3 : Data2.getChildren()) {
 
@@ -108,6 +106,10 @@ public class MainScreen_Charts extends JPanel {
                                 if (activeCheck == false && Data3.child("MealType").getValue().equals(KIDDIES)) {
                                     countKiddiesInActive++;
                                 }
+                                
+                                if (familySizeCheck > 6) {
+                                countFamilySizeMoreThanSix++;
+                            }
 
                             }
 
@@ -172,6 +174,7 @@ public class MainScreen_Charts extends JPanel {
                 datasetPieChart.setValue("FamilySize_4", countFamilySize_4);
                 datasetPieChart.setValue("FamilySize_5", countFamilySize_5);
                 datasetPieChart.setValue("FamilySize_6", countFamilySize_6);
+                datasetPieChart.setValue("FamilySizeMoreThan6", countFamilySizeMoreThanSix);
 
                 JFreeChart pieChart = ChartFactory.createPieChart("PieChart", datasetPieChart, true, false, false);
 
