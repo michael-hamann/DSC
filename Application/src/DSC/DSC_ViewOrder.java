@@ -4,10 +4,11 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -110,10 +111,10 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     private boolean checkEmpty() {
         boolean empty = false;
 
-        if (txfClientName.getText().isEmpty() && txfClientSurname.getText().isEmpty() && txfClientContactNo.getText().isEmpty()
-                && txfClientAddress.getText().isEmpty() && txfAddInfo.getText().isEmpty()
-                && txfClientContactNo.getText().isEmpty() && txfAltNum.getText().isEmpty() && txfClientEmail.getText().isEmpty()
-                && cmbSuburbs.getSelectedIndex() == 0) {
+        if (txfClientName.getText().isEmpty() || txfClientSurname.getText().isEmpty() || txfClientContactNo.getText().isEmpty()
+                || txfClientAddress.getText().isEmpty() || txfAddInfo.getText().isEmpty()
+                || txfClientContactNo.getText().isEmpty() || txfAltNum.getText().isEmpty() || txfClientEmail.getText().isEmpty()
+                || cmbSuburbs.getSelectedIndex() == 0) {
             empty = true;
         }
 
@@ -134,6 +135,9 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     c.setContactNumber((String) Data.child("ContactNum").getValue());
                     c.setEmail((String) Data.child("Email").getValue());
                     c.setSuburb((String) Data.child("Suburb").getValue());
+                    c.setAdditionalInfo((String) Data.child("AdditionalInfo").getValue());
+                    c.setAddress((String) Data.child("Address").getValue());
+                    c.setAlternativeNumber((String) Data.child("AlternativeNumber").getValue());
                     allclients.add(c);
 
                 }
@@ -214,7 +218,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     public void callSuburbs() {
 
     }
- 
+
     public void setOrderTB(String col, String find, Order order, DefaultTableModel d) {
 
         orders1.add(order);
@@ -236,7 +240,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 mealmodel.setRowCount(0);
 
                 int row = tblOrderTable.rowAtPoint(evt.getPoint());
-                
+
                 txfClientID.setText(orders1.get(row).getClient().getID());
                 txfClientName.setText(orders1.get(row).getClient().getName());
                 txfClientSurname.setText(orders1.get(row).getClient().getSurname());
@@ -256,7 +260,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     mealmodel.addRow(meals.returnObj());
                 }
                 mealmodel.fireTableDataChanged();
-                
+
             }
         });
     }
@@ -909,12 +913,8 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         switch (answer) {
             case JOptionPane.YES_OPTION:
                 JOptionPane.showMessageDialog(this, name + " will be deleted", "Delete Notification", JOptionPane.INFORMATION_MESSAGE);
+                Firebase del = DBClass.getInstance().child("Clients/" + allclients.get(tblOrderTable.getSelectedRow()).getID() + "/");
 
-                try {
-
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
-                }
                 break;
 
             case JOptionPane.NO_OPTION:
@@ -928,107 +928,34 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        boolean back = false;
-        if (btnSave.getText().equals("Save")) {
-            short ID = Short.parseShort(txfClientID.getText().trim());
-            String newName = txfClientName.getText().trim();
-            String newSurname = txfClientSurname.getText().trim();
-            String newAdditionalInfo = txfAddInfo.getText().trim();
-            String newContactNumber = txfClientContactNo.getText().trim();
-            String newAlternativeNo = txfAltNum.getText().trim();
-            String newAddress = txfClientAddress.getText().trim();
-            String newEmail = txfClientEmail.getText().trim();
-            String newSuburb = (String) cmbSuburbs.getSelectedItem();
+        
+        Firebase upd = DBClass.getInstance().child("Clients/" + allclients.get(tblOrderTable.getSelectedRow()).getID());
+        System.out.println(upd);
+        boolean empty = checkEmpty();
 
-            ResultSet rs;
-            try {
-//                Connection c = DBClass.getConnection();
-//                Statement stmt2 = c.createStatement();
-//                String findSuburbID = "SELECT SuburbID FROM suburb_tb WHERE Suburb LIKE '"+ newSuburb +"';";
-//                rs = stmt2.executeQuery(findSuburbID);
-//                rs.next();
-//                String newSuburbID = rs.getString(1);
-//                
-//                PreparedStatement stmt = c.prepareStatement("UPDATE doorstepchef.client_tb SET Name = ?,"
-//                        + " Surname = ?,  Address = ?,AdditionalInfo  = ?,ContactNumber = ?, "
-//                        + "AlternativeNumber = ?,Email = ?,SuburbID = ? WHERE ClientID = ?;");
-//                stmt.setString(1, newName);
-//                stmt.setString(2, newSurname);
-//                stmt.setString(3, newAddress);
-//                stmt.setString(4, newAdditionalInfo);
-//                stmt.setString(5, newContactNumber);
-//                stmt.setString(6, newAlternativeNo);
-//                stmt.setString(7, newEmail);
-//                stmt.setString(8, newSuburbID);
-//                stmt.setShort(9, ID);
-//                stmt.executeUpdate();
-//                
-//                int orderID =Integer.parseInt(txfOrderID.getText());
-//                int newFamilySize = (int) spnOrderFamilySize.getValue();
-//                Date newStartingDate = new java.sql.Date((long)spnOrderStartingDate.getValue());
-//                String newRouteID = txfOrderRouteID.getText();
-//                String newDuration = txfOrderDuration.getText();
-//                String newOrderClientID = txfOrderClientID.getText();
-//                
-//                stmt = c.prepareStatement("UPDATE doorstepchef.order_tb SET FamilySize = ?,"
-//                        + " StartingDate = ?,  RouteID = ?,Duration  = ?,Client_ID = ?, "
-//                        + " WHERE OrderID = ?;");
-//                
-//                stmt.setInt(1, newFamilySize);
-//                stmt.setDate(2, (java.sql.Date) newStartingDate);
-//                stmt.setInt(3 ,Integer.parseInt(newRouteID));
-//                stmt.setString(4,newDuration);
-//                stmt.setString(5, newOrderClientID );
-//                stmt.setInt(6, orderID);
-//
-//                JOptionPane.showMessageDialog(this, "Changes Saved");
-//                //Refresh
-//                back = true;
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
-            back = true;
-        } else if (btnSave.getText().equals("Add")) {
-            //Add to database
-            boolean empty = checkEmpty();
-            if (false) {
-                //empty
-                JOptionPane.showMessageDialog(this, "Please fill in all fields", "Error", JOptionPane.ERROR_MESSAGE);
-            } else {
-                short newID = Short.parseShort(txfClientID.getText().trim());
-                String newName = txfClientName.getText().trim();
-                String newSurname = txfClientSurname.getText().trim();
-                String newContactNo = txfClientContactNo.getText().trim();
-                String newAddress = txfClientAddress.getText().trim();
-                String newAddInfo = txfAddInfo.getText().trim();
-                String newAltNum = txfAltNum.getText().trim();
-                String newEmail = txfClientEmail.getText().trim();
+        if (empty) {
+            JOptionPane.showMessageDialog(this, "Please fill in all fields", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            Map<String, Object> clientinfo = new HashMap();
+            clientinfo.put("Name", txfClientName.getText().trim());
+            clientinfo.put("Surname", txfClientSurname.getText().trim());
+            clientinfo.put("AdditionalInfo", txfAddInfo.getText().trim());
+            clientinfo.put("AlternativeNumber", txfClientContactNo.getText().trim());
+            clientinfo.put("ContactNum", txfAltNum.getText().trim());
+            clientinfo.put("Address", txfClientAddress.getText().trim());
+            clientinfo.put("Email", txfClientEmail.getText().trim());
+            clientinfo.put("Suburb", (String) cmbSuburbs.getSelectedItem());
 
-                String query = "INSERT INTO doorstepchef.client_tb (`ClientID`, `Name`, `Surname`, `Address`,`AdditionalInfo`,"
-                        + " `ContactNumber`, `AlternativeNumber`, `Email`,`SuburbID`) \n"
-                        + "	VALUES (" + newID + ", '" + newName + "', '" + newSurname + "', '" + newAddress + "', '"
-                        + newAddInfo + "', '" + newContactNo + "', '" + newAltNum + "', '" + newEmail + "', '0');";
-                try {
-//                    Connection c = DBClass.getConnection();
-//                    Statement stmt = c.createStatement();
-//                    stmt.executeUpdate(query);
-//                    JOptionPane.showMessageDialog(this, "Saved");
-//                    back = true;
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-            btnSave.setText("Save");
-        }
+            upd.updateChildren(clientinfo);
 
-        if (back) {
             disableFieldsClient();
             btnSave.setVisible(false);
             btnEditOrder.setEnabled(true);
             btnEditClient.setEnabled(true);
             editClicked = false;
+            btnDelete.setEnabled(true);
         }
-        btnDelete.setEnabled(true);
+
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
@@ -1041,6 +968,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     btnEditClient.setEnabled(true);
                     btnEditOrder.setEnabled(true);
                     btnDelete.setEnabled(true);
+                    editClicked = false;
                     break;
                 case JOptionPane.NO_OPTION:
                     btnSave.setEnabled(true);
@@ -1116,7 +1044,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             break;
                         case "Family Size":
                             for (Order orders : allorders) {
-                                if ((Integer.parseInt(searchFor))==orders.getFamilySize()) {
+                                if ((Integer.parseInt(searchFor)) == orders.getFamilySize()) {
                                     setOrderTB(column, searchFor, orders, model);
                                 }
                             }
@@ -1184,7 +1112,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             break;
                         case "Family Size":
                             for (Order orders : allorders) {
-                                if ((Integer.parseInt(searchFor))==orders.getFamilySize()) {
+                                if ((Integer.parseInt(searchFor)) == orders.getFamilySize()) {
                                     if (orders.isActive()) {
                                         setOrderTB(column, searchFor, orders, model);
                                     }
@@ -1262,7 +1190,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             break;
                         case "Family Size":
                             for (Order orders : allorders) {
-                                if((Integer.parseInt(searchFor))==orders.getFamilySize()) {
+                                if ((Integer.parseInt(searchFor)) == orders.getFamilySize()) {
                                     if (orders.isActive()) {
                                     } else {
                                         setOrderTB(column, searchFor, orders, model);
