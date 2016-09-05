@@ -9,7 +9,7 @@ package DSC;
  *
  * @author Aliens_Ross
  */
-public class Driver {
+public class Driver implements java.io.Serializable{
     private String driverID;
     private boolean address;
     private String contactNumber;

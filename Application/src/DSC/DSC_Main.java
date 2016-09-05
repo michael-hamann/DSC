@@ -1,5 +1,16 @@
 package DSC;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -763,7 +774,7 @@ public class DSC_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnChangeChartActionPerformed
 
     private void btnChangeStatisticsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeStatisticsActionPerformed
-
+        
     }//GEN-LAST:event_btnChangeStatisticsActionPerformed
 
     private void pnlBarChartActiveresizeCheck(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_pnlBarChartActiveresizeCheck
@@ -833,23 +844,23 @@ public class DSC_Main extends javax.swing.JFrame {
                     for (int i = 0; i < 10; i++) {
                         if (!DBClass.connected) {
                             Thread.sleep(500);
-                        }else{
+                        } else {
                             break;
                         }
                     }
                     if (!DBClass.connected) {
                         JOptionPane.showMessageDialog(null, "Could Not Connect To Database.\nYou will only be able to add orders.\nThey will be added to the database as soon as a connection can be made.", "Database Connection", JOptionPane.ERROR_MESSAGE);
                         System.err.println("Could Not Connect To Database.");
-                        new DSC_Place_Order(false);
-                    }else{
+                        new DSC_Place_Order(false).setVisible(true);
+                    } else {
                         main.setVisible(true);
                         main.toFront();
+                        main.writeOfflineOrdersToFirebase();
+
                     }
-                    
                 } catch (Exception e) {
 
                 }
-                
 
             }
         });
@@ -914,4 +925,52 @@ public class DSC_Main extends javax.swing.JFrame {
     private javax.swing.JPanel pnlTables;
     private javax.swing.JPanel pnlTextStats;
     // End of variables declaration//GEN-END:variables
+
+    protected void writeOfflineOrdersToFirebase() {
+        try {
+            ObjectInputStream orderIn = new ObjectInputStream(new FileInputStream("Offline Orders.ser"));
+            ArrayList<Order> orders = (ArrayList<Order>) orderIn.readObject();
+            Firebase ref = DBClass.getInstance().child("META-Data");
+            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot ds) {
+                    String lastOrderID = ds.child("OrderID").getValue(String.class);
+                    String lastClientID = ds.child("ClientID").getValue(String.class);
+                    DSC_Place_Order DSC = new DSC_Place_Order();
+                    for (Order order : orders) {
+                        order.setID(lastOrderID);
+                        order.getClient().setID(lastClientID);
+                        DSC.addOrderToFirebase(order, false);
+                        System.out.println(order.getClient().getName() + " " + order.getClient().getSurname() + " has been added to Firebase.");
+                        lastOrderID = "" + (Integer.parseInt(lastOrderID) + 1);
+                        lastClientID = "" + (Integer.parseInt(lastClientID) + 1);
+                        System.out.println(order.toString());
+                    }
+                    DSC.addToMetaData("ClientID", Integer.parseInt(lastClientID));
+                    DSC.addToMetaData("OrderID", Integer.parseInt(lastOrderID));
+
+                    try {
+                        ObjectOutputStream ordersOut = new ObjectOutputStream(new FileOutputStream("Offline Orders.ser"));
+                        ordersOut.writeObject(new ArrayList<Order>());
+                    } catch (FileNotFoundException e) {
+                        System.out.println("Warning:'Offline Orders.ser' File Not found");
+                    } catch (IOException e) {
+                        System.out.println("Error Removing 'Offline Orders.ser': " + e.getMessage());
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onCancelled(FirebaseError fe) {
+                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                }
+            });
+        } catch (FileNotFoundException ex) {
+            System.out.println("Warning:'Offline Orders.ser' File not Found");
+        } catch (IOException | ClassNotFoundException e) {
+            System.err.println("Could not read offline orders from serialised file.");
+            e.printStackTrace();
+        }
+    }
+
 }

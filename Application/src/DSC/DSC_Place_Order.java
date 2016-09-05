@@ -4,7 +4,6 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
-import java.awt.List;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -17,8 +16,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -32,37 +29,44 @@ public class DSC_Place_Order extends javax.swing.JFrame {
 
     private ArrayList<Meal> orderMeals = new ArrayList<>();
     private ArrayList<SuburbData> subList = new ArrayList<>();
-    private String clientID;
+    private String clientID = "1";
     private Calendar[] orderDates = new Calendar[4];
     private ArrayList<Route> routes = new ArrayList<>();
+    private boolean online;
+    private boolean connection;
 
     /**
      * Creates new form DSC_Main
      */
+    public DSC_Place_Order() {
+    }
+
     public DSC_Place_Order(boolean online) {
         //Connect and get all data from db
-
+        this.online = online;
         if (online) {
             initComponents();
+
+            rbtAfternoon.setEnabled(false);
+            rbtEvening.setEnabled(false);
+            rbtLateAfternoon.setEnabled(false);
+
             this.setExtendedState(JFrame.MAXIMIZED_BOTH);
             refreshTable();
             getSuburbs();
             getDates();
-
-            rbtAfternoon.setEnabled(false);
-            rbtEvening.setEnabled(false);
-            rbtLateAfternoon.setEnabled(false);
         } else {
+            retryConnection();
             initComponents();
-            this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-            refreshTable();
-            getSuburbsFromText();
-            getDates();
-
             rbtAfternoon.setEnabled(false);
             rbtEvening.setEnabled(false);
             rbtLateAfternoon.setEnabled(false);
             btnBack.setEnabled(false);
+
+            this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            refreshTable();
+            getSuburbsFromText();
+            getDates();
             lblName.setText(lblName.getText() + "          --Offline");
         }
     }
@@ -623,7 +627,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         });
 
         btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Save 2.png"))); // NOI18N
-        btnSave.setText(" Save");
+        btnSave.setText("Place Order");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSaveActionPerformed(evt);
@@ -768,6 +772,8 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         if (((clientAlternativeNumber.length() != 0 || clientContactNumber.length() != 10) || !clientContactNumber.matches("[0-9]+"))) {
             invalid += "\nAlternative Contact Number";
             allGood = false;
+        } else if (clientAlternativeNumber.isEmpty()) {
+            clientAlternativeNumber = "N/A";
         }
 
         String clientEmail = txfClientEmail.getText();
@@ -827,27 +833,47 @@ public class DSC_Place_Order extends javax.swing.JFrame {
 
         Order order = new Order(null, true, client, timeSlot, orderDate, null, routeID, orderMeals, null);
 
-        if (allGood) {
-            String clientID = "";
-            Firebase ref = DBClass.getInstance().child("META-Data");
-            ref.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot ds) {
-                    String clientID = ds.child("ClientID").getValue(Integer.class) + "";
-                    String orderID = ds.child("OrderID").getValue(Integer.class) + "";
-                    client.setID(clientID);
-                    order.setID(orderID);
+        if (allGood || true) {
 
-                    addToMetaData("OrderID", Integer.parseInt(orderID) + 1);
-                    addToMetaData("ClientID", Integer.parseInt(clientID) + 1);
-                    addDataToFirebase(order);
-                }
+            if (online) {
+                clientID = "";
+                Firebase ref = DBClass.getInstance().child("META-Data");
+                ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot ds) {
+                        String clientID = ds.child("ClientID").getValue(Integer.class) + "";
+                        String orderID = ds.child("OrderID").getValue(Integer.class) + "";
+                        client.setID(clientID);
+                        order.setID(orderID);
 
-                @Override
-                public void onCancelled(FirebaseError fe) {
-                    JOptionPane.showMessageDialog(null, "ERROR: " + fe, "Database Err", JOptionPane.ERROR_MESSAGE);
+                        addToMetaData("OrderID", Integer.parseInt(orderID) + 1);
+                        addToMetaData("ClientID", Integer.parseInt(clientID) + 1);
+                        addOrderToFirebase(order, true);
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError fe) {
+                        JOptionPane.showMessageDialog(null, "ERROR: " + fe, "Database Err", JOptionPane.ERROR_MESSAGE);
+                    }
+                });
+            } else {
+                client.setID(clientID);
+                order.setID(clientID);
+                clientID = "" + (Integer.parseInt(clientID) + 1);
+                writeOrdersToFile(order, client);
+                btnSave.setEnabled(true);
+
+                if (connection) {
+                    JOptionPane.showMessageDialog(null, "Connection to the database has been made. Your orders will now be entered to the database automatically. Opening Main Screen.", "Connection", JOptionPane.OK_OPTION);
+                    DSC_Main main = new DSC_Main();
+                    main.setVisible(true);
+                    main.writeOfflineOrdersToFirebase();
+                    this.dispose();
+                } else {
+                    resetFields();
                 }
-            });
+            }
+
         } else {
             JOptionPane.showMessageDialog(null, "Please fill in the following fields: " + invalid, "Warning", JOptionPane.WARNING_MESSAGE);
             btnSave.setEnabled(true);
@@ -1060,7 +1086,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
                 }
                 cmbClientSuburb.setModel(new DefaultComboBoxModel<>(subArr));
                 changeTimeSlots();
-                writeToText();
+                writeSuburbsToText();
             }
 
             @Override
@@ -1074,8 +1100,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
     private void getSuburbsFromText() {
         String path = "Suburb.ser";
         try {
-            FileInputStream subIn = new FileInputStream(path);
-            ObjectInputStream subRead = new ObjectInputStream(subIn);
+            ObjectInputStream subRead = new ObjectInputStream(new FileInputStream(path));
             routes = (ArrayList<Route>) subRead.readObject();
         } catch (IOException | ClassNotFoundException ex) {
             System.err.println("Could not get data from '" + path + "'.");
@@ -1109,15 +1134,23 @@ public class DSC_Place_Order extends javax.swing.JFrame {
                 }
             }
         }
-
+        System.out.println(subList.size());
         String[] subArr = new String[subList.size()];
-        Arrays.sort(subArr);
+
+        for (int i = 0; i < subArr.length; i++) {
+            subArr[i] = subList.get(i).suburb;
+        }
+
+        try {
+            Arrays.sort(subArr);
+        } catch (NullPointerException e) {
+        }
 
         cmbClientSuburb.setModel(new DefaultComboBoxModel<>(subArr));
         changeTimeSlots();
     }
 
-    private void writeToText() {
+    private void writeSuburbsToText() {
         int count = 0;
         try {
             ObjectOutputStream subOut = new ObjectOutputStream(new FileOutputStream("Suburb.ser"));
@@ -1127,6 +1160,36 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             System.err.println("Error: Could not write to existing file. (" + ex.toString() + ")");
             System.err.println("Creating new Serialized File.");
         }
+    }
+
+    private void writeOrdersToFile(Order order, Client client) {
+        String path = "Offline Orders.ser";
+        ArrayList<Order> offOrders = new ArrayList<>();
+        try {
+            ObjectInputStream ordersIn = new ObjectInputStream(new FileInputStream(path));
+            offOrders = (ArrayList<Order>) ordersIn.readObject();
+        } catch (FileNotFoundException e) {
+            try {
+                File file = new File(path);
+                file.createNewFile();
+            } catch (IOException ex) {
+                System.err.print("Error Writing'" + path + "' (FileNotFound): " + ex.getLocalizedMessage());
+            }
+        } catch (ClassNotFoundException | IOException io) {
+            System.err.print("Error Writing'" + path + "' (IOException) : " + io.getLocalizedMessage());
+        }
+        offOrders.add(order);
+
+        try {
+            ObjectOutputStream ordersOut = new ObjectOutputStream(new FileOutputStream(path));
+            ordersOut.writeObject(offOrders);
+            System.out.println("File Order's succsesfully topped up.");
+            JOptionPane.showMessageDialog(null, "Order Succsesfully added.", "Success", JOptionPane.PLAIN_MESSAGE);
+        } catch (IOException e) {
+            System.err.print("Error Writing '" + path + "' (IOException) : " + e.getLocalizedMessage());
+            e.printStackTrace();
+        }
+
     }
 
     private void changeTimeSlots() {
@@ -1155,7 +1218,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         }
     }
 
-    public void getDates() {
+    private void getDates() {
         Calendar currentDate = Calendar.getInstance();
         int counter = 0;
         String[] weeks = new String[4];
@@ -1180,7 +1243,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         ref.child(ids).setValue(value);
     }
 
-    public void addDataToFirebase(Order order) {
+    public void addOrderToFirebase(Order order, boolean orderPane) {
 
         Firebase ref = DBClass.getInstance().child("Clients");
 
@@ -1223,9 +1286,50 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         );
 
         ref.child(order.getID()).setValue(orderContainer);
-
+        if (orderPane) {
+            JOptionPane.showMessageDialog(null, "Order Succsesfully placed!", "Success", JOptionPane.PLAIN_MESSAGE);
+            btnBack.doClick();
+        }
     }
 
+    private void resetFields() {
+        txfClientName.setText("");
+        txfClientSurname.setText("");
+        txfClientContactNumber.setText("");
+        txfClientAlternativeNumber.setText("");
+        txfClientEmail.setText("");
+        ckbClientCollection.setSelected(false);
+        cmbClientSuburb.setSelectedIndex(0);
+        txaClientDeliveryAddress.setText("");
+        txfClientAdditionalInfo.setText("");
+
+        cmbSurveyReason.setSelectedIndex(0);
+        cmbSurveySource.setSelectedIndex(0);
+        txaSurveyComments.setText("");
+
+        cmbOrderDate.setSelectedIndex(0);
+        rbtMonToFri.setSelected(true);
+
+        orderMeals = new ArrayList<>();
+        refreshTable();
+    }
+
+    private void retryConnection() {
+        Firebase ref = DBClass.getInstance();
+        ref.child("META-Data/Connected").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot ds) {
+                connection = true;
+            }
+
+            @Override
+            public void onCancelled(FirebaseError fe) {
+                System.err.println("Error Trying To connect: " + fe.getMessage());
+            }
+        });
+    }
+
+//---------------------------------------------------------------------------------------------------------------------------AnonymousClasses        
     class ClientContainer {
 
         public String AdditionalInfo;
