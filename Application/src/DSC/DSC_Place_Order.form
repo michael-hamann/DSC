@@ -581,7 +581,6 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="componentResized" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="pnlOrderInfoComponentResized"/>
             <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="pnlOrderInfoPropertyChange"/>
           </Events>
 

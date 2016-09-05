@@ -774,7 +774,7 @@ public class DSC_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnChangeChartActionPerformed
 
     private void btnChangeStatisticsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeStatisticsActionPerformed
-        
+
     }//GEN-LAST:event_btnChangeStatisticsActionPerformed
 
     private void pnlBarChartActiveresizeCheck(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_pnlBarChartActiveresizeCheck
