@@ -804,8 +804,7 @@ public class DSC_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPlaceOrderActionPerformed
 
     private void btnAddNewSuburbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddNewSuburbActionPerformed
-        this.dispose();
-        new DSC_Place_Order(false).setVisible(true);
+        
     }//GEN-LAST:event_btnAddNewSuburbActionPerformed
 
     /**
