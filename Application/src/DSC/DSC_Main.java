@@ -811,13 +811,13 @@ public class DSC_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_pnlBarChartActiveresizeCheck
 
     private void btnPlaceOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlaceOrderActionPerformed
-        this.dispose();
-        new DSC_Place_Order(true).setVisible(true);
+//        this.dispose();
+//        new DSC_Place_Order(true).setVisible(true);
     }//GEN-LAST:event_btnPlaceOrderActionPerformed
 
     private void btnAddNewSuburbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddNewSuburbActionPerformed
-        this.dispose();
-        new DSC_Place_Order(false).setVisible(true);
+//        this.dispose();
+//        new DSC_Place_Order(false).setVisible(true);
     }//GEN-LAST:event_btnAddNewSuburbActionPerformed
 
     /**
@@ -863,7 +863,7 @@ public class DSC_Main extends javax.swing.JFrame {
                     if (!DBClass.connected) {
                         JOptionPane.showMessageDialog(null, "Could Not Connect To Database.\nYou will only be able to add orders.\nThey will be added to the database as soon as a connection can be made.", "Database Connection", JOptionPane.ERROR_MESSAGE);
                         System.err.println("Could Not Connect To Database.");
-                        new DSC_Place_Order(false);
+                        //new DSC_Place_Order(false);
                     } else {
                         main.setVisible(true);
                         main.toFront();
