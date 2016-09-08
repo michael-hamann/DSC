@@ -9,7 +9,7 @@ package DSC;
  *
  * @author Aliens_Ross
  */
-public class Meal implements java.io.Serializable{
+public class Meal {
     private int quantity;
     private String mealType;
     private String allergies;

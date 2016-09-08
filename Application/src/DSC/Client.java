@@ -10,7 +10,7 @@ package DSC;
 <<<<<<< HEAD
  * @author Aliens_Ross
  */
-public class Client implements java.io.Serializable{
+public class Client {
     
     private String clientID;
     private String name;
