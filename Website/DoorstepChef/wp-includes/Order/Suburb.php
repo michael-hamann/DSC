@@ -23,5 +23,5 @@ $uri = "https://dsc-database.firebaseio.com/";
 $firebase = new FirebaseLib($uri, $token);
 
 $routeData = $firebase->get("Routes/");
-echo json_encode($routeData);
+echo $routeData;
 ?>

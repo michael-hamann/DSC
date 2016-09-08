@@ -40,75 +40,92 @@ function getDates(dates) {
 //-------------------------------------------------------------------------*Data Reduction (PHP Side)
 function listSuburbs() {
 
-    var url = "/DoorstepChef/wp-includes/Order/Suburb.php";
-    allSuburbs = [
-        {suburb: "collection", timeframes: ""}
-    ];
-    routeInfo = [
-        {suburb: "", timeframe: "", routeID: "0"}
-    ];
-    var html = document.getElementById("pageContent").innerHTML;
-    document.getElementById("pageContent").innerHTML = "Loading ...";
 
-    jQuery.ajax({
-        type: 'get',
-        url: url,
-        success: function (data, textStatus, jqXHR) {
-            if (data !== "false") {
-                console.log(data);
-                document.getElementById("pageContent").innerHTML = html;
-                getDates("startDate");
 
-                var routeData = JSON.parse(JSON.parse(data));
-                console.log(routeData);
-                for (var i in routeData) {
-                    if (routeData[i].Active) {
-                        var arr = routeData[i].Suburbs;
-                        var arrTimes = routeData[i].TimeFrame;
-                        for (var j = 0; j < arr.length; j++) {
-                            var found = false;
-                            for (var k = 0; k < allSuburbs.length; k++) {
-                                if (allSuburbs[k].suburb === arr[j]) {
-                                    if (!allSuburbs[k].timeframes.includes(arrTimes)) {
-                                        allSuburbs[k].timeframes += arrTimes + ", ";
+    if (routeInfo == null) {
+        var url = "/DoorstepChef/wp-includes/Order/Suburb.php";
+
+        var html = document.getElementById("pageContent").innerHTML;
+        document.getElementById("pageContent").innerHTML = "Loading ...";
+        jQuery.ajax({
+            type: 'get',
+            url: url,
+            success: function (data, textStatus, jqXHR) {
+                if (data !== "false") {
+
+                    allSuburbs = [
+                        {suburb: "", timeframes: ""}
+                    ];
+                    routeInfo = [
+                        {suburb: "", timeframe: "", routeID: "0"}
+                    ];
+
+                    document.getElementById("pageContent").innerHTML = html;
+                    getDates("startDate");
+
+                    var routeData = JSON.parse(data);
+                    for (var i in routeData) {
+                        if (routeData[i].Active) {
+                            var arr = routeData[i].Suburbs;
+                            var arrTimes = routeData[i].TimeFrame;
+                            for (var j = 0; j < arr.length; j++) {
+                                var found = false;
+                                for (var k = 0; k < allSuburbs.length; k++) {
+                                    if (allSuburbs[k].suburb === arr[j]) {
+                                        if (!allSuburbs[k].timeframes.includes(arrTimes)) {
+                                            allSuburbs[k].timeframes += arrTimes + ", ";
+                                        }
+                                        found = true;
                                     }
-                                    found = true;
+                                }
+                                if (!found) {
+                                    allSuburbs.push({suburb: arr[j], timeframes: arrTimes + ", "});
                                 }
                             }
-                            if (!found) {
-                                allSuburbs.push({suburb: arr[j], timeframes: arrTimes + ", "});
+                        }
+                    }
+
+                    for (var i in routeData) {
+                        if (routeData[i].Active) {
+                            var arr = routeData[i].Suburbs;
+                            var arrTimes = routeData[i].TimeFrame;
+                            var routeID = i;
+                            for (var j = 0; j < arr.length; j++) {
+                                routeInfo.push({suburb: arr[j], timeframe: arrTimes, routeID: i});
                             }
+
                         }
                     }
-                }
 
-                for (var i in routeData) {
-                    if (routeData[i].Active) {
-                        var arr = routeData[i].Suburbs;
-                        var arrTimes = routeData[i].TimeFrame;
-                        var routeID = i;
-                        for (var j = 0; j < arr.length; j++) {
-                            routeInfo.push({suburb: arr[j], timeframe: arrTimes, routeID: i});
+                    var val = '<option hidden="" disabled="disabled" selected="selected">Please Select a Suburb</option>';
+                    for (var i = 1; i < allSuburbs.length; i++) {
+                        if (allSuburbs[i].suburb !== "Collection") {
+                            val += "<option>" + allSuburbs[i].suburb + "</option>";
                         }
-
+                        console.log(allSuburbs[i].suburb);
                     }
+
+                    document.getElementById("Suburb").innerHTML = val;
+                } else {
+                    document.getElementById("pageContent").innerHTML = "<a>ERROR 400: DATABASE CONNECTION COULD NOT BE ESTABLISHED</a>";
                 }
 
-                var val = '<option hidden="" disabled="disabled" selected="selected">Please Select a Suburb</option>';
-                for (var i = 1; i < allSuburbs.length; i++) {
-                    val += "<option>" + allSuburbs[i].suburb + "</option>";
-                }
-
-                document.getElementById("Suburb").innerHTML = val;
-            } else {
-                document.getElementById("pageContent").innerHTML = "<a>ERROR 400: DATABASE CONNECTION COULD NOT BE ESTABLISHED</a>";
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert("Failed to get Suburbs: " + errorThrown);
             }
-
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            alert("Failed to get Suburbs: " + errorThrown);
+        });
+    } else {
+        var val = '<option hidden="" disabled="disabled" selected="selected">Please Select a Suburb</option>';
+        for (var i = 1; i < allSuburbs.length; i++) {
+            if (allSuburbs[i].suburb !== "Collection") {
+                val += "<option>" + allSuburbs[i].suburb + "</option>";
+            }
+            console.log(allSuburbs[i].suburb);
         }
-    });
+
+        document.getElementById("Suburb").innerHTML = val;
+    }
 }
 
 
@@ -276,6 +293,8 @@ function findPos(obj) {
 }
 
 function submitData() {
+
+
     var allGood = true;
     var compFocus;
 
@@ -430,8 +449,8 @@ function submitData() {
 
 
 
-
     if (allGood) {
+        document.getElementById("submit").disabled = true;
         var jsonOrder = JSON.stringify({
             "clientName": clienName,
             "clientSurname": clientSurname,
@@ -465,7 +484,9 @@ function submitData() {
                 routeID: routeID},
             dataType: 'text',
             success: function (data, textStatus, jqXHR) {
-                document.getElementById("TestDisplay").innerHTML = data;
+                if (data === true) {
+                    alert("Order has been placed");
+                }
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 alert("Failed to add Order: " + errorThrown);

@@ -12,7 +12,7 @@ import java.util.Calendar;
  *
  * @author Aliens_Ross
  */
-public class Order {
+public class Order implements java.io.Serializable{
     private String orderID;
     private boolean active;
     private Client client;

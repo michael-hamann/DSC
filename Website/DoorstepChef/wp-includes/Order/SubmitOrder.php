@@ -14,6 +14,7 @@ try {
             ->create();
 } catch (TokenException $e) {
     echo "Error: " . $e->getMessage();
+    
 }
 
 $uri = "https://dsc-database.firebaseio.com/";
@@ -31,7 +32,7 @@ $clientArr = array(
     "Name" => $json["clientName"],
     "Address" => $json["address"],
     "AdditionalInfo" => $json["addInfo"],
-    "Alternative Number" => $json["altNum"],
+    "AlternativeNumber" => $json["altNum"],
     "ContactNum" => $json["contactNum"],
     "Email" => $json["email"],
     "Suburb" => $json["suburb"],
@@ -41,7 +42,7 @@ $clientArr = array(
 //$client = json_encode($clientArr);
 
 
-echo $firebase->set("/Clients/" . $clientID, $clientArr) . "\n";
+//echo $firebase->set("/Clients/" . $clientID, $clientArr) . "\n";
 $firebase->set("/META-Data/ClientID", $clientID + 1);
 
 $mealsArr = array(6);
@@ -68,7 +69,8 @@ $orderArr = array(
     "Meals" => $mealsArr
 );
 
-echo $firebase->set("/Orders/" . $orderID, $orderArr) . "\n";
+//echo $firebase->set("/Orders/" . $orderID, $orderArr) . "\n";
 $firebase->set("/META-Data/OrderID", $orderID + 1);
+echo true;
 ?>
 
