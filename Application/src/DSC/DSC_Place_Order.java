@@ -36,7 +36,6 @@ public class DSC_Place_Order extends javax.swing.JFrame {
     }
 
     public DSC_Place_Order(boolean online) {
-        //Connect and get all data from db
         this.online = online;
         if (online) {
             initComponents();
