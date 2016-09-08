@@ -12,7 +12,7 @@ import java.util.Calendar;
  *
  * @author Aliens_Ross
  */
-public class Order implements java.io.Serializable{
+public class Order {
     private String orderID;
     private boolean active;
     private Client client;
@@ -115,11 +115,6 @@ public class Order implements java.io.Serializable{
 
     public void setFamilySize(int familySize) {
         this.familySize = familySize;
-    }
-
-    @Override
-    public String toString() {
-        return "Order{" + "orderID=" + orderID + ", active=" + active + ", client=" + client + ", duration=" + duration + ", startingDate=" + startingDate + ", endDate=" + endDate + ", route=" + route + ", familySize=" + familySize + ", meals=" + meals + ", clientID=" + clientID + '}';
     }
     
     
