@@ -403,11 +403,6 @@ public class DSC_Place_Order extends javax.swing.JFrame {
 
         pnlOrderInfo.setBackground(new java.awt.Color(0, 204, 51));
         pnlOrderInfo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        pnlOrderInfo.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                pnlOrderInfoPropertyChange(evt);
-            }
-        });
 
         lblOrderInfo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblOrderInfo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -493,9 +488,9 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         pnlOrderInfoLayout.setHorizontalGroup(
             pnlOrderInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlOrderInfoLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(214, Short.MAX_VALUE)
                 .addComponent(lblOrderInfo)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(215, Short.MAX_VALUE))
             .addGroup(pnlOrderInfoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -575,7 +570,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
+                    .addComponent(jScrollPane5)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -615,7 +610,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         });
 
         btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Save 2.png"))); // NOI18N
-        btnSave.setText("Place Order");
+        btnSave.setText(" Save");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSaveActionPerformed(evt);
@@ -826,7 +821,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
 
         Order order = new Order(null, true, client, timeSlot, orderDate, null, routeID, orderMeals, familySize);
 
-        if (allGood) {
+        if (allGood || true) {
             if (online) {
                 clientID = "";
                 Firebase ref = DBClass.getInstance().child("META-Data");
@@ -841,6 +836,9 @@ public class DSC_Place_Order extends javax.swing.JFrame {
                         addToMetaData("OrderID", Integer.parseInt(orderID) + 1);
                         addToMetaData("ClientID", Integer.parseInt(clientID) + 1);
                         addOrderToFirebase(order, true);
+                        if (cmbSurveyReason.getSelectedIndex() == 0 || cmbSurveySource.getSelectedIndex() == 0) {
+                            writeSurveyInfo(online);
+                        }
                     }
 
                     @Override
@@ -854,7 +852,11 @@ public class DSC_Place_Order extends javax.swing.JFrame {
                 clientID = "" + (Integer.parseInt(clientID) + 1);
                 writeOrdersToFile(order);
                 btnSave.setEnabled(true);
-
+                
+                if (cmbSurveyReason.getSelectedIndex() == 0 || cmbSurveySource.getSelectedIndex() == 0) {
+                    writeSurveyInfo(online);
+                }
+                
                 if (connection) {
                     JOptionPane.showMessageDialog(null, "Connection to the database has been made. Your orders will now be entered to the database automatically. Opening Main Screen.", "Connection", JOptionPane.OK_OPTION);
                     DSC_Main main = new DSC_Main();
@@ -924,9 +926,6 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         this.setEnabled(false);
 
     }//GEN-LAST:event_btnAddMealActionPerformed
-
-    private void pnlOrderInfoPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_pnlOrderInfoPropertyChange
-    }//GEN-LAST:event_pnlOrderInfoPropertyChange
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddMeal;
@@ -1308,7 +1307,49 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         });
     }
 
+    private void writeSurveyInfo(boolean online) {
+        String reason = cmbSurveyReason.getSelectedItem().toString();
+        String source = cmbSurveySource.getSelectedItem().toString();
+        String comments = txaSurveyComments.getText();
+        SurveyContainer sc = new SurveyContainer(reason, source, comments, clientID);
+
+        if (online) {
+            Firebase ref = DBClass.getInstance();
+            ref.child("META-Data/SurveyID").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot ds) {
+                    int id = ds.getValue(Integer.class);
+                    ref.child("META-Data/SurveyID").setValue((id + 1));
+                    ref.child("Survey/" + id).setValue(sc);
+                }
+
+                @Override
+                public void onCancelled(FirebaseError fe) {
+                    System.err.println("Unable to connect to database" + fe.getDetails());
+                }
+            });
+        }else{
+            
+        }
+
+    }
+
 //---------------------------------------------------------------------------------------------------------------------------AnonymousClasses        
+    private class SurveyContainer {
+
+        public String Reason;
+        public String Source;
+        public String comments;
+        public String ClientID;
+
+        public SurveyContainer(String Reason, String Source, String comments, String ClientID) {
+            this.Reason = Reason;
+            this.Source = Source;
+            this.comments = comments;
+            this.ClientID = ClientID;
+        }
+    }
+
     private class ClientContainer {
 
         public String AdditionalInfo;
