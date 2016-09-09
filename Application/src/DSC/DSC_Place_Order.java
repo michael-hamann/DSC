@@ -4,12 +4,18 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -26,7 +32,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
     private String clientID = "1";
     private Calendar[] orderDates = new Calendar[4];
     private ArrayList<Route> routes = new ArrayList<>();
-    private boolean online;
+    private boolean online; 
     private boolean connection;
 
     /**
@@ -850,7 +856,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
                 client.setID(clientID);
                 order.setID(clientID);
                 clientID = "" + (Integer.parseInt(clientID) + 1);
-                writeOrdersToFile(order);
+                //writeOrdersToFile(order);
                 btnSave.setEnabled(true);
                 
                 if (cmbSurveyReason.getSelectedIndex() == 0 || cmbSurveySource.getSelectedIndex() == 0) {
@@ -1329,13 +1335,40 @@ public class DSC_Place_Order extends javax.swing.JFrame {
                 }
             });
         }else{
+            ArrayList<SurveyContainer> surveys = new ArrayList<>();
             
+            try {
+                ObjectInputStream surveyIn = new ObjectInputStream(new FileInputStream("Offline Surveys.ser"));
+                surveys = (ArrayList<SurveyContainer>)surveyIn.readObject();
+            } catch (FileNotFoundException e){
+                try {
+                    new File("Offline Surveys.ser").createNewFile();
+                } catch (IOException ex) {
+                    System.err.print("Error: Could not create new File: ");
+                    ex.printStackTrace();
+                }
+            } catch (IOException ex) {
+                System.err.print("Error Reading File 'Offline Surveys.ser': ");
+                ex.printStackTrace();
+            } catch (ClassNotFoundException ec){
+                
+            }
+           
+            surveys.add(new SurveyContainer(reason, source, comments, clientID));
+            try {
+                ObjectOutputStream surveyOut = new ObjectOutputStream(new FileOutputStream("Offline Surveys.ser"));
+                surveyOut.writeObject(surveys);
+                System.out.println("Surveys succesfully written!");
+            } catch (IOException ex) {
+                System.err.print("Error: Could not create Survey File: ");
+                ex.printStackTrace();
+            }
         }
 
     }
 
 //---------------------------------------------------------------------------------------------------------------------------AnonymousClasses        
-    private class SurveyContainer {
+    private class SurveyContainer implements java.io.Serializable{
 
         public String Reason;
         public String Source;
