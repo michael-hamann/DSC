@@ -32,8 +32,6 @@ public class DSC_Main extends javax.swing.JFrame {
     public DSC_Main() {
         DBClass.getInstance();
         initComponents();
-        pnlBarChartActive.removeAll();
-        pnlBarChartActive.repaint();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
     }
@@ -123,11 +121,11 @@ public class DSC_Main extends javax.swing.JFrame {
         pnlHeadingLayout.setHorizontalGroup(
             pnlHeadingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlHeadingLayout.createSequentialGroup()
-                .addContainerGap(384, Short.MAX_VALUE)
+                .addContainerGap(386, Short.MAX_VALUE)
                 .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(385, Short.MAX_VALUE))
+                .addContainerGap(387, Short.MAX_VALUE))
         );
         pnlHeadingLayout.setVerticalGroup(
             pnlHeadingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -340,12 +338,13 @@ public class DSC_Main extends javax.swing.JFrame {
             .addGap(0, 492, Short.MAX_VALUE)
         );
 
-        pnlTextStats.setBackground(new java.awt.Color(0, 0, 0));
+        pnlTextStats.setBackground(new java.awt.Color(102, 102, 102));
         pnlTextStats.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         pnlTextStats.setForeground(new java.awt.Color(255, 255, 255));
+        pnlTextStats.setMinimumSize(new java.awt.Dimension(30, 30));
 
-        pnlMealTypeStats.setBackground(new java.awt.Color(0, 0, 0));
-        pnlMealTypeStats.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Meal Type Stats", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
+        pnlMealTypeStats.setBackground(new java.awt.Color(102, 102, 102));
+        pnlMealTypeStats.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Meal Type Stats", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(255, 255, 255))); // NOI18N
         pnlMealTypeStats.setForeground(new java.awt.Color(255, 255, 255));
 
         lblStandardMeal.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
@@ -364,6 +363,7 @@ public class DSC_Main extends javax.swing.JFrame {
         jLabel28.setForeground(new java.awt.Color(255, 255, 255));
         jLabel28.setText("Meal Type");
 
+        jLabel29.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(255, 255, 255));
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel29.setText("Total");
@@ -494,15 +494,16 @@ public class DSC_Main extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        pnlFamilySizeStats.setBackground(new java.awt.Color(0, 0, 0));
-        pnlFamilySizeStats.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Family Size Stats", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
+        pnlFamilySizeStats.setBackground(new java.awt.Color(102, 102, 102));
+        pnlFamilySizeStats.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Family Size Stats", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(255, 255, 255))); // NOI18N
 
+        jLabel25.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         jLabel25.setForeground(new java.awt.Color(255, 255, 255));
         jLabel25.setText("Family size");
 
         lblSingleFamilySize.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         lblSingleFamilySize.setForeground(new java.awt.Color(255, 255, 255));
-        lblSingleFamilySize.setText("Single  (1)");
+        lblSingleFamilySize.setText("Single   (1)");
 
         lblCoupleFamilySize.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         lblCoupleFamilySize.setForeground(new java.awt.Color(255, 255, 255));
@@ -554,6 +555,7 @@ public class DSC_Main extends javax.swing.JFrame {
         lblSixFamilySizeTotal.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lblSixFamilySizeTotal.setText("0");
 
+        jLabel40.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         jLabel40.setForeground(new java.awt.Color(255, 255, 255));
         jLabel40.setText("Orders Of Family Size");
 
@@ -734,7 +736,7 @@ public class DSC_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDriverTblActionPerformed
 
     private void btnDriverRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDriverRptActionPerformed
-        //DriverReport.getDriverData_Clientstb();
+        Reports.createDriverReport();
     }//GEN-LAST:event_btnDriverRptActionPerformed
 
     private void btnChefRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChefRptActionPerformed

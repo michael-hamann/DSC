@@ -10,7 +10,6 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
-import com.sun.prism.paint.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -43,11 +42,13 @@ public class Reports {
     public static ArrayList<String> setRouteNumber = new ArrayList();
     public static ArrayList<String> setWeekNumber = new ArrayList();
     public static ArrayList<String> getDriverReportData = new ArrayList();
+    ArrayList<DriverReportData> driverData = new ArrayList<>();
     public static String standardSheet[] = {"Yes/No", "Name", "Surname", "Contact", "EFT", "Cash", "Date", "Mon", "Tue", "Wed", "Thurs", "Fri", "Address", "AdditionalInfo"};
     public static int iterate = 0;
     public static CellStyle cs;
 
     public static void createDriverReport() {
+
         tableRef = DBClass.getInstance().child("Clients");// Go to specific Table]\
 
         tableRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -55,13 +56,14 @@ public class Reports {
             public void onDataChange(DataSnapshot ds) {
 
                 for (DataSnapshot Data : ds.getChildren()) {// entire database
-
-                    getDriverReportData.add(Data.child("Name").getValue() + "");
-                    getDriverReportData.add(Data.child("Surname").getValue() + "");
-                    getDriverReportData.add(Data.child("ContactNum").getValue() + "");
-                    getDriverReportData.add(Data.child("Address").getValue() + "");
-                    getDriverReportData.add(Data.child("AdditionalInfo").getValue() + "");
-
+                    
+                    DriverReportData driverData =  new DriverReportData();
+                    driverData.setName((String) Data.child("Name").getValue());
+                    driverData.setSurname((String) Data.child("Surname").getValue());
+                    driverData.setContactNumber((String) Data.child("Address").getValue());
+                    driverData.setAddress((String) Data.child("Address").getValue());
+                    driverData.setAdditionalInfo((String) Data.child("AdditionalInfo").getValue());
+                    
                 }
 
             }
@@ -114,7 +116,7 @@ public class Reports {
 
                                                         cs = workbook.createCellStyle();
                                                         cs.setWrapText(true);
-                                                        
+
                                                         cell.setCellStyle(cs);
 
                                                         row.setHeightInPoints((2 * spreadsheet.getDefaultRowHeightInPoints()));
@@ -128,7 +130,7 @@ public class Reports {
                                                             cell = row.createCell(count);
                                                             cell.setCellValue(values);
 
-                                                            if (count > 4) {                                                               
+                                                            if (count > 4) {
                                                                 cell.setCellValue("\n");
                                                             }
 
