@@ -18,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Aliens_Amina
  */
 public class DSC_ViewOrder extends javax.swing.JFrame {
-
+    boolean orderEdited = false;
     boolean editClicked = false;
     ArrayList<Client> allclients = new ArrayList<>();
     ArrayList<Order> allorders = new ArrayList<>();
@@ -114,7 +114,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         if (txfClientName.getText().isEmpty() || txfClientSurname.getText().isEmpty() || txfClientContactNo.getText().isEmpty()
                 || txfClientAddress.getText().isEmpty() || txfAddInfo.getText().isEmpty()
                 || txfClientContactNo.getText().isEmpty() || txfAltNum.getText().isEmpty() || txfClientEmail.getText().isEmpty()
-                || cmbSuburbs.getSelectedIndex() == 0) {
+                ) {//|| cmbSuburbs.getSelectedIndex() == 0
             empty = true;
         }
 
@@ -186,7 +186,6 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             allmeals, Data.child("FamilySize").getValue(int.class));
 
                     allorders.add(o);
-                    System.out.println(o.getFamilySize());
                     String clientID = Data.child("ClientID").getValue(String.class);
                     for (Client c : allclients) {
                         if (c.getID().equals(clientID)) {
@@ -260,7 +259,6 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     mealmodel.addRow(meals.returnObj());
                 }
                 mealmodel.fireTableDataChanged();
-
             }
         });
     }
@@ -716,6 +714,11 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         lblEndDate.setText("End Date:");
 
         btnDeactivate.setText("Deactivate");
+        btnDeactivate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeactivateActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlDetailsLayout = new javax.swing.GroupLayout(pnlDetails);
         pnlDetails.setLayout(pnlDetailsLayout);
@@ -930,7 +933,6 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         
         Firebase upd = DBClass.getInstance().child("Clients/" + allclients.get(tblOrderTable.getSelectedRow()).getID());
-        System.out.println(upd);
         boolean empty = checkEmpty();
 
         if (empty) {
@@ -945,9 +947,18 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             clientinfo.put("Address", txfClientAddress.getText().trim());
             clientinfo.put("Email", txfClientEmail.getText().trim());
             clientinfo.put("Suburb", (String) cmbSuburbs.getSelectedItem());
-
+           
             upd.updateChildren(clientinfo);
 
+//            if(orderEdited){
+//                 Firebase updorder = DBClass.getInstance().child("Orders/" + allclients.get(tblOrderTable.getSelectedRow()).getID());
+//            }
+//
+//            allclients.clear();
+//            allorders.clear();
+//            setClients();
+//            setOrders();
+            
             disableFieldsClient();
             btnSave.setVisible(false);
             btnEditOrder.setEnabled(true);
@@ -1055,6 +1066,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
                     break;
                 case "Active":
+                    btnDeactivate.setEnabled(true);
                     switch (column) {
                         case "Name":
                             for (Order orders : allorders) {
@@ -1126,7 +1138,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     break;
                 case "Inactive":
                     model.setRowCount(0);
-
+                    btnDeactivate.setEnabled(false);
                     switch (column) {
                         case "Name":
                             for (Order orders : allorders) {
@@ -1223,6 +1235,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         btnEditOrder.setEnabled(false);
         btnSave.setEnabled(true);
         editClicked = true;
+        orderEdited = true;
     }//GEN-LAST:event_btnEditOrderActionPerformed
 
     private void btnEndDateAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEndDateAddActionPerformed
@@ -1240,6 +1253,17 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     private void txfSearchPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_txfSearchPropertyChange
         // TODO add your handling code here:
     }//GEN-LAST:event_txfSearchPropertyChange
+
+    private void btnDeactivateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeactivateActionPerformed
+        
+        Firebase updorder = DBClass.getInstance().child("Orders/" + allorders.get(tblOrderTable.getSelectedRow()).getID());
+        
+            Map<String, Object> orderinfo = new HashMap();
+            orderinfo.put("Active", false);
+            
+            updorder.updateChildren(orderinfo);
+
+    }//GEN-LAST:event_btnDeactivateActionPerformed
 
     /**
      * @param args the command line arguments
