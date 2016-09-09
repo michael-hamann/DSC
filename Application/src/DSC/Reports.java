@@ -19,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.RichTextString;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -30,22 +31,23 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  */
 public class Reports {
 
-    public static String routeNumber = "";
-    public static String route = "Route: ";
-    public static XSSFWorkbook workbook = new XSSFWorkbook();
-    public static XSSFSheet spreadsheet;
-    public static XSSFRow row;
-    public static XSSFCell cell;
-    public static FileOutputStream out;
-    public static int counter = 1;
-    public static ArrayList<String> setDriverName = new ArrayList();
-    public static ArrayList<String> setRouteNumber = new ArrayList();
-    public static ArrayList<String> setWeekNumber = new ArrayList();
-    public static ArrayList<String> getDriverReportData = new ArrayList();
-    ArrayList<DriverReportData> driverData = new ArrayList<>();
-    public static String standardSheet[] = {"Yes/No", "Name", "Surname", "Contact", "EFT", "Cash", "Date", "Mon", "Tue", "Wed", "Thurs", "Fri", "Address", "AdditionalInfo"};
-    public static int iterate = 0;
-    public static CellStyle cs;
+    private static String routeNumber = "";
+    private static String route = "Route: ";
+    private static XSSFWorkbook workbook = new XSSFWorkbook();
+    private static XSSFSheet spreadsheet;
+    private static XSSFRow row;
+    private static XSSFCell cell;
+    private static FileOutputStream out;
+    private static int counter = 1;
+    private static ArrayList<String> setDriverName = new ArrayList();
+    private static ArrayList<String> setRouteNumber = new ArrayList();
+    private static ArrayList<String> setWeekNumber = new ArrayList();
+    private static ArrayList<String> getDriverReportData = new ArrayList();
+    private static ArrayList<DriverReportData> driverData = new ArrayList<>();
+    private static String standardSheet[] = {"Yes/No", "Name", "Surname", "Contact", "EFT", "Cash", "Date Paid", "Mon", "Tue", "Wed", "Thurs", "Fri", "Address", "AdditionalInfo"};
+    private static int iterate = 0;
+    private static CellStyle cs;
+    private static int count = 0;
 
     public static void createDriverReport() {
 
@@ -56,14 +58,15 @@ public class Reports {
             public void onDataChange(DataSnapshot ds) {
 
                 for (DataSnapshot Data : ds.getChildren()) {// entire database
-                    
-                    DriverReportData driverData =  new DriverReportData();
-                    driverData.setName((String) Data.child("Name").getValue());
-                    driverData.setSurname((String) Data.child("Surname").getValue());
-                    driverData.setContactNumber((String) Data.child("Address").getValue());
-                    driverData.setAddress((String) Data.child("Address").getValue());
-                    driverData.setAdditionalInfo((String) Data.child("AdditionalInfo").getValue());
-                    
+
+                    DriverReportData driverObj = new DriverReportData();
+                    driverObj.setName((String) Data.child("Name").getValue());
+                    driverObj.setSurname((String) Data.child("Surname").getValue());
+                    driverObj.setContactNumber((String) Data.child("Address").getValue());
+                    driverObj.setAddress((String) Data.child("Address").getValue());
+                    driverObj.setAdditionalInfo((String) Data.child("AdditionalInfo").getValue());
+                    driverData.add(driverObj);
+
                 }
 
             }
@@ -89,15 +92,15 @@ public class Reports {
                             for (DataSnapshot Data3 : Data2.getChildren()) {
                                 if (!Data2.getKey().equals("Suburbs")) {
                                     try {
-                                        for (; iterate < 10; iterate++) {
+                                        for (DriverReportData o : driverData) {
 
                                             setDriverName.add("Driver: " + Data3.child("DriverName").getValue() + "");
                                             setRouteNumber.add(route + routeNumber);
                                             setWeekNumber.add("Week: " + "1");
 
-                                            for (int rows = 0; rows < 10; rows++) {
+                                            for (int rows = 0; rows < driverData.size(); rows++) {
                                                 row = spreadsheet.createRow(rows);
-                                                for (int col = 0; col < 10; col++) {
+                                                for (int col = 0; col < 50; col++) {
                                                     if (col == 0 && rows == 0) {
                                                         cell = row.createCell(col);
                                                         cell.setCellValue(setRouteNumber.get(iterate));
@@ -114,29 +117,17 @@ public class Reports {
                                                         }
                                                     } else if (col > 2 && rows > 2) {
 
-                                                        cs = workbook.createCellStyle();
-                                                        cs.setWrapText(true);
-
-                                                        cell.setCellStyle(cs);
-
-                                                        row.setHeightInPoints((2 * spreadsheet.getDefaultRowHeightInPoints()));
-
-                                                        spreadsheet.autoSizeColumn((short) 2);
-                                                        int count = 1;
-                                                        for (int arrayListCount = 0; arrayListCount < getDriverReportData.size(); arrayListCount++) {
-                                                            String values = getDriverReportData.get(arrayListCount);
-
-                                                            System.out.println(values);
+//                                                        cs = workbook.createCellStyle();
+//                                                        cs.setWrapText(true);
+//                                                        cell.setCellStyle(cs);
+//                                                        row.setHeightInPoints((2 * spreadsheet.getDefaultRowHeightInPoints()));
+//                                                        spreadsheet.autoSizeColumn((short) 2);
+                                                       
+                                                            System.out.println(o.getName());
                                                             cell = row.createCell(count);
-                                                            cell.setCellValue(values);
-
-                                                            if (count > 4) {
-                                                                cell.setCellValue("\n");
-                                                            }
-
+                                                            cell.setCellValue(o.getName());
                                                             count++;
-
-                                                        }
+                                                        
 
                                                     }
 
@@ -165,7 +156,6 @@ public class Reports {
 
             }
 
-            //        
             @Override
             public void onCancelled(FirebaseError fe) {
                 throw new UnsupportedOperationException("Error: " + fe.getMessage()); //To change body of generated methods, choose Tools | Templates.

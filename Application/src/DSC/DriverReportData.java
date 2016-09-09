@@ -5,8 +5,6 @@
  */
 package DSC;
 
-import static DSC.Reports.getDriverReportData;
-
 /**
  *
  * @author Aliens_Keanu
@@ -28,7 +26,7 @@ public class DriverReportData {
     }
 
     DriverReportData() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       
     }
 
     public String getName() {
