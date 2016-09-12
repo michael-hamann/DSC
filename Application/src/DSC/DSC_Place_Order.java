@@ -32,8 +32,10 @@ public class DSC_Place_Order extends javax.swing.JFrame {
     private String clientID = "1";
     private Calendar[] orderDates = new Calendar[4];
     private ArrayList<Route> routes = new ArrayList<>();
-    private boolean online; 
+    private boolean online;
     private boolean connection;
+    private String surveyReasons[];
+    private String surveySources[];
 
     /**
      * Creates new form DSC_Main
@@ -43,31 +45,28 @@ public class DSC_Place_Order extends javax.swing.JFrame {
 
     public DSC_Place_Order(boolean online) {
         this.online = online;
+
         if (online) {
             initComponents();
-
-            rbtAfternoon.setEnabled(false);
-            rbtEvening.setEnabled(false);
-            rbtLateAfternoon.setEnabled(false);
-
-            this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-            refreshTable();
             getSuburbs();
-            getDates();
         } else {
             retryConnection();
             initComponents();
-
-            rbtAfternoon.setEnabled(false);
-            rbtEvening.setEnabled(false);
-            rbtLateAfternoon.setEnabled(false);
             btnBack.setEnabled(false);
-            this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-            refreshTable();
             getSuburbsFromText();
-            getDates();
             lblName.setText(lblName.getText() + "          --Offline");
         }
+
+        surveyReasons = getSurveyReasons();
+        surveySources = getSurveySources();
+        cmbSurveyReason.setModel(new DefaultComboBoxModel<>(surveyReasons));
+        cmbSurveySource.setModel(new DefaultComboBoxModel<>(surveySources));
+        getDates();
+        refreshTable();
+        rbtAfternoon.setEnabled(false);
+        rbtEvening.setEnabled(false);
+        rbtLateAfternoon.setEnabled(false);
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     @SuppressWarnings("unchecked")
@@ -336,10 +335,29 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         lblSurveyComments.setText("Comments: ");
 
         cmbSurveyReason.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbSurveyReason.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+                cmbSurveyReasonPopupMenuWillBecomeVisible(evt);
+            }
+        });
 
         cmbSurveySource.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbSurveySource.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+                cmbSurveySourcePopupMenuWillBecomeVisible(evt);
+            }
+        });
 
         txaSurveyComments.setColumns(20);
+        txaSurveyComments.setLineWrap(true);
         txaSurveyComments.setRows(2);
         txaSurveyComments.setWrapStyleWord(true);
         jScrollPane3.setViewportView(txaSurveyComments);
@@ -834,7 +852,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
                 ref.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot ds) {
-                        String clientID = ds.child("ClientID").getValue(Integer.class) + "";
+                        clientID = ds.child("ClientID").getValue(Integer.class) + "";
                         String orderID = ds.child("OrderID").getValue(Integer.class) + "";
                         client.setID(clientID);
                         order.setID(orderID);
@@ -842,9 +860,6 @@ public class DSC_Place_Order extends javax.swing.JFrame {
                         addToMetaData("OrderID", Integer.parseInt(orderID) + 1);
                         addToMetaData("ClientID", Integer.parseInt(clientID) + 1);
                         addOrderToFirebase(order, true);
-                        if (cmbSurveyReason.getSelectedIndex() == 0 || cmbSurveySource.getSelectedIndex() == 0) {
-                            writeSurveyInfo(online);
-                        }
                     }
 
                     @Override
@@ -856,13 +871,13 @@ public class DSC_Place_Order extends javax.swing.JFrame {
                 client.setID(clientID);
                 order.setID(clientID);
                 clientID = "" + (Integer.parseInt(clientID) + 1);
-                //writeOrdersToFile(order);
+                writeOrdersToFile(order);
                 btnSave.setEnabled(true);
-                
-                if (cmbSurveyReason.getSelectedIndex() == 0 || cmbSurveySource.getSelectedIndex() == 0) {
+
+                if (cmbSurveyReason.getSelectedIndex() != 0 && cmbSurveySource.getSelectedIndex() != 0) {
                     writeSurveyInfo(online);
                 }
-                
+
                 if (connection) {
                     JOptionPane.showMessageDialog(null, "Connection to the database has been made. Your orders will now be entered to the database automatically. Opening Main Screen.", "Connection", JOptionPane.OK_OPTION);
                     DSC_Main main = new DSC_Main();
@@ -932,6 +947,24 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         this.setEnabled(false);
 
     }//GEN-LAST:event_btnAddMealActionPerformed
+
+    private void cmbSurveyReasonPopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cmbSurveyReasonPopupMenuWillBecomeVisible
+        String[] arr = new String[surveyReasons.length - 1];
+        for (int i = 0; i < surveyReasons.length - 1; i++) {
+            arr[i] = surveyReasons[i + 1];
+        }
+
+        cmbSurveyReason.setModel(new DefaultComboBoxModel<>(arr));
+    }//GEN-LAST:event_cmbSurveyReasonPopupMenuWillBecomeVisible
+
+    private void cmbSurveySourcePopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cmbSurveySourcePopupMenuWillBecomeVisible
+        String[] arr = new String[surveySources.length - 1];
+        for (int i = 0; i < surveySources.length - 1; i++) {
+            arr[i] = surveySources[i + 1];
+        }
+
+        cmbSurveySource.setModel(new DefaultComboBoxModel<>(arr));
+    }//GEN-LAST:event_cmbSurveySourcePopupMenuWillBecomeVisible
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddMeal;
@@ -1273,6 +1306,9 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         );
 
         ref.child(order.getID()).setValue(orderContainer);
+        if (cmbSurveyReason.getSelectedIndex() != 0 && cmbSurveySource.getSelectedIndex() != 0) {
+            writeSurveyInfo(online);
+        }
         if (orderPane) {
             JOptionPane.showMessageDialog(null, "Order Succsesfully placed!", "Success", JOptionPane.PLAIN_MESSAGE);
             btnBack.doClick();
@@ -1334,13 +1370,13 @@ public class DSC_Place_Order extends javax.swing.JFrame {
                     System.err.println("Unable to connect to database" + fe.getDetails());
                 }
             });
-        }else{
+        } else {
             ArrayList<SurveyContainer> surveys = new ArrayList<>();
-            
+
             try {
                 ObjectInputStream surveyIn = new ObjectInputStream(new FileInputStream("Offline Surveys.ser"));
-                surveys = (ArrayList<SurveyContainer>)surveyIn.readObject();
-            } catch (FileNotFoundException e){
+                surveys = (ArrayList<SurveyContainer>) surveyIn.readObject();
+            } catch (FileNotFoundException e) {
                 try {
                     new File("Offline Surveys.ser").createNewFile();
                 } catch (IOException ex) {
@@ -1350,10 +1386,11 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             } catch (IOException ex) {
                 System.err.print("Error Reading File 'Offline Surveys.ser': ");
                 ex.printStackTrace();
-            } catch (ClassNotFoundException ec){
-                
+            } catch (ClassNotFoundException ec) {
+                System.err.print("Error:");
+                ec.printStackTrace();
             }
-           
+
             surveys.add(new SurveyContainer(reason, source, comments, clientID));
             try {
                 ObjectOutputStream surveyOut = new ObjectOutputStream(new FileOutputStream("Offline Surveys.ser"));
@@ -1367,18 +1404,28 @@ public class DSC_Place_Order extends javax.swing.JFrame {
 
     }
 
+    private String[] getSurveyReasons() {
+        String[] arr = {"Item1", "Item2", "Item3", "Item4", "Item5", "Item6", "Item7", "Item8", "Item9"};
+        return arr;
+    }
+
+    private String[] getSurveySources() {
+        String[] arr = {"Item1", "Item2", "Item3", "Item4", "Item5", "Item6", "Item7", "Item8", "Item9"};
+        return arr;
+    }
+
 //---------------------------------------------------------------------------------------------------------------------------AnonymousClasses        
-    private class SurveyContainer implements java.io.Serializable{
+    private class SurveyContainer implements java.io.Serializable {
 
         public String Reason;
         public String Source;
-        public String comments;
+        public String Comments;
         public String ClientID;
 
         public SurveyContainer(String Reason, String Source, String comments, String ClientID) {
             this.Reason = Reason;
             this.Source = Source;
-            this.comments = comments;
+            this.Comments = comments;
             this.ClientID = ClientID;
         }
     }
