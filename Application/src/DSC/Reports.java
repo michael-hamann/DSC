@@ -15,11 +15,15 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.RichTextString;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -62,7 +66,7 @@ public class Reports {
                     DriverReportData driverObj = new DriverReportData();
                     driverObj.setName((String) Data.child("Name").getValue());
                     driverObj.setSurname((String) Data.child("Surname").getValue());
-                    driverObj.setContactNumber((String) Data.child("Address").getValue());
+                    driverObj.setContactNumber((String) Data.child("ContactNum").getValue());
                     driverObj.setAddress((String) Data.child("Address").getValue());
                     driverObj.setAdditionalInfo((String) Data.child("AdditionalInfo").getValue());
                     driverData.add(driverObj);
@@ -94,47 +98,33 @@ public class Reports {
                                     try {
                                         for (DriverReportData o : driverData) {
 
-                                            setDriverName.add("Driver: " + Data3.child("DriverName").getValue() + "");
-                                            setRouteNumber.add(route + routeNumber);
-                                            setWeekNumber.add("Week: " + "1");
-
-                                            for (int rows = 0; rows < driverData.size(); rows++) {
-                                                row = spreadsheet.createRow(rows);
-                                                for (int col = 0; col < 50; col++) {
-                                                    if (col == 0 && rows == 0) {
-                                                        cell = row.createCell(col);
-                                                        cell.setCellValue(setRouteNumber.get(iterate));
-                                                    } else if (col == 3 && rows == 0) {
-                                                        cell = row.createCell(col);
-                                                        cell.setCellValue(setDriverName.get(iterate));
-                                                    } else if (col == 8 && rows == 0) {
-                                                        cell = row.createCell(col);
-                                                        cell.setCellValue(setWeekNumber.get(iterate));
-                                                    } else if (col == 0 && rows == 1) {
-                                                        for (int b = 0; b < standardSheet.length; b++) {
-                                                            cell = row.createCell(b);
-                                                            cell.setCellValue(standardSheet[b]);
+                                            for (int c = 0; c < 2; c++) {
+                                                
+                                                Map<String, Object[]> data = new TreeMap<String, Object[]>();
+                                                
+                                                data.put("1", new Object[]{"Yes/No", "Name", "Surname", "Contact", "EFT", "Cash", "Date Paid", "Mon", "Tue", "Wed", "Thurs", "Fri", "Address", "AdditionalInfo"});
+                                                
+                                                for (int i = 0; i < 2; i++) {
+                                                    data.put("2", new Object[]{"", o.getName(), o.getSurname(), o.getContactNumber(), "", "", "", "", "", "", "", "", o.getAddress(), o.getAdditionalInfo()});
+                                                }
+                                                //Iterate over data and write to sheet
+                                                Set<String> keyset = data.keySet();
+                                                int rownum = 0;
+                                                for (String key : keyset) {
+                                                    Row row = spreadsheet.createRow(rownum++);
+                                                    Object[] objArr = data.get(key);
+                                                    int cellnum = 0;
+                                                    for (Object obj : objArr) {
+                                                        Cell cell = row.createCell(cellnum++);
+                                                        if (obj instanceof String) {
+                                                            cell.setCellValue((String) obj);
+                                                        } else if (obj instanceof Integer) {
+                                                            cell.setCellValue((Integer) obj);
                                                         }
-                                                    } else if (col > 2 && rows > 2) {
-
-//                                                        cs = workbook.createCellStyle();
-//                                                        cs.setWrapText(true);
-//                                                        cell.setCellStyle(cs);
-//                                                        row.setHeightInPoints((2 * spreadsheet.getDefaultRowHeightInPoints()));
-//                                                        spreadsheet.autoSizeColumn((short) 2);
-                                                       
-                                                            System.out.println(o.getName());
-                                                            cell = row.createCell(count);
-                                                            cell.setCellValue(o.getName());
-                                                            count++;
-                                                        
-
                                                     }
-
                                                 }
                                             }
                                         }
-
                                     } catch (Exception e) {
 
                                     }
@@ -157,10 +147,12 @@ public class Reports {
             }
 
             @Override
-            public void onCancelled(FirebaseError fe) {
+            public void onCancelled(FirebaseError fe
+            ) {
                 throw new UnsupportedOperationException("Error: " + fe.getMessage()); //To change body of generated methods, choose Tools | Templates.
             }
-        });
+        }
+        );
 
     }
 
