@@ -298,11 +298,6 @@ public class DSC_Main extends javax.swing.JFrame {
                 pnlBarChartActiveresizeCheck(evt);
             }
         });
-        pnlBarChartActive.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                pnlBarChartActiveMouseClicked(evt);
-            }
-        });
 
         javax.swing.GroupLayout pnlBarChartActiveLayout = new javax.swing.GroupLayout(pnlBarChartActive);
         pnlBarChartActive.setLayout(pnlBarChartActiveLayout);
@@ -331,11 +326,6 @@ public class DSC_Main extends javax.swing.JFrame {
 
         pnlBarChartInActive.setBackground(new java.awt.Color(102, 102, 102));
         pnlBarChartInActive.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        pnlBarChartInActive.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                pnlBarChartInActiveMousePressed(evt);
-            }
-        });
 
         javax.swing.GroupLayout pnlBarChartInActiveLayout = new javax.swing.GroupLayout(pnlBarChartInActive);
         pnlBarChartInActive.setLayout(pnlBarChartInActiveLayout);
@@ -816,16 +806,9 @@ public class DSC_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPlaceOrderActionPerformed
 
     private void btnAddNewSuburbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddNewSuburbActionPerformed
-
+        new DSC_Place_Order(false).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnAddNewSuburbActionPerformed
-
-    private void pnlBarChartActiveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlBarChartActiveMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_pnlBarChartActiveMouseClicked
-
-    private void pnlBarChartInActiveMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlBarChartInActiveMousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_pnlBarChartInActiveMousePressed
 
     /**
      * @param args the command line arguments
