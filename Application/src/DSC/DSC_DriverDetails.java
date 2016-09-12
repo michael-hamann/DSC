@@ -1,10 +1,7 @@
 
 package DSC;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -15,7 +12,8 @@ import javax.swing.JOptionPane;
 public class DSC_DriverDetails extends javax.swing.JFrame {
 
     boolean editClicked = false;
-    int listIndex = 0;
+    int listRouteIndex = 0;
+    int listSuburbIndex = 0;
 
     /**
      * Creates new form DSC_DriverDetails
@@ -26,13 +24,15 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         disableFields();
         btnSave.setText("Save");
         btnSave.setVisible(false);
+        txfRouteID.setEnabled(false);
+        txfSuburbID.setEnabled(false);
         txfDriverID.setEnabled(false);
-        lstRoutes.setSelectedIndex(0);
+        lstRoutes.setSelectedIndex(listRouteIndex);
+        lstSuburbs.setSelectedIndex(listSuburbIndex);
     }
 
     public final void enableFields() {
         txfDriverName.setEnabled(true);
-        txfDriverSurname.setEnabled(true);
         txfContactNo.setEnabled(true);
         txfAddress.setEnabled(true);
         txfVehicleReg.setEnabled(true);
@@ -40,7 +40,6 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
 
     public final void disableFields() {
         txfDriverName.setEnabled(false);
-        txfDriverSurname.setEnabled(false);
         txfContactNo.setEnabled(false);
         txfAddress.setEnabled(false);
         txfVehicleReg.setEnabled(false);
@@ -49,10 +48,20 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     public final void clearFields() {
         txfDriverID.setText(null);
         txfDriverName.setText(null);
-        txfDriverSurname.setText(null);
         txfContactNo.setText(null);
         txfAddress.setText(null);
         txfVehicleReg.setText(null);
+    }
+    
+    private boolean checkEmpty() {
+        boolean empty = false;
+
+        if (txfDriverName.getText().isEmpty() && txfContactNo.getText().isEmpty()
+                && txfAddress.getText().isEmpty() && txfVehicleReg.getText().isEmpty()) {
+            empty = true;
+        }
+
+        return empty;
     }
 
     /**
@@ -72,22 +81,24 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         btnAddRoute = new javax.swing.JButton();
         btnDeleteRoute = new javax.swing.JButton();
         pnlDetails = new javax.swing.JPanel();
-        lblDriversDetails = new javax.swing.JLabel();
+        lblDetails = new javax.swing.JLabel();
         lblDriverID = new javax.swing.JLabel();
         lblDriverName = new javax.swing.JLabel();
-        lblDriverSurname = new javax.swing.JLabel();
         lblContactNo = new javax.swing.JLabel();
         lblAddress = new javax.swing.JLabel();
         lblVehicleReg = new javax.swing.JLabel();
         txfDriverID = new javax.swing.JTextField();
         txfDriverName = new javax.swing.JTextField();
-        txfDriverSurname = new javax.swing.JTextField();
         txfContactNo = new javax.swing.JTextField();
         txfAddress = new javax.swing.JTextField();
         txfVehicleReg = new javax.swing.JTextField();
         btnBack = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
+        lblRouteID = new javax.swing.JLabel();
+        txfRouteID = new javax.swing.JTextField();
+        lblSuburbID = new javax.swing.JLabel();
+        txfSuburbID = new javax.swing.JTextField();
         pnlSuburbs = new javax.swing.JPanel();
         lblSuburbs = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
@@ -144,10 +155,10 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
             pnlRoutesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlRoutesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlRoutesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblRoutes, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDeleteRoute, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAddRoute, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(pnlRoutesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnDeleteRoute, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAddRoute, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblRoutes, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1)
                 .addContainerGap())
@@ -156,17 +167,14 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         pnlDetails.setBackground(new java.awt.Color(0, 204, 51));
         pnlDetails.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        lblDriversDetails.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lblDriversDetails.setText("Details:");
+        lblDetails.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblDetails.setText("Details:");
 
         lblDriverID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblDriverID.setText("Driver ID:");
 
         lblDriverName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblDriverName.setText("Driver Name:");
-
-        lblDriverSurname.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblDriverSurname.setText("Driver Surname:");
 
         lblContactNo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblContactNo.setText("Contact Number:");
@@ -183,9 +191,6 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         txfDriverName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfDriverName.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
-        txfDriverSurname.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txfDriverSurname.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-
         txfContactNo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfContactNo.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
@@ -196,7 +201,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         txfVehicleReg.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
         btnBack.setBackground(new java.awt.Color(255, 0, 0));
-        btnBack.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnBack.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnBack.setForeground(new java.awt.Color(255, 255, 255));
         btnBack.setMnemonic('B');
         btnBack.setText("Back");
@@ -224,6 +229,16 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
             }
         });
 
+        lblRouteID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblRouteID.setText("Route ID:");
+
+        txfRouteID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        lblSuburbID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblSuburbID.setText("Suburb ID:");
+
+        txfSuburbID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
         javax.swing.GroupLayout pnlDetailsLayout = new javax.swing.GroupLayout(pnlDetails);
         pnlDetails.setLayout(pnlDetailsLayout);
         pnlDetailsLayout.setHorizontalGroup(
@@ -231,36 +246,46 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
             .addGroup(pnlDetailsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblDriversDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlDetailsLayout.createSequentialGroup()
-                        .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblVehicleReg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblAddress, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblContactNo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblDriverSurname, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblDriverName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblDriverID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnEdit)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                        .addComponent(btnSave)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnBack))
+                    .addGroup(pnlDetailsLayout.createSequentialGroup()
+                        .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(lblSuburbID, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblRouteID, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblVehicleReg, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblAddress, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblContactNo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblDriverName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblDriverID, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txfDriverID)
                             .addComponent(txfDriverName, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txfDriverSurname, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txfContactNo, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txfAddress, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txfVehicleReg, javax.swing.GroupLayout.Alignment.TRAILING)))
-                    .addGroup(pnlDetailsLayout.createSequentialGroup()
-                        .addComponent(btnEdit)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSave)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnBack)))
+                            .addComponent(txfVehicleReg, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txfRouteID)
+                            .addComponent(txfSuburbID))))
                 .addContainerGap())
         );
         pnlDetailsLayout.setVerticalGroup(
             pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDetailsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblDriversDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblRouteID)
+                    .addComponent(txfRouteID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblSuburbID)
+                    .addComponent(txfSuburbID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDriverID)
@@ -269,10 +294,6 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDriverName)
                     .addComponent(txfDriverName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDriverSurname)
-                    .addComponent(txfDriverSurname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblContactNo)
@@ -285,7 +306,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblVehicleReg)
                     .addComponent(txfVehicleReg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 252, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 225, Short.MAX_VALUE)
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEdit)
                     .addComponent(btnSave)
@@ -337,12 +358,12 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
             pnlSuburbsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlSuburbsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlSuburbsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblSuburbs, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(btnAddSuburb, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnDeleteSuburb, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(pnlSuburbsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(btnAddSuburb, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnDeleteSuburb, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(lblSuburbs, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE)
+                .addComponent(jScrollPane5)
                 .addContainerGap())
         );
 
@@ -356,8 +377,8 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlSuburbs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlDetails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(pnlDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         pnlBackgroundLayout.setVerticalGroup(
             pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -386,7 +407,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        listIndex = lstRoutes.getSelectedIndex();
+        listRouteIndex = lstRoutes.getSelectedIndex();
         enableFields();
         btnEdit.setEnabled(false);
         btnSave.setVisible(true);
@@ -401,7 +422,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                     btnSave.setVisible(false);
                     btnEdit.setEnabled(true);
                     disableFields();
-                    lstRoutes.setSelectedIndex(listIndex);
+                    lstRoutes.setSelectedIndex(listRouteIndex);
                     editClicked = false;
                     break;
                 case JOptionPane.NO_OPTION:
@@ -421,7 +442,6 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
             //Update existing driver
             short ID = Short.parseShort(txfDriverID.getText().trim());
             String newName = txfDriverName.getText().trim();
-            String newSurname = txfDriverSurname.getText().trim();
             String newContactNo = txfContactNo.getText().trim();
             String newAddress = txfAddress.getText().trim();
             String newVehicleReg = txfVehicleReg.getText().trim();
@@ -454,13 +474,9 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
             } else {
                 short newID = Short.parseShort(txfDriverID.getText().trim());
                 String newName = txfDriverName.getText().trim();
-                String newSurname = txfDriverSurname.getText().trim();
                 String newContactNo = txfContactNo.getText().trim();
                 String newAddress = txfAddress.getText().trim();
                 String newVehicleReg = txfVehicleReg.getText().trim();
-
-                String query = "INSERT INTO doorstepchef.driver_tb (`DriverID`, `DriverName`, `ContactNumber`, `Address`, `VehicleReg`, `DriverSurname`) \n"
-                        + "	VALUES (" + newID + ", '" + newName + "', '" + newContactNo + "', '" + newAddress + "', '" + newVehicleReg + "', '" + newSurname + "');";
 
                 try {
 //                    Connection c = DBClass.getConnection();
@@ -482,17 +498,6 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btnSaveActionPerformed
-
-    private boolean checkEmpty() {
-        boolean empty = false;
-
-        if (txfDriverName.getText().isEmpty() && txfDriverSurname.getText().isEmpty() && txfContactNo.getText().isEmpty()
-                && txfAddress.getText().isEmpty() && txfVehicleReg.getText().isEmpty()) {
-            empty = true;
-        }
-
-        return empty;
-    }
 
     private void btnAddRouteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRouteActionPerformed
         clearFields();
@@ -521,7 +526,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddRouteActionPerformed
 
     private void btnDeleteRouteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteRouteActionPerformed
-        String name = txfDriverName.getText() + " " + txfDriverSurname.getText();
+        String name = txfDriverName.getText();
 
         int driverID = Integer.parseInt(txfDriverID.getText());
         int elementIndex = lstRoutes.getSelectedIndex();
@@ -573,53 +578,37 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAddDriver1;
-    private javax.swing.JButton btnAddDriver2;
-    private javax.swing.JButton btnAddDriver3;
     private javax.swing.JButton btnAddRoute;
     private javax.swing.JButton btnAddSuburb;
     private javax.swing.JButton btnBack;
-    private javax.swing.JButton btnDeleteDriver1;
-    private javax.swing.JButton btnDeleteDriver2;
-    private javax.swing.JButton btnDeleteDriver3;
     private javax.swing.JButton btnDeleteRoute;
     private javax.swing.JButton btnDeleteSuburb;
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnSave;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JLabel lblAddress;
     private javax.swing.JLabel lblContactNo;
+    private javax.swing.JLabel lblDetails;
     private javax.swing.JLabel lblDriverID;
     private javax.swing.JLabel lblDriverName;
-    private javax.swing.JLabel lblDriverSurname;
-    private javax.swing.JLabel lblDrivers1;
-    private javax.swing.JLabel lblDrivers2;
-    private javax.swing.JLabel lblDrivers3;
-    private javax.swing.JLabel lblDriversDetails;
+    private javax.swing.JLabel lblRouteID;
     private javax.swing.JLabel lblRoutes;
+    private javax.swing.JLabel lblSuburbID;
     private javax.swing.JLabel lblSuburbs;
     private javax.swing.JLabel lblVehicleReg;
-    private javax.swing.JList<String> lstDrivers1;
-    private javax.swing.JList<String> lstDrivers2;
-    private javax.swing.JList<String> lstDrivers3;
     private javax.swing.JList<String> lstRoutes;
     private javax.swing.JList<String> lstSuburbs;
     private javax.swing.JPanel pnlBackground;
     private javax.swing.JPanel pnlDetails;
-    private javax.swing.JPanel pnlDrivers1;
-    private javax.swing.JPanel pnlDrivers2;
-    private javax.swing.JPanel pnlDrivers3;
     private javax.swing.JPanel pnlRoutes;
     private javax.swing.JPanel pnlSuburbs;
     private javax.swing.JTextField txfAddress;
     private javax.swing.JTextField txfContactNo;
     private javax.swing.JTextField txfDriverID;
     private javax.swing.JTextField txfDriverName;
-    private javax.swing.JTextField txfDriverSurname;
+    private javax.swing.JTextField txfRouteID;
+    private javax.swing.JTextField txfSuburbID;
     private javax.swing.JTextField txfVehicleReg;
     // End of variables declaration//GEN-END:variables
 }
