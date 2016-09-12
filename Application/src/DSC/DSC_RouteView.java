@@ -101,7 +101,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
         btnAddSuburb = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("Route Table");
+        setTitle("Route View");
         setBackground(new java.awt.Color(0, 0, 0));
 
         pnlBackground.setBackground(new java.awt.Color(0, 153, 0));
