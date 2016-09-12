@@ -21,8 +21,8 @@ public class DSC_RouteView extends javax.swing.JFrame {
         btnSave.setVisible(false);
         pnlNew.setVisible(false);
         setRoutesList("Active");
-        setSuburbsList("Active");
         lstRoutes.setSelectedIndex(0);
+        setSuburbsList("Active");
         lstSuburbs.setSelectedIndex(0);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
