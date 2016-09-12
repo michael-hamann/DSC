@@ -27,7 +27,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         btnSave.setText("Save");
         btnSave.setVisible(false);
         txfDriverID.setEnabled(false);
-        lstDrivers.setSelectedIndex(0);
+        lstRoutes.setSelectedIndex(0);
     }
 
     public final void enableFields() {
@@ -65,12 +65,12 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     private void initComponents() {
 
         pnlBackground = new javax.swing.JPanel();
-        pnlDrivers = new javax.swing.JPanel();
-        lblDrivers = new javax.swing.JLabel();
+        pnlRoutes = new javax.swing.JPanel();
+        lblRoutes = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        lstDrivers = new javax.swing.JList<>();
-        btnAddDriver = new javax.swing.JButton();
-        btnDeleteDriver = new javax.swing.JButton();
+        lstRoutes = new javax.swing.JList<>();
+        btnAddRoute = new javax.swing.JButton();
+        btnDeleteRoute = new javax.swing.JButton();
         pnlDetails = new javax.swing.JPanel();
         lblDriversDetails = new javax.swing.JLabel();
         lblDriverID = new javax.swing.JLabel();
@@ -88,63 +88,66 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         btnBack = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
+        pnlSuburbs = new javax.swing.JPanel();
+        lblSuburbs = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        lstSuburbs = new javax.swing.JList<>();
+        btnAddSuburb = new javax.swing.JButton();
+        btnDeleteSuburb = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Driver Details");
 
         pnlBackground.setBackground(new java.awt.Color(0, 153, 0));
 
-        pnlDrivers.setBackground(new java.awt.Color(0, 204, 51));
-        pnlDrivers.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        pnlRoutes.setBackground(new java.awt.Color(0, 204, 51));
+        pnlRoutes.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        lblDrivers.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lblDrivers.setText("Drivers:");
+        lblRoutes.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblRoutes.setText("Routes:");
 
-        lstDrivers.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lstDrivers.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane1.setViewportView(lstDrivers);
+        lstRoutes.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lstRoutes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane1.setViewportView(lstRoutes);
 
-        btnAddDriver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Add.png"))); // NOI18N
-        btnAddDriver.setText(" Add");
-        btnAddDriver.addActionListener(new java.awt.event.ActionListener() {
+        btnAddRoute.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Add.png"))); // NOI18N
+        btnAddRoute.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddDriverActionPerformed(evt);
+                btnAddRouteActionPerformed(evt);
             }
         });
 
-        btnDeleteDriver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Bin.png"))); // NOI18N
-        btnDeleteDriver.setText("Delete");
-        btnDeleteDriver.addActionListener(new java.awt.event.ActionListener() {
+        btnDeleteRoute.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Bin.png"))); // NOI18N
+        btnDeleteRoute.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteDriverActionPerformed(evt);
+                btnDeleteRouteActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout pnlDriversLayout = new javax.swing.GroupLayout(pnlDrivers);
-        pnlDrivers.setLayout(pnlDriversLayout);
-        pnlDriversLayout.setHorizontalGroup(
-            pnlDriversLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlDriversLayout.createSequentialGroup()
+        javax.swing.GroupLayout pnlRoutesLayout = new javax.swing.GroupLayout(pnlRoutes);
+        pnlRoutes.setLayout(pnlRoutesLayout);
+        pnlRoutesLayout.setHorizontalGroup(
+            pnlRoutesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlRoutesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlDriversLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(pnlDriversLayout.createSequentialGroup()
-                        .addComponent(lblDrivers, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlRoutesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(pnlRoutesLayout.createSequentialGroup()
+                        .addComponent(lblRoutes, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAddDriver)
+                        .addComponent(btnAddRoute)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnDeleteDriver)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(btnDeleteRoute)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        pnlDriversLayout.setVerticalGroup(
-            pnlDriversLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlDriversLayout.createSequentialGroup()
+        pnlRoutesLayout.setVerticalGroup(
+            pnlRoutesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlRoutesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlDriversLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDrivers, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAddDriver, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnDeleteDriver))
+                .addGroup(pnlRoutesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblRoutes, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDeleteRoute, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAddRoute, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1)
                 .addContainerGap())
@@ -154,7 +157,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         pnlDetails.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         lblDriversDetails.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lblDriversDetails.setText("Driver's Details:");
+        lblDriversDetails.setText("Details:");
 
         lblDriverID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblDriverID.setText("Driver ID:");
@@ -247,7 +250,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                             .addComponent(txfVehicleReg, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addGroup(pnlDetailsLayout.createSequentialGroup()
                         .addComponent(btnEdit)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnSave)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnBack)))
@@ -282,11 +285,64 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblVehicleReg)
                     .addComponent(txfVehicleReg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 252, Short.MAX_VALUE)
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEdit)
                     .addComponent(btnSave)
                     .addComponent(btnBack))
+                .addContainerGap())
+        );
+
+        pnlSuburbs.setBackground(new java.awt.Color(0, 204, 51));
+        pnlSuburbs.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        lblSuburbs.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblSuburbs.setText("Suburbs:");
+
+        lstSuburbs.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lstSuburbs.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane5.setViewportView(lstSuburbs);
+
+        btnAddSuburb.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Add.png"))); // NOI18N
+        btnAddSuburb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddSuburbActionPerformed(evt);
+            }
+        });
+
+        btnDeleteSuburb.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Bin.png"))); // NOI18N
+        btnDeleteSuburb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteSuburbActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlSuburbsLayout = new javax.swing.GroupLayout(pnlSuburbs);
+        pnlSuburbs.setLayout(pnlSuburbsLayout);
+        pnlSuburbsLayout.setHorizontalGroup(
+            pnlSuburbsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlSuburbsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlSuburbsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(pnlSuburbsLayout.createSequentialGroup()
+                        .addComponent(lblSuburbs, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAddSuburb)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnDeleteSuburb)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pnlSuburbsLayout.setVerticalGroup(
+            pnlSuburbsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlSuburbsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlSuburbsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblSuburbs, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(btnAddSuburb, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnDeleteSuburb, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -296,18 +352,21 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
             pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlBackgroundLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pnlDrivers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(pnlDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(pnlRoutes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlSuburbs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlDetails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlBackgroundLayout.setVerticalGroup(
             pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlBackgroundLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlDrivers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(pnlRoutes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlSuburbs, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -327,7 +386,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        listIndex = lstDrivers.getSelectedIndex();
+        listIndex = lstRoutes.getSelectedIndex();
         enableFields();
         btnEdit.setEnabled(false);
         btnSave.setVisible(true);
@@ -342,7 +401,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                     btnSave.setVisible(false);
                     btnEdit.setEnabled(true);
                     disableFields();
-                    lstDrivers.setSelectedIndex(listIndex);
+                    lstRoutes.setSelectedIndex(listIndex);
                     editClicked = false;
                     break;
                 case JOptionPane.NO_OPTION:
@@ -435,7 +494,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         return empty;
     }
 
-    private void btnAddDriverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDriverActionPerformed
+    private void btnAddRouteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRouteActionPerformed
         clearFields();
         enableFields();
         btnEdit.setEnabled(false);
@@ -459,13 +518,13 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         numRows += 1;
         txfDriverID.setText(numRows + "");
 
-    }//GEN-LAST:event_btnAddDriverActionPerformed
+    }//GEN-LAST:event_btnAddRouteActionPerformed
 
-    private void btnDeleteDriverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteDriverActionPerformed
+    private void btnDeleteRouteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteRouteActionPerformed
         String name = txfDriverName.getText() + " " + txfDriverSurname.getText();
 
         int driverID = Integer.parseInt(txfDriverID.getText());
-        int elementIndex = lstDrivers.getSelectedIndex();
+        int elementIndex = lstRoutes.getSelectedIndex();
 
         String message = "Are you sure you want to delete " + name + "?";
         int answer = JOptionPane.showConfirmDialog(this, message, "Confirm", JOptionPane.INFORMATION_MESSAGE);
@@ -501,29 +560,61 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
 
                 break;
         }
-    }//GEN-LAST:event_btnDeleteDriverActionPerformed
+    }//GEN-LAST:event_btnDeleteRouteActionPerformed
+
+    private void btnAddSuburbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSuburbActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAddSuburbActionPerformed
+
+    private void btnDeleteSuburbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteSuburbActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDeleteSuburbActionPerformed
 
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAddDriver;
+    private javax.swing.JButton btnAddDriver1;
+    private javax.swing.JButton btnAddDriver2;
+    private javax.swing.JButton btnAddDriver3;
+    private javax.swing.JButton btnAddRoute;
+    private javax.swing.JButton btnAddSuburb;
     private javax.swing.JButton btnBack;
-    private javax.swing.JButton btnDeleteDriver;
+    private javax.swing.JButton btnDeleteDriver1;
+    private javax.swing.JButton btnDeleteDriver2;
+    private javax.swing.JButton btnDeleteDriver3;
+    private javax.swing.JButton btnDeleteRoute;
+    private javax.swing.JButton btnDeleteSuburb;
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnSave;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JLabel lblAddress;
     private javax.swing.JLabel lblContactNo;
     private javax.swing.JLabel lblDriverID;
     private javax.swing.JLabel lblDriverName;
     private javax.swing.JLabel lblDriverSurname;
-    private javax.swing.JLabel lblDrivers;
+    private javax.swing.JLabel lblDrivers1;
+    private javax.swing.JLabel lblDrivers2;
+    private javax.swing.JLabel lblDrivers3;
     private javax.swing.JLabel lblDriversDetails;
+    private javax.swing.JLabel lblRoutes;
+    private javax.swing.JLabel lblSuburbs;
     private javax.swing.JLabel lblVehicleReg;
-    private javax.swing.JList<String> lstDrivers;
+    private javax.swing.JList<String> lstDrivers1;
+    private javax.swing.JList<String> lstDrivers2;
+    private javax.swing.JList<String> lstDrivers3;
+    private javax.swing.JList<String> lstRoutes;
+    private javax.swing.JList<String> lstSuburbs;
     private javax.swing.JPanel pnlBackground;
     private javax.swing.JPanel pnlDetails;
-    private javax.swing.JPanel pnlDrivers;
+    private javax.swing.JPanel pnlDrivers1;
+    private javax.swing.JPanel pnlDrivers2;
+    private javax.swing.JPanel pnlDrivers3;
+    private javax.swing.JPanel pnlRoutes;
+    private javax.swing.JPanel pnlSuburbs;
     private javax.swing.JTextField txfAddress;
     private javax.swing.JTextField txfContactNo;
     private javax.swing.JTextField txfDriverID;

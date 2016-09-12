@@ -378,6 +378,7 @@
               </Properties>
               <Events>
                 <EventHandler event="ancestorResized" listener="java.awt.event.HierarchyBoundsListener" parameters="java.awt.event.HierarchyEvent" handler="pnlBarChartActiveresizeCheck"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="pnlBarChartActiveMouseClicked"/>
               </Events>
 
               <Layout>
@@ -429,6 +430,9 @@
                   </Border>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="pnlBarChartInActiveMousePressed"/>
+              </Events>
 
               <Layout>
                 <DimensionLayout dim="0">
