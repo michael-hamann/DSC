@@ -25,6 +25,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -88,7 +89,8 @@ public class Reports {
 
                 spreadsheet = workbook.createSheet("DriverReport " + counter);
                 counter++;
-
+                Map<String, Object[]> data = new TreeMap<String, Object[]>();
+                data.put("0", new Object[]{"Y/N", "Name", "Surname", "Contact", "EFT", "Cash", "Date Paid", "Mon", "Tue", "Wed", "Thurs", "Fri", "Address", "AdditionalInfo"});
                 for (DataSnapshot Data : ds.getChildren()) {
                     routeNumber = Data.getKey();
                     if (routeNumber != "0") {
@@ -96,35 +98,38 @@ public class Reports {
                             for (DataSnapshot Data3 : Data2.getChildren()) {
                                 if (!Data2.getKey().equals("Suburbs")) {
                                     try {
-                                        for (DriverReportData o : driverData) {
+                                        
+                                        cs = workbook.createCellStyle();
+                                        cs.setBorderBottom(XSSFCellStyle.BORDER_THIN);
+                                        cs.setBorderTop(XSSFCellStyle.BORDER_THIN);
+                                        
+                                        
+           
+                                        for (int i = 0; i < driverData.size(); i++) {
+                                            data.put((i + 1) + "", new Object[]{"", driverData.get(i).getName(), driverData.get(i).getSurname(), driverData.get(i).getContactNumber(), "", "", "", "", "", "", "", "", driverData.get(i).getAddress(), driverData.get(i).getAdditionalInfo()});
+                                        }
+                                        Set<String> keyset = data.keySet();
+                                        int rownum = 0;
+                                        for (String key : keyset) {
+                                            Row row = spreadsheet.createRow(rownum++);
+                                            Object[] objArr = data.get(key);
+                                            int cellnum = 0;
+                                            for (Object obj : objArr) {
 
-                                            for (int c = 0; c < 2; c++) {
-                                                
-                                                Map<String, Object[]> data = new TreeMap<String, Object[]>();
-                                                
-                                                data.put("1", new Object[]{"Yes/No", "Name", "Surname", "Contact", "EFT", "Cash", "Date Paid", "Mon", "Tue", "Wed", "Thurs", "Fri", "Address", "AdditionalInfo"});
-                                                
-                                                for (int i = 0; i < 2; i++) {
-                                                    data.put("2", new Object[]{"", o.getName(), o.getSurname(), o.getContactNumber(), "", "", "", "", "", "", "", "", o.getAddress(), o.getAdditionalInfo()});
-                                                }
-                                                //Iterate over data and write to sheet
-                                                Set<String> keyset = data.keySet();
-                                                int rownum = 0;
-                                                for (String key : keyset) {
-                                                    Row row = spreadsheet.createRow(rownum++);
-                                                    Object[] objArr = data.get(key);
-                                                    int cellnum = 0;
-                                                    for (Object obj : objArr) {
-                                                        Cell cell = row.createCell(cellnum++);
-                                                        if (obj instanceof String) {
-                                                            cell.setCellValue((String) obj);
-                                                        } else if (obj instanceof Integer) {
-                                                            cell.setCellValue((Integer) obj);
-                                                        }
-                                                    }
+                                                Cell cell = row.createCell(cellnum++);
+                                                if (obj instanceof String) {
+                                                    cell.setCellValue((String) obj);
+                                                } else if (obj instanceof Integer) {
+                                                    cell.setCellValue((Integer) obj);
                                                 }
                                             }
+
+                                            for (short i = 0; i < 14; i++) {
+                                                spreadsheet.autoSizeColumn(i);
+                                            }
+
                                         }
+
                                     } catch (Exception e) {
 
                                     }
@@ -132,7 +137,7 @@ public class Reports {
                             }
                         }
                         try {
-                            FileOutputStream out = new FileOutputStream(new File("DriverReport " + routeNumber + " " + counter + ".xlsx"));
+                            FileOutputStream out = new FileOutputStream(new File("DriverReport .xlsx"));
                             workbook.write(out);
                             out.close();
                         } catch (FileNotFoundException ex) {
