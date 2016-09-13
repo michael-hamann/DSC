@@ -183,8 +183,9 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     }
                     Order o = new Order(Data.getKey(), Data.child("Active").getValue(boolean.class), allclients.get(0),
                             Data.child("Duration").getValue(String.class), null, end, Data.child("RouteID").getValue(String.class),
-                            allmeals, Data.child("FamilySize").getValue(int.class));
-
+                            allmeals, 0);
+                    o.setFamilySize(Data.child("FamilySize").getValue(long.class));
+                    
                     allorders.add(o);
                     String clientID = Data.child("ClientID").getValue(String.class);
                     for (Client c : allclients) {
@@ -251,7 +252,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 cmbSuburbs.setSelectedItem(orders1.get(row).getClient().getSuburb());
                 txfOrderID.setText(orders1.get(row).getID());
                 txfOrderDuration.setText(orders1.get(row).getDuration());
-                //spnOrderFamilySize.setValue(orders.getFamilySize());
+                spnOrderFamilySize.setValue(orders1.get(row).getFamilySize());
                 //spnOrderStartingDate.setValue(orders.getStartingDate());
                 txfOrderRouteID.setText(orders1.get(row).getRoute());
 
