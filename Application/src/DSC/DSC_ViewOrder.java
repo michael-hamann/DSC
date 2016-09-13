@@ -18,11 +18,13 @@ import javax.swing.table.DefaultTableModel;
  * @author Aliens_Amina
  */
 public class DSC_ViewOrder extends javax.swing.JFrame {
+
     boolean orderEdited = false;
     boolean editClicked = false;
     ArrayList<Client> allclients = new ArrayList<>();
     ArrayList<Order> allorders = new ArrayList<>();
     ArrayList<Order> orders1 = new ArrayList<>();
+    ArrayList<String> suburbs = new ArrayList<>();
 
     /**
      * Creates new form DSC_Main
@@ -37,6 +39,8 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         disableFieldsOrder();
         btnSave.setEnabled(false);
         cmbVeiw.setSelectedItem("Active");
+        cmbSuburbs.removeAllItems();
+        cmbSuburbs.addItem("Collection");
         callSuburbs();
         setOrders();
     }
@@ -113,8 +117,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
         if (txfClientName.getText().isEmpty() || txfClientSurname.getText().isEmpty() || txfClientContactNo.getText().isEmpty()
                 || txfClientAddress.getText().isEmpty() || txfAddInfo.getText().isEmpty()
-                || txfClientContactNo.getText().isEmpty() || txfAltNum.getText().isEmpty() || txfClientEmail.getText().isEmpty()
-                ) {//|| cmbSuburbs.getSelectedIndex() == 0
+                || txfClientContactNo.getText().isEmpty() || txfAltNum.getText().isEmpty() || txfClientEmail.getText().isEmpty()) {//|| cmbSuburbs.getSelectedIndex() == 0
             empty = true;
         }
 
@@ -185,7 +188,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             Data.child("Duration").getValue(String.class), null, end, Data.child("RouteID").getValue(String.class),
                             allmeals, 0);
                     o.setFamilySize(Data.child("FamilySize").getValue(long.class));
-                    
+
                     allorders.add(o);
                     String clientID = Data.child("ClientID").getValue(String.class);
                     for (Client c : allclients) {
@@ -216,6 +219,30 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     }
 
     public void callSuburbs() {
+        Firebase ref = DBClass.getInstance().child("Routes");
+        ref.orderByChild("Active").equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot ds) {
+                for (DataSnapshot dataSnapshot : ds.getChildren()) {
+                    String subArr[] = dataSnapshot.child("Suburbs").getValue(String[].class);
+                    if (subArr[0].equals("Collection")) {
+                        continue;
+                    } else {
+                        for (int i = 0; i < subArr.length; i++) {
+                            suburbs.add(subArr[i]);
+                            cmbSuburbs.addItem(subArr[i]);
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError fe) {
+                JOptionPane.showMessageDialog(null, "Could not fetch suburbs.\nCheck logs for error report.", "Suburb Error", JOptionPane.ERROR_MESSAGE);
+                System.err.print("Database connection error (Suburb): " + fe);
+            }
+        });
 
     }
 
@@ -932,7 +959,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        
+
         Firebase upd = DBClass.getInstance().child("Clients/" + allclients.get(tblOrderTable.getSelectedRow()).getID());
         boolean empty = checkEmpty();
 
@@ -948,7 +975,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             clientinfo.put("Address", txfClientAddress.getText().trim());
             clientinfo.put("Email", txfClientEmail.getText().trim());
             clientinfo.put("Suburb", (String) cmbSuburbs.getSelectedItem());
-           
+
             upd.updateChildren(clientinfo);
 
 //            if(orderEdited){
@@ -959,7 +986,6 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 //            allorders.clear();
 //            setClients();
 //            setOrders();
-            
             disableFieldsClient();
             btnSave.setVisible(false);
             btnEditOrder.setEnabled(true);
@@ -1256,13 +1282,13 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_txfSearchPropertyChange
 
     private void btnDeactivateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeactivateActionPerformed
-        
+
         Firebase updorder = DBClass.getInstance().child("Orders/" + allorders.get(tblOrderTable.getSelectedRow()).getID());
-        
-            Map<String, Object> orderinfo = new HashMap();
-            orderinfo.put("Active", false);
-            
-            updorder.updateChildren(orderinfo);
+
+        Map<String, Object> orderinfo = new HashMap();
+        orderinfo.put("Active", false);
+
+        updorder.updateChildren(orderinfo);
 
     }//GEN-LAST:event_btnDeactivateActionPerformed
 
