@@ -53,10 +53,7 @@ public class DSC_Main extends javax.swing.JFrame {
         lblView = new javax.swing.JLabel();
         btnRouteView = new javax.swing.JButton();
         btnViewOrders = new javax.swing.JButton();
-        btnChangeChart = new javax.swing.JButton();
-        btnChangeStatistics = new javax.swing.JButton();
         btnPlaceOrder = new javax.swing.JButton();
-        btnAddNewSuburb = new javax.swing.JButton();
         pnlReports = new javax.swing.JPanel();
         btnDriverRpt = new javax.swing.JButton();
         btnChefRpt = new javax.swing.JButton();
@@ -158,31 +155,10 @@ public class DSC_Main extends javax.swing.JFrame {
             }
         });
 
-        btnChangeChart.setText("Change Chart");
-        btnChangeChart.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnChangeChartActionPerformed(evt);
-            }
-        });
-
-        btnChangeStatistics.setText("Change Statistics");
-        btnChangeStatistics.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnChangeStatisticsActionPerformed(evt);
-            }
-        });
-
         btnPlaceOrder.setText("Place Order");
         btnPlaceOrder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPlaceOrderActionPerformed(evt);
-            }
-        });
-
-        btnAddNewSuburb.setText("Create New Suburb");
-        btnAddNewSuburb.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddNewSuburbActionPerformed(evt);
             }
         });
 
@@ -195,11 +171,8 @@ public class DSC_Main extends javax.swing.JFrame {
                 .addGroup(pnlTablesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnRouteView, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnViewOrders, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnPlaceOrder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnChangeChart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnChangeStatistics, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAddNewSuburb, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE))
+                    .addComponent(btnViewOrders, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
+                    .addComponent(btnPlaceOrder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlTablesLayout.setVerticalGroup(
@@ -213,12 +186,6 @@ public class DSC_Main extends javax.swing.JFrame {
                 .addComponent(btnViewOrders, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnRouteView, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnChangeChart, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnChangeStatistics, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnAddNewSuburb, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -298,6 +265,11 @@ public class DSC_Main extends javax.swing.JFrame {
                 pnlBarChartActiveresizeCheck(evt);
             }
         });
+        pnlBarChartActive.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnlBarChartActiveMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlBarChartActiveLayout = new javax.swing.GroupLayout(pnlBarChartActive);
         pnlBarChartActive.setLayout(pnlBarChartActiveLayout);
@@ -326,6 +298,11 @@ public class DSC_Main extends javax.swing.JFrame {
 
         pnlBarChartInActive.setBackground(new java.awt.Color(102, 102, 102));
         pnlBarChartInActive.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        pnlBarChartInActive.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                pnlBarChartInActiveMousePressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlBarChartInActiveLayout = new javax.swing.GroupLayout(pnlBarChartInActive);
         pnlBarChartInActive.setLayout(pnlBarChartInActiveLayout);
@@ -761,24 +738,6 @@ public class DSC_Main extends javax.swing.JFrame {
         new DSC_ViewOrder().setVisible(true);
     }//GEN-LAST:event_btnViewOrdersActionPerformed
 
-    private void btnChangeChartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeChartActionPerformed
-
-        /*
-                Removes All Componets from certain Panels.
-         */
-        pnlBarChartActive.removeAll();
-        pnlBarChartInActive.removeAll();
-        pnlBarChartActive.repaint();
-        pnlBarChartInActive.repaint();
-        checkGraph = false;
-
-
-    }//GEN-LAST:event_btnChangeChartActionPerformed
-
-    private void btnChangeStatisticsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeStatisticsActionPerformed
-
-    }//GEN-LAST:event_btnChangeStatisticsActionPerformed
-
     private void pnlBarChartActiveresizeCheck(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_pnlBarChartActiveresizeCheck
 
         /*
@@ -804,11 +763,6 @@ public class DSC_Main extends javax.swing.JFrame {
         this.dispose();
         new DSC_Place_Order(true).setVisible(true);
     }//GEN-LAST:event_btnPlaceOrderActionPerformed
-
-    private void btnAddNewSuburbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddNewSuburbActionPerformed
-        new DSC_Place_Order(false).setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnAddNewSuburbActionPerformed
 
     /**
      * @param args the command line arguments
@@ -869,9 +823,6 @@ public class DSC_Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAddNewSuburb;
-    private javax.swing.JButton btnChangeChart;
-    private javax.swing.JButton btnChangeStatistics;
     private javax.swing.JButton btnChefRpt;
     private javax.swing.JButton btnDriverRpt;
     private javax.swing.JButton btnHandlerRpt;
