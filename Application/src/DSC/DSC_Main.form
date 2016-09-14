@@ -83,11 +83,11 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace pref="241" max="32767" attributes="0"/>
+                      <EmptySpace pref="244" max="32767" attributes="0"/>
                       <Component id="lblLogo" min="-2" pref="312" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="lblName" min="-2" pref="388" max="-2" attributes="0"/>
-                      <EmptySpace pref="241" max="32767" attributes="0"/>
+                      <EmptySpace pref="244" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -145,10 +145,7 @@
                           <Component id="btnRouteView" alignment="1" max="32767" attributes="0"/>
                           <Component id="btnViewOrders" alignment="1" pref="161" max="32767" attributes="0"/>
                           <Component id="btnPlaceOrder" alignment="0" max="32767" attributes="0"/>
-<<<<<<< HEAD
-                          <Component id="btnAddNewSuburb" alignment="0" pref="161" max="32767" attributes="0"/>
-=======
->>>>>>> origin/master
+                          <Component id="btnSurveyQuestions" alignment="1" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -165,13 +162,9 @@
                       <Component id="btnViewOrders" min="-2" pref="50" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnRouteView" min="-2" pref="50" max="-2" attributes="0"/>
-<<<<<<< HEAD
-                      <EmptySpace min="-2" pref="131" max="-2" attributes="0"/>
-                      <Component id="btnAddNewSuburb" min="-2" pref="52" max="-2" attributes="0"/>
-                      <EmptySpace pref="100" max="32767" attributes="0"/>
-=======
                       <EmptySpace max="32767" attributes="0"/>
->>>>>>> origin/master
+                      <Component id="btnSurveyQuestions" min="-2" pref="50" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -210,6 +203,14 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPlaceOrderActionPerformed"/>
               </Events>
             </Component>
+            <Component class="javax.swing.JButton" name="btnSurveyQuestions">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Change Survey Questions"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSurveyQuestionsActionPerformed"/>
+              </Events>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="pnlReports">
@@ -227,18 +228,14 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="btnDriverRpt" alignment="0" max="32767" attributes="0"/>
                           <Component id="btnChefRpt" alignment="0" max="32767" attributes="0"/>
                           <Component id="btnPackerRpt" alignment="0" max="32767" attributes="0"/>
                           <Component id="btnHandlerRpt" alignment="1" max="32767" attributes="0"/>
-                          <Component id="lblGenerate" alignment="0" pref="161" max="32767" attributes="0"/>
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              <Component id="btnSurveyQuestions" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="lblGenerate" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -257,9 +254,7 @@
                       <Component id="btnPackerRpt" min="-2" pref="50" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnHandlerRpt" min="-2" pref="50" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="btnSurveyQuestions" min="-2" pref="52" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace pref="222" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -270,6 +265,7 @@
                 <Property name="text" type="java.lang.String" value="Driver Report"/>
               </Properties>
               <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnDriverRptMouseClicked"/>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDriverRptActionPerformed"/>
               </Events>
             </Component>
@@ -305,14 +301,6 @@
                 <Property name="horizontalAlignment" type="int" value="0"/>
                 <Property name="text" type="java.lang.String" value="Generate Reports"/>
               </Properties>
-            </Component>
-            <Component class="javax.swing.JButton" name="btnSurveyQuestions">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Change Survey Questions"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSurveyQuestionsActionPerformed"/>
-              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -374,7 +362,7 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="337" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="376" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -404,7 +392,7 @@
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="251" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
               </Layout>
@@ -420,19 +408,16 @@
                   </Border>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="pnlBarChartInActiveMousePressed"/>
-              </Events>
 
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="435" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="441" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="259" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="261" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
               </Layout>

@@ -54,13 +54,13 @@ public class DSC_Main extends javax.swing.JFrame {
         btnRouteView = new javax.swing.JButton();
         btnViewOrders = new javax.swing.JButton();
         btnPlaceOrder = new javax.swing.JButton();
+        btnSurveyQuestions = new javax.swing.JButton();
         pnlReports = new javax.swing.JPanel();
         btnDriverRpt = new javax.swing.JButton();
         btnChefRpt = new javax.swing.JButton();
         btnPackerRpt = new javax.swing.JButton();
         btnHandlerRpt = new javax.swing.JButton();
         lblGenerate = new javax.swing.JLabel();
-        btnSurveyQuestions = new javax.swing.JButton();
         pnlMainChartBackground = new javax.swing.JPanel();
         pnlBarChartActive = new javax.swing.JPanel();
         pnlPieChart = new javax.swing.JPanel();
@@ -119,11 +119,11 @@ public class DSC_Main extends javax.swing.JFrame {
         pnlHeadingLayout.setHorizontalGroup(
             pnlHeadingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlHeadingLayout.createSequentialGroup()
-                .addContainerGap(241, Short.MAX_VALUE)
+                .addContainerGap(244, Short.MAX_VALUE)
                 .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(241, Short.MAX_VALUE))
+                .addContainerGap(244, Short.MAX_VALUE))
         );
         pnlHeadingLayout.setVerticalGroup(
             pnlHeadingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,6 +163,13 @@ public class DSC_Main extends javax.swing.JFrame {
             }
         });
 
+        btnSurveyQuestions.setText("Change Survey Questions");
+        btnSurveyQuestions.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSurveyQuestionsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlTablesLayout = new javax.swing.GroupLayout(pnlTables);
         pnlTables.setLayout(pnlTablesLayout);
         pnlTablesLayout.setHorizontalGroup(
@@ -172,14 +179,9 @@ public class DSC_Main extends javax.swing.JFrame {
                 .addGroup(pnlTablesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnRouteView, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-<<<<<<< HEAD
-                    .addComponent(btnViewOrders, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnPlaceOrder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAddNewSuburb, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE))
-=======
                     .addComponent(btnViewOrders, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
-                    .addComponent(btnPlaceOrder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
->>>>>>> origin/master
+                    .addComponent(btnPlaceOrder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnSurveyQuestions, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlTablesLayout.setVerticalGroup(
@@ -193,19 +195,20 @@ public class DSC_Main extends javax.swing.JFrame {
                 .addComponent(btnViewOrders, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnRouteView, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-<<<<<<< HEAD
-                .addGap(131, 131, 131)
-                .addComponent(btnAddNewSuburb, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(100, Short.MAX_VALUE))
-=======
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
->>>>>>> origin/master
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnSurveyQuestions, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pnlReports.setBackground(new java.awt.Color(0, 204, 51));
         pnlReports.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         btnDriverRpt.setText("Driver Report");
+        btnDriverRpt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnDriverRptMouseClicked(evt);
+            }
+        });
         btnDriverRpt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDriverRptActionPerformed(evt);
@@ -237,13 +240,6 @@ public class DSC_Main extends javax.swing.JFrame {
         lblGenerate.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblGenerate.setText("Generate Reports");
 
-        btnSurveyQuestions.setText("Change Survey Questions");
-        btnSurveyQuestions.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSurveyQuestionsActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout pnlReportsLayout = new javax.swing.GroupLayout(pnlReports);
         pnlReports.setLayout(pnlReportsLayout);
         pnlReportsLayout.setHorizontalGroup(
@@ -255,10 +251,7 @@ public class DSC_Main extends javax.swing.JFrame {
                     .addComponent(btnChefRpt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnPackerRpt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnHandlerRpt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblGenerate, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlReportsLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnSurveyQuestions)))
+                    .addComponent(lblGenerate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlReportsLayout.setVerticalGroup(
@@ -274,9 +267,7 @@ public class DSC_Main extends javax.swing.JFrame {
                 .addComponent(btnPackerRpt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnHandlerRpt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnSurveyQuestions, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(222, Short.MAX_VALUE))
         );
 
         pnlMainChartBackground.setBackground(new java.awt.Color(0, 153, 0));
@@ -290,17 +281,12 @@ public class DSC_Main extends javax.swing.JFrame {
                 pnlBarChartActiveresizeCheck(evt);
             }
         });
-        pnlBarChartActive.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                pnlBarChartActiveMouseClicked(evt);
-            }
-        });
 
         javax.swing.GroupLayout pnlBarChartActiveLayout = new javax.swing.GroupLayout(pnlBarChartActive);
         pnlBarChartActive.setLayout(pnlBarChartActiveLayout);
         pnlBarChartActiveLayout.setHorizontalGroup(
             pnlBarChartActiveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 337, Short.MAX_VALUE)
+            .addGap(0, 376, Short.MAX_VALUE)
         );
         pnlBarChartActiveLayout.setVerticalGroup(
             pnlBarChartActiveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -318,26 +304,21 @@ public class DSC_Main extends javax.swing.JFrame {
         );
         pnlPieChartLayout.setVerticalGroup(
             pnlPieChartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 251, Short.MAX_VALUE)
         );
 
         pnlBarChartInActive.setBackground(new java.awt.Color(102, 102, 102));
         pnlBarChartInActive.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        pnlBarChartInActive.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                pnlBarChartInActiveMousePressed(evt);
-            }
-        });
 
         javax.swing.GroupLayout pnlBarChartInActiveLayout = new javax.swing.GroupLayout(pnlBarChartInActive);
         pnlBarChartInActive.setLayout(pnlBarChartInActiveLayout);
         pnlBarChartInActiveLayout.setHorizontalGroup(
             pnlBarChartInActiveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 435, Short.MAX_VALUE)
+            .addGap(0, 441, Short.MAX_VALUE)
         );
         pnlBarChartInActiveLayout.setVerticalGroup(
             pnlBarChartInActiveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 259, Short.MAX_VALUE)
+            .addGap(0, 261, Short.MAX_VALUE)
         );
 
         pnlTextStats.setBackground(new java.awt.Color(102, 102, 102));
@@ -738,7 +719,8 @@ public class DSC_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDriverTblActionPerformed
 
     private void btnDriverRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDriverRptActionPerformed
-        Reports.createDriverReport();
+        Reports reportObject = new Reports();
+        reportObject.createDriverReport();
     }//GEN-LAST:event_btnDriverRptActionPerformed
 
     private void btnChefRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChefRptActionPerformed
@@ -789,15 +771,9 @@ public class DSC_Main extends javax.swing.JFrame {
         new DSC_Place_Order(true).setVisible(true);
     }//GEN-LAST:event_btnPlaceOrderActionPerformed
 
-<<<<<<< HEAD
-    private void btnAddNewSuburbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddNewSuburbActionPerformed
-        new DSC_Place_Order(false).setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnAddNewSuburbActionPerformed
-
-    private void pnlBarChartInActiveMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlBarChartInActiveMousePressed
+    private void btnDriverRptMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDriverRptMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_pnlBarChartInActiveMousePressed
+    }//GEN-LAST:event_btnDriverRptMouseClicked
 
     private void btnSurveyQuestionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSurveyQuestionsActionPerformed
         DSC_SurveyQuestions pane = new DSC_SurveyQuestions();
@@ -807,8 +783,6 @@ public class DSC_Main extends javax.swing.JFrame {
         this.setEnabled(false);
     }//GEN-LAST:event_btnSurveyQuestionsActionPerformed
 
-=======
->>>>>>> origin/master
     /**
      * @param args the command line arguments
      */
@@ -842,7 +816,7 @@ public class DSC_Main extends javax.swing.JFrame {
                 DSC_Main main = new DSC_Main();
                 DBClass.getInstance();
                 try {
-                    for (int i = 0; i < 20; i++) {
+                    for (int i = 0; i < 10; i++) {
                         if (!DBClass.connected) {
                             Thread.sleep(500);
                         } else {
@@ -868,10 +842,6 @@ public class DSC_Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-<<<<<<< HEAD
-    private javax.swing.JButton btnAddNewSuburb;
-=======
->>>>>>> origin/master
     private javax.swing.JButton btnChefRpt;
     private javax.swing.JButton btnDriverRpt;
     private javax.swing.JButton btnHandlerRpt;
