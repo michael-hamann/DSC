@@ -209,11 +209,12 @@ public class DSC_SurveyQuestions extends javax.swing.JFrame {
         } else {
             setList("Source");
         }
+        txaQuestion.setText("");
+        selectedIndex = -1;
     }//GEN-LAST:event_cmbQuestionTypeItemStateChanged
 
     private void lstQuestionsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstQuestionsValueChanged
         selectedIndex = lstQuestions.getSelectedIndex();
-        System.out.println(selectedIndex);
         if (selectedIndex != -1) {
             if (cmbQuestionType.getSelectedIndex() == 0) {
                 txaQuestion.setText(reasonQuestions.get(selectedIndex));
