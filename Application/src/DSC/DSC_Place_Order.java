@@ -41,6 +41,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
      * Creates new form DSC_Main
      */
     public DSC_Place_Order() {
+        initComponents();
     }
 
     public DSC_Place_Order(boolean online) {
@@ -869,10 +870,6 @@ public class DSC_Place_Order extends javax.swing.JFrame {
                 writeOrdersToFile(order);
                 btnSave.setEnabled(true);
 
-                if (cmbSurveyReason.getSelectedIndex() != 0 && cmbSurveySource.getSelectedIndex() != 0) {
-                    writeSurveyInfo(online);
-                }
-
                 if (connection) {
                     JOptionPane.showMessageDialog(null, "Connection to the database has been made. Your orders will now be entered to the database automatically. Opening Main Screen.", "Connection", JOptionPane.OK_OPTION);
                     DSC_Main main = new DSC_Main();
@@ -1301,8 +1298,9 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         );
 
         ref.child(order.getID()).setValue(orderContainer);
-        if (cmbSurveyReason.getSelectedIndex() != 0 && cmbSurveySource.getSelectedIndex() != 0) {
-            writeSurveyInfo(online);
+
+        if (cmbSurveyReason.getSelectedIndex() != 0 && cmbSurveySource.getSelectedIndex() != 0 && online) {
+            writeSurveyInfo();
         }
         if (orderPane) {
             JOptionPane.showMessageDialog(null, "Order Succsesfully placed!", "Success", JOptionPane.PLAIN_MESSAGE);
@@ -1344,58 +1342,26 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         });
     }
 
-    private void writeSurveyInfo(boolean online) {
+    private void writeSurveyInfo() {
         String reason = cmbSurveyReason.getSelectedItem().toString();
         String source = cmbSurveySource.getSelectedItem().toString();
         String comments = txaSurveyComments.getText();
         SurveyContainer sc = new SurveyContainer(reason, source, comments, clientID);
 
-        if (online) {
-            Firebase ref = DBClass.getInstance();
-            ref.child("META-Data/SurveyID").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot ds) {
-                    int id = ds.getValue(Integer.class);
-                    ref.child("META-Data/SurveyID").setValue((id + 1));
-                    ref.child("Survey/Entries/" + id).setValue(sc);
-                }
-
-                @Override
-                public void onCancelled(FirebaseError fe) {
-                    System.err.println("Unable to connect to database" + fe.getDetails());
-                }
-            });
-        } else {
-            ArrayList<SurveyContainer> surveys = new ArrayList<>();
-
-            try {
-                ObjectInputStream surveyIn = new ObjectInputStream(new FileInputStream("Offline Surveys.ser"));
-                surveys = (ArrayList<SurveyContainer>) surveyIn.readObject();
-            } catch (FileNotFoundException e) {
-                try {
-                    new File("Offline Surveys.ser").createNewFile();
-                } catch (IOException ex) {
-                    System.err.print("Error: Could not create new File: ");
-                    ex.printStackTrace();
-                }
-            } catch (IOException ex) {
-                System.err.print("Error Reading File 'Offline Surveys.ser': ");
-                ex.printStackTrace();
-            } catch (ClassNotFoundException ec) {
-                System.err.print("Error:");
-                ec.printStackTrace();
+        Firebase ref = DBClass.getInstance();
+        ref.child("META-Data/SurveyID").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot ds) {
+                int id = ds.getValue(Integer.class);
+                ref.child("META-Data/SurveyID").setValue((id + 1));
+                ref.child("Survey/Entries/" + id).setValue(sc);
             }
 
-            surveys.add(new SurveyContainer(reason, source, comments, clientID));
-            try {
-                ObjectOutputStream surveyOut = new ObjectOutputStream(new FileOutputStream("Offline Surveys.ser"));
-                surveyOut.writeObject(surveys);
-                System.out.println("Surveys succesfully written!");
-            } catch (IOException ex) {
-                System.err.print("Error: Could not create Survey File: ");
-                ex.printStackTrace();
+            @Override
+            public void onCancelled(FirebaseError fe) {
+                System.err.println("Unable to connect to database" + fe.getDetails());
             }
-        }
+        });
 
     }
 
@@ -1422,6 +1388,11 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             this.Source = Source;
             this.Comments = comments;
             this.ClientID = ClientID;
+        }
+
+        @Override
+        public String toString() {
+            return "SurveyContainer{" + "Reason=" + Reason + ", Source=" + Source + ", Comments=" + Comments + ", ClientID=" + ClientID + '}';
         }
     }
 

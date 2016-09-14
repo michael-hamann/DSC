@@ -9,6 +9,9 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -23,6 +26,7 @@ public class DSC_SurveyQuestions extends javax.swing.JFrame {
     private ArrayList<String> reasonQuestions = new ArrayList<>();
     private ArrayList<String> sourceQuestions = new ArrayList<>();
     private int selectedIndex;
+    private boolean addingNew = false;
 
     /**
      * Creates new form DSC_SurveyQuestions
@@ -30,6 +34,10 @@ public class DSC_SurveyQuestions extends javax.swing.JFrame {
     public DSC_SurveyQuestions() {
         getQuestions();
         initComponents();
+        txaQuestion.setEnabled(false);
+        btnSave.setEnabled(false);
+        this.setLocationRelativeTo(null);
+        this.addWindowListener(closeListener());
     }
 
     /**
@@ -52,10 +60,10 @@ public class DSC_SurveyQuestions extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         txaQuestion = new javax.swing.JTextArea();
         btnAdd = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("DoorsepChef");
-        setAlwaysOnTop(true);
         setResizable(false);
 
         jPanel5.setBackground(new java.awt.Color(0, 153, 0));
@@ -82,11 +90,6 @@ public class DSC_SurveyQuestions extends javax.swing.JFrame {
             }
         });
 
-        lstQuestions.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         lstQuestions.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         lstQuestions.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
@@ -104,10 +107,28 @@ public class DSC_SurveyQuestions extends javax.swing.JFrame {
 
         txaQuestion.setColumns(20);
         txaQuestion.setRows(5);
+        txaQuestion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txaQuestionKeyTyped(evt);
+            }
+        });
         jScrollPane2.setViewportView(txaQuestion);
 
         btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Add.png"))); // NOI18N
         btnAdd.setText("Add");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
+
+        btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Bin.png"))); // NOI18N
+        btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -125,13 +146,8 @@ public class DSC_SurveyQuestions extends javax.swing.JFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGap(0, 7, Short.MAX_VALUE)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(24, 24, 24))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                                .addComponent(btnBack)
-                                .addContainerGap())))
+                        .addComponent(jLabel3)
+                        .addGap(24, 24, 24))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane2)
@@ -139,6 +155,11 @@ public class DSC_SurveyQuestions extends javax.swing.JFrame {
                                 .addComponent(btnAdd)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnSave)))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                        .addComponent(btnDelete)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnBack)
                         .addContainerGap())))
         );
         jPanel6Layout.setVerticalGroup(
@@ -154,8 +175,14 @@ public class DSC_SurveyQuestions extends javax.swing.JFrame {
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnAdd)
                             .addComponent(btnSave))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                        .addComponent(btnBack))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGap(0, 4, Short.MAX_VALUE)
+                                .addComponent(btnBack))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(btnDelete)
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(cmbQuestionType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -200,6 +227,37 @@ public class DSC_SurveyQuestions extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        String type = "";
+        if (addingNew) {
+            if (cmbQuestionType.getSelectedIndex() == 0) {
+                reasonQuestions.add(txaQuestion.getText());
+                DBClass.getInstance().child("Survey/Questions/Reason/" + (reasonQuestions.size() - 1)).setValue(txaQuestion.getText());
+                type = "Reason";
+            } else {
+                sourceQuestions.add(txaQuestion.getText());
+                DBClass.getInstance().child("Survey/Questions/Source/" + (sourceQuestions.size() - 1)).setValue(txaQuestion.getText());
+                type = "Source";
+            }
+            addingNew = false;
+            lstQuestions.setEnabled(true);
+            cmbQuestionType.setEnabled(true);
+            txaQuestion.setText("");
+            txaQuestion.setEnabled(false);
+            btnAdd.setEnabled(true);
+            btnDelete.setEnabled(true);
+        } else if (selectedIndex != -1) {
+            if (cmbQuestionType.getSelectedIndex() == 0) {
+                reasonQuestions.set(selectedIndex, txaQuestion.getText());
+                updateEntry("Reason", txaQuestion.getText(), selectedIndex);
+                type = "Reason";
+            } else {
+                sourceQuestions.set(selectedIndex, txaQuestion.getText());
+                updateEntry("Source", txaQuestion.getText(), selectedIndex);
+                type = "Source";
+            }
+            updateTextArea();
+        }
+        setList(type);
 
     }//GEN-LAST:event_btnSaveActionPerformed
 
@@ -211,19 +269,63 @@ public class DSC_SurveyQuestions extends javax.swing.JFrame {
         }
         txaQuestion.setText("");
         selectedIndex = -1;
+        txaQuestion.setEnabled(false);
+        btnSave.setEnabled(false);
     }//GEN-LAST:event_cmbQuestionTypeItemStateChanged
 
     private void lstQuestionsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstQuestionsValueChanged
-        selectedIndex = lstQuestions.getSelectedIndex();
+        updateTextArea();
+    }//GEN-LAST:event_lstQuestionsValueChanged
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        txaQuestion.setEnabled(true);
+        lstQuestions.setSelectedIndex(-1);
+        lstQuestions.setEnabled(false);
+        cmbQuestionType.setEnabled(false);
+        txaQuestion.setText("");
+        addingNew = true;
+        txaQuestion.requestFocus();
+        btnAdd.setEnabled(false);
+        btnDelete.setEnabled(false);
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void txaQuestionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txaQuestionKeyTyped
+        if (txaQuestion.getText().equals("")) {
+            btnSave.setEnabled(false);
+        } else {
+            btnSave.setEnabled(true);
+        }
+    }//GEN-LAST:event_txaQuestionKeyTyped
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        String type = "";
         if (selectedIndex != -1) {
             if (cmbQuestionType.getSelectedIndex() == 0) {
-                txaQuestion.setText(reasonQuestions.get(selectedIndex));
-            } else {
-                txaQuestion.setText(sourceQuestions.get(selectedIndex));
-            }
-        }
+                type = "Reason";
+                reasonQuestions.remove(selectedIndex);
+                DBClass.getInstance().child("Survey/Questions/Reason/").setValue(reasonQuestions);
 
-    }//GEN-LAST:event_lstQuestionsValueChanged
+            } else {
+                type = "Source";
+                sourceQuestions.remove(selectedIndex);
+                DBClass.getInstance().child("Survey/Questions/Source/").setValue(sourceQuestions);
+            }
+            JOptionPane.showMessageDialog(null, "Question Succsesfully deleted!");
+            txaQuestion.setText("");
+            setList(type);
+            txaQuestion.setEnabled(false);
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private WindowListener closeListener() {
+        WindowListener exitListener = new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                btnBack.doClick();
+            }
+        };
+        return exitListener;
+    }
 
     /**
      * @param args the command line arguments
@@ -263,39 +365,16 @@ public class DSC_SurveyQuestions extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnBack;
-    private javax.swing.JButton btnCancel;
-    private javax.swing.JButton btnCancel1;
+    private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnSave;
-    private javax.swing.JComboBox<String> cmbMealType;
-    private javax.swing.JComboBox<String> cmbMealType1;
     private javax.swing.JComboBox<String> cmbQuestionType;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel lblAllergy;
-    private javax.swing.JLabel lblAllergy1;
-    private javax.swing.JLabel lblExclusions;
-    private javax.swing.JLabel lblExclusions1;
-    private javax.swing.JLabel lblMealType;
-    private javax.swing.JLabel lblMealType1;
-    private javax.swing.JLabel lblQuantity;
-    private javax.swing.JLabel lblQuantity1;
     private javax.swing.JList<String> lstQuestions;
-    private javax.swing.JSpinner spnQuantity;
-    private javax.swing.JSpinner spnQuantity1;
     private javax.swing.JTextArea txaQuestion;
-    private javax.swing.JTextField txfAllergy;
-    private javax.swing.JTextField txfAllergy1;
-    private javax.swing.JTextField txfExclusions;
-    private javax.swing.JTextField txfExclusions1;
     // End of variables declaration//GEN-END:variables
 
     public void setBack(DSC_Main pane) {
@@ -343,6 +422,24 @@ public class DSC_SurveyQuestions extends javax.swing.JFrame {
             df.add(i, arrList.get(i));
         }
         lstQuestions.setModel(df);
+    }
+
+    private void updateEntry(String type, String text, int index) {
+        String route = "Survey/Questions/" + type + "/" + index;
+        DBClass.getInstance().child(route).setValue(text);
+    }
+
+    private void updateTextArea() {
+        selectedIndex = lstQuestions.getSelectedIndex();
+        if (selectedIndex != -1) {
+            if (cmbQuestionType.getSelectedIndex() == 0) {
+                txaQuestion.setText(reasonQuestions.get(selectedIndex));
+            } else {
+                txaQuestion.setText(sourceQuestions.get(selectedIndex));
+            }
+        }
+        txaQuestion.setEnabled(true);
+        btnSave.setEnabled(true);
     }
 
 }
