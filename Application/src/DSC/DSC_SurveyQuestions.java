@@ -206,7 +206,7 @@ public class DSC_SurveyQuestions extends javax.swing.JFrame {
     private void cmbQuestionTypeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbQuestionTypeItemStateChanged
         if (cmbQuestionType.getSelectedIndex() == 0) {
             setList("Reason");
-        }else{
+        } else {
             setList("Source");
         }
     }//GEN-LAST:event_cmbQuestionTypeItemStateChanged
@@ -214,11 +214,14 @@ public class DSC_SurveyQuestions extends javax.swing.JFrame {
     private void lstQuestionsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstQuestionsValueChanged
         selectedIndex = lstQuestions.getSelectedIndex();
         System.out.println(selectedIndex);
-        if (cmbQuestionType.getSelectedIndex() == 0) {
-            txaQuestion.setText(reasonQuestions.get(selectedIndex));
-        }else{
-            txaQuestion.setText(sourceQuestions.get(selectedIndex));
+        if (selectedIndex != -1) {
+            if (cmbQuestionType.getSelectedIndex() == 0) {
+                txaQuestion.setText(reasonQuestions.get(selectedIndex));
+            } else {
+                txaQuestion.setText(sourceQuestions.get(selectedIndex));
+            }
         }
+
     }//GEN-LAST:event_lstQuestionsValueChanged
 
     /**
@@ -311,9 +314,9 @@ public class DSC_SurveyQuestions extends javax.swing.JFrame {
                 for (DataSnapshot dataSnapshot : sourceQuestion.getChildren()) {
                     sourceQuestions.add(dataSnapshot.getValue(String.class));
                 }
-                
+
                 setList("Reason");
-                
+
             }
 
             @Override
@@ -330,10 +333,10 @@ public class DSC_SurveyQuestions extends javax.swing.JFrame {
         selectedIndex = 0;
         if (type.equals("Reason")) {
             arrList = reasonQuestions;
-        }else{
+        } else {
             arrList = sourceQuestions;
         }
-        
+
         DefaultListModel df = new DefaultListModel();
         for (int i = 0; i < arrList.size(); i++) {
             df.add(i, arrList.get(i));
