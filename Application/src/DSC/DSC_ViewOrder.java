@@ -176,11 +176,11 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 //                }
 //                 
 //                Calendar start = sdf.getCalendar();
-                    if (Data.child("EndDate").getValue().equals("-")) {
-                        end = null;
-                    } else {
-                        end = (Calendar) Data.child("EndDate").getValue();
-                    }
+//                    if (Data.child("EndDate").getValue().equals("-")) {
+//                        end = null;
+//                    } else {
+//                        end = (Calendar) Data.child("EndDate").getValue();
+//                    }
 
                     for (DataSnapshot Data2 : Data.getChildren()) {
                         for (DataSnapshot Data3 : Data2.getChildren()) {
@@ -190,7 +190,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         }
                     }
                     Order o = new Order(Data.getKey(), Data.child("Active").getValue(boolean.class), allclients.get(0),
-                            Data.child("Duration").getValue(String.class), null, end, Data.child("RouteID").getValue(String.class),
+                            Data.child("Duration").getValue(String.class), null,null, Data.child("RouteID").getValue(String.class),
                             allmeals, 0);
                     o.setFamilySize(Data.child("FamilySize").getValue(long.class));
 
@@ -430,6 +430,8 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         tblMeals = new javax.swing.JTable();
         btnBack = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
+        btnAddMeal = new javax.swing.JButton();
+        btnRemoveMeal = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Meals Table");
@@ -949,6 +951,20 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             }
         });
 
+        btnAddMeal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Add.png"))); // NOI18N
+        btnAddMeal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddMealActionPerformed(evt);
+            }
+        });
+
+        btnRemoveMeal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Bin.png"))); // NOI18N
+        btnRemoveMeal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveMealActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlBackgroundLayout = new javax.swing.GroupLayout(pnlBackground);
         pnlBackground.setLayout(pnlBackgroundLayout);
         pnlBackgroundLayout.setHorizontalGroup(
@@ -966,7 +982,10 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         .addGroup(pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
                             .addGroup(pnlBackgroundLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(btnAddMeal, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnRemoveMeal)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnSave)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnBack)))))
@@ -985,7 +1004,9 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnSave)
-                            .addComponent(btnBack)))
+                            .addComponent(btnBack)
+                            .addComponent(btnAddMeal)
+                            .addComponent(btnRemoveMeal)))
                     .addComponent(pnlDetailsClient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pnlDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -1078,6 +1099,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     }
 
                     if (orderEdited) {
+                        DefaultTableModel meals = (DefaultTableModel)tblMeals.getModel();
                         orderEdited = false;
                         Firebase updO = DBClass.getInstance().child("Orders/" + txfOrderID.getText());
                         updO.child("FamilySize").setValue(spnOrderFamilySize.getValue());
@@ -1085,7 +1107,16 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         updO.child("Duration").setValue(txfOrderDuration.getText());
                         updO.child("StartingDate").setValue(spnOrderStartingDate.getValue());
                         updO.child("EndDate").setValue(spnEndDate.getValue());
-
+                        updO.child("Meals").removeValue();
+                        
+                        for (int i = 0; i < meals.getRowCount(); i++) {
+                            updO.child("Meals").child(""+i);
+                            updO.child("Meals").child(""+i).child("Quantity").setValue(meals.getValueAt(i, 0));
+                            updO.child("Meals").child(""+i).child("MealType").setValue(meals.getValueAt(i, 1));
+                            updO.child("Meals").child(""+i).child("Allergies").setValue(meals.getValueAt(i, 2));
+                            updO.child("Meals").child(""+i).child("Exclusions").setValue(meals.getValueAt(i, 3));
+                        }
+                       
                     }
                     JOptionPane.showMessageDialog(rootPane, "Saved successfully.");
 
@@ -1137,6 +1168,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             updO.child("Duration").setValue(txfOrderDuration.getText());
                             updO.child("StartingDate").setValue(spnOrderStartingDate.getValue());
                             updO.child("EndDate").setValue(spnEndDate.getValue());
+                            
 
                         }
                         JOptionPane.showMessageDialog(rootPane, "Saved successfully.");
@@ -1485,6 +1517,17 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tblOrderTablePropertyChange
 
+    private void btnRemoveMealActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveMealActionPerformed
+        DefaultTableModel mealmod = (DefaultTableModel) tblMeals.getModel();
+        mealmod.removeRow(tblMeals.getSelectedRow());
+    }//GEN-LAST:event_btnRemoveMealActionPerformed
+
+    private void btnAddMealActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddMealActionPerformed
+        DefaultTableModel mealmod = (DefaultTableModel) tblMeals.getModel();
+        Object[] row = {"","","",""};
+        mealmod.addRow(row);
+    }//GEN-LAST:event_btnAddMealActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1528,6 +1571,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddMeal;
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnDeactivate;
     private javax.swing.JButton btnDelete;
@@ -1537,6 +1581,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     private javax.swing.JButton btnEndDateRemove;
     private javax.swing.JButton btnOrderDateAdd;
     private javax.swing.JButton btnRemove;
+    private javax.swing.JButton btnRemoveMeal;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnSearch;
     private javax.swing.JComboBox<String> cmbSearchColumn;
