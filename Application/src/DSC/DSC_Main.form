@@ -143,9 +143,12 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lblView" alignment="0" max="32767" attributes="0"/>
                           <Component id="btnRouteView" alignment="1" max="32767" attributes="0"/>
-                          <Component id="btnViewOrders" alignment="1" max="32767" attributes="0"/>
+                          <Component id="btnViewOrders" alignment="1" pref="161" max="32767" attributes="0"/>
                           <Component id="btnPlaceOrder" alignment="0" max="32767" attributes="0"/>
+<<<<<<< HEAD
                           <Component id="btnAddNewSuburb" alignment="0" pref="161" max="32767" attributes="0"/>
+=======
+>>>>>>> origin/master
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -162,9 +165,13 @@
                       <Component id="btnViewOrders" min="-2" pref="50" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnRouteView" min="-2" pref="50" max="-2" attributes="0"/>
+<<<<<<< HEAD
                       <EmptySpace min="-2" pref="131" max="-2" attributes="0"/>
                       <Component id="btnAddNewSuburb" min="-2" pref="52" max="-2" attributes="0"/>
                       <EmptySpace pref="100" max="32767" attributes="0"/>
+=======
+                      <EmptySpace max="32767" attributes="0"/>
+>>>>>>> origin/master
                   </Group>
               </Group>
             </DimensionLayout>
@@ -201,14 +208,6 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPlaceOrderActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="btnAddNewSuburb">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Create New Suburb"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddNewSuburbActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>

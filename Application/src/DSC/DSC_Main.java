@@ -54,7 +54,6 @@ public class DSC_Main extends javax.swing.JFrame {
         btnRouteView = new javax.swing.JButton();
         btnViewOrders = new javax.swing.JButton();
         btnPlaceOrder = new javax.swing.JButton();
-        btnAddNewSuburb = new javax.swing.JButton();
         pnlReports = new javax.swing.JPanel();
         btnDriverRpt = new javax.swing.JButton();
         btnChefRpt = new javax.swing.JButton();
@@ -164,13 +163,6 @@ public class DSC_Main extends javax.swing.JFrame {
             }
         });
 
-        btnAddNewSuburb.setText("Create New Suburb");
-        btnAddNewSuburb.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddNewSuburbActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout pnlTablesLayout = new javax.swing.GroupLayout(pnlTables);
         pnlTables.setLayout(pnlTablesLayout);
         pnlTablesLayout.setHorizontalGroup(
@@ -180,9 +172,14 @@ public class DSC_Main extends javax.swing.JFrame {
                 .addGroup(pnlTablesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnRouteView, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+<<<<<<< HEAD
                     .addComponent(btnViewOrders, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnPlaceOrder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnAddNewSuburb, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE))
+=======
+                    .addComponent(btnViewOrders, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
+                    .addComponent(btnPlaceOrder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+>>>>>>> origin/master
                 .addContainerGap())
         );
         pnlTablesLayout.setVerticalGroup(
@@ -196,9 +193,13 @@ public class DSC_Main extends javax.swing.JFrame {
                 .addComponent(btnViewOrders, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnRouteView, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+<<<<<<< HEAD
                 .addGap(131, 131, 131)
                 .addComponent(btnAddNewSuburb, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(100, Short.MAX_VALUE))
+=======
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+>>>>>>> origin/master
         );
 
         pnlReports.setBackground(new java.awt.Color(0, 204, 51));
@@ -287,6 +288,11 @@ public class DSC_Main extends javax.swing.JFrame {
             }
             public void ancestorResized(java.awt.event.HierarchyEvent evt) {
                 pnlBarChartActiveresizeCheck(evt);
+            }
+        });
+        pnlBarChartActive.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnlBarChartActiveMouseClicked(evt);
             }
         });
 
@@ -783,6 +789,7 @@ public class DSC_Main extends javax.swing.JFrame {
         new DSC_Place_Order(true).setVisible(true);
     }//GEN-LAST:event_btnPlaceOrderActionPerformed
 
+<<<<<<< HEAD
     private void btnAddNewSuburbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddNewSuburbActionPerformed
         new DSC_Place_Order(false).setVisible(true);
         this.dispose();
@@ -800,6 +807,8 @@ public class DSC_Main extends javax.swing.JFrame {
         this.setEnabled(false);
     }//GEN-LAST:event_btnSurveyQuestionsActionPerformed
 
+=======
+>>>>>>> origin/master
     /**
      * @param args the command line arguments
      */
@@ -859,7 +868,10 @@ public class DSC_Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+<<<<<<< HEAD
     private javax.swing.JButton btnAddNewSuburb;
+=======
+>>>>>>> origin/master
     private javax.swing.JButton btnChefRpt;
     private javax.swing.JButton btnDriverRpt;
     private javax.swing.JButton btnHandlerRpt;
