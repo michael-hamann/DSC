@@ -1,8 +1,14 @@
-
 package DSC;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,6 +20,8 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     boolean editClicked = false;
     int listRouteIndex = 0;
     int listSuburbIndex = 0;
+    ArrayList<Route> allRoutes = new ArrayList<>();
+    ArrayList<String> suburbs = new ArrayList<>();
 
     /**
      * Creates new form DSC_DriverDetails
@@ -27,8 +35,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         txfRouteID.setEnabled(false);
         txfSuburbID.setEnabled(false);
         txfDriverID.setEnabled(false);
-        lstRoutes.setSelectedIndex(listRouteIndex);
-        lstSuburbs.setSelectedIndex(listSuburbIndex);
+        setRoutes();
     }
 
     public final void enableFields() {
@@ -52,7 +59,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         txfAddress.setText(null);
         txfVehicleReg.setText(null);
     }
-    
+
     private boolean checkEmpty() {
         boolean empty = false;
 
@@ -62,6 +69,68 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         }
 
         return empty;
+    }
+
+    private void setRoutes() {
+        Firebase tableRef = DBClass.getInstance().child("Routes");
+        tableRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot ds) {
+
+                for (DataSnapshot data : ds.getChildren()) {
+                    if (!data.getKey().equals("0")) {
+                        Route r = new Route();
+                        r.setID(data.getKey());
+                        r.setActive((boolean) data.child("Active").getValue());
+                        //r.setDrivers(drivers);
+                        //r.setSuburbs(suburbs);
+                        r.setTimeFrame((String) data.child("TimeFrame").getValue());
+                        allRoutes.add(r);
+                    }
+                }
+                DefaultListModel model = new DefaultListModel();
+                for (Route r : allRoutes) {
+                    model.addElement(r);
+                }
+                lstRoutes.setModel(model);
+                lstRoutes.setSelectedIndex(0);
+                setSuburbs("1");
+            }
+
+            @Override
+            public void onCancelled(FirebaseError fe) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
+
+    }
+
+    private void setSuburbs(String routeNum) {
+        Firebase tableRef = DBClass.getInstance().child("Routes");
+        tableRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot ds) {
+                for (DataSnapshot data : ds.getChildren()) {
+                    if(data.getKey().equals(routeNum)){
+                       String subArr[] = data.child("Suburbs").getValue(String[].class);
+                       for (int i = 0; i < subArr.length; i++) {
+                            suburbs.add(subArr[i]);
+                        }
+                    }
+                }
+                DefaultListModel model = new DefaultListModel();
+                for (String s : suburbs) {
+                    model.addElement(s);
+                }
+                lstSuburbs.setModel(model);
+                lstSuburbs.setSelectedIndex(0);
+            }
+
+            @Override
+            public void onCancelled(FirebaseError fe) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
     }
 
     /**
@@ -119,6 +188,11 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
 
         lstRoutes.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lstRoutes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lstRoutes.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstRoutesValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(lstRoutes);
 
         btnAddRoute.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Add.png"))); // NOI18N
@@ -575,7 +649,11 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnDeleteSuburbActionPerformed
 
-    
+    private void lstRoutesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstRoutesValueChanged
+//        String num = Character.toString(lstRoutes.getSelectedValue().charAt(lstRoutes.getSelectedValue().length()-1));
+//        setSuburbs(num);
+    }//GEN-LAST:event_lstRoutesValueChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddRoute;

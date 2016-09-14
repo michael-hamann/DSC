@@ -94,7 +94,11 @@ public class Route implements java.io.Serializable{
     public void setEndDate(Calendar endDate) {
         this.endDate = endDate;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Route: "+routeID;
+    }
     
     
 }
