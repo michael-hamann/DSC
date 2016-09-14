@@ -32,8 +32,10 @@ public class DSC_Place_Order extends javax.swing.JFrame {
     private String clientID = "1";
     private Calendar[] orderDates = new Calendar[4];
     private ArrayList<Route> routes = new ArrayList<>();
-    private boolean online; 
+    private boolean online;
     private boolean connection;
+    private String surveyReasons[];
+    private String surveySources[];
 
     /**
      * Creates new form DSC_Main
@@ -43,31 +45,28 @@ public class DSC_Place_Order extends javax.swing.JFrame {
 
     public DSC_Place_Order(boolean online) {
         this.online = online;
+
         if (online) {
             initComponents();
-
-            rbtAfternoon.setEnabled(false);
-            rbtEvening.setEnabled(false);
-            rbtLateAfternoon.setEnabled(false);
-
-            this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-            refreshTable();
             getSuburbs();
-            getDates();
         } else {
             retryConnection();
             initComponents();
-
-            rbtAfternoon.setEnabled(false);
-            rbtEvening.setEnabled(false);
-            rbtLateAfternoon.setEnabled(false);
             btnBack.setEnabled(false);
-            this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-            refreshTable();
             getSuburbsFromText();
-            getDates();
             lblName.setText(lblName.getText() + "          --Offline");
         }
+
+        surveyReasons = getSurveyReasons();
+        surveySources = getSurveySources();
+        cmbSurveyReason.setModel(new DefaultComboBoxModel<>(surveyReasons));
+        cmbSurveySource.setModel(new DefaultComboBoxModel<>(surveySources));
+        getDates();
+        refreshTable();
+        rbtAfternoon.setEnabled(false);
+        rbtEvening.setEnabled(false);
+        rbtLateAfternoon.setEnabled(false);
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     @SuppressWarnings("unchecked")
@@ -106,11 +105,11 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         lblSurveyReason = new javax.swing.JLabel();
         lblSurveySource = new javax.swing.JLabel();
-        lblSurveyComments = new javax.swing.JLabel();
         cmbSurveyReason = new javax.swing.JComboBox<>();
         cmbSurveySource = new javax.swing.JComboBox<>();
         jScrollPane3 = new javax.swing.JScrollPane();
         txaSurveyComments = new javax.swing.JTextArea();
+        lblSurveyComments = new javax.swing.JLabel();
         lblSurveyInfo = new javax.swing.JLabel();
         pnlOrderInfo = new javax.swing.JPanel();
         lblOrderInfo = new javax.swing.JLabel();
@@ -133,17 +132,16 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         txfMealsTotal = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         btnDeleteMeal = new javax.swing.JButton();
-        lblOrderInfo1 = new javax.swing.JLabel();
-        btnBack = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
+        lblOrderInfo1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Place Order");
         setBackground(new java.awt.Color(0, 0, 0));
-        setMinimumSize(new java.awt.Dimension(915, 795));
+        setMinimumSize(new java.awt.Dimension(950, 730));
 
         pnlBackground.setBackground(new java.awt.Color(0, 153, 0));
-        pnlBackground.setMinimumSize(new java.awt.Dimension(915, 795));
 
         pnlHeading.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -284,7 +282,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblClientSuburb)
                     .addComponent(cmbClientSuburb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblClientAddress))
@@ -306,7 +304,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             .addGroup(pnlClientInfoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(130, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlClientInfoLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblClientInfo)
@@ -316,8 +314,8 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             pnlClientInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlClientInfoLayout.createSequentialGroup()
                 .addComponent(lblClientInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -332,17 +330,36 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         lblSurveySource.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblSurveySource.setText("Refrence Source: ");
 
-        lblSurveyComments.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblSurveyComments.setText("Comments: ");
-
         cmbSurveyReason.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbSurveyReason.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+                cmbSurveyReasonPopupMenuWillBecomeVisible(evt);
+            }
+        });
 
         cmbSurveySource.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbSurveySource.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+                cmbSurveySourcePopupMenuWillBecomeVisible(evt);
+            }
+        });
 
         txaSurveyComments.setColumns(20);
+        txaSurveyComments.setLineWrap(true);
         txaSurveyComments.setRows(2);
         txaSurveyComments.setWrapStyleWord(true);
         jScrollPane3.setViewportView(txaSurveyComments);
+
+        lblSurveyComments.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblSurveyComments.setText("Comments: ");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -351,35 +368,32 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblSurveyComments, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblSurveySource, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(lblSurveyReason)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(cmbSurveySource, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cmbSurveyReason, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(41, 41, 41))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(cmbSurveySource, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cmbSurveyReason, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblSurveyComments, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblSurveyReason)
-                    .addComponent(cmbSurveyReason, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbSurveyReason, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblSurveyComments))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbSurveySource, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblSurveySource))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblSurveyComments)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblSurveySource)))
         );
 
         lblSurveyInfo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -391,19 +405,19 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         pnlSurveyInfoLayout.setHorizontalGroup(
             pnlSurveyInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlSurveyInfoLayout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlSurveyInfoLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblSurveyInfo)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(pnlSurveyInfoLayout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         pnlSurveyInfoLayout.setVerticalGroup(
             pnlSurveyInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlSurveyInfoLayout.createSequentialGroup()
                 .addComponent(lblSurveyInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(11, 11, 11)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -494,9 +508,9 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         pnlOrderInfoLayout.setHorizontalGroup(
             pnlOrderInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlOrderInfoLayout.createSequentialGroup()
-                .addContainerGap(214, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblOrderInfo)
-                .addContainerGap(215, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(pnlOrderInfoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -507,8 +521,8 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlOrderInfoLayout.createSequentialGroup()
                 .addComponent(lblOrderInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pnlMealInfo.setBackground(new java.awt.Color(0, 204, 51));
@@ -569,6 +583,21 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             }
         });
 
+        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Save 2.png"))); // NOI18N
+        btnSave.setText(" Save");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
+
+        btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -576,7 +605,12 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane5)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnSave)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnBack))
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -601,27 +635,16 @@ public class DSC_Place_Order extends javax.swing.JFrame {
                     .addComponent(btnDeleteMeal)
                     .addComponent(txfMealsTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSave)
+                    .addComponent(btnBack)))
         );
 
         lblOrderInfo1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblOrderInfo1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblOrderInfo1.setText("Meals Info");
-
-        btnBack.setText("Back");
-        btnBack.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBackActionPerformed(evt);
-            }
-        });
-
-        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Save 2.png"))); // NOI18N
-        btnSave.setText(" Save");
-        btnSave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSaveActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout pnlMealInfoLayout = new javax.swing.GroupLayout(pnlMealInfo);
         pnlMealInfo.setLayout(pnlMealInfoLayout);
@@ -632,23 +655,13 @@ public class DSC_Place_Order extends javax.swing.JFrame {
                 .addComponent(lblOrderInfo1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMealInfoLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnSave)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnBack)
-                .addContainerGap())
         );
         pnlMealInfoLayout.setVerticalGroup(
             pnlMealInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMealInfoLayout.createSequentialGroup()
                 .addComponent(lblOrderInfo1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17)
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlMealInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnBack)
-                    .addComponent(btnSave))
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -675,13 +688,13 @@ public class DSC_Place_Order extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlBackgroundLayout.createSequentialGroup()
-                        .addComponent(pnlClientInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pnlSurveyInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(pnlBackgroundLayout.createSequentialGroup()
                         .addComponent(pnlOrderInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pnlMealInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(pnlMealInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pnlBackgroundLayout.createSequentialGroup()
+                        .addComponent(pnlClientInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pnlSurveyInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -834,7 +847,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
                 ref.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot ds) {
-                        String clientID = ds.child("ClientID").getValue(Integer.class) + "";
+                        clientID = ds.child("ClientID").getValue(Integer.class) + "";
                         String orderID = ds.child("OrderID").getValue(Integer.class) + "";
                         client.setID(clientID);
                         order.setID(orderID);
@@ -842,9 +855,6 @@ public class DSC_Place_Order extends javax.swing.JFrame {
                         addToMetaData("OrderID", Integer.parseInt(orderID) + 1);
                         addToMetaData("ClientID", Integer.parseInt(clientID) + 1);
                         addOrderToFirebase(order, true);
-                        if (cmbSurveyReason.getSelectedIndex() == 0 || cmbSurveySource.getSelectedIndex() == 0) {
-                            writeSurveyInfo(online);
-                        }
                     }
 
                     @Override
@@ -856,13 +866,13 @@ public class DSC_Place_Order extends javax.swing.JFrame {
                 client.setID(clientID);
                 order.setID(clientID);
                 clientID = "" + (Integer.parseInt(clientID) + 1);
-                //writeOrdersToFile(order);
+                writeOrdersToFile(order);
                 btnSave.setEnabled(true);
-                
-                if (cmbSurveyReason.getSelectedIndex() == 0 || cmbSurveySource.getSelectedIndex() == 0) {
+
+                if (cmbSurveyReason.getSelectedIndex() != 0 && cmbSurveySource.getSelectedIndex() != 0) {
                     writeSurveyInfo(online);
                 }
-                
+
                 if (connection) {
                     JOptionPane.showMessageDialog(null, "Connection to the database has been made. Your orders will now be entered to the database automatically. Opening Main Screen.", "Connection", JOptionPane.OK_OPTION);
                     DSC_Main main = new DSC_Main();
@@ -932,6 +942,24 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         this.setEnabled(false);
 
     }//GEN-LAST:event_btnAddMealActionPerformed
+
+    private void cmbSurveyReasonPopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cmbSurveyReasonPopupMenuWillBecomeVisible
+        String[] arr = new String[surveyReasons.length - 1];
+        for (int i = 0; i < surveyReasons.length - 1; i++) {
+            arr[i] = surveyReasons[i + 1];
+        }
+
+        cmbSurveyReason.setModel(new DefaultComboBoxModel<>(arr));
+    }//GEN-LAST:event_cmbSurveyReasonPopupMenuWillBecomeVisible
+
+    private void cmbSurveySourcePopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cmbSurveySourcePopupMenuWillBecomeVisible
+        String[] arr = new String[surveySources.length - 1];
+        for (int i = 0; i < surveySources.length - 1; i++) {
+            arr[i] = surveySources[i + 1];
+        }
+
+        cmbSurveySource.setModel(new DefaultComboBoxModel<>(arr));
+    }//GEN-LAST:event_cmbSurveySourcePopupMenuWillBecomeVisible
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddMeal;
@@ -1273,6 +1301,9 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         );
 
         ref.child(order.getID()).setValue(orderContainer);
+        if (cmbSurveyReason.getSelectedIndex() != 0 && cmbSurveySource.getSelectedIndex() != 0) {
+            writeSurveyInfo(online);
+        }
         if (orderPane) {
             JOptionPane.showMessageDialog(null, "Order Succsesfully placed!", "Success", JOptionPane.PLAIN_MESSAGE);
             btnBack.doClick();
@@ -1326,7 +1357,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
                 public void onDataChange(DataSnapshot ds) {
                     int id = ds.getValue(Integer.class);
                     ref.child("META-Data/SurveyID").setValue((id + 1));
-                    ref.child("Survey/" + id).setValue(sc);
+                    ref.child("Survey/Entries/" + id).setValue(sc);
                 }
 
                 @Override
@@ -1334,13 +1365,13 @@ public class DSC_Place_Order extends javax.swing.JFrame {
                     System.err.println("Unable to connect to database" + fe.getDetails());
                 }
             });
-        }else{
+        } else {
             ArrayList<SurveyContainer> surveys = new ArrayList<>();
-            
+
             try {
                 ObjectInputStream surveyIn = new ObjectInputStream(new FileInputStream("Offline Surveys.ser"));
-                surveys = (ArrayList<SurveyContainer>)surveyIn.readObject();
-            } catch (FileNotFoundException e){
+                surveys = (ArrayList<SurveyContainer>) surveyIn.readObject();
+            } catch (FileNotFoundException e) {
                 try {
                     new File("Offline Surveys.ser").createNewFile();
                 } catch (IOException ex) {
@@ -1350,10 +1381,11 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             } catch (IOException ex) {
                 System.err.print("Error Reading File 'Offline Surveys.ser': ");
                 ex.printStackTrace();
-            } catch (ClassNotFoundException ec){
-                
+            } catch (ClassNotFoundException ec) {
+                System.err.print("Error:");
+                ec.printStackTrace();
             }
-           
+
             surveys.add(new SurveyContainer(reason, source, comments, clientID));
             try {
                 ObjectOutputStream surveyOut = new ObjectOutputStream(new FileOutputStream("Offline Surveys.ser"));
@@ -1367,18 +1399,28 @@ public class DSC_Place_Order extends javax.swing.JFrame {
 
     }
 
+    private String[] getSurveyReasons() {
+        String[] arr = {"Item1", "Item2", "Item3", "Item4", "Item5", "Item6", "Item7", "Item8", "Item9"};
+        return arr;
+    }
+
+    private String[] getSurveySources() {
+        String[] arr = {"Item1", "Item2", "Item3", "Item4", "Item5", "Item6", "Item7", "Item8", "Item9"};
+        return arr;
+    }
+
 //---------------------------------------------------------------------------------------------------------------------------AnonymousClasses        
-    private class SurveyContainer implements java.io.Serializable{
+    private class SurveyContainer implements java.io.Serializable {
 
         public String Reason;
         public String Source;
-        public String comments;
+        public String Comments;
         public String ClientID;
 
         public SurveyContainer(String Reason, String Source, String comments, String ClientID) {
             this.Reason = Reason;
             this.Source = Source;
-            this.comments = comments;
+            this.Comments = comments;
             this.ClientID = ClientID;
         }
     }

@@ -19,10 +19,12 @@ import javax.swing.table.DefaultTableModel;
  */
 public class DSC_ViewOrder extends javax.swing.JFrame {
 
+    boolean orderEdited = false;
     boolean editClicked = false;
     ArrayList<Client> allclients = new ArrayList<>();
     ArrayList<Order> allorders = new ArrayList<>();
     ArrayList<Order> orders1 = new ArrayList<>();
+    ArrayList<String> suburbs = new ArrayList<>();
 
     /**
      * Creates new form DSC_Main
@@ -37,6 +39,8 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         disableFieldsOrder();
         btnSave.setEnabled(false);
         cmbVeiw.setSelectedItem("Active");
+        cmbSuburbs.removeAllItems();
+        cmbSuburbs.addItem("Collection");
         callSuburbs();
         setOrders();
     }
@@ -113,8 +117,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
         if (txfClientName.getText().isEmpty() || txfClientSurname.getText().isEmpty() || txfClientContactNo.getText().isEmpty()
                 || txfClientAddress.getText().isEmpty() || txfAddInfo.getText().isEmpty()
-                || txfClientContactNo.getText().isEmpty() || txfAltNum.getText().isEmpty() || txfClientEmail.getText().isEmpty()
-                || cmbSuburbs.getSelectedIndex() == 0) {
+                || txfClientContactNo.getText().isEmpty() || txfAltNum.getText().isEmpty() || txfClientEmail.getText().isEmpty()) {//|| cmbSuburbs.getSelectedIndex() == 0
             empty = true;
         }
 
@@ -183,10 +186,10 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     }
                     Order o = new Order(Data.getKey(), Data.child("Active").getValue(boolean.class), allclients.get(0),
                             Data.child("Duration").getValue(String.class), null, end, Data.child("RouteID").getValue(String.class),
-                            allmeals, Data.child("FamilySize").getValue(int.class));
+                            allmeals, 0);
+                    o.setFamilySize(Data.child("FamilySize").getValue(long.class));
 
                     allorders.add(o);
-                    System.out.println(o.getFamilySize());
                     String clientID = Data.child("ClientID").getValue(String.class);
                     for (Client c : allclients) {
                         if (c.getID().equals(clientID)) {
@@ -216,6 +219,30 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     }
 
     public void callSuburbs() {
+        Firebase ref = DBClass.getInstance().child("Routes");
+        ref.orderByChild("Active").equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot ds) {
+                for (DataSnapshot dataSnapshot : ds.getChildren()) {
+                    String subArr[] = dataSnapshot.child("Suburbs").getValue(String[].class);
+                    if (subArr[0].equals("Collection")) {
+                        continue;
+                    } else {
+                        for (int i = 0; i < subArr.length; i++) {
+                            suburbs.add(subArr[i]);
+                            cmbSuburbs.addItem(subArr[i]);
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError fe) {
+                JOptionPane.showMessageDialog(null, "Could not fetch suburbs.\nCheck logs for error report.", "Suburb Error", JOptionPane.ERROR_MESSAGE);
+                System.err.print("Database connection error (Suburb): " + fe);
+            }
+        });
 
     }
 
@@ -252,7 +279,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 cmbSuburbs.setSelectedItem(orders1.get(row).getClient().getSuburb());
                 txfOrderID.setText(orders1.get(row).getID());
                 txfOrderDuration.setText(orders1.get(row).getDuration());
-                //spnOrderFamilySize.setValue(orders.getFamilySize());
+                spnOrderFamilySize.setValue(orders1.get(row).getFamilySize());
                 //spnOrderStartingDate.setValue(orders.getStartingDate());
                 txfOrderRouteID.setText(orders1.get(row).getRoute());
 
@@ -260,7 +287,6 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     mealmodel.addRow(meals.returnObj());
                 }
                 mealmodel.fireTableDataChanged();
-
             }
         });
     }
@@ -401,6 +427,11 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tblOrderTable.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                tblOrderTablePropertyChange(evt);
             }
         });
         jScrollPane1.setViewportView(tblOrderTable);
@@ -546,7 +577,10 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             .addGroup(pnlDetailsClientLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblClientDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(pnlDetailsClientLayout.createSequentialGroup()
+                        .addComponent(lblClientDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnEditClient))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDetailsClientLayout.createSequentialGroup()
                         .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -555,9 +589,6 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txfClientEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
                             .addComponent(cmbSuburbs, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDetailsClientLayout.createSequentialGroup()
-                        .addComponent(btnEditClient)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(pnlDetailsClientLayout.createSequentialGroup()
                         .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblClientSurname)
@@ -588,7 +619,9 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDetailsClientLayout.createSequentialGroup()
                 .addGap(4, 4, 4)
-                .addComponent(lblClientDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblClientDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEditClient))
                 .addGap(18, 18, 18)
                 .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblClientID)
@@ -625,9 +658,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblSuburb)
                     .addComponent(cmbSuburbs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnEditClient)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pnlDetails.setBackground(new java.awt.Color(0, 204, 51));
@@ -716,6 +747,11 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         lblEndDate.setText("End Date:");
 
         btnDeactivate.setText("Deactivate");
+        btnDeactivate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeactivateActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlDetailsLayout = new javax.swing.GroupLayout(pnlDetails);
         pnlDetails.setLayout(pnlDetailsLayout);
@@ -726,11 +762,8 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlDetailsLayout.createSequentialGroup()
                         .addComponent(lblOrdersDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(89, 89, 89))
-                    .addGroup(pnlDetailsLayout.createSequentialGroup()
-                        .addComponent(btnEditOrder)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnDeactivate))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnEditOrder))
                     .addGroup(pnlDetailsLayout.createSequentialGroup()
                         .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblEndDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -761,13 +794,18 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             .addComponent(txfOrderID)
                             .addComponent(spnOrderFamilySize)
                             .addComponent(txfOrderRouteID, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txfOrderDuration))))
+                            .addComponent(txfOrderDuration)))
+                    .addGroup(pnlDetailsLayout.createSequentialGroup()
+                        .addComponent(btnDeactivate)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnlDetailsLayout.setVerticalGroup(
             pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDetailsLayout.createSequentialGroup()
-                .addComponent(lblOrdersDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblOrdersDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEditOrder))
                 .addGap(27, 27, 27)
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblOrderID)
@@ -796,11 +834,9 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDuration)
                     .addComponent(txfOrderDuration, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEditOrder)
-                    .addComponent(btnDeactivate))
-                .addContainerGap())
+                .addGap(41, 41, 41)
+                .addComponent(btnDeactivate)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         tblMeals.setModel(new javax.swing.table.DefaultTableModel(
@@ -855,12 +891,13 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(pnlDetails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBackgroundLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnSave)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnBack)))
+                        .addGroup(pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
+                            .addGroup(pnlBackgroundLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(btnSave)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnBack)))))
                 .addContainerGap())
         );
         pnlBackgroundLayout.setVerticalGroup(
@@ -871,14 +908,15 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 .addComponent(pnlTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlDetails, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlDetailsClient, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(11, 11, 11)
-                .addGroup(pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnBack)
-                    .addComponent(btnSave))
-                .addContainerGap())
+                    .addGroup(pnlBackgroundLayout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnSave)
+                            .addComponent(btnBack)))
+                    .addComponent(pnlDetailsClient, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnlDetails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -928,9 +966,8 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        
+
         Firebase upd = DBClass.getInstance().child("Clients/" + allclients.get(tblOrderTable.getSelectedRow()).getID());
-        System.out.println(upd);
         boolean empty = checkEmpty();
 
         if (empty) {
@@ -948,6 +985,14 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
             upd.updateChildren(clientinfo);
 
+//            if(orderEdited){
+//                 Firebase updorder = DBClass.getInstance().child("Orders/" + allclients.get(tblOrderTable.getSelectedRow()).getID());
+//            }
+//
+//            allclients.clear();
+//            allorders.clear();
+//            setClients();
+//            setOrders();
             disableFieldsClient();
             btnSave.setVisible(false);
             btnEditOrder.setEnabled(true);
@@ -1055,6 +1100,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
                     break;
                 case "Active":
+                    btnDeactivate.setEnabled(true);
                     switch (column) {
                         case "Name":
                             for (Order orders : allorders) {
@@ -1126,7 +1172,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     break;
                 case "Inactive":
                     model.setRowCount(0);
-
+                    btnDeactivate.setEnabled(false);
                     switch (column) {
                         case "Name":
                             for (Order orders : allorders) {
@@ -1223,6 +1269,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         btnEditOrder.setEnabled(false);
         btnSave.setEnabled(true);
         editClicked = true;
+        orderEdited = true;
     }//GEN-LAST:event_btnEditOrderActionPerformed
 
     private void btnEndDateAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEndDateAddActionPerformed
@@ -1240,6 +1287,21 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     private void txfSearchPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_txfSearchPropertyChange
         // TODO add your handling code here:
     }//GEN-LAST:event_txfSearchPropertyChange
+
+    private void btnDeactivateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeactivateActionPerformed
+
+        Firebase updorder = DBClass.getInstance().child("Orders/" + allorders.get(tblOrderTable.getSelectedRow()).getID());
+
+        Map<String, Object> orderinfo = new HashMap();
+        orderinfo.put("Active", false);
+
+        updorder.updateChildren(orderinfo);
+
+    }//GEN-LAST:event_btnDeactivateActionPerformed
+
+    private void tblOrderTablePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tblOrderTablePropertyChange
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblOrderTablePropertyChange
 
     /**
      * @param args the command line arguments
