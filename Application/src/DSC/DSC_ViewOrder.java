@@ -111,10 +111,10 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     public final void clearFieldsOrder() {
         txfOrderID.setText(null);
         spnOrderFamilySize.setValue(0);
-        spnOrderStartingDate.setValue("");
+        //spnOrderStartingDate.setValue("");
         txfOrderRouteID.setText(null);
         txfOrderDuration.setText(null);
-        spnEndDate.setValue("");
+        //spnEndDate.setValue("");
     }
 
     private boolean checkEmpty() {
@@ -559,7 +559,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(btnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
                         .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cmbSearchColumn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblSearchBy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -568,7 +568,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         .addComponent(btnDelete)
                         .addComponent(cmbVeiw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(11, 11, 11)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -730,7 +730,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblSuburb)
                     .addComponent(cmbSuburbs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         pnlDetails.setBackground(new java.awt.Color(0, 204, 51));
@@ -906,9 +906,9 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDuration)
                     .addComponent(txfOrderDuration, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(41, 41, 41)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnDeactivate)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         tblMeals.setModel(new javax.swing.table.DefaultTableModel(
@@ -981,14 +981,14 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlBackgroundLayout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnSave)
                             .addComponent(btnBack)))
-                    .addComponent(pnlDetailsClient, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pnlDetails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(pnlDetailsClient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -1017,18 +1017,27 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         String name = txfClientName.getText() + " " + txfClientSurname.getText();
 
-        String message = "Are you sure you want to delete " + name + "?";
+        String message = "Are you sure you want to delete an order of " + name + "?";
         int answer = JOptionPane.showConfirmDialog(this, message, "Confirm", JOptionPane.INFORMATION_MESSAGE);
 
         switch (answer) {
             case JOptionPane.YES_OPTION:
-                JOptionPane.showMessageDialog(this, name + " will be deleted", "Delete Notification", JOptionPane.INFORMATION_MESSAGE);
-                Firebase del = DBClass.getInstance().child("Clients/" + allclients.get(tblOrderTable.getSelectedRow()).getID() + "/");
-
+                //removes node from database
+                Firebase del = DBClass.getInstance().child("Orders/" + txfOrderID.getText());
+                del.removeValue();
+                clearFieldsClient();
+                clearFieldsOrder();
+                DefaultTableModel m = (DefaultTableModel) tblMeals.getModel();
+                m.setRowCount(0);
+                //clear arraylist and repopulate with updated data
+                allclients.clear();
+                allorders.clear();
+                setClients();
+                setOrders();
+                JOptionPane.showMessageDialog(this, name + " has been deleted", "Delete Notification", JOptionPane.INFORMATION_MESSAGE);
                 break;
 
             case JOptionPane.NO_OPTION:
-                JOptionPane.showMessageDialog(this, name + " will not be deleted", "Delete Notification", JOptionPane.INFORMATION_MESSAGE);
                 break;
 
             case JOptionPane.CANCEL_OPTION:
@@ -1128,7 +1137,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             updO.child("Duration").setValue(txfOrderDuration.getText());
                             updO.child("StartingDate").setValue(spnOrderStartingDate.getValue());
                             updO.child("EndDate").setValue(spnEndDate.getValue());
-                            
+
                         }
                         JOptionPane.showMessageDialog(rootPane, "Saved successfully.");
 
@@ -1461,12 +1470,14 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
     private void btnDeactivateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeactivateActionPerformed
 
-        Firebase updorder = DBClass.getInstance().child("Orders/" + allorders.get(tblOrderTable.getSelectedRow()).getID());
-
-        Map<String, Object> orderinfo = new HashMap();
-        orderinfo.put("Active", false);
-
-        updorder.updateChildren(orderinfo);
+        Firebase updOrder = DBClass.getInstance().child("Orders/" + txfOrderID.getText());
+        updOrder.child("Active").setValue(false);
+        //clear arraylist and repopulate with updated data
+        allclients.clear();
+        allorders.clear();
+        setClients();
+        setOrders();
+        btnDeactivate.setEnabled(false);
 
     }//GEN-LAST:event_btnDeactivateActionPerformed
 
