@@ -193,6 +193,11 @@ public class DSC_Main extends javax.swing.JFrame {
         pnlReports.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         btnDriverRpt.setText("Driver Report");
+        btnDriverRpt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnDriverRptMouseClicked(evt);
+            }
+        });
         btnDriverRpt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDriverRptActionPerformed(evt);
@@ -265,11 +270,6 @@ public class DSC_Main extends javax.swing.JFrame {
                 pnlBarChartActiveresizeCheck(evt);
             }
         });
-        pnlBarChartActive.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                pnlBarChartActiveMouseClicked(evt);
-            }
-        });
 
         javax.swing.GroupLayout pnlBarChartActiveLayout = new javax.swing.GroupLayout(pnlBarChartActive);
         pnlBarChartActive.setLayout(pnlBarChartActiveLayout);
@@ -298,11 +298,6 @@ public class DSC_Main extends javax.swing.JFrame {
 
         pnlBarChartInActive.setBackground(new java.awt.Color(102, 102, 102));
         pnlBarChartInActive.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        pnlBarChartInActive.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                pnlBarChartInActiveMousePressed(evt);
-            }
-        });
 
         javax.swing.GroupLayout pnlBarChartInActiveLayout = new javax.swing.GroupLayout(pnlBarChartInActive);
         pnlBarChartInActive.setLayout(pnlBarChartInActiveLayout);
@@ -713,7 +708,8 @@ public class DSC_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDriverTblActionPerformed
 
     private void btnDriverRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDriverRptActionPerformed
-        Reports.createDriverReport();
+        Reports reportObject = new Reports();
+        reportObject.createDriverReport();
     }//GEN-LAST:event_btnDriverRptActionPerformed
 
     private void btnChefRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChefRptActionPerformed
@@ -763,6 +759,10 @@ public class DSC_Main extends javax.swing.JFrame {
         this.dispose();
         new DSC_Place_Order(true).setVisible(true);
     }//GEN-LAST:event_btnPlaceOrderActionPerformed
+
+    private void btnDriverRptMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDriverRptMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDriverRptMouseClicked
 
     /**
      * @param args the command line arguments

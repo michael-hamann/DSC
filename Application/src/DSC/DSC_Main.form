@@ -254,6 +254,7 @@
                 <Property name="text" type="java.lang.String" value="Driver Report"/>
               </Properties>
               <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnDriverRptMouseClicked"/>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDriverRptActionPerformed"/>
               </Events>
             </Component>
@@ -345,7 +346,6 @@
               </Properties>
               <Events>
                 <EventHandler event="ancestorResized" listener="java.awt.event.HierarchyBoundsListener" parameters="java.awt.event.HierarchyEvent" handler="pnlBarChartActiveresizeCheck"/>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="pnlBarChartActiveMouseClicked"/>
               </Events>
 
               <Layout>
@@ -397,9 +397,6 @@
                   </Border>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="pnlBarChartInActiveMousePressed"/>
-              </Events>
 
               <Layout>
                 <DimensionLayout dim="0">

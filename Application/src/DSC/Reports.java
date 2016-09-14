@@ -36,25 +36,20 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  */
 public class Reports {
 
-    private static String routeNumber = "";
-    private static String route = "Route: ";
-    private static XSSFWorkbook workbook = new XSSFWorkbook();
-    private static XSSFSheet spreadsheet;
-    private static XSSFRow row;
-    private static XSSFCell cell;
-    private static FileOutputStream out;
-    private static int counter = 1;
-    private static ArrayList<String> setDriverName = new ArrayList();
-    private static ArrayList<String> setRouteNumber = new ArrayList();
-    private static ArrayList<String> setWeekNumber = new ArrayList();
-    private static ArrayList<String> getDriverReportData = new ArrayList();
-    private static ArrayList<DriverReportData> driverData = new ArrayList<>();
-    private static String standardSheet[] = {"Yes/No", "Name", "Surname", "Contact", "EFT", "Cash", "Date Paid", "Mon", "Tue", "Wed", "Thurs", "Fri", "Address", "AdditionalInfo"};
-    private static int iterate = 0;
-    private static CellStyle cs;
-    private static int count = 0;
+    private  String routeNumber = "";
+    private  String route = "Route: ";
+    private  XSSFWorkbook workbook = new XSSFWorkbook();
+    private  XSSFSheet spreadsheet;
+    private  XSSFRow row;
+    private  XSSFCell cell;
+    private  FileOutputStream out;
+    private  int counter = 1;
+    private  ArrayList<DriverReportData> driverData = new ArrayList<>();
+    private  String standardSheet[] = {"Yes/No", "Name", "Surname", "Contact", "EFT", "Cash", "Date Paid", "Mon", "Tue", "Wed", "Thurs", "Fri", "Address", "AdditionalInfo"};
+    private  CellStyle cs;
+    private  int count = 0;
 
-    public static void createDriverReport() {
+    public void createDriverReport() {
 
         tableRef = DBClass.getInstance().child("Clients");// Go to specific Table]\
 
@@ -89,27 +84,24 @@ public class Reports {
 
                 spreadsheet = workbook.createSheet("DriverReport " + counter);
                 counter++;
-                Map<String, Object[]> data = new TreeMap<String, Object[]>();
-                data.put("0", new Object[]{"Y/N", "Name", "Surname", "Contact", "EFT", "Cash", "Date Paid", "Mon", "Tue", "Wed", "Thurs", "Fri", "Address", "AdditionalInfo"});
+                Map<String, Object[]> data = new TreeMap<String, Object[]>();               
+                data.put("0", new Object[]{"Name", "Surname", "Contact","Date Paid", "Mon", "Tue", "Wed", "Thurs", "Fri", "Address", "AdditionalInfo"});
                 for (DataSnapshot Data : ds.getChildren()) {
                     routeNumber = Data.getKey();
                     if (routeNumber != "0") {
-                        for (DataSnapshot Data2 : Data.getChildren()) {
-                            for (DataSnapshot Data3 : Data2.getChildren()) {
-                                if (!Data2.getKey().equals("Suburbs")) {
-                                    try {
-                                        
-                                        cs = workbook.createCellStyle();
-                                        cs.setBorderBottom(XSSFCellStyle.BORDER_THIN);
-                                        cs.setBorderTop(XSSFCellStyle.BORDER_THIN);
+                        try {
+                            for (DataSnapshot Data2 : Data.getChildren()) {
+                                for (DataSnapshot Data3 : Data2.getChildren()) {
+                                    if (!Data2.getKey().equals("Suburbs")) {
                                         
                                         
-           
                                         for (int i = 0; i < driverData.size(); i++) {
-                                            data.put((i + 1) + "", new Object[]{"", driverData.get(i).getName(), driverData.get(i).getSurname(), driverData.get(i).getContactNumber(), "", "", "", "", "", "", "", "", driverData.get(i).getAddress(), driverData.get(i).getAdditionalInfo()});
+                                            data.put((i + 1) + "", new Object[]{driverData.get(i).getName(), driverData.get(i).getSurname(), driverData.get(i).getContactNumber(), "", "", "", "", "", "", driverData.get(i).getAddress(), driverData.get(i).getAdditionalInfo()});
                                         }
+
                                         Set<String> keyset = data.keySet();
                                         int rownum = 0;
+
                                         for (String key : keyset) {
                                             Row row = spreadsheet.createRow(rownum++);
                                             Object[] objArr = data.get(key);
@@ -129,22 +121,20 @@ public class Reports {
                                             }
 
                                         }
-
-                                    } catch (Exception e) {
-
+                                        
+                                        
+                                        
                                     }
                                 }
                             }
-                        }
-                        try {
+
                             FileOutputStream out = new FileOutputStream(new File("DriverReport .xlsx"));
                             workbook.write(out);
                             out.close();
-                        } catch (FileNotFoundException ex) {
-                            Logger.getLogger(DSC_Main.class.getName()).log(Level.SEVERE, null, ex);
                         } catch (IOException ex) {
-                            Logger.getLogger(DSC_Main.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(Reports.class.getName()).log(Level.SEVERE, null, ex);
                         }
+                        
                     }
 
                 }
