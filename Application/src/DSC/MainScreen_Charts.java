@@ -122,9 +122,9 @@ public class MainScreen_Charts extends JPanel {
                 *Creates BarGraph For all Active Meals.
                  */
                 DefaultCategoryDataset dataset_Chart1 = new DefaultCategoryDataset();
-                dataset_Chart1.addValue(countLowCarbActive, "", "Low Carb ( " + countLowCarbActive + " )");
-                dataset_Chart1.addValue(countStandardActive, "", "Standard ( " + countStandardActive + " )");
-                dataset_Chart1.addValue(countKiddiesActive, "", "Kiddies ( " + countKiddiesActive + " )");
+                dataset_Chart1.addValue(countLowCarbActive, "", " Low Carb ( " + countLowCarbActive + " )");
+                dataset_Chart1.addValue(countStandardActive, "", " Standard ( " + countStandardActive + " )");
+                dataset_Chart1.addValue(countKiddiesActive, "", " Kiddies ( " + countKiddiesActive + " )");
 
                 JFreeChart barChart = ChartFactory.createBarChart(
                         "Total Active Meals",
