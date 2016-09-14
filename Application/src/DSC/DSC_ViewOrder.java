@@ -19,12 +19,14 @@ import javax.swing.table.DefaultTableModel;
  */
 public class DSC_ViewOrder extends javax.swing.JFrame {
 
+    boolean search = false;
     boolean orderEdited = false;
     boolean editClicked = false;
     ArrayList<Client> allclients = new ArrayList<>();
     ArrayList<Order> allorders = new ArrayList<>();
     ArrayList<Order> orders1 = new ArrayList<>();
     ArrayList<String> suburbs = new ArrayList<>();
+    ArrayList<String> activeSuburbs = new ArrayList<>();
 
     /**
      * Creates new form DSC_Main
@@ -41,8 +43,10 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         cmbVeiw.setSelectedItem("Active");
         cmbSuburbs.removeAllItems();
         cmbSuburbs.addItem("Collection");
-        callSuburbs();
+        callActiveSuburbs();
+        callAllSuburbs();
         setOrders();
+        setTextFields2();
     }
 
     public final void enableFieldsClient() {
@@ -88,6 +92,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         spnEndDate.setEnabled(true);
         btnEndDateAdd.setEnabled(true);
         btnEndDateRemove.setEnabled(true);
+        txfOrderRouteID.setEnabled(true);
     }
 
     public final void disableFieldsOrder() {
@@ -117,7 +122,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
         if (txfClientName.getText().isEmpty() || txfClientSurname.getText().isEmpty() || txfClientContactNo.getText().isEmpty()
                 || txfClientAddress.getText().isEmpty() || txfAddInfo.getText().isEmpty()
-                || txfClientContactNo.getText().isEmpty() || txfAltNum.getText().isEmpty() || txfClientEmail.getText().isEmpty()) {//|| cmbSuburbs.getSelectedIndex() == 0
+                || txfClientContactNo.getText().isEmpty() || txfAltNum.getText().isEmpty() || txfClientEmail.getText().isEmpty()) {
             empty = true;
         }
 
@@ -189,7 +194,6 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             allmeals, 0);
                     o.setFamilySize(Data.child("FamilySize").getValue(long.class));
 
-                    allorders.add(o);
                     String clientID = Data.child("ClientID").getValue(String.class);
                     for (Client c : allclients) {
                         if (c.getID().equals(clientID)) {
@@ -197,6 +201,8 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             break;
                         }
                     }
+
+                    allorders.add(o);
 
                 }
                 DefaultTableModel model = (DefaultTableModel) tblOrderTable.getModel();
@@ -218,9 +224,36 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
     }
 
-    public void callSuburbs() {
+    public void callActiveSuburbs() {
         Firebase ref = DBClass.getInstance().child("Routes");
         ref.orderByChild("Active").equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot ds) {
+                for (DataSnapshot dataSnapshot : ds.getChildren()) {
+                    String subList[] = dataSnapshot.child("Suburbs").getValue(String[].class);
+                    if (subList[0].equals("Collection")) {
+                        continue;
+                    } else {
+                        for (int i = 0; i < subList.length; i++) {
+                            activeSuburbs.add(subList[i]);
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError fe) {
+                JOptionPane.showMessageDialog(null, "Could not fetch suburbs.\nCheck logs for error report.", "Suburb Error", JOptionPane.ERROR_MESSAGE);
+                System.err.print("Database connection error (Suburb): " + fe);
+            }
+        });
+
+    }
+
+    public void callAllSuburbs() {
+        Firebase ref = DBClass.getInstance().child("Routes");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot ds) {
                 for (DataSnapshot dataSnapshot : ds.getChildren()) {
@@ -276,7 +309,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 txfClientContactNo.setText(orders1.get(row).getClient().getContactNumber());
                 txfAltNum.setText(orders1.get(row).getClient().getAlternativeNumber());
                 txfClientEmail.setText(orders1.get(row).getClient().getEmail());
-                cmbSuburbs.setSelectedItem(orders1.get(row).getClient().getSuburb());
+                cmbSuburbs.setSelectedItem(orders1.get(row).getClient().getSuburb().trim());
                 txfOrderID.setText(orders1.get(row).getID());
                 txfOrderDuration.setText(orders1.get(row).getDuration());
                 spnOrderFamilySize.setValue(orders1.get(row).getFamilySize());
@@ -287,6 +320,45 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     mealmodel.addRow(meals.returnObj());
                 }
                 mealmodel.fireTableDataChanged();
+            }
+        });
+    }
+
+    public void setTextFields2() {
+
+        DefaultTableModel mealmodel = (DefaultTableModel) tblMeals.getModel();
+
+        tblOrderTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                if (search) {
+
+                } else {
+                    mealmodel.setRowCount(0);
+
+                    int row = tblOrderTable.rowAtPoint(evt.getPoint());
+
+                    txfClientID.setText(allorders.get(row).getClient().getID());
+                    txfClientName.setText(allorders.get(row).getClient().getName());
+                    txfClientSurname.setText(allorders.get(row).getClient().getSurname());
+                    txfClientAddress.setText(allorders.get(row).getClient().getAddress());
+                    txfAddInfo.setText(allorders.get(row).getClient().getAdditionalInfo());
+                    txfClientContactNo.setText(allorders.get(row).getClient().getContactNumber());
+                    txfAltNum.setText(allorders.get(row).getClient().getAlternativeNumber());
+                    txfClientEmail.setText(allorders.get(row).getClient().getEmail());
+                    cmbSuburbs.setSelectedItem(allorders.get(row).getClient().getSuburb().trim());
+                    txfOrderID.setText(allorders.get(row).getID());
+                    txfOrderDuration.setText(allorders.get(row).getDuration());
+                    spnOrderFamilySize.setValue(allorders.get(row).getFamilySize());
+                    //spnOrderStartingDate.setValue(orders.getStartingDate());
+                    txfOrderRouteID.setText(allorders.get(row).getRoute());
+
+                    for (Meal meals : allorders.get(row).getMeals()) {
+                        mealmodel.addRow(meals.returnObj());
+                    }
+                    mealmodel.fireTableDataChanged();
+                }
             }
         });
     }
@@ -967,38 +1039,134 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
 
+        //path to specific node in database
         Firebase upd = DBClass.getInstance().child("Clients/" + allclients.get(tblOrderTable.getSelectedRow()).getID());
+
+        //method checks if all fields are filled
         boolean empty = checkEmpty();
 
         if (empty) {
             JOptionPane.showMessageDialog(this, "Please fill in all fields", "Error", JOptionPane.ERROR_MESSAGE);
+            //displays message to user if all fields have not been filled in
         } else {
-            Map<String, Object> clientinfo = new HashMap();
-            clientinfo.put("Name", txfClientName.getText().trim());
-            clientinfo.put("Surname", txfClientSurname.getText().trim());
-            clientinfo.put("AdditionalInfo", txfAddInfo.getText().trim());
-            clientinfo.put("AlternativeNumber", txfClientContactNo.getText().trim());
-            clientinfo.put("ContactNum", txfAltNum.getText().trim());
-            clientinfo.put("Address", txfClientAddress.getText().trim());
-            clientinfo.put("Email", txfClientEmail.getText().trim());
-            clientinfo.put("Suburb", (String) cmbSuburbs.getSelectedItem());
 
-            upd.updateChildren(clientinfo);
+            boolean subActive = false; //variable used to track whether suburbs edited are active
+
+            //loops through all active suburbs and checks whether the suburb changed is active
+            for (String s : activeSuburbs) {
+                if (s.equals(cmbSuburbs.getSelectedItem().toString())) {
+                    if (editClicked) {
+                        editClicked = false;
+                        //updates all values in database
+                        upd.child("Suburb").setValue(cmbSuburbs.getSelectedItem().toString());
+                        upd.child("Name").setValue(txfClientName.getText().trim());
+                        upd.child("Surname").setValue(txfClientSurname.getText().trim());
+                        upd.child("Address").setValue(txfClientAddress.getText().trim());
+                        upd.child("ContactNum").setValue(txfClientContactNo.getText().trim());
+                        upd.child("AdditionalInfo").setValue(txfAddInfo.getText().trim());
+                        upd.child("AlternativeNumber").setValue(txfAltNum.getText().trim());
+                        upd.child("Email").setValue(txfClientEmail.getText().trim());
+                    }
+
+                    if (orderEdited) {
+                        orderEdited = false;
+                        Firebase updO = DBClass.getInstance().child("Orders/" + txfOrderID.getText());
+                        updO.child("FamilySize").setValue(spnOrderFamilySize.getValue());
+                        updO.child("RouteID").setValue(txfOrderRouteID.getText());
+                        updO.child("Duration").setValue(txfOrderDuration.getText());
+                        updO.child("StartingDate").setValue(spnOrderStartingDate.getValue());
+                        updO.child("EndDate").setValue(spnEndDate.getValue());
+
+                    }
+                    JOptionPane.showMessageDialog(rootPane, "Saved successfully.");
+
+                    //enabling and disabling of relevant components
+                    disableFieldsClient();
+                    disableFieldsOrder();
+                    btnSave.setEnabled(false);
+                    btnEditOrder.setEnabled(true);
+                    btnEditClient.setEnabled(true);
+                    btnDelete.setEnabled(true);
+
+                    //clear arraylist and repopulate with updated data
+                    allclients.clear();
+                    allorders.clear();
+                    setClients();
+                    setOrders();
+
+                    subActive = true;
+                    break;
+                }
+            }
+
+            //if suburb is inactive asks user whether the user wants to continue or not
+            if (subActive == false) {
+                String message = "Set suburb is currently inactive, continue anyway?";
+                int answer = JOptionPane.showConfirmDialog(this, message, "Confirm", JOptionPane.INFORMATION_MESSAGE);
+                switch (answer) {
+                    case JOptionPane.YES_OPTION:
+
+                        if (editClicked) {
+                            editClicked = false;
+                            //updates all values in database if edit client button pressed
+                            upd.child("Suburb").setValue(cmbSuburbs.getSelectedItem().toString());
+                            upd.child("Name").setValue(txfClientName.getText().trim());
+                            upd.child("Surname").setValue(txfClientSurname.getText().trim());
+                            upd.child("Address").setValue(txfClientAddress.getText().trim());
+                            upd.child("ContactNum").setValue(txfClientContactNo.getText().trim());
+                            upd.child("AdditionalInfo").setValue(txfAddInfo.getText().trim());
+                            upd.child("AlternativeNumber").setValue(txfAltNum.getText().trim());
+                            upd.child("Email").setValue(txfClientEmail.getText().trim());
+                        }
+
+                        if (orderEdited) {
+                            orderEdited = false;
+                            //updates all values in database if edit orders button pressed
+                            Firebase updO = DBClass.getInstance().child("Orders/" + txfOrderID.getText());
+                            updO.child("FamilySize").setValue(spnOrderFamilySize.getValue());
+                            updO.child("RouteID").setValue(txfOrderRouteID.getText());
+                            updO.child("Duration").setValue(txfOrderDuration.getText());
+                            updO.child("StartingDate").setValue(spnOrderStartingDate.getValue());
+                            updO.child("EndDate").setValue(spnEndDate.getValue());
+                            
+                        }
+                        JOptionPane.showMessageDialog(rootPane, "Saved successfully.");
+
+                        //enabling and disabling of relevant components
+                        disableFieldsClient();
+                        disableFieldsOrder();
+                        btnSave.setEnabled(false);
+                        btnEditOrder.setEnabled(true);
+                        btnEditClient.setEnabled(true);
+                        btnDelete.setEnabled(true);
+
+                        //clear arraylist and repopulate with updated data
+                        allclients.clear();
+                        allorders.clear();
+                        setClients();
+                        setOrders();
+
+                        break;
+
+                    case JOptionPane.NO_OPTION:
+
+                        break;
+
+                    //no changes are saved if cancel is selected,relevant components are simply enabled and disabled
+                    case JOptionPane.CANCEL_OPTION:
+                        disableFieldsClient();
+                        btnSave.setEnabled(false);
+                        btnEditOrder.setEnabled(true);
+                        btnEditClient.setEnabled(true);
+                        editClicked = false;
+                        btnDelete.setEnabled(true);
+                        break;
+                }
+            }
 
 //            if(orderEdited){
 //                 Firebase updorder = DBClass.getInstance().child("Orders/" + allclients.get(tblOrderTable.getSelectedRow()).getID());
 //            }
-//
-//            allclients.clear();
-//            allorders.clear();
-//            setClients();
-//            setOrders();
-            disableFieldsClient();
-            btnSave.setVisible(false);
-            btnEditOrder.setEnabled(true);
-            btnEditClient.setEnabled(true);
-            editClicked = false;
-            btnDelete.setEnabled(true);
         }
 
     }//GEN-LAST:event_btnSaveActionPerformed
@@ -1036,6 +1204,9 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) tblOrderTable.getModel();
         model.setRowCount(0);
 
+        search = true;
+
+        orders1.clear();
         if (txfSearch.getText().equals("")) {
             JOptionPane.showMessageDialog(rootPane, "Please enter search value!");
 
