@@ -54,7 +54,6 @@ public class DSC_Main extends javax.swing.JFrame {
         btnRouteView = new javax.swing.JButton();
         btnViewOrders = new javax.swing.JButton();
         btnPlaceOrder = new javax.swing.JButton();
-        btnSurveyQuestions = new javax.swing.JButton();
         pnlReports = new javax.swing.JPanel();
         btnDriverRpt = new javax.swing.JButton();
         btnChefRpt = new javax.swing.JButton();
@@ -119,11 +118,11 @@ public class DSC_Main extends javax.swing.JFrame {
         pnlHeadingLayout.setHorizontalGroup(
             pnlHeadingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlHeadingLayout.createSequentialGroup()
-                .addContainerGap(244, Short.MAX_VALUE)
+                .addContainerGap(386, Short.MAX_VALUE)
                 .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(244, Short.MAX_VALUE))
+                .addContainerGap(387, Short.MAX_VALUE))
         );
         pnlHeadingLayout.setVerticalGroup(
             pnlHeadingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,13 +162,6 @@ public class DSC_Main extends javax.swing.JFrame {
             }
         });
 
-        btnSurveyQuestions.setText("Change Survey Questions");
-        btnSurveyQuestions.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSurveyQuestionsActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout pnlTablesLayout = new javax.swing.GroupLayout(pnlTables);
         pnlTables.setLayout(pnlTablesLayout);
         pnlTablesLayout.setHorizontalGroup(
@@ -180,8 +172,7 @@ public class DSC_Main extends javax.swing.JFrame {
                     .addComponent(lblView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnRouteView, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnViewOrders, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
-                    .addComponent(btnPlaceOrder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnSurveyQuestions, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnPlaceOrder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlTablesLayout.setVerticalGroup(
@@ -195,9 +186,7 @@ public class DSC_Main extends javax.swing.JFrame {
                 .addComponent(btnViewOrders, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnRouteView, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnSurveyQuestions, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pnlReports.setBackground(new java.awt.Color(0, 204, 51));
@@ -267,7 +256,7 @@ public class DSC_Main extends javax.swing.JFrame {
                 .addComponent(btnPackerRpt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnHandlerRpt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(222, Short.MAX_VALUE))
+                .addContainerGap(684, Short.MAX_VALUE))
         );
 
         pnlMainChartBackground.setBackground(new java.awt.Color(0, 153, 0));
@@ -286,7 +275,7 @@ public class DSC_Main extends javax.swing.JFrame {
         pnlBarChartActive.setLayout(pnlBarChartActiveLayout);
         pnlBarChartActiveLayout.setHorizontalGroup(
             pnlBarChartActiveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 376, Short.MAX_VALUE)
+            .addGap(0, 531, Short.MAX_VALUE)
         );
         pnlBarChartActiveLayout.setVerticalGroup(
             pnlBarChartActiveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -304,7 +293,7 @@ public class DSC_Main extends javax.swing.JFrame {
         );
         pnlPieChartLayout.setVerticalGroup(
             pnlPieChartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 251, Short.MAX_VALUE)
+            .addGap(0, 481, Short.MAX_VALUE)
         );
 
         pnlBarChartInActive.setBackground(new java.awt.Color(102, 102, 102));
@@ -314,11 +303,11 @@ public class DSC_Main extends javax.swing.JFrame {
         pnlBarChartInActive.setLayout(pnlBarChartInActiveLayout);
         pnlBarChartInActiveLayout.setHorizontalGroup(
             pnlBarChartInActiveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 441, Short.MAX_VALUE)
+            .addGap(0, 597, Short.MAX_VALUE)
         );
         pnlBarChartInActiveLayout.setVerticalGroup(
             pnlBarChartInActiveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 261, Short.MAX_VALUE)
+            .addGap(0, 492, Short.MAX_VALUE)
         );
 
         pnlTextStats.setBackground(new java.awt.Color(102, 102, 102));
@@ -327,77 +316,77 @@ public class DSC_Main extends javax.swing.JFrame {
         pnlTextStats.setMinimumSize(new java.awt.Dimension(30, 30));
 
         pnlMealTypeStats.setBackground(new java.awt.Color(102, 102, 102));
-        pnlMealTypeStats.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Meal Type Stats", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
+        pnlMealTypeStats.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Meal Type Stats", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(255, 255, 255))); // NOI18N
         pnlMealTypeStats.setForeground(new java.awt.Color(255, 255, 255));
 
-        lblStandardMeal.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        lblStandardMeal.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         lblStandardMeal.setForeground(new java.awt.Color(255, 255, 255));
         lblStandardMeal.setText("Standard");
 
-        lblLowCarb.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        lblLowCarb.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         lblLowCarb.setForeground(new java.awt.Color(255, 255, 255));
         lblLowCarb.setText("Low Carb");
 
-        lblKiddies.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        lblKiddies.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         lblKiddies.setForeground(new java.awt.Color(255, 255, 255));
         lblKiddies.setText("Kiddies");
 
-        jLabel28.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        jLabel28.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         jLabel28.setForeground(new java.awt.Color(255, 255, 255));
         jLabel28.setText("Meal Type");
 
-        jLabel29.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        jLabel29.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(255, 255, 255));
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel29.setText("Total");
 
-        lblStandardTotal.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        lblStandardTotal.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         lblStandardTotal.setForeground(new java.awt.Color(255, 255, 255));
         lblStandardTotal.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lblStandardTotal.setText("0");
 
-        lblLowCarbTotal.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        lblLowCarbTotal.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         lblLowCarbTotal.setForeground(new java.awt.Color(255, 255, 255));
         lblLowCarbTotal.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lblLowCarbTotal.setText("0");
 
-        lblKiddiesTotal.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        lblKiddiesTotal.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         lblKiddiesTotal.setForeground(new java.awt.Color(255, 255, 255));
         lblKiddiesTotal.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lblKiddiesTotal.setText("0");
 
-        lblStandardMeal1.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        lblStandardMeal1.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         lblStandardMeal1.setForeground(new java.awt.Color(255, 255, 255));
         lblStandardMeal1.setText("Standard");
 
-        lblLowCarb1.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        lblLowCarb1.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         lblLowCarb1.setForeground(new java.awt.Color(255, 255, 255));
         lblLowCarb1.setText("Low Carb");
 
-        lblKiddies1.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        lblKiddies1.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         lblKiddies1.setForeground(new java.awt.Color(255, 255, 255));
         lblKiddies1.setText("Kiddies");
 
-        lblStandardTotalInActive.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        lblStandardTotalInActive.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         lblStandardTotalInActive.setForeground(new java.awt.Color(255, 255, 255));
         lblStandardTotalInActive.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lblStandardTotalInActive.setText("0");
 
-        lblLowCarbTotalInActive.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        lblLowCarbTotalInActive.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         lblLowCarbTotalInActive.setForeground(new java.awt.Color(255, 255, 255));
         lblLowCarbTotalInActive.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lblLowCarbTotalInActive.setText("0");
 
-        lblKiddiesTotalinActive.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        lblKiddiesTotalinActive.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         lblKiddiesTotalinActive.setForeground(new java.awt.Color(255, 255, 255));
         lblKiddiesTotalinActive.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lblKiddiesTotalinActive.setText("0");
 
-        lblActive.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        lblActive.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         lblActive.setForeground(new java.awt.Color(255, 255, 255));
         lblActive.setText("Active Meals:");
 
-        lblInActive.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        lblInActive.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         lblInActive.setForeground(new java.awt.Color(255, 255, 255));
         lblInActive.setText("In-Active:");
 
@@ -478,75 +467,75 @@ public class DSC_Main extends javax.swing.JFrame {
         );
 
         pnlFamilySizeStats.setBackground(new java.awt.Color(102, 102, 102));
-        pnlFamilySizeStats.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Family Size Stats", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
+        pnlFamilySizeStats.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Family Size Stats", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(255, 255, 255))); // NOI18N
 
-        jLabel25.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        jLabel25.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         jLabel25.setForeground(new java.awt.Color(255, 255, 255));
         jLabel25.setText("Family size");
 
-        lblSingleFamilySize.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        lblSingleFamilySize.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         lblSingleFamilySize.setForeground(new java.awt.Color(255, 255, 255));
         lblSingleFamilySize.setText("Single   (1)");
 
-        lblCoupleFamilySize.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        lblCoupleFamilySize.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         lblCoupleFamilySize.setForeground(new java.awt.Color(255, 255, 255));
         lblCoupleFamilySize.setText("Couple  (2)");
 
-        lblThreeFamilySize.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        lblThreeFamilySize.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         lblThreeFamilySize.setForeground(new java.awt.Color(255, 255, 255));
         lblThreeFamilySize.setText("Three    (3)");
 
-        lblFourFamilySize.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        lblFourFamilySize.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         lblFourFamilySize.setForeground(new java.awt.Color(255, 255, 255));
         lblFourFamilySize.setText("Four      (4)");
 
-        lblFiveFamilySize.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        lblFiveFamilySize.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         lblFiveFamilySize.setForeground(new java.awt.Color(255, 255, 255));
         lblFiveFamilySize.setText("Five       (5)");
 
-        lblSixFamilySize.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        lblSixFamilySize.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         lblSixFamilySize.setForeground(new java.awt.Color(255, 255, 255));
         lblSixFamilySize.setText("Six         (6)");
 
-        lblSingleFamilySizeTotal.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        lblSingleFamilySizeTotal.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         lblSingleFamilySizeTotal.setForeground(new java.awt.Color(255, 255, 255));
         lblSingleFamilySizeTotal.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lblSingleFamilySizeTotal.setText("0");
 
-        lblCoupleFamilySizeTotal.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        lblCoupleFamilySizeTotal.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         lblCoupleFamilySizeTotal.setForeground(new java.awt.Color(255, 255, 255));
         lblCoupleFamilySizeTotal.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lblCoupleFamilySizeTotal.setText("0");
 
-        lblThreeFamilySizeTotal.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        lblThreeFamilySizeTotal.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         lblThreeFamilySizeTotal.setForeground(new java.awt.Color(255, 255, 255));
         lblThreeFamilySizeTotal.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lblThreeFamilySizeTotal.setText("0");
 
-        lblFourFamilySizeTotal.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        lblFourFamilySizeTotal.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         lblFourFamilySizeTotal.setForeground(new java.awt.Color(255, 255, 255));
         lblFourFamilySizeTotal.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lblFourFamilySizeTotal.setText("0");
 
-        lblFiveFamilySizeTotal.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        lblFiveFamilySizeTotal.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         lblFiveFamilySizeTotal.setForeground(new java.awt.Color(255, 255, 255));
         lblFiveFamilySizeTotal.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lblFiveFamilySizeTotal.setText("0");
 
-        lblSixFamilySizeTotal.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        lblSixFamilySizeTotal.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         lblSixFamilySizeTotal.setForeground(new java.awt.Color(255, 255, 255));
         lblSixFamilySizeTotal.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lblSixFamilySizeTotal.setText("0");
 
-        jLabel40.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        jLabel40.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         jLabel40.setForeground(new java.awt.Color(255, 255, 255));
         jLabel40.setText("Orders Of Family Size");
 
-        lblMoreThanSixFamilySize.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        lblMoreThanSixFamilySize.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         lblMoreThanSixFamilySize.setForeground(new java.awt.Color(255, 255, 255));
         lblMoreThanSixFamilySize.setText("More than Six");
 
-        lblMoreThanSixFamilySizeTotal.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        lblMoreThanSixFamilySizeTotal.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         lblMoreThanSixFamilySizeTotal.setForeground(new java.awt.Color(255, 255, 255));
         lblMoreThanSixFamilySizeTotal.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lblMoreThanSixFamilySizeTotal.setText("0");
@@ -559,7 +548,7 @@ public class DSC_Main extends javax.swing.JFrame {
                 .addGroup(pnlFamilySizeStatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlFamilySizeStatsLayout.createSequentialGroup()
                         .addComponent(lblSingleFamilySize)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 216, Short.MAX_VALUE)
                         .addComponent(lblSingleFamilySizeTotal))
                     .addGroup(pnlFamilySizeStatsLayout.createSequentialGroup()
                         .addComponent(jLabel25)
@@ -775,14 +764,6 @@ public class DSC_Main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnDriverRptMouseClicked
 
-    private void btnSurveyQuestionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSurveyQuestionsActionPerformed
-        DSC_SurveyQuestions pane = new DSC_SurveyQuestions();
-        pane.setBack(this);
-        pane.setVisible(true);
-        pane.setFocusableWindowState(true);
-        this.setEnabled(false);
-    }//GEN-LAST:event_btnSurveyQuestionsActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -848,7 +829,6 @@ public class DSC_Main extends javax.swing.JFrame {
     private javax.swing.JButton btnPackerRpt;
     private javax.swing.JButton btnPlaceOrder;
     private javax.swing.JButton btnRouteView;
-    private javax.swing.JButton btnSurveyQuestions;
     private javax.swing.JButton btnViewOrders;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel28;
