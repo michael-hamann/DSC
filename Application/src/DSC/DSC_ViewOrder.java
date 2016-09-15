@@ -1070,7 +1070,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
 
         //path to specific node in database
-        Firebase upd = DBClass.getInstance().child("Clients/" + allclients.get(tblOrderTable.getSelectedRow()).getID());
+        Firebase upd = DBClass.getInstance().child("Clients/" + txfClientID.getText());
 
         //method checks if all fields are filled
         boolean empty = checkEmpty();
@@ -1110,11 +1110,21 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         updO.child("Meals").removeValue();
                         
                         for (int i = 0; i < meals.getRowCount(); i++) {
-                            updO.child("Meals").child(""+i);
-                            updO.child("Meals").child(""+i).child("Quantity").setValue(meals.getValueAt(i, 0));
-                            updO.child("Meals").child(""+i).child("MealType").setValue(meals.getValueAt(i, 1));
-                            updO.child("Meals").child(""+i).child("Allergies").setValue(meals.getValueAt(i, 2));
-                            updO.child("Meals").child(""+i).child("Exclusions").setValue(meals.getValueAt(i, 3));
+                            Firebase updmeal = DBClass.getInstance().child("Orders/" + txfOrderID.getText()+"/Meals/"+i);
+                            updmeal.push();
+                            updmeal = DBClass.getInstance().child("Orders/" + txfOrderID.getText()+"/Meals/"+i+"/Quantity");
+                            updmeal.push();
+                            updmeal.setValue(meals.getValueAt(i, 0));
+                            updmeal = DBClass.getInstance().child("Orders/" + txfOrderID.getText()+"/Meals/"+i+"/MealType");
+                            updmeal.push();
+                            updmeal.setValue(meals.getValueAt(i, 1));
+                            updmeal = DBClass.getInstance().child("Orders/" + txfOrderID.getText()+"/Meals/"+i+"/Allergies");
+                            updmeal.push();
+                            updmeal.setValue(meals.getValueAt(i, 2));
+                            updmeal = DBClass.getInstance().child("Orders/" + txfOrderID.getText()+"/Meals/"+i+"/Exclusions");
+                            updmeal.push();
+                            updmeal.setValue(meals.getValueAt(i, 3));
+                            
                         }
                        
                     }
@@ -1161,6 +1171,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
                         if (orderEdited) {
                             orderEdited = false;
+                            DefaultTableModel meals = (DefaultTableModel)tblMeals.getModel();
                             //updates all values in database if edit orders button pressed
                             Firebase updO = DBClass.getInstance().child("Orders/" + txfOrderID.getText());
                             updO.child("FamilySize").setValue(spnOrderFamilySize.getValue());
@@ -1169,8 +1180,24 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             updO.child("StartingDate").setValue(spnOrderStartingDate.getValue());
                             updO.child("EndDate").setValue(spnEndDate.getValue());
                             
-
+                            for (int i = 0; i < meals.getRowCount(); i++) {
+                            Firebase updmeal = DBClass.getInstance().child("Orders/" + txfOrderID.getText()+"/Meals/"+i);
+                            updmeal.push();
+                            updmeal = DBClass.getInstance().child("Orders/" + txfOrderID.getText()+"/Meals/"+i+"/Quantity");
+                            updmeal.push();
+                            updmeal.setValue(meals.getValueAt(i, 0));
+                            updmeal = DBClass.getInstance().child("Orders/" + txfOrderID.getText()+"/Meals/"+i+"/MealType");
+                            updmeal.push();
+                            updmeal.setValue(meals.getValueAt(i, 1));
+                            updmeal = DBClass.getInstance().child("Orders/" + txfOrderID.getText()+"/Meals/"+i+"/Allergies");
+                            updmeal.push();
+                            updmeal.setValue(meals.getValueAt(i, 2));
+                            updmeal = DBClass.getInstance().child("Orders/" + txfOrderID.getText()+"/Meals/"+i+"/Exclusions");
+                            updmeal.push();
+                            updmeal.setValue(meals.getValueAt(i, 3));
+                            
                         }
+                       }
                         JOptionPane.showMessageDialog(rootPane, "Saved successfully.");
 
                         //enabling and disabling of relevant components
@@ -1524,7 +1551,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
     private void btnAddMealActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddMealActionPerformed
         DefaultTableModel mealmod = (DefaultTableModel) tblMeals.getModel();
-        Object[] row = {"","","",""};
+        Object[] row = {"0","Standard","-","-"};
         mealmod.addRow(row);
     }//GEN-LAST:event_btnAddMealActionPerformed
 
