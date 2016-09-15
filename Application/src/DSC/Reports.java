@@ -104,10 +104,10 @@ public class Reports {
             @Override
             public void onDataChange(DataSnapshot ds) {
 
-                spreadsheet = workbook.createSheet("DriverReport " + counter);
+                spreadsheet = workbook.createSheet("DriverReport Route - " + counter);
                 counter++;
                 Map<String, Object[]> data = new TreeMap<String, Object[]>();
-                data.put("0", new Object[]{"Name", "Surname", "Contact", "Date Paid", "Mon", "Tue", "Wed", "Thurs", "Fri", "Address", "AdditionalInfo"});
+                data.put("0", new Object[]{"Name", "Surname", "Contact", "DatePaid", "Mon", "Tue", "Wed", "Thurs", "Fri", "Address", "AdditionalInfo"});
 
                 for (DataSnapshot Data : ds.getChildren()) {
                     routeNumber = Data.getKey();
