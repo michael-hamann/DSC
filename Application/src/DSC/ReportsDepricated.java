@@ -5,7 +5,6 @@
  */
 package DSC;
 
-import static DSC.DriverReport.tableRef;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -33,8 +32,10 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  *
  * @author Aliens_Keanu
  */
-public class Reports {
+public class ReportsDepricated {
 
+//    private ArrayList<> 
+    
     private String routeNumber = "";
     private static String driverName = "";
     private String route = "Route: ";
@@ -53,7 +54,7 @@ public class Reports {
 
     public void createDriverReport() {
 
-        tableRef = DBClass.getInstance().child("Drivers");// Go to specific Table
+        Firebase tableRef = DBClass.getInstance().child("Drivers"); // Go to specific Table
 
         tableRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -99,7 +100,7 @@ public class Reports {
             }
         });
 
-        Firebase tableRef = DBClass.getInstance().child("Routes");
+        tableRef = DBClass.getInstance().child("Routes");
         tableRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot ds) {
@@ -195,9 +196,9 @@ public class Reports {
             workbook.write(out);
             out.close();
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(Reports.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ReportsDepricated.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(Reports.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ReportsDepricated.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
