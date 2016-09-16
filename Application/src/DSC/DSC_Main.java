@@ -70,8 +70,8 @@ public class DSC_Main extends javax.swing.JFrame {
         lblStandardMeal = new javax.swing.JLabel();
         lblLowCarb = new javax.swing.JLabel();
         lblKiddies = new javax.swing.JLabel();
-        jLabel28 = new javax.swing.JLabel();
-        jLabel29 = new javax.swing.JLabel();
+        lblMealType = new javax.swing.JLabel();
+        lblTotal = new javax.swing.JLabel();
         lblStandardTotal = new javax.swing.JLabel();
         lblLowCarbTotal = new javax.swing.JLabel();
         lblKiddiesTotal = new javax.swing.JLabel();
@@ -84,7 +84,7 @@ public class DSC_Main extends javax.swing.JFrame {
         lblActive = new javax.swing.JLabel();
         lblInActive = new javax.swing.JLabel();
         pnlFamilySizeStats = new javax.swing.JPanel();
-        jLabel25 = new javax.swing.JLabel();
+        lblFamilySize = new javax.swing.JLabel();
         lblSingleFamilySize = new javax.swing.JLabel();
         lblCoupleFamilySize = new javax.swing.JLabel();
         lblThreeFamilySize = new javax.swing.JLabel();
@@ -97,7 +97,7 @@ public class DSC_Main extends javax.swing.JFrame {
         lblFourFamilySizeTotal = new javax.swing.JLabel();
         lblFiveFamilySizeTotal = new javax.swing.JLabel();
         lblSixFamilySizeTotal = new javax.swing.JLabel();
-        jLabel40 = new javax.swing.JLabel();
+        lblOrderByFamilySize = new javax.swing.JLabel();
         lblMoreThanSixFamilySize = new javax.swing.JLabel();
         lblMoreThanSixFamilySizeTotal = new javax.swing.JLabel();
 
@@ -180,7 +180,7 @@ public class DSC_Main extends javax.swing.JFrame {
                 .addGroup(pnlTablesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnRouteView, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnViewOrders, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
+                    .addComponent(btnViewOrders, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnPlaceOrder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSurveyQuestions, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -283,6 +283,11 @@ public class DSC_Main extends javax.swing.JFrame {
                 pnlBarChartActiveresizeCheck(evt);
             }
         });
+        pnlBarChartActive.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                pnlBarChartActiveComponentResized(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlBarChartActiveLayout = new javax.swing.GroupLayout(pnlBarChartActive);
         pnlBarChartActive.setLayout(pnlBarChartActiveLayout);
@@ -331,7 +336,7 @@ public class DSC_Main extends javax.swing.JFrame {
         pnlTextStats.setMinimumSize(new java.awt.Dimension(305, 252));
 
         pnlMealTypeStats.setBackground(new java.awt.Color(102, 102, 102));
-        pnlMealTypeStats.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Meal Type Stats", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
+        pnlMealTypeStats.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Meal Type Stats", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(255, 255, 255))); // NOI18N
         pnlMealTypeStats.setForeground(new java.awt.Color(255, 255, 255));
 
         lblStandardMeal.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
@@ -346,14 +351,14 @@ public class DSC_Main extends javax.swing.JFrame {
         lblKiddies.setForeground(new java.awt.Color(255, 255, 255));
         lblKiddies.setText("Kiddies");
 
-        jLabel28.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
-        jLabel28.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel28.setText("Meal Type");
+        lblMealType.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        lblMealType.setForeground(new java.awt.Color(255, 255, 255));
+        lblMealType.setText("Meal Type");
 
-        jLabel29.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
-        jLabel29.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel29.setText("Total");
+        lblTotal.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        lblTotal.setForeground(new java.awt.Color(255, 255, 255));
+        lblTotal.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        lblTotal.setText("Total");
 
         lblStandardTotal.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
         lblStandardTotal.setForeground(new java.awt.Color(255, 255, 255));
@@ -421,10 +426,10 @@ public class DSC_Main extends javax.swing.JFrame {
                     .addComponent(lblKiddiesTotalinActive, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
             .addGroup(pnlMealTypeStatsLayout.createSequentialGroup()
                 .addGroup(pnlMealTypeStatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabel28, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblMealType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblActive, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel29))
+                .addComponent(lblTotal))
             .addGroup(pnlMealTypeStatsLayout.createSequentialGroup()
                 .addGroup(pnlMealTypeStatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(lblInActive, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
@@ -442,8 +447,8 @@ public class DSC_Main extends javax.swing.JFrame {
             .addGroup(pnlMealTypeStatsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlMealTypeStatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel28, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel29, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblMealType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblActive)
                 .addGap(10, 10, 10)
@@ -476,11 +481,11 @@ public class DSC_Main extends javax.swing.JFrame {
         );
 
         pnlFamilySizeStats.setBackground(new java.awt.Color(102, 102, 102));
-        pnlFamilySizeStats.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Family Size Stats", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
+        pnlFamilySizeStats.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Family Size Stats", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(255, 255, 255))); // NOI18N
 
-        jLabel25.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
-        jLabel25.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel25.setText("Family size");
+        lblFamilySize.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        lblFamilySize.setForeground(new java.awt.Color(255, 255, 255));
+        lblFamilySize.setText("Family size");
 
         lblSingleFamilySize.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
         lblSingleFamilySize.setForeground(new java.awt.Color(255, 255, 255));
@@ -536,9 +541,9 @@ public class DSC_Main extends javax.swing.JFrame {
         lblSixFamilySizeTotal.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lblSixFamilySizeTotal.setText("0");
 
-        jLabel40.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
-        jLabel40.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel40.setText("Orders Of Family Size");
+        lblOrderByFamilySize.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        lblOrderByFamilySize.setForeground(new java.awt.Color(255, 255, 255));
+        lblOrderByFamilySize.setText("Orders Of Family Size");
 
         lblMoreThanSixFamilySize.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
         lblMoreThanSixFamilySize.setForeground(new java.awt.Color(255, 255, 255));
@@ -558,9 +563,9 @@ public class DSC_Main extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblSingleFamilySizeTotal))
             .addGroup(pnlFamilySizeStatsLayout.createSequentialGroup()
-                .addComponent(jLabel25)
+                .addComponent(lblFamilySize)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel40))
+                .addComponent(lblOrderByFamilySize))
             .addGroup(pnlFamilySizeStatsLayout.createSequentialGroup()
                 .addComponent(lblCoupleFamilySize)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -591,8 +596,8 @@ public class DSC_Main extends javax.swing.JFrame {
             .addGroup(pnlFamilySizeStatsLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pnlFamilySizeStatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel25)
-                    .addComponent(jLabel40))
+                    .addComponent(lblFamilySize)
+                    .addComponent(lblOrderByFamilySize))
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(pnlFamilySizeStatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblSingleFamilySize)
@@ -742,23 +747,6 @@ public class DSC_Main extends javax.swing.JFrame {
 
     private void pnlBarChartActiveresizeCheck(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_pnlBarChartActiveresizeCheck
 
-        /*
-               Gets Executed When JFrame Resizes.
-         */
-        try {
-
-            MainScreen_Charts.createBarGraph_ActiveAndInActiveMeals(pnlBarChartActive, pnlBarChartInActive, pnlPieChart, lblStandardTotal, lblLowCarbTotal,
-                    lblKiddiesTotal, lblKiddiesTotalinActive, lblStandardTotalInActive, lblLowCarbTotalInActive, lblSingleFamilySizeTotal,
-                    lblCoupleFamilySizeTotal, lblThreeFamilySizeTotal, lblFourFamilySizeTotal, lblFiveFamilySizeTotal,
-                    lblSixFamilySizeTotal, lblMoreThanSixFamilySizeTotal, getData);
-            getData = false;
-            pnlBarChartActive.repaint();
-            pnlBarChartInActive.repaint();
-            pnlPieChart.repaint();
-
-        } catch (Exception e) {
-
-        }
     }//GEN-LAST:event_pnlBarChartActiveresizeCheck
 
     private void btnPlaceOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlaceOrderActionPerformed
@@ -777,6 +765,26 @@ public class DSC_Main extends javax.swing.JFrame {
         pane.setFocusableWindowState(true);
         this.setEnabled(false);
     }//GEN-LAST:event_btnSurveyQuestionsActionPerformed
+
+    private void pnlBarChartActiveComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_pnlBarChartActiveComponentResized
+        /*
+               Gets Executed When JFrame Resizes.
+         */
+        try {
+
+            MainScreen_Charts.createBarGraph_ActiveAndInActiveMeals(pnlBarChartActive, pnlBarChartInActive, pnlPieChart, lblStandardTotal, lblLowCarbTotal,
+                    lblKiddiesTotal, lblKiddiesTotalinActive, lblStandardTotalInActive, lblLowCarbTotalInActive, lblSingleFamilySizeTotal,
+                    lblCoupleFamilySizeTotal, lblThreeFamilySizeTotal, lblFourFamilySizeTotal, lblFiveFamilySizeTotal,
+                    lblSixFamilySizeTotal, lblMoreThanSixFamilySizeTotal, getData);
+            getData = false;
+            pnlBarChartActive.repaint();
+            pnlBarChartInActive.repaint();
+            pnlPieChart.repaint();
+
+        } catch (Exception e) {
+
+        }
+    }//GEN-LAST:event_pnlBarChartActiveComponentResized
 
     /**
      * @param args the command line arguments
@@ -845,13 +853,10 @@ public class DSC_Main extends javax.swing.JFrame {
     private javax.swing.JButton btnRouteView;
     private javax.swing.JButton btnSurveyQuestions;
     private javax.swing.JButton btnViewOrders;
-    private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
-    private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel lblActive;
     private javax.swing.JLabel lblCoupleFamilySize;
     private javax.swing.JLabel lblCoupleFamilySizeTotal;
+    private javax.swing.JLabel lblFamilySize;
     private javax.swing.JLabel lblFiveFamilySize;
     private javax.swing.JLabel lblFiveFamilySizeTotal;
     private javax.swing.JLabel lblFourFamilySize;
@@ -867,9 +872,11 @@ public class DSC_Main extends javax.swing.JFrame {
     private javax.swing.JLabel lblLowCarb1;
     private javax.swing.JLabel lblLowCarbTotal;
     private javax.swing.JLabel lblLowCarbTotalInActive;
+    private javax.swing.JLabel lblMealType;
     private javax.swing.JLabel lblMoreThanSixFamilySize;
     private javax.swing.JLabel lblMoreThanSixFamilySizeTotal;
     private javax.swing.JLabel lblName;
+    private javax.swing.JLabel lblOrderByFamilySize;
     private javax.swing.JLabel lblSingleFamilySize;
     private javax.swing.JLabel lblSingleFamilySizeTotal;
     private javax.swing.JLabel lblSixFamilySize;
@@ -880,6 +887,7 @@ public class DSC_Main extends javax.swing.JFrame {
     private javax.swing.JLabel lblStandardTotalInActive;
     private javax.swing.JLabel lblThreeFamilySize;
     private javax.swing.JLabel lblThreeFamilySizeTotal;
+    private javax.swing.JLabel lblTotal;
     private javax.swing.JLabel lblView;
     private javax.swing.JPanel pnlBackground;
     private javax.swing.JPanel pnlBarChartActive;

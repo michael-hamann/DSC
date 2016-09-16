@@ -146,7 +146,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lblView" alignment="0" max="32767" attributes="0"/>
                           <Component id="btnRouteView" alignment="1" max="32767" attributes="0"/>
-                          <Component id="btnViewOrders" alignment="1" pref="161" max="32767" attributes="0"/>
+                          <Component id="btnViewOrders" alignment="1" max="32767" attributes="0"/>
                           <Component id="btnPlaceOrder" alignment="0" max="32767" attributes="0"/>
                           <Component id="btnSurveyQuestions" alignment="1" max="32767" attributes="0"/>
                       </Group>
@@ -363,6 +363,7 @@
               </Properties>
               <Events>
                 <EventHandler event="ancestorResized" listener="java.awt.event.HierarchyBoundsListener" parameters="java.awt.event.HierarchyEvent" handler="pnlBarChartActiveresizeCheck"/>
+                <EventHandler event="componentResized" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="pnlBarChartActiveComponentResized"/>
               </Events>
 
               <Layout>
@@ -514,11 +515,11 @@
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="jLabel28" max="32767" attributes="0"/>
+                                  <Component id="lblMealType" max="32767" attributes="0"/>
                                   <Component id="lblActive" alignment="1" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="jLabel29" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblTotal" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="1" max="-2" attributes="0">
@@ -541,8 +542,8 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jLabel28" alignment="3" max="32767" attributes="0"/>
-                                  <Component id="jLabel29" alignment="3" max="32767" attributes="0"/>
+                                  <Component id="lblMealType" alignment="3" max="32767" attributes="0"/>
+                                  <Component id="lblTotal" alignment="3" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" max="-2" attributes="0"/>
                               <Component id="lblActive" min="-2" max="-2" attributes="0"/>
@@ -617,7 +618,7 @@
                         <Property name="text" type="java.lang.String" value="Kiddies"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel28">
+                    <Component class="javax.swing.JLabel" name="lblMealType">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="sansserif" size="10" style="0"/>
@@ -628,7 +629,7 @@
                         <Property name="text" type="java.lang.String" value="Meal Type"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel29">
+                    <Component class="javax.swing.JLabel" name="lblTotal">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="sansserif" size="10" style="0"/>
@@ -795,9 +796,9 @@
                               <Component id="lblSingleFamilySizeTotal" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
-                              <Component id="jLabel25" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblFamilySize" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="32767" attributes="0"/>
-                              <Component id="jLabel40" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblOrderByFamilySize" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="lblCoupleFamilySize" min="-2" max="-2" attributes="0"/>
@@ -836,8 +837,8 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jLabel25" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel40" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblFamilySize" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblOrderByFamilySize" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
@@ -880,7 +881,7 @@
                     </DimensionLayout>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JLabel" name="jLabel25">
+                    <Component class="javax.swing.JLabel" name="lblFamilySize">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="sansserif" size="10" style="0"/>
@@ -1029,7 +1030,7 @@
                         <Property name="text" type="java.lang.String" value="0"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel40">
+                    <Component class="javax.swing.JLabel" name="lblOrderByFamilySize">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="sansserif" size="10" style="0"/>

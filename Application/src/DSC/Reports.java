@@ -36,35 +36,30 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class Reports {
 
     private String routeNumber = "";
-    private static String driverName = "";
-    private String route = "Route: ";
-    private static XSSFWorkbook workbook = new XSSFWorkbook();
+    private String driverName = "";
+    private XSSFWorkbook workbook = new XSSFWorkbook();
     private XSSFSheet spreadsheet;
     private XSSFRow row;
     private XSSFCell cell;
-    private static FileOutputStream out;
+    private FileOutputStream printExcelReport;
     private int counter = 1;
     private ArrayList<DriverReportData> driverData = new ArrayList<>();
     private String driverReportHead[] = new String[3];
     private CellStyle cs;
-    private static int count = 1;
+    private int count = 1;
     private Cell cellObject;
     private Row rowObject;
 
     public void createDriverReport() {
 
-        tableRef = DBClass.getInstance().child("Drivers");// Go to specific Table
-
+        tableRef = DBClass.getInstance().child("Routes");// Go to specific Table
         tableRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot ds) {
 
                 for (DataSnapshot Data : ds.getChildren()) {// entire database
-
                     driverName = (String) Data.child("DriverName").getValue();
-
                 }
-
             }
 
             @Override
@@ -74,7 +69,6 @@ public class Reports {
         });
 
         tableRef = DBClass.getInstance().child("Clients");// Go to specific Table]\
-
         tableRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot ds) {
@@ -107,7 +101,7 @@ public class Reports {
                 spreadsheet = workbook.createSheet("DriverReport Route - " + counter);
                 counter++;
                 Map<String, Object[]> data = new TreeMap<String, Object[]>();
-                data.put("0", new Object[]{"Name", "Surname", "Contact", "DatePaid", "Mon", "Tue", "Wed", "Thurs", "Fri", "Address", "AdditionalInfo"});
+                data.put("0", new Object[]{"Name", "Surname", "Contact", "Mon", "Tue", "Wed", "Thurs", "Fri", "Address", "AdditionalInfo"});
 
                 for (DataSnapshot Data : ds.getChildren()) {
                     routeNumber = Data.getKey();
@@ -188,12 +182,12 @@ public class Reports {
 
     }
 
-    public static void createExcelSheets() {
+    public void createExcelSheets() {
 
         try {
-            out = new FileOutputStream(new File("DriverReport Route - " + count + ".xlsx"));
-            workbook.write(out);
-            out.close();
+            printExcelReport = new FileOutputStream(new File("DriverReport Route - " + count + ".xlsx"));
+            workbook.write(printExcelReport);
+            printExcelReport.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Reports.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
