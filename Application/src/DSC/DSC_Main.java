@@ -318,6 +318,11 @@ public class DSC_Main extends javax.swing.JFrame {
         pnlBarChartInActive.setBackground(new java.awt.Color(102, 102, 102));
         pnlBarChartInActive.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         pnlBarChartInActive.setMinimumSize(new java.awt.Dimension(305, 252));
+        pnlBarChartInActive.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                pnlBarChartInActiveComponentResized(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlBarChartInActiveLayout = new javax.swing.GroupLayout(pnlBarChartInActive);
         pnlBarChartInActive.setLayout(pnlBarChartInActiveLayout);
@@ -785,6 +790,10 @@ public class DSC_Main extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_pnlBarChartActiveComponentResized
+
+    private void pnlBarChartInActiveComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_pnlBarChartInActiveComponentResized
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pnlBarChartInActiveComponentResized
 
     /**
      * @param args the command line arguments

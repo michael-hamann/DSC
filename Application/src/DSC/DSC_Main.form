@@ -421,6 +421,9 @@
                   <Dimension value="[305, 252]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="componentResized" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="pnlBarChartInActiveComponentResized"/>
+              </Events>
 
               <Layout>
                 <DimensionLayout dim="0">
