@@ -8,7 +8,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 /**
@@ -110,6 +109,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         tableRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot ds) {
+                suburbs.clear();
                 for (DataSnapshot data : ds.getChildren()) {
                     if(data.getKey().equals(routeNum)){
                        String subArr[] = data.child("Suburbs").getValue(String[].class);
@@ -650,8 +650,10 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDeleteSuburbActionPerformed
 
     private void lstRoutesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstRoutesValueChanged
-//        String num = Character.toString(lstRoutes.getSelectedValue().charAt(lstRoutes.getSelectedValue().length()-1));
-//        setSuburbs(num);
+        int num = lstRoutes.getSelectedIndex();
+        num++;
+        String number = num + "";
+        setSuburbs(number);
     }//GEN-LAST:event_lstRoutesValueChanged
 
 
