@@ -30,6 +30,18 @@ public class Route implements java.io.Serializable{
         this.startingDate = startingDate;
         this.endDate = null;
     }
+
+    public Route(String routeID, boolean active, String timeFrame, ArrayList<String> suburbs, ArrayList<RouteDrivers> drivers, Calendar startingDate, Calendar endDate) {
+        this.routeID = routeID;
+        this.active = active;
+        this.timeFrame = timeFrame;
+        this.drivers = drivers;
+        this.startingDate = startingDate;
+        this.endDate = endDate;
+        this.suburbs = suburbs;
+    }
+    
+    
     
     public Route(){
         

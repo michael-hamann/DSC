@@ -20,10 +20,12 @@ public class Order implements java.io.Serializable{
     private Calendar startingDate;
     private Calendar endDate;
     private String route;
-    private long familySize;
+    private int familySize;
     private ArrayList<Meal> meals;
     private String clientID;
 
+   
+    
     public Order(String orderID, boolean active, Client client, String duration, Calendar startingDate, Calendar endDate, String route, ArrayList<Meal> meals, long familySize) {
         this.orderID = orderID;
         this.active = active;
@@ -35,7 +37,16 @@ public class Order implements java.io.Serializable{
         this.meals = meals;
     }
     
-    
+    public Order(String orderID, boolean active, String clientID, String duration, Calendar startingDate, Calendar endDate, String route, ArrayList<Meal> meals, long familySize) {
+        this.orderID = orderID;
+        this.active = active;
+        this.clientID = clientID;
+        this.duration = duration;
+        this.startingDate = startingDate;
+        this.endDate = endDate;
+        this.route = route;
+        this.meals = meals;
+    }
 
     public String getID() {
         return orderID;
@@ -113,8 +124,13 @@ public class Order implements java.io.Serializable{
         return familySize;
     }
 
-    public void setFamilySize(long familySize) {
+    public void setFamilySize(int familySize) {
         this.familySize = familySize;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" + "orderID=" + orderID + ", active=" + active + ", client=" + client + ", duration=" + duration + ", startingDate=" + startingDate + ", endDate=" + endDate + ", route=" + route + ", familySize=" + familySize + ", meals=" + meals + ", clientID=" + clientID + '}';
     }
     
     

@@ -802,7 +802,8 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  <Component id="btnDummyData" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
                                   <Component id="btnSave" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="btnBack" min="-2" max="-2" attributes="0"/>
@@ -843,6 +844,7 @@
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="btnSave" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="btnBack" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnDummyData" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -960,6 +962,14 @@
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBackActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JButton" name="btnDummyData">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Gen Dummy Data"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDummyDataActionPerformed"/>
                   </Events>
                 </Component>
               </SubComponents>

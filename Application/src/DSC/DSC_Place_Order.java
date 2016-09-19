@@ -4,18 +4,12 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -135,6 +129,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         btnDeleteMeal = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
+        btnDummyData = new javax.swing.JButton();
         lblOrderInfo1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -599,6 +594,13 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             }
         });
 
+        btnDummyData.setText("Gen Dummy Data");
+        btnDummyData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDummyDataActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -607,7 +609,8 @@ public class DSC_Place_Order extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnDummyData)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnSave)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnBack))
@@ -640,7 +643,8 @@ public class DSC_Place_Order extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSave)
-                    .addComponent(btnBack)))
+                    .addComponent(btnBack)
+                    .addComponent(btnDummyData)))
         );
 
         lblOrderInfo1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -958,10 +962,15 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         cmbSurveySource.setModel(new DefaultComboBoxModel<>(arr));
     }//GEN-LAST:event_cmbSurveySourcePopupMenuWillBecomeVisible
 
+    private void btnDummyDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDummyDataActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDummyDataActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddMeal;
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnDeleteMeal;
+    private javax.swing.JButton btnDummyData;
     private javax.swing.JButton btnEditMeal;
     private javax.swing.JButton btnSave;
     private javax.swing.JCheckBox ckbClientCollection;
@@ -1241,7 +1250,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
                 }
             }
             orderDates[counter] = (Calendar) currentDate.clone();
-            java.text.DateFormat df = new SimpleDateFormat("dd MMMMM yyyy");
+            java.text.DateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
             weeks[counter] = df.format(currentDate.getTime());
             currentDate.add(Calendar.DAY_OF_WEEK, 1);
             counter++;
@@ -1293,7 +1302,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
                 "-",
                 totalMeals,
                 order.getRoute(),
-                new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'").format(order.getStartingDate().getTime()),
+                order.getStartingDate().getTimeInMillis(),
                 meals
         );
 
@@ -1428,10 +1437,10 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         public String EndDate;
         public int FamilySize;
         public String RouteID;
-        public String StartingDate;
+        public long StartingDate;
         public MealContainer[] meals;
 
-        public OrderContainer(boolean Active, String ClientID, String Duration, String EndDate, int FamilySize, String RouteID, String StartingDate, MealContainer[] meals) {
+        public OrderContainer(boolean Active, String ClientID, String Duration, String EndDate, int FamilySize, String RouteID, long StartingDate, MealContainer[] meals) {
             this.Active = Active;
             this.ClientID = ClientID;
             this.Duration = Duration;

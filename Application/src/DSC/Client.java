@@ -22,6 +22,7 @@ public class Client implements java.io.Serializable{
     private String additionalInfo;
 
     public Client() {
+        
     }
 
     public Client(String clientID, String name, String surname, String contactNumber, String alternativeNumber, String email, String suburb, String address, String additionalInfo) {

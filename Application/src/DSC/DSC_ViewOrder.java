@@ -6,20 +6,12 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import org.shaded.apache.http.impl.cookie.DateParseException;
-import org.shaded.apache.http.impl.cookie.DateUtils;
 
 /**
  *
@@ -192,7 +184,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     Order o = new Order(Data.getKey(), Data.child("Active").getValue(boolean.class), allclients.get(0),
                             Data.child("Duration").getValue(String.class), null, null, Data.child("RouteID").getValue(String.class),
                             allmeals, 0);
-                    o.setFamilySize(Data.child("FamilySize").getValue(long.class));
+                    o.setFamilySize(Data.child("FamilySize").getValue(int.class));
 
                     String clientID = Data.child("ClientID").getValue(String.class);
                     for (Client c : allclients) {

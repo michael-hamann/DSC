@@ -22,6 +22,10 @@ public class RouteDrivers {
         this.endDate = endDate;
         this.startDate = startDate;
     }
+    
+    public RouteDrivers(String name){
+        driver = new Driver(name);
+    }
 
     public Driver getDriver() {
         return driver;

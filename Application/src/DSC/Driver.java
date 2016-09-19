@@ -22,6 +22,10 @@ public class Driver implements java.io.Serializable{
         this.driverName = driverName;
         this.vehicleRegistration = vehicleRegistration;
     }
+    
+    public Driver(String name){
+        this.driverName = name;
+    }
 
     public boolean isAddress() {
         return address;
