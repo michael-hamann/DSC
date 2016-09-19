@@ -38,14 +38,14 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     }
 
     public final void enableFields() {
-        txfDriverName.setEnabled(true);
+        
         txfContactNo.setEnabled(true);
         txfAddress.setEnabled(true);
         txfVehicleReg.setEnabled(true);
     }
 
     public final void disableFields() {
-        txfDriverName.setEnabled(false);
+        
         txfContactNo.setEnabled(false);
         txfAddress.setEnabled(false);
         txfVehicleReg.setEnabled(false);
@@ -53,7 +53,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
 
     public final void clearFields() {
         txfDriverID.setText(null);
-        txfDriverName.setText(null);
+        
         txfContactNo.setText(null);
         txfAddress.setText(null);
         txfVehicleReg.setText(null);
@@ -62,7 +62,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     private boolean checkEmpty() {
         boolean empty = false;
 
-        if (txfDriverName.getText().isEmpty() && txfContactNo.getText().isEmpty()
+        if (txfContactNo.getText().isEmpty() //and driver name
                 && txfAddress.getText().isEmpty() && txfVehicleReg.getText().isEmpty()) {
             empty = true;
         }
@@ -134,6 +134,21 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     }
     
     private void setTextFields(){
+        Firebase tableRef = DBClass.getInstance().child("Routes");
+        tableRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot ds) {
+                
+            }
+
+            @Override
+            public void onCancelled(FirebaseError fe) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
+    }
+    
+    private void setDrivers(){
         
     }
 
@@ -161,7 +176,6 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         lblAddress = new javax.swing.JLabel();
         lblVehicleReg = new javax.swing.JLabel();
         txfDriverID = new javax.swing.JTextField();
-        txfDriverName = new javax.swing.JTextField();
         txfContactNo = new javax.swing.JTextField();
         txfAddress = new javax.swing.JTextField();
         txfVehicleReg = new javax.swing.JTextField();
@@ -172,6 +186,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         txfRouteID = new javax.swing.JTextField();
         lblSuburbID = new javax.swing.JLabel();
         txfSuburbID = new javax.swing.JTextField();
+        jComboBox1 = new javax.swing.JComboBox<>();
         pnlSuburbs = new javax.swing.JPanel();
         lblSuburbs = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
@@ -266,9 +281,6 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         txfDriverID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfDriverID.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
-        txfDriverName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txfDriverName.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-
         txfContactNo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfContactNo.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
@@ -317,6 +329,9 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
 
         txfSuburbID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
+        jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout pnlDetailsLayout = new javax.swing.GroupLayout(pnlDetails);
         pnlDetails.setLayout(pnlDetailsLayout);
         pnlDetailsLayout.setHorizontalGroup(
@@ -343,12 +358,12 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txfDriverID)
-                            .addComponent(txfDriverName, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txfContactNo, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txfAddress, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txfVehicleReg, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txfRouteID)
-                            .addComponent(txfSuburbID))))
+                            .addComponent(txfSuburbID)
+                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         pnlDetailsLayout.setVerticalGroup(
@@ -371,7 +386,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDriverName)
-                    .addComponent(txfDriverName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblContactNo)
@@ -518,53 +533,14 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         boolean back = false;
         if (btnSave.getText().equals("Save")) {
             //Update existing driver
-            short ID = Short.parseShort(txfDriverID.getText().trim());
-            String newName = txfDriverName.getText().trim();
-            String newContactNo = txfContactNo.getText().trim();
-            String newAddress = txfAddress.getText().trim();
-            String newVehicleReg = txfVehicleReg.getText().trim();
-
-            try {
-//                Connection c = DBClass.getConnection();
-//                
-//                PreparedStatement stmt = c.prepareStatement
-//        ("UPDATE doorstepchef.driver_tb SET DriverName = ?, DriverSurname = ?, ContactNumber = ?, Address = ?, VehicleReg = ? WHERE DriverID = ?;");
-//                stmt.setString(1, newName);
-//                stmt.setString(2, newSurname);
-//                stmt.setString(3, newContactNo);
-//                stmt.setString(4, newAddress);
-//                stmt.setString(5, newVehicleReg);
-//                stmt.setShort(6, ID);
-//                stmt.executeUpdate();
-//                
-//                JOptionPane.showMessageDialog(this, "Changes Saved");
-//                //Refresh
-//                back = true;
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
-
+            
         } else if (btnSave.getText().equals("Add")) {
             //Add new driver
             boolean empty = checkEmpty();
             if (empty) {
                 JOptionPane.showMessageDialog(this, "Please fill in all fields", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
-                short newID = Short.parseShort(txfDriverID.getText().trim());
-                String newName = txfDriverName.getText().trim();
-                String newContactNo = txfContactNo.getText().trim();
-                String newAddress = txfAddress.getText().trim();
-                String newVehicleReg = txfVehicleReg.getText().trim();
-
-                try {
-//                    Connection c = DBClass.getConnection();
-//                    Statement stmt = c.createStatement();
-//                    stmt.executeUpdate(query);
-//                    JOptionPane.showMessageDialog(this, "New Driver Saved");
-//                    back = true;
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
-                }
+                
             }
         }
 
@@ -604,7 +580,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddRouteActionPerformed
 
     private void btnDeleteRouteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteRouteActionPerformed
-        String name = txfDriverName.getText();
+        String name = ""; //get from combo box
 
         int driverID = Integer.parseInt(txfDriverID.getText());
         int elementIndex = lstRoutes.getSelectedIndex();
@@ -669,6 +645,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     private javax.swing.JButton btnDeleteSuburb;
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnSave;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JLabel lblAddress;
@@ -690,7 +667,6 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     private javax.swing.JTextField txfAddress;
     private javax.swing.JTextField txfContactNo;
     private javax.swing.JTextField txfDriverID;
-    private javax.swing.JTextField txfDriverName;
     private javax.swing.JTextField txfRouteID;
     private javax.swing.JTextField txfSuburbID;
     private javax.swing.JTextField txfVehicleReg;
