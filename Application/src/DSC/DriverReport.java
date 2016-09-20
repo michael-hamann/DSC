@@ -9,6 +9,7 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -19,14 +20,16 @@ import java.util.Calendar;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xssf.usermodel.extensions.XSSFCellBorder;
 
 /**
  *
@@ -172,7 +175,7 @@ public class DriverReport {
                 }
                 System.out.println("Success!!!");
                 createSpreadsheets();
-                
+
             }
 
             @Override
@@ -185,34 +188,75 @@ public class DriverReport {
     private static void createSpreadsheets() {
 
         for (Route route : routeList) {
-            
+
             XSSFWorkbook workbook = new XSSFWorkbook();
             XSSFSheet sheet = workbook.createSheet("DriverReports Route - " + route.getID());
-            
+
             Map<String, Object[]> data = new TreeMap<>();
-            data.put("0", new Object[]{"Route: " + route.getID(),"","Driver: " + route.getDrivers().get(0).getDriver().getDriverName().split(" ")[0] ,"" ,"" ,"" ,"" ,"" ,"" ,"" ,"", "Date: "+returnWeekString(), "" });
-            data.put("1", new Object[]{"", "", "", "", "", "", "", "", "", ""});
-            data.put("2", new Object[]{"Name", "Surname", "Contact", "Mon", "Tue", "Wed", "Thurs", "Fri", "Address", "AdditionalInfo"});
-            
-            int counter = 3;
+            data.put("1", new Object[]{"Route: " + route.getID(), "", "Driver: " + route.getDrivers().get(0).getDriver().getDriverName().split(" ")[0], "", "", "", "", "", "Date: " + returnWeekString(), ""});
+            data.put("2", new Object[]{"", "", "", "", "", "", "", "", "", ""});
+            data.put("3", new Object[]{"Name", "Surname", "Contact", "Mon", "Tue", "Wed", "Thu", "Fri", "Address", "AdditionalInfo"});
+
+            int counter = 4;
             for (Order order : orderList) {
                 if (order.getRoute().equals(route.getID())) {
                     Client client = order.getClient();
-                    data.put("" + counter, new Object[]{client.getName(),client.getSurname(), client.getContactNumber() ,"" ,"" ,"" ,"" ,"", client.getAddress(), client.getAdditionalInfo()});
+                    data.put("" + counter, new Object[]{client.getName(), client.getSurname(), client.getContactNumber(), "", "", "", "", "", client.getAddress(), client.getAdditionalInfo()});
                     counter++;
                 }
             }
             Set<String> keySet = data.keySet();
             int rowNum = 0;
+            int longestName = 0;
+            int longestSurname = 0;
+            int totalWidth = 33000;
             for (String key : keySet) {
+
                 Row row = sheet.createRow(rowNum);
                 Object[] arr = data.get(key);
                 for (int i = 0; i < arr.length; i++) {
                     Cell cell = row.createCell(i);
-                    cell.setCellValue((String)arr[i]);
+                    cell.setCellValue((String) arr[i]);
+                    if (((String) arr[i]).length() > longestName && i == 0) {
+                        longestName = ((String) arr[i]).length();
+                    }
+                    if (((String) arr[i]).length() > longestSurname && i == 1) {
+                        longestSurname = ((String) arr[i]).length();
+                    }
+                    XSSFCellStyle borderStyle = workbook.createCellStyle();
+                    borderStyle.setBorderBottom(XSSFCellStyle.BORDER_THIN);
+                    borderStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+                    borderStyle.setBorderLeft(XSSFCellStyle.BORDER_THIN);
+                    borderStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+                    borderStyle.setBorderTop(XSSFCellStyle.BORDER_THIN);
+                    borderStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+                    borderStyle.setBorderRight(XSSFCellStyle.BORDER_THIN);
+                    borderStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+                    if (i == 8 || i == 9) {
+                        borderStyle.setAlignment(XSSFCellStyle.ALIGN_JUSTIFY);
+                        borderStyle.setVerticalAlignment(XSSFCellStyle.VERTICAL_JUSTIFY);
+                    }
+                    cell.setCellStyle(borderStyle);
                 }
+                rowNum++;
+//                XSSFCellStyle textWrap = workbook.createCellStyle();
+//                textWrap.setAlignment(XSSFCellStyle.ALIGN_JUSTIFY);
+//                textWrap.setVerticalAlignment(XSSFCellStyle.VERTICAL_JUSTIFY);
+//                row.getCell(8).setCellStyle(textWrap);
+//                row.getCell(9).setCellStyle(textWrap);
+
             }
-            
+
+            sheet.setColumnWidth(0, (longestName + 1) * 240);
+            sheet.setColumnWidth(1, (longestSurname + 1) * 240);
+            sheet.setColumnWidth(2, 12 * 240);
+            for (int i = 0; i < 5; i++) {
+                sheet.setColumnWidth(i + 3, 1000);
+            }
+            totalWidth = (totalWidth - (720 * 5 + 11 * 240 + (longestSurname + 1) * 240 + (longestName + 1) * 240)) / 3;
+            sheet.setColumnWidth(8, totalWidth * 2);
+            sheet.setColumnWidth(9, totalWidth);
+
             try {
                 File file = new File("DriverReports Route - " + route.getID() + ".xlsx");
                 if (!file.exists()) {
@@ -225,23 +269,21 @@ public class DriverReport {
                 JOptionPane.showMessageDialog(null, "An error occured\nCould not find Driver Roport", "Error", JOptionPane.ERROR_MESSAGE);
                 System.err.println("Error - Could not create new Driver Report: ");
                 ex.printStackTrace();
-            } catch (IOException io){
+            } catch (IOException io) {
                 JOptionPane.showMessageDialog(null, "An error occured\nCould not create Driver Roport", "Error", JOptionPane.ERROR_MESSAGE);
                 System.err.println("Error - Could not create new Driver Report: ");
                 io.printStackTrace();
             }
         }
-
+        System.out.println("JobsDone");
     }
-    
-    private static String returnWeekString(){
+
+    private static String returnWeekString() {
         Calendar weekDate = Calendar.getInstance();
-        while (weekDate.get(Calendar.DAY_OF_WEEK) != 2) {            
+        while (weekDate.get(Calendar.DAY_OF_WEEK) != 2) {
             weekDate.add(Calendar.DAY_OF_WEEK, -1);
         }
         return new SimpleDateFormat("dd MMM yyyy").format(weekDate.getTime());
     }
-    
-
 
 }
