@@ -7,6 +7,7 @@ import com.firebase.client.ValueEventListener;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
@@ -51,6 +52,32 @@ public class DSC_RouteView extends javax.swing.JFrame {
                         allRoutes.add(r);
                     }
                 }
+                if (active.equalsIgnoreCase("Active")) {
+                    DefaultListModel model = new DefaultListModel();
+                    for (Route r : allRoutes) {
+                        if (r.isActive()) {
+                            model.addElement(r);
+                        }
+                    }
+                    lstRoutes.setModel(model);
+                    lstRoutes.setSelectedIndex(0);
+                    String curr = lstRoutes.getSelectedIndex()+1 + "";
+                    setSuburbsList(curr, "Active");
+                } else if (active.equalsIgnoreCase("Inactive")) {
+                    DefaultListModel model = new DefaultListModel();
+                    for (Route r : allRoutes) {
+                        if (!r.isActive()) {
+                            model.addElement(r);
+                        }
+                    }
+                    lstRoutes.setModel(model);
+                    lstRoutes.setSelectedIndex(0);
+                    if (model.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "There is no inactive routes");
+                    } else {
+                        setSuburbsList("1", "Active");
+                    }
+                }
             }
 
             @Override
@@ -58,63 +85,44 @@ public class DSC_RouteView extends javax.swing.JFrame {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         });
-        if (active.equalsIgnoreCase("Active")) {
-            DefaultListModel model = new DefaultListModel();
-            for (Route r : allRoutes) {
-                if (r.isActive()) {
-                    model.addElement(r);
-                }
-            }
-            lstRoutes.setModel(model);
-            lstRoutes.setSelectedIndex(0);
-            setSuburbsList("1", "Active");
-        } else if (active.equalsIgnoreCase("Inactive")) {
-            DefaultListModel model = new DefaultListModel();
-            for (Route r : allRoutes) {
-                if (!r.isActive()) {
-                    model.addElement(r);
-                }
-            }
-            lstRoutes.setModel(model);
-            lstRoutes.setSelectedIndex(0);
-            setSuburbsList("1", "Active");
-        }
+
     }
 
     private void setSuburbsList(String routeNum, String active) {
         //Get children of routes > suburbs
         Firebase tableRef = DBClass.getInstance().child("Routes");
-            tableRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot ds) {
-                    suburbs.clear();
-                    for (DataSnapshot data : ds.getChildren()) {
-                        if (data.getKey().equals(routeNum)) {
-                            String subArr[] = data.child("Suburbs").getValue(String[].class);
-                            for (int i = 0; i < subArr.length; i++) {
-                                suburbs.add(subArr[i]);
-                            }
+        tableRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot ds) {
+                suburbs.clear();
+                for (DataSnapshot data : ds.getChildren()) {
+                    if (data.getKey().equals(routeNum)) {
+                        String subArr[] = data.child("Suburbs").getValue(String[].class);
+                        for (int i = 0; i < subArr.length; i++) {
+                            suburbs.add(subArr[i]);
                         }
                     }
                 }
-
-                @Override
-                public void onCancelled(FirebaseError fe) {
-                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                }
-            });
-        if (active.equalsIgnoreCase("Active")) {
-            DefaultListModel model = new DefaultListModel();
+                if (active.equalsIgnoreCase("Active")) {
+                    DefaultListModel model = new DefaultListModel();
                     for (String s : suburbs) {
 //                        if () {
-                            model.addElement(s);
+                        model.addElement(s);
 //                        }
                     }
                     lstSuburbs.setModel(model);
                     lstSuburbs.setSelectedIndex(0);
-        } else if (active.equalsIgnoreCase("Inactive")) {
+                } else if (active.equalsIgnoreCase("Inactive")) {
 
-        }
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError fe) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
+
     }
 
     private void disableChecks() {
@@ -216,6 +224,11 @@ public class DSC_RouteView extends javax.swing.JFrame {
 
         lstRoutes.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lstRoutes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lstRoutes.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstRoutesValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(lstRoutes);
 
         btnAddRoute.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -591,15 +604,15 @@ public class DSC_RouteView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnShowOtherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowOtherActionPerformed
+        lstRoutes.setModel(new DefaultListModel<>());
+        lstSuburbs.setModel(new DefaultListModel<>());
         if (btnShowOther.getText().equalsIgnoreCase("Show inactive")) {
             //show inactive routes
             setRoutesList("Inactive");
-            setSuburbsList("1", "Inactive");
             btnShowOther.setText("Show active");
         } else {
             //show active routes
             setRoutesList("Active");
-            setSuburbsList("1", "Active");
             btnShowOther.setText("Show inactive");
         }
     }//GEN-LAST:event_btnShowOtherActionPerformed
@@ -633,6 +646,17 @@ public class DSC_RouteView extends javax.swing.JFrame {
         this.dispose();
         new DSC_DriverDetails().setVisible(true);
     }//GEN-LAST:event_btnChangeDriverActionPerformed
+
+    private void lstRoutesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstRoutesValueChanged
+        String curr = lstRoutes.getSelectedIndex()+1 + "";
+        String active = btnShowOther.getText();
+        if (active.equalsIgnoreCase("Show inactive")) {
+            active = "Active";
+        } else {
+            active = "Inactive";
+        }
+        setSuburbsList(curr, active);
+    }//GEN-LAST:event_lstRoutesValueChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
