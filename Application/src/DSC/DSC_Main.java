@@ -741,7 +741,8 @@ public class DSC_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDriverRptActionPerformed
 
     private void btnChefRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChefRptActionPerformed
-        //ChefReport.getChefData_Ordertb();
+        ReportsDepricated rp = new ReportsDepricated();
+        rp.createDriverReport();
     }//GEN-LAST:event_btnChefRptActionPerformed
 
     private void btnPackerRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPackerRptActionPerformed

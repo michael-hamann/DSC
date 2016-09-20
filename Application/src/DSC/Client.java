@@ -112,6 +112,11 @@ public class Client implements java.io.Serializable{
     public void setClientID(String clientID) {
         this.clientID = clientID;
     }
+
+    @Override
+    public String toString() {
+        return "Client{" + "clientID=" + clientID + ", name=" + name + ", surname=" + surname + ", contactNumber=" + contactNumber + ", alternativeNumber=" + alternativeNumber + ", email=" + email + ", suburb=" + suburb + ", address=" + address + ", additionalInfo=" + additionalInfo + '}';
+    }
     
     
     

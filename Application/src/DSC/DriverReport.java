@@ -9,10 +9,22 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -26,7 +38,6 @@ public class DriverReport {
     private static ArrayList<Order> orderList = new ArrayList<>();
     private static ArrayList<Route> routeList = new ArrayList<>();
     private static int clientCounter = 0;
-    private Firebase ref = DBClass.getInstance();
 
     public static void getClients() {
         Firebase ref = DBClass.getInstance().child("Orders");
@@ -94,7 +105,7 @@ public class DriverReport {
 
                 orderList.get(index).setClient(new Client(
                         id,
-                        ds.child("Names").getValue(String.class),
+                        ds.child("Name").getValue(String.class),
                         ds.child("Surname").getValue(String.class),
                         ds.child("ContactNum").getValue(String.class),
                         ds.child("AlternativeNumber").getValue(String.class),
@@ -161,6 +172,7 @@ public class DriverReport {
                 }
                 System.out.println("Success!!!");
                 createSpreadsheets();
+                
             }
 
             @Override
@@ -173,16 +185,63 @@ public class DriverReport {
     private static void createSpreadsheets() {
 
         for (Route route : routeList) {
+            
             XSSFWorkbook workbook = new XSSFWorkbook();
-            XSSFSheet sheet = workbook.createSheet("DriverReport Route - " + route.getID());
+            XSSFSheet sheet = workbook.createSheet("DriverReports Route - " + route.getID());
+            
             Map<String, Object[]> data = new TreeMap<>();
-            data.put("0", new Object[]{"","Route: " + route.getID()});
-            data.put("1", new Object[]{"Name", "Surname", "Contact", "Mon", "Tue", "Wed", "Thurs", "Fri", "Address", "AdditionalInfo"});
+            data.put("0", new Object[]{"Route: " + route.getID(),"","Driver: " + route.getDrivers().get(0).getDriver().getDriverName().split(" ")[0] ,"" ,"" ,"" ,"" ,"" ,"" ,"" ,"", "Date: "+returnWeekString(), "" });
+            data.put("1", new Object[]{"", "", "", "", "", "", "", "", "", ""});
+            data.put("2", new Object[]{"Name", "Surname", "Contact", "Mon", "Tue", "Wed", "Thurs", "Fri", "Address", "AdditionalInfo"});
             
+            int counter = 3;
+            for (Order order : orderList) {
+                if (order.getRoute().equals(route.getID())) {
+                    Client client = order.getClient();
+                    data.put("" + counter, new Object[]{client.getName(),client.getSurname(), client.getContactNumber() ,"" ,"" ,"" ,"" ,"", client.getAddress(), client.getAdditionalInfo()});
+                    counter++;
+                }
+            }
+            Set<String> keySet = data.keySet();
+            int rowNum = 0;
+            for (String key : keySet) {
+                Row row = sheet.createRow(rowNum);
+                Object[] arr = data.get(key);
+                for (int i = 0; i < arr.length; i++) {
+                    Cell cell = row.createCell(i);
+                    cell.setCellValue((String)arr[i]);
+                }
+            }
             
-            
+            try {
+                File file = new File("DriverReports Route - " + route.getID() + ".xlsx");
+                if (!file.exists()) {
+                    file.createNewFile();
+                }
+                FileOutputStream excelOut = new FileOutputStream(file);
+                workbook.write(excelOut);
+                excelOut.close();
+            } catch (FileNotFoundException ex) {
+                JOptionPane.showMessageDialog(null, "An error occured\nCould not find Driver Roport", "Error", JOptionPane.ERROR_MESSAGE);
+                System.err.println("Error - Could not create new Driver Report: ");
+                ex.printStackTrace();
+            } catch (IOException io){
+                JOptionPane.showMessageDialog(null, "An error occured\nCould not create Driver Roport", "Error", JOptionPane.ERROR_MESSAGE);
+                System.err.println("Error - Could not create new Driver Report: ");
+                io.printStackTrace();
+            }
         }
 
     }
+    
+    private static String returnWeekString(){
+        Calendar weekDate = Calendar.getInstance();
+        while (weekDate.get(Calendar.DAY_OF_WEEK) != 2) {            
+            weekDate.add(Calendar.DAY_OF_WEEK, -1);
+        }
+        return new SimpleDateFormat("dd MMM yyyy").format(weekDate.getTime());
+    }
+    
+
 
 }
