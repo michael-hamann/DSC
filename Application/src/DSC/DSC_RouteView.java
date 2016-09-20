@@ -1,6 +1,11 @@
-
 package DSC;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
@@ -10,6 +15,9 @@ import javax.swing.border.TitledBorder;
  * @author Aliens_Michael
  */
 public class DSC_RouteView extends javax.swing.JFrame {
+
+    ArrayList<Route> allRoutes = new ArrayList<>();
+    ArrayList<String> suburbs = new ArrayList<>();
 
     /**
      * Creates new form DSC_Main
@@ -22,30 +30,94 @@ public class DSC_RouteView extends javax.swing.JFrame {
         pnlNew.setVisible(false);
         setRoutesList("Active");
         lstRoutes.setSelectedIndex(0);
-        setSuburbsList("Active");
-        lstSuburbs.setSelectedIndex(0);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
-    
-    private void setRoutesList(String active){
+
+    private void setRoutesList(String active) {
         //Get children of routes
+        Firebase tableRef = DBClass.getInstance().child("Routes");
+        tableRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot ds) {
+                allRoutes.clear();
+                for (DataSnapshot data : ds.getChildren()) {
+                    if (!data.getKey().equals("0")) {
+                        Route r = new Route();
+                        r.setID(data.getKey());
+                        r.setActive((boolean) data.child("Active").getValue());
+                        //r.setDrivers(drivers);
+                        //r.setSuburbs(suburbs);
+                        r.setTimeFrame((String) data.child("TimeFrame").getValue());
+                        allRoutes.add(r);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError fe) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
         if (active.equalsIgnoreCase("Active")) {
-            
-        } else if (active.equalsIgnoreCase("Inactive")){
-            
+            DefaultListModel model = new DefaultListModel();
+            for (Route r : allRoutes) {
+                if (r.isActive()) {
+                    model.addElement(r);
+                }
+            }
+            lstRoutes.setModel(model);
+            lstRoutes.setSelectedIndex(0);
+            setSuburbsList("1", "Active");
+        } else if (active.equalsIgnoreCase("Inactive")) {
+            DefaultListModel model = new DefaultListModel();
+            for (Route r : allRoutes) {
+                if (!r.isActive()) {
+                    model.addElement(r);
+                }
+            }
+            lstRoutes.setModel(model);
+            lstRoutes.setSelectedIndex(0);
+            setSuburbsList("1", "Active");
         }
     }
-    
-    private void setSuburbsList(String active){
+
+    private void setSuburbsList(String routeNum, String active) {
         //Get children of routes > suburbs
+        Firebase tableRef = DBClass.getInstance().child("Routes");
+            tableRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot ds) {
+                    suburbs.clear();
+                    for (DataSnapshot data : ds.getChildren()) {
+                        if (data.getKey().equals(routeNum)) {
+                            String subArr[] = data.child("Suburbs").getValue(String[].class);
+                            for (int i = 0; i < subArr.length; i++) {
+                                suburbs.add(subArr[i]);
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(FirebaseError fe) {
+                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                }
+            });
         if (active.equalsIgnoreCase("Active")) {
-            
-        } else if (active.equalsIgnoreCase("Inactive")){
-            
+            DefaultListModel model = new DefaultListModel();
+                    for (String s : suburbs) {
+//                        if () {
+                            model.addElement(s);
+//                        }
+                    }
+                    lstSuburbs.setModel(model);
+                    lstSuburbs.setSelectedIndex(0);
+        } else if (active.equalsIgnoreCase("Inactive")) {
+
         }
     }
-    
-    private void disableChecks(){
+
+    private void disableChecks() {
         chbAfternoon.setEnabled(false);
         chbLateAfternoon.setEnabled(false);
         chbEvening.setEnabled(false);
@@ -519,21 +591,21 @@ public class DSC_RouteView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnShowOtherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowOtherActionPerformed
-        if(btnShowOther.getText().equalsIgnoreCase("Show inactive")){
+        if (btnShowOther.getText().equalsIgnoreCase("Show inactive")) {
             //show inactive routes
             setRoutesList("Inactive");
-        setSuburbsList("Inactive");
+            setSuburbsList("1", "Inactive");
             btnShowOther.setText("Show active");
         } else {
             //show active routes
             setRoutesList("Active");
-        setSuburbsList("Active");
+            setSuburbsList("1", "Active");
             btnShowOther.setText("Show inactive");
         }
     }//GEN-LAST:event_btnShowOtherActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        if(pnlNew.isVisible()){
+        if (pnlNew.isVisible()) {
             //save to db
         } else {
             //save changes of times
