@@ -61,7 +61,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
                     }
                     lstRoutes.setModel(model);
                     lstRoutes.setSelectedIndex(0);
-                    String curr = lstRoutes.getSelectedIndex()+1 + "";
+                    String curr = getSelectedRoute();
                     setSuburbsList(curr, "Active");
                 } else if (active.equalsIgnoreCase("Inactive")) {
                     DefaultListModel model = new DefaultListModel();
@@ -72,10 +72,11 @@ public class DSC_RouteView extends javax.swing.JFrame {
                     }
                     lstRoutes.setModel(model);
                     lstRoutes.setSelectedIndex(0);
-                    if (model.isEmpty()) {
+                    if (lstRoutes.getSelectedIndex() <= 0) {
                         JOptionPane.showMessageDialog(null, "There is no inactive routes");
                     } else {
-                        setSuburbsList("1", "Active");
+                        String curr = getSelectedRoute();
+                        setSuburbsList(curr, "Inactive");
                     }
                 }
             }
@@ -96,10 +97,12 @@ public class DSC_RouteView extends javax.swing.JFrame {
             public void onDataChange(DataSnapshot ds) {
                 suburbs.clear();
                 for (DataSnapshot data : ds.getChildren()) {
-                    if (data.getKey().equals(routeNum)) {
-                        String subArr[] = data.child("Suburbs").getValue(String[].class);
-                        for (int i = 0; i < subArr.length; i++) {
-                            suburbs.add(subArr[i]);
+                    if (!data.getKey().equals("0")) {
+                        if (data.getKey().equals(routeNum)) {
+                            String subArr[] = data.child("Suburbs").getValue(String[].class);
+                            for (int i = 0; i < subArr.length; i++) {
+                                suburbs.add(subArr[i]);
+                            }
                         }
                     }
                 }
@@ -129,6 +132,19 @@ public class DSC_RouteView extends javax.swing.JFrame {
         chbAfternoon.setEnabled(false);
         chbLateAfternoon.setEnabled(false);
         chbEvening.setEnabled(false);
+    }
+    
+    private void enableChecks(){
+        chbAfternoon.setEnabled(true);
+        chbLateAfternoon.setEnabled(true);
+        chbEvening.setEnabled(true);
+    }
+    
+    private String getSelectedRoute(){
+        String curr = lstRoutes.getSelectedValue();
+        curr = curr.charAt(curr.length() - 1)+"";
+        curr = curr.trim();
+        return curr;
     }
 
     /**
@@ -596,9 +612,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        chbAfternoon.setEnabled(true);
-        chbLateAfternoon.setEnabled(true);
-        chbEvening.setEnabled(true);
+        enableChecks();
         btnEdit.setVisible(false);
         btnSave.setVisible(true);
     }//GEN-LAST:event_btnEditActionPerformed
@@ -648,7 +662,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnChangeDriverActionPerformed
 
     private void lstRoutesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstRoutesValueChanged
-        String curr = lstRoutes.getSelectedIndex()+1 + "";
+        String curr = lstRoutes.getSelectedIndex() + 1 + "";
         String active = btnShowOther.getText();
         if (active.equalsIgnoreCase("Show inactive")) {
             active = "Active";
