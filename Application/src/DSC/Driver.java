@@ -11,27 +11,27 @@ package DSC;
  */
 public class Driver implements java.io.Serializable{
     private String driverID;
-    private boolean address;
+    private String address;
     private String contactNumber;
     private String driverName;
     private String vehicleRegistration;
 
-    public Driver(boolean address, String contactNumber, String driverName, String vehicleRegistration) {
+    public Driver(String address, String contactNumber, String driverName, String vehicleRegistration) {
         this.address = address;
         this.contactNumber = contactNumber;
         this.driverName = driverName;
         this.vehicleRegistration = vehicleRegistration;
     }
     
-    public Driver(String name){
-        this.driverName = name;
+    public Driver(String id){
+        this.driverID = id;
     }
 
-    public boolean isAddress() {
+    public String isAddress() {
         return address;
     }
 
-    public void setAddress(boolean address) {
+    public void setAddress(String address) {
         this.address = address;
     }
 
