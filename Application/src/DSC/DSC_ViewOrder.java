@@ -5,10 +5,15 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -22,11 +27,16 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     boolean search = false;
     boolean orderEdited = false;
     boolean editClicked = false;
+
     ArrayList<Client> allclients = new ArrayList<>();
     ArrayList<Order> allorders = new ArrayList<>();
     ArrayList<Order> orders1 = new ArrayList<>();
+    
     ArrayList<String> suburbs = new ArrayList<>();
     ArrayList<String> activeSuburbs = new ArrayList<>();
+    
+    ArrayList<Calendar> startdates = new ArrayList<>();
+    ArrayList<Calendar> enddates = new ArrayList<>();
 
     /**
      * Creates new form DSC_Main
@@ -36,6 +46,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         txfClientID.setEnabled(false);
         txfOrderID.setEnabled(false);
+        txfOrderRouteID.setEnabled(false);
         cmbSuburbs.setEnabled(false);
         disableFieldsClient();
         disableFieldsOrder();
@@ -46,7 +57,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         callActiveSuburbs();
         callAllSuburbs();
         setOrders();
-        setTextFields2();
+        setTextFields();
     }
 
     public final void enableFieldsClient() {
@@ -108,6 +119,8 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         txfOrderRouteID.setText(null);
         txfOrderDuration.setText(null);
         //spnEndDate.setValue("");
+        DefaultTableModel model = (DefaultTableModel) tblOrderTable.getModel();
+        model.setRowCount(0);
     }
 
     private boolean checkEmpty() {
@@ -159,21 +172,18 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             public void onDataChange(DataSnapshot ds) {
                 for (DataSnapshot Data : ds.getChildren()) {
                     ArrayList<Meal> allmeals = new ArrayList<>();
-                    Calendar end;
+                    Calendar endDate;
 
-//               SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-ddEhh:mm:ss.SSSZ");
-//                try {
-//                    Date date = sdf.parse(Data.child("StartingDate").getValue(String.class));
-//                } catch (ParseException ex) {
-//                    Logger.getLogger(DSC_ViewOrder.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//                 
-//                Calendar start = sdf.getCalendar();
-//                    if (Data.child("EndDate").getValue().equals("-")) {
-//                        end = null;
-//                    } else {
-//                        end = (Calendar) Data.child("EndDate").getValue();
-//                    }
+                    Calendar startingDate = Calendar.getInstance();
+                    startingDate.setTimeInMillis(Data.child("StartingDate").getValue(long.class));
+
+                    if (Data.child("EndDate").getValue(String.class).equals("-")) {
+                        endDate = null;
+                    } else {
+                        endDate = Calendar.getInstance();
+                        endDate.setTimeInMillis(Data.child("EndDate").getValue(long.class));
+                    }
+
                     for (DataSnapshot Data2 : Data.getChildren()) {
                         for (DataSnapshot Data3 : Data2.getChildren()) {
                             Meal m = new Meal(Data3.child("Quantity").getValue(int.class), Data3.child("MealType").getValue(String.class),
@@ -182,7 +192,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         }
                     }
                     Order o = new Order(Data.getKey(), Data.child("Active").getValue(boolean.class), allclients.get(0),
-                            Data.child("Duration").getValue(String.class), null, null, Data.child("RouteID").getValue(String.class),
+                            Data.child("Duration").getValue(String.class), startingDate, null, Data.child("RouteID").getValue(String.class),
                             allmeals, 0);
                     o.setFamilySize(Data.child("FamilySize").getValue(int.class));
 
@@ -202,6 +212,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     if (o.isActive()) {
                         Object[] row = {o.getClient().getName(), o.getClient().getSurname(), o.getClient().getContactNumber(),
                             o.getClient().getEmail(), o.getClient().getSuburb(), o.isActive(), o.getDuration(), o.getFamilySize()};
+                        orders1.add(o);
                         model.addRow(row);
                         model.fireTableDataChanged();
                     }
@@ -291,6 +302,11 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 mealmodel.setRowCount(0);
 
+                cmbStartDate.removeAllItems();
+                cmbEndDate.removeAllItems();
+                startdates.clear();
+                enddates.clear();
+
                 int row = tblOrderTable.rowAtPoint(evt.getPoint());
 
                 txfClientID.setText(orders1.get(row).getClient().getID());
@@ -305,7 +321,18 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 txfOrderID.setText(orders1.get(row).getID());
                 txfOrderDuration.setText(orders1.get(row).getDuration());
                 spnOrderFamilySize.setValue(orders1.get(row).getFamilySize());
-                //spnOrderStartingDate.setValue(orders.getStartingDate());
+                cmbStartDate.addItem(orders1.get(row).getStartingDate().getTime() + "");
+                cmbStartDate.setSelectedItem(orders1.get(row).getStartingDate() + "");
+                startdates.add(orders1.get(row).getStartingDate());
+                if (orders1.get(row).getEndDate() != null) {
+                    cmbEndDate.addItem(orders1.get(row).getEndDate().getTime() + "");
+                    cmbEndDate.setSelectedItem(orders1.get(row).getEndDate() + "");
+                    enddates.add(orders1.get(row).getEndDate());
+                }else{
+                    cmbEndDate.addItem("None Selected");
+                    cmbEndDate.setSelectedItem("None Selected");
+                    enddates.add(null);
+                }
                 txfOrderRouteID.setText(orders1.get(row).getRoute());
 
                 for (Meal meals : orders1.get(row).getMeals()) {
@@ -316,147 +343,17 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         });
     }
 
-    public void setTextFields2() {
+    public String dateConverter(long milliSeconds) {
 
-        DefaultTableModel mealmodel = (DefaultTableModel) tblMeals.getModel();
+        // Create a DateFormatter object for displaying date in specified format.
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
-        tblOrderTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                if (search) {
-
-                } else {
-                    mealmodel.setRowCount(0);
-
-                    int row = tblOrderTable.rowAtPoint(evt.getPoint());
-
-                    txfClientID.setText(allorders.get(row).getClient().getID());
-                    txfClientName.setText(allorders.get(row).getClient().getName());
-                    txfClientSurname.setText(allorders.get(row).getClient().getSurname());
-                    txfClientAddress.setText(allorders.get(row).getClient().getAddress());
-                    txfAddInfo.setText(allorders.get(row).getClient().getAdditionalInfo());
-                    txfClientContactNo.setText(allorders.get(row).getClient().getContactNumber());
-                    txfAltNum.setText(allorders.get(row).getClient().getAlternativeNumber());
-                    txfClientEmail.setText(allorders.get(row).getClient().getEmail());
-                    cmbSuburbs.setSelectedItem(allorders.get(row).getClient().getSuburb().trim());
-                    txfOrderID.setText(allorders.get(row).getID());
-                    txfOrderDuration.setText(allorders.get(row).getDuration());
-                    spnOrderFamilySize.setValue(allorders.get(row).getFamilySize());
-                    //spnOrderStartingDate.setValue(orders.getStartingDate());
-                    txfOrderRouteID.setText(allorders.get(row).getRoute());
-
-                    for (Meal meals : allorders.get(row).getMeals()) {
-                        mealmodel.addRow(meals.returnObj());
-                    }
-                    mealmodel.fireTableDataChanged();
-                }
-            }
-        });
+        // Create a calendar object that will convert the date and time value in milliseconds to date. 
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(milliSeconds);
+        return formatter.format(calendar.getTime());
     }
 
-    public String dateIncrementor(int day, int month, int year) {
-        String date = "";
-        if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) {
-            if (day < 25) {
-                if (day < 7) {
-                    int count = 0;
-                    while (day > 1) {
-                        day = day - 1;
-                        count = count + 1;
-                    }
-                    day = 31 - (7 - count);
-                    month = month - 1;
-                    if (month == 1) {
-                        year = year - 1;
-                    }
-                    date = day + "/" + month + "/" + year;
-                }
-                day = day + 7;
-                date = day + "/" + month + "/" + year;
-            } else {
-                int count = 0;
-                while (day < 31) {
-                    day = day + 1;
-                    count = count + 1;
-                }
-                day = 7 - count;
-                month = month + 1;
-                if (month == 12) {
-                    year = year + 1;
-                }
-                date = day + "/" + month + "/" + year;
-            }
-        } else if (month == 4 || month == 6 || month == 9 || month == 11) {
-            if (day < 24) {
-                if (day < 7) {
-                    int count = 0;
-                    while (day > 1) {
-                        day = day - 1;
-                        count = count + 1;
-                    }
-                    day = 30 - (7 - count);
-                    month = month - 1;
-                    if (month == 1) {
-                        year = year - 1;
-                    }
-                    date = day + "/" + month + "/" + year;
-                }
-                day = day + 7;
-                date = day + "/" + month + "/" + year;
-            } else {
-                int count = 0;
-                while (day < 30) {
-                    day = day + 1;
-                    count = count + 1;
-                }
-                day = 7 - count;
-                month = month + 1;
-                if (month == 12) {
-                    year = year + 1;
-                }
-                date = day + "/" + month + "/" + year;
-
-            }
-        } else if (month == 2) {
-            if (day < 22) {
-                if (day < 7) {
-                    int count = 0;
-                    while (day > 1) {
-                        day = day - 1;
-                        count = count + 1;
-                    }
-                    day = 28 - (7 - count);
-                    month = month - 1;
-                    if (month == 1) {
-                        year = year - 1;
-                    }
-                    date = day + "/" + month + "/" + year;
-                }
-                day = day + 7;
-                date = day + "/" + month + "/" + year;
-            } else {
-                int count = 0;
-                while (day < 28) {
-                    day = day + 1;
-                    count = count + 1;
-                }
-                day = 7 - count;
-                month = month + 1;
-                if (month == 12) {
-                    year = year + 1;
-                }
-                date = day + "/" + month + "/" + year;
-            }
-        }
-        return date;
-    }
-
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -1135,8 +1032,8 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         updO.child("FamilySize").setValue(spnOrderFamilySize.getValue());
                         updO.child("RouteID").setValue(txfOrderRouteID.getText());
                         updO.child("Duration").setValue(txfOrderDuration.getText());
-                        updO.child("StartingDate").setValue(cmbStartDate.getSelectedItem());
-                        updO.child("EndDate").setValue(cmbEndDate.getSelectedItem());
+                        updO.child("StartingDate").setValue(startdates.get(cmbStartDate.getSelectedIndex()).getTimeInMillis());
+                        updO.child("EndDate").setValue(enddates.get(cmbEndDate.getSelectedIndex()).getTimeInMillis());
                         updO.child("Meals").removeValue();
 
                         for (int i = 0; i < meals.getRowCount(); i++) {
@@ -1303,8 +1200,8 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         model.setRowCount(0);
 
         search = true;
-
         orders1.clear();
+
         if (txfSearch.getText().equals("")) {
             JOptionPane.showMessageDialog(rootPane, "Please enter search value!");
 
@@ -1521,59 +1418,23 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnEditOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditOrderActionPerformed
+        Calendar c;
 
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-        Calendar cal = Calendar.getInstance();
-        String currentDate = dateFormat.format(cal.getTime());
-
-        System.out.println(currentDate);
-        int year = Integer.parseInt(currentDate.substring(0, 4));
-        int month = Integer.parseInt(currentDate.substring(5, 7));
-        int day = Integer.parseInt(currentDate.substring(8, 10));
-        System.out.println(year + " " + month + " " + day);
-
-        int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
-        switch (dayOfWeek) {
-            case 1:
-                day = day - 6;
-                for (int i = 0; i < 4; i++) {
-                    String d = dateIncrementor(day, month, year);
-                    Scanner sc = new Scanner(d).useDelimiter("/");
-                    day = sc.nextInt();
-                    month = sc.nextInt();
-                    year = sc.nextInt();
-                    cmbStartDate.addItem(d);
+        for (Order order : allorders) {
+            if (order.getClient().getID().equals(txfClientID.getText())) {
+                c = order.getStartingDate();
+                for (int i = 0; i < 3; i++) {
+                    c.add(Calendar.DATE, 7);  // adds 7 days 
+                    startdates.add(c);
+                    enddates.add(c);
+                    cmbStartDate.addItem(c.getTime() + "");
+                    cmbEndDate.addItem(c.getTime() + "");
+                    System.out.println(startdates.get(i));
                 }
                 break;
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-            case 7:
-                day = day - (dayOfWeek - 2);
-                for (int i = 0; i < 4; i++) {
-                    String d = dateIncrementor(day, month, year);
-                    Scanner sc = new Scanner(d).useDelimiter("/");
-                    day = sc.nextInt();
-                    month = sc.nextInt();
-                    year = sc.nextInt();
-                    cmbStartDate.addItem(d);
-                }
-                break;
-            case 2:
-                cmbStartDate.addItem(currentDate);
-                for (int i = 0; i < 4; i++) {
-                    String d = dateIncrementor(day, month, year);
-                    Scanner sc = new Scanner(d).useDelimiter("/");
-                    day = sc.nextInt();
-                    month = sc.nextInt();
-                    year = sc.nextInt();
-                    cmbStartDate.addItem(d);
-                }
-                break;
-
+            }
         }
-
+        
         btnDelete.setEnabled(false);
         enableFieldsOrder();
         btnEditOrder.setEnabled(false);
