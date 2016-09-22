@@ -37,13 +37,14 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  */
 public class DriverReport {
 
-    //private static ArrayList<Client> clientList = new ArrayList<>();
-    private static ArrayList<Order> orderList = new ArrayList<>();
-    private static ArrayList<Route> routeList = new ArrayList<>();
+    private static ArrayList<Order> orderList;
+    private static ArrayList<Route> routeList;
     private static int clientCounter = 0;
     private static int driverCounter = 0;
 
     public static void getClients() {
+        routeList = new ArrayList<>();
+        orderList = new ArrayList<>();
         Firebase ref = DBClass.getInstance().child("Orders");
         ref.orderByChild("Active").equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -67,7 +68,7 @@ public class DriverReport {
                     if (!(returnWeekMili() >= start.getTimeInMillis())) {
                         continue;
                     }
-                    
+
                     ArrayList<Meal> meals = new ArrayList<>();
                     for (DataSnapshot dataSnapshot1 : ds.child("Meals").getChildren()) {
                         meals.add(new Meal(dataSnapshot1.child("Quantity").getValue(int.class),
@@ -89,7 +90,7 @@ public class DriverReport {
                     ));
 
                 }
-
+                clientCounter = 0;
                 for (Order order : orderList) {
                     getClient(order.getClientID(), orderList.indexOf(order));
                 }
@@ -123,6 +124,7 @@ public class DriverReport {
                 ));
                 clientCounter++;
                 if (clientCounter == orderList.size()) {
+                    driverCounter = 0;
                     getAllRoutes();
                 }
             }
@@ -224,10 +226,9 @@ public class DriverReport {
     }
 
     private static void createSpreadsheets() {
-
+        XSSFWorkbook workbook = new XSSFWorkbook();
         for (Route route : routeList) {
 
-            XSSFWorkbook workbook = new XSSFWorkbook();
             XSSFSheet sheet = workbook.createSheet("DriverReports Route - " + route.getID());
 
             Map<String, Object[]> data = new TreeMap<>();
@@ -339,8 +340,10 @@ public class DriverReport {
             sheet.setColumnWidth(7, totalWidth * 2);
             sheet.setColumnWidth(8, totalWidth);
 
+        }
+        
             try {
-                File file = new File("DriverReports Route - " + route.getID() + ".xlsx");
+                File file = new File("DriverReports Route (" + returnWeekString() + ").xlsx");
                 if (!file.exists()) {
                     file.createNewFile();
                 }
@@ -356,8 +359,7 @@ public class DriverReport {
                 System.err.println("Error - Could not create new Driver Report: ");
                 io.printStackTrace();
             }
-        }
-        System.out.println("JobsDone");
+        JOptionPane.showMessageDialog(null, "DriverReports Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private static String returnWeekString() {
@@ -379,11 +381,12 @@ public class DriverReport {
         return weeks;
     }
 
-    public static long returnWeekMili(){
+    public static long returnWeekMili() {
         Calendar weekDate = Calendar.getInstance();
         while (weekDate.get(Calendar.DAY_OF_WEEK) != 2) {
             weekDate.add(Calendar.DAY_OF_WEEK, -1);
         }
+        weekDate.add(7, Calendar.DAY_OF_WEEK);
         return weekDate.getTimeInMillis();
     }
 }

@@ -418,6 +418,12 @@ function submitData() {
             arr[1] = document.getElementById("mealTypeSelector_" + i).options[document.getElementById("mealTypeSelector_" + i).selectedIndex].text;
             arr[2] = document.getElementById("orderAll_" + i).value;
             arr[3] = document.getElementById("orderExc_" + i).value;
+            if (arr[2] === "") {
+                arr[2] = "-";
+            }
+            if (arr[3] === "") {
+                arr[3] = "-";
+            }
         } catch (err) {
             arr[0] = "";
             arr[1] = "";
