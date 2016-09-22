@@ -221,9 +221,6 @@
                   <Dimension value="[6, 23]"/>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="txfSearchPropertyChange"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JComboBox" name="cmbSearchColumn">
               <Properties>
@@ -318,9 +315,6 @@
                       <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                     </Property>
                   </Properties>
-                  <Events>
-                    <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="tblOrderTablePropertyChange"/>
-                  </Events>
                 </Component>
               </SubComponents>
             </Container>
