@@ -1438,7 +1438,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         public int FamilySize;
         public String RouteID;
         public long StartingDate;
-        public MealContainer[] meals;
+        public MealContainer[] Meals;
 
         public OrderContainer(boolean Active, String ClientID, String Duration, String EndDate, int FamilySize, String RouteID, long StartingDate, MealContainer[] meals) {
             this.Active = Active;
@@ -1448,7 +1448,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             this.FamilySize = FamilySize;
             this.RouteID = RouteID;
             this.StartingDate = StartingDate;
-            this.meals = meals;
+            this.Meals = meals;
         }
 
     }
