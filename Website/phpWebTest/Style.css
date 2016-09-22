@@ -1,0 +1,9 @@
+p {
+    font-family: Tahhome, Ariel, Verdana;
+}
+label {
+    width: 10%;
+    float: left;
+    text-align: right;
+    padding-right: 10px;
+}
