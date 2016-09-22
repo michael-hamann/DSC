@@ -9,7 +9,6 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
-import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -27,12 +26,9 @@ import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
-import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.apache.poi.xssf.usermodel.extensions.XSSFCellBorder;
 
 /**
  *
@@ -46,7 +42,7 @@ public class DriverReport {
     private static int clientCounter = 0;
     private static int driverCounter = 0;
 
-    public static void getClients() {
+    public static void getOrders() {
         Firebase ref = DBClass.getInstance().child("Orders");
         ref.orderByChild("Active").equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -87,7 +83,6 @@ public class DriverReport {
                             meals,
                             dataSnapshot.child("FamilySize").getValue(int.class)
                     ));
-
                 }
 
                 for (Order order : orderList) {
@@ -287,17 +282,17 @@ public class DriverReport {
 
                             if ((Integer.parseInt(key)) != keySet.size()) {
                                 borderStyle.setBorderBottom(XSSFCellStyle.BORDER_THIN);
-                            }else{
+                            } else {
                                 borderStyle.setBorderBottom(XSSFCellStyle.BORDER_MEDIUM);
                             }
                             borderStyle.setBorderTop(XSSFCellStyle.BORDER_THIN);
-                            
+
                         }
                         if ((i == 7 || i == 8) && !key.equals("3")) {
                             borderStyle.setAlignment(XSSFCellStyle.ALIGN_JUSTIFY);
                             borderStyle.setVerticalAlignment(XSSFCellStyle.VERTICAL_JUSTIFY);
                         }
-                    }else if (i == 2|| i == 7) {
+                    } else if (i == 2 || i == 7) {
                         borderStyle.setAlignment(HorizontalAlignment.CENTER);
                     } else if (i == 8) {
                         borderStyle.setAlignment(HorizontalAlignment.RIGHT);
@@ -329,11 +324,11 @@ public class DriverReport {
                 workbook.write(excelOut);
                 excelOut.close();
             } catch (FileNotFoundException ex) {
-                JOptionPane.showMessageDialog(null, "An error occured\nCould not find Driver Roport", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "An error occured\nCould not find Driver Report", "Error", JOptionPane.ERROR_MESSAGE);
                 System.err.println("Error - Could not create new Driver Report: ");
                 ex.printStackTrace();
             } catch (IOException io) {
-                JOptionPane.showMessageDialog(null, "An error occured\nCould not create Driver Roport", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "An error occured\nCould not create Driver Report", "Error", JOptionPane.ERROR_MESSAGE);
                 System.err.println("Error - Could not create new Driver Report: ");
                 io.printStackTrace();
             }
