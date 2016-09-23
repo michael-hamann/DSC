@@ -41,13 +41,12 @@ public class DriverReport {
     private static int clientCounter = 0;
     private static int driverCounter = 0;
 
-<<<<<<< HEAD
     public static void getClients() {
         routeList = new ArrayList<>();
         orderList = new ArrayList<>();
-=======
+    }
+
     public static void getOrders() {
->>>>>>> origin/master
         Firebase ref = DBClass.getInstance().child("Orders");
         ref.orderByChild("Active").equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -361,7 +360,6 @@ public class DriverReport {
         return weeks;
     }
 
-<<<<<<< HEAD
     public static long returnWeekMili() {
         Calendar weekDate = Calendar.getInstance();
         while (weekDate.get(Calendar.DAY_OF_WEEK) != 2) {
@@ -370,6 +368,5 @@ public class DriverReport {
         weekDate.add(7, Calendar.DAY_OF_WEEK);
         return weekDate.getTimeInMillis();
     }
-=======
->>>>>>> origin/master
+
 }
