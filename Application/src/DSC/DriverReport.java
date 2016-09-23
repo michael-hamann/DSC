@@ -27,7 +27,6 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
-import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -42,9 +41,13 @@ public class DriverReport {
     private static int clientCounter = 0;
     private static int driverCounter = 0;
 
+<<<<<<< HEAD
     public static void getClients() {
         routeList = new ArrayList<>();
         orderList = new ArrayList<>();
+=======
+    public static void getOrders() {
+>>>>>>> origin/master
         Firebase ref = DBClass.getInstance().child("Orders");
         ref.orderByChild("Active").equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -63,10 +66,7 @@ public class DriverReport {
                         start = null;
                     } else {
                         start.setTimeInMillis(dataSnapshot.child("StartingDate").getValue(long.class));
-                    }
 
-                    if (!(returnWeekMili() >= start.getTimeInMillis())) {
-                        continue;
                     }
 
                     ArrayList<Meal> meals = new ArrayList<>();
@@ -88,7 +88,6 @@ public class DriverReport {
                             meals,
                             dataSnapshot.child("FamilySize").getValue(int.class)
                     ));
-
                 }
                 clientCounter = 0;
                 for (Order order : orderList) {
@@ -189,7 +188,7 @@ public class DriverReport {
 
             @Override
             public void onCancelled(FirebaseError fe) {
-                System.err.println("Error: " + fe.getMessage());
+                System.out.println("Error: " + fe.getMessage());
             }
         });
     }
@@ -220,7 +219,7 @@ public class DriverReport {
 
             @Override
             public void onCancelled(FirebaseError fe) {
-                System.err.println("Error: Could not retrieve specified driver: " + fe.getMessage());
+                System.out.println("Error: Could not retrieve specified driver: " + fe.getMessage());
             }
         });
     }
@@ -273,13 +272,7 @@ public class DriverReport {
                             borderStyle.setBorderRight(XSSFCellStyle.BORDER_MEDIUM);
                             borderStyle.setAlignment(HorizontalAlignment.CENTER);
                             borderStyle.setFillForegroundColor(HSSFColor.GREY_50_PERCENT.index);
-                            borderStyle.setFillPattern(XSSFCellStyle.FINE_DOTS);
-                            borderStyle.setFillBackgroundColor(IndexedColors.GREY_50_PERCENT.getIndex());
-                            XSSFFont font = workbook.createFont();
-                            font.setColor(HSSFColor.WHITE.index);
-                            font.setFontName("Calibri");
-                            font.setFontHeightInPoints((short) 11);
-                            borderStyle.setFont(font);
+                            borderStyle.setFillPattern(XSSFCellStyle.LESS_DOTS);
                         } else {
                             if (i != 0) {
                                 borderStyle.setBorderLeft(XSSFCellStyle.BORDER_THIN);
@@ -304,17 +297,10 @@ public class DriverReport {
                             borderStyle.setAlignment(XSSFCellStyle.ALIGN_JUSTIFY);
                             borderStyle.setVerticalAlignment(XSSFCellStyle.VERTICAL_JUSTIFY);
                         }
-                    } else {
-                        if (i == 2 || i == 7) {
-                            borderStyle.setAlignment(HorizontalAlignment.CENTER);
-                        } else if (i == 8) {
-                            borderStyle.setAlignment(HorizontalAlignment.RIGHT);
-                        }
-
-                        XSSFFont font = workbook.createFont();
-                        font.setBold(true);
-                        font.setFontHeightInPoints((short) 14);
-                        borderStyle.setFont(font);
+                    } else if (i == 2 || i == 7) {
+                        borderStyle.setAlignment(HorizontalAlignment.CENTER);
+                    } else if (i == 8) {
+                        borderStyle.setAlignment(HorizontalAlignment.RIGHT);
                     }
 
                     cell.setCellStyle(borderStyle);
@@ -325,13 +311,7 @@ public class DriverReport {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 1));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, 6));
 
-            if (((longestCustomer + 1) * 240) > 4560) {
-                sheet.setColumnWidth(0, (longestCustomer + 1) * 240);
-            } else {
-                sheet.setColumnWidth(0, 4560);
-                longestCustomer = 18;
-            }
-
+            sheet.setColumnWidth(0, (longestCustomer + 1) * 240);
             sheet.setColumnWidth(1, 12 * 240);
             for (int i = 0; i < 5; i++) {
                 sheet.setColumnWidth(i + 2, 1000);
@@ -351,11 +331,11 @@ public class DriverReport {
                 workbook.write(excelOut);
                 excelOut.close();
             } catch (FileNotFoundException ex) {
-                JOptionPane.showMessageDialog(null, "An error occured\nCould not find Driver Roport", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "An error occured\nCould not find Driver Report", "Error", JOptionPane.ERROR_MESSAGE);
                 System.err.println("Error - Could not create new Driver Report: ");
                 ex.printStackTrace();
             } catch (IOException io) {
-                JOptionPane.showMessageDialog(null, "An error occured\nCould not create Driver Roport", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "An error occured\nCould not create Driver Report", "Error", JOptionPane.ERROR_MESSAGE);
                 System.err.println("Error - Could not create new Driver Report: ");
                 io.printStackTrace();
             }
@@ -381,6 +361,7 @@ public class DriverReport {
         return weeks;
     }
 
+<<<<<<< HEAD
     public static long returnWeekMili() {
         Calendar weekDate = Calendar.getInstance();
         while (weekDate.get(Calendar.DAY_OF_WEEK) != 2) {
@@ -389,4 +370,6 @@ public class DriverReport {
         weekDate.add(7, Calendar.DAY_OF_WEEK);
         return weekDate.getTimeInMillis();
     }
+=======
+>>>>>>> origin/master
 }
