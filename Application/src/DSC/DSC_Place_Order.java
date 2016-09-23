@@ -528,6 +528,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
 
         btnAddMeal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Add.png"))); // NOI18N
         btnAddMeal.setText(" Add");
+        btnAddMeal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAddMeal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddMealActionPerformed(evt);
@@ -536,6 +537,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
 
         btnEditMeal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Edit 2.png"))); // NOI18N
         btnEditMeal.setText(" Edit");
+        btnEditMeal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEditMeal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditMealActionPerformed(evt);
@@ -573,6 +575,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
 
         btnDeleteMeal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Bin.png"))); // NOI18N
         btnDeleteMeal.setText("Delete");
+        btnDeleteMeal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnDeleteMeal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDeleteMealActionPerformed(evt);
@@ -581,13 +584,17 @@ public class DSC_Place_Order extends javax.swing.JFrame {
 
         btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Save 2.png"))); // NOI18N
         btnSave.setText(" Save");
+        btnSave.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSaveActionPerformed(evt);
             }
         });
 
+        btnBack.setBackground(new java.awt.Color(255, 0, 0));
+        btnBack.setForeground(new java.awt.Color(255, 255, 255));
         btnBack.setText("Back");
+        btnBack.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBackActionPerformed(evt);

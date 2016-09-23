@@ -267,6 +267,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
         btnAddRoute.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnAddRoute.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Add.png"))); // NOI18N
         btnAddRoute.setText("Add");
+        btnAddRoute.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAddRoute.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddRouteActionPerformed(evt);
@@ -276,6 +277,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
         btnDeleteRoute.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnDeleteRoute.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Bin.png"))); // NOI18N
         btnDeleteRoute.setText("Delete");
+        btnDeleteRoute.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout pnlRoutesLayout = new javax.swing.GroupLayout(pnlRoutes);
         pnlRoutes.setLayout(pnlRoutesLayout);
@@ -313,6 +315,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
         btnBack.setForeground(new java.awt.Color(255, 255, 255));
         btnBack.setMnemonic('B');
         btnBack.setText("Back");
+        btnBack.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnBack.setMaximumSize(new java.awt.Dimension(71, 23));
         btnBack.setMinimumSize(new java.awt.Dimension(71, 23));
         btnBack.addActionListener(new java.awt.event.ActionListener() {
@@ -324,6 +327,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
         btnEdit.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Edit 2.png"))); // NOI18N
         btnEdit.setText(" Edit");
+        btnEdit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditActionPerformed(evt);
@@ -470,6 +474,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
         btnChangeDriver.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnChangeDriver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/driver.gif"))); // NOI18N
         btnChangeDriver.setText("Change Driver");
+        btnChangeDriver.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnChangeDriver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnChangeDriverActionPerformed(evt);
@@ -478,6 +483,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
 
         btnShowOther.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnShowOther.setText("Show inactive");
+        btnShowOther.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnShowOther.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnShowOtherActionPerformed(evt);
@@ -487,6 +493,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
         btnSave.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Save 2.png"))); // NOI18N
         btnSave.setText("Save");
+        btnSave.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSaveActionPerformed(evt);
@@ -550,10 +557,12 @@ public class DSC_RouteView extends javax.swing.JFrame {
         btnDeleteSuburb.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnDeleteSuburb.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Bin.png"))); // NOI18N
         btnDeleteSuburb.setText("Delete");
+        btnDeleteSuburb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         btnAddSuburb.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnAddSuburb.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Add.png"))); // NOI18N
         btnAddSuburb.setText("Add");
+        btnAddSuburb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAddSuburb.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddSuburbActionPerformed(evt);
