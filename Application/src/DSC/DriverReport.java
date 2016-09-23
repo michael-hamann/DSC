@@ -51,7 +51,7 @@ public class DriverReport {
         ref.orderByChild("Active").equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot ds) {
-
+                getClients();
                 for (DataSnapshot dataSnapshot : ds.getChildren()) {
                     Calendar start = Calendar.getInstance();
                     Calendar end = Calendar.getInstance();
@@ -320,24 +320,24 @@ public class DriverReport {
             sheet.setColumnWidth(8, totalWidth);
 
         }
-        
-            try {
-                File file = new File("DriverReports Route (" + returnWeekString() + ").xlsx");
-                if (!file.exists()) {
-                    file.createNewFile();
-                }
-                FileOutputStream excelOut = new FileOutputStream(file);
-                workbook.write(excelOut);
-                excelOut.close();
-            } catch (FileNotFoundException ex) {
-                JOptionPane.showMessageDialog(null, "An error occured\nCould not find Driver Report", "Error", JOptionPane.ERROR_MESSAGE);
-                System.err.println("Error - Could not create new Driver Report: ");
-                ex.printStackTrace();
-            } catch (IOException io) {
-                JOptionPane.showMessageDialog(null, "An error occured\nCould not create Driver Report", "Error", JOptionPane.ERROR_MESSAGE);
-                System.err.println("Error - Could not create new Driver Report: ");
-                io.printStackTrace();
+
+        try {
+            File file = new File("DriverReports Route (" + returnWeekString() + ").xlsx");
+            if (!file.exists()) {
+                file.createNewFile();
             }
+            FileOutputStream excelOut = new FileOutputStream(file);
+            workbook.write(excelOut);
+            excelOut.close();
+        } catch (FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "An error occured\nCould not find Driver Report", "Error", JOptionPane.ERROR_MESSAGE);
+            System.err.println("Error - Could not create new Driver Report: ");
+            ex.printStackTrace();
+        } catch (IOException io) {
+            JOptionPane.showMessageDialog(null, "An error occured\nCould not create Driver Report", "Error", JOptionPane.ERROR_MESSAGE);
+            System.err.println("Error - Could not create new Driver Report: ");
+            io.printStackTrace();
+        }
         JOptionPane.showMessageDialog(null, "DriverReports Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
     }
 

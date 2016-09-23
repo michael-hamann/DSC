@@ -57,7 +57,7 @@ public class ChefReport {
                                 allOrders.add(new Chef(levelThree.child("Quantity").getValue(String.class),
                                         levelThree.child("Allergies").getValue(String.class),
                                         levelThree.child("Exclusions").getValue(String.class),
-                                        levelTwo.child("RouteID").getValue(String.class),
+                                        levelOne.child("RouteID").getValue(String.class),
                                         levelThree.child("MealType").getValue(String.class)
                                 ));
 
@@ -67,35 +67,41 @@ public class ChefReport {
 
                 }
                 Map<String, String[]> data = new TreeMap<>();
+                Map<String, String[]> data2 = new TreeMap<>();
+                Map<String, String[]> data3 = new TreeMap<>();
                 for (Chef allOrder : allOrders) {
-                    r = allOrder.getRoute();
-
-                    if (allOrder.getMealType().equals("Standard")) {
+                    String arr[] = new String[100];
+                    arr[counterName] = allOrder.getRoute();
+                    if (allOrder.getRoute().equals("0") || allOrder.getRoute().equals("1") || allOrder.getRoute().equals("2") && allOrder.getMealType().equals("Standard")) {
                         standardOrders.add(allOrder.getMealType());
-                        data.put(counter + "", new String[]{allOrder.getQuantity(), allOrder.getAllergies(), allOrder.getExclusions()});
+                        data.put(counter + "", new String[]{allOrder.getQuantity(), allOrder.getAllergies(), allOrder.getExclusions(), allOrder.getRoute()});
                         counter++;
-                    } else if (allOrder.getMealType().equals("Low Carb")) {
+                    }
+
+                    if (allOrder.getRoute().equals("0") || allOrder.getRoute().equals("1") || allOrder.getRoute().equals("2") && allOrder.getMealType().equals("Low Carb")) {
                         lowCarbOrders.add(allOrder.getMealType());
-                        data.put(counter + "", new String[]{allOrder.getQuantity(), allOrder.getAllergies(), allOrder.getExclusions()});
+                        data2.put(counter + "", new String[]{allOrder.getQuantity(), allOrder.getAllergies(), allOrder.getExclusions(), allOrder.getRoute()});
                         counter++;
-                    } else if (allOrder.getMealType().equals("Kiddies")) {
+                    }
+
+                    if (allOrder.getRoute().equals("0") || allOrder.getRoute().equals("1") || allOrder.getRoute().equals("2") && allOrder.getMealType().equals("Kiddies")) {
                         kiddiesOrders.add(allOrder.getMealType());
-                        data.put(counter + "", new String[]{allOrder.getQuantity(), allOrder.getAllergies(), allOrder.getExclusions()});
+                        data3.put(counter + "", new String[]{allOrder.getQuantity(), allOrder.getAllergies(), allOrder.getExclusions(), allOrder.getRoute()});
                         counter++;
                     }
                 }
 
+                Object[] maps = {data, data2, data3};
                 for (int count = 0; count < 3; count++) {
 
                     XSSFSheet sheet = workbook.createSheet("ChefReports Route - " + counterName);
                     int rowNum = 0;
                     int cellNum = 0;
-                    Set<String> keySet = data.keySet();
+                    Set<String> keySet = ((Map) maps[count]).keySet();
 
                     for (String key : keySet) {
                         Row row = sheet.createRow(rowNum);
-                        Object[] arr = data.get(key);
-
+                        Object[] arr = (String[]) ((Map) maps[count]).get(key);
                         for (int i = 0; i < arr.length; i++) {
                             Cell cell = row.createCell(i);
                             cell.setCellValue((String) arr[i]);
