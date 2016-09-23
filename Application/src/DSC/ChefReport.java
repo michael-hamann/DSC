@@ -39,7 +39,8 @@ public class ChefReport {
     private static int counter = 0;
     private static int counterName = 0;
     private static XSSFWorkbook workbook = new XSSFWorkbook();
-    private static Map<String, String[]> data;
+    private static String r = "";
+    //private static Map<String, String[]> data;
 
     public static void getQuanity() {
         Firebase ref = DBClass.getInstance().child("Orders");
@@ -65,9 +66,9 @@ public class ChefReport {
                     }
 
                 }
-
+                Map<String, String[]> data = new TreeMap<>();
                 for (Chef allOrder : allOrders) {
-                    data = new TreeMap<>();
+                    r = allOrder.getRoute();
 
                     if (allOrder.getMealType().equals("Standard")) {
                         standardOrders.add(allOrder.getMealType());
@@ -82,6 +83,9 @@ public class ChefReport {
                         data.put(counter + "", new String[]{allOrder.getQuantity(), allOrder.getAllergies(), allOrder.getExclusions()});
                         counter++;
                     }
+                }
+
+                for (int count = 0; count < 3; count++) {
 
                     XSSFSheet sheet = workbook.createSheet("ChefReports Route - " + counterName);
                     int rowNum = 0;
@@ -91,7 +95,8 @@ public class ChefReport {
                     for (String key : keySet) {
                         Row row = sheet.createRow(rowNum);
                         Object[] arr = data.get(key);
-                        for (int i = 0; i < 3; i++) {
+
+                        for (int i = 0; i < arr.length; i++) {
                             Cell cell = row.createCell(i);
                             cell.setCellValue((String) arr[i]);
                         }
@@ -99,15 +104,14 @@ public class ChefReport {
                         rowNum++;
                         cellNum++;
                     }
-
-                    try {
-                        creatSheet(counterName);
-                    } catch (IOException ex) {
-                        Logger.getLogger(ChefReport.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    counterName++;
                 }
-                counterName++;
 
+                try {
+                    creatSheet(r);
+                } catch (IOException ex) {
+                    Logger.getLogger(ChefReport.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
 
             @Override
@@ -115,18 +119,20 @@ public class ChefReport {
             ) {
                 System.err.print("Error: Could not get Clients: " + fe.getMessage());
             }
+
         }
         );
 
     }
 
-    public static void creatSheet(int route) throws IOException {
+    public static void creatSheet(String r) throws IOException {
         FileOutputStream excelOut = null;
         try {
-            File file = new File("ChefReports Route - " + counterName + ".xlsx");
+            File file = new File("ChefReports Route - " + r + ".xlsx");
             excelOut = new FileOutputStream(file);
             workbook.write(excelOut);
             excelOut.close();
+            System.out.println("DONE");
         } catch (FileNotFoundException ex) {
             Logger.getLogger(ChefReport.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
