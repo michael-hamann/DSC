@@ -38,25 +38,17 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     }
 
     public final void enableFields() {
-        
+        cmbDriverName.setEnabled(true);
         txfContactNo.setEnabled(true);
         txfAddress.setEnabled(true);
         txfVehicleReg.setEnabled(true);
     }
 
     public final void disableFields() {
-        
+        cmbDriverName.setEnabled(false);
         txfContactNo.setEnabled(false);
         txfAddress.setEnabled(false);
         txfVehicleReg.setEnabled(false);
-    }
-
-    public final void clearFields() {
-        txfDriverID.setText(null);
-        
-        txfContactNo.setText(null);
-        txfAddress.setText(null);
-        txfVehicleReg.setText(null);
     }
 
     private boolean checkEmpty() {
@@ -166,8 +158,6 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         lblRoutes = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         lstRoutes = new javax.swing.JList<>();
-        btnAddRoute = new javax.swing.JButton();
-        btnDeleteRoute = new javax.swing.JButton();
         pnlDetails = new javax.swing.JPanel();
         lblDetails = new javax.swing.JLabel();
         lblDriverID = new javax.swing.JLabel();
@@ -186,13 +176,12 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         txfRouteID = new javax.swing.JTextField();
         lblSuburbID = new javax.swing.JLabel();
         txfSuburbID = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cmbDriverName = new javax.swing.JComboBox<>();
+        btnAddDriver = new javax.swing.JButton();
         pnlSuburbs = new javax.swing.JPanel();
         lblSuburbs = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
         lstSuburbs = new javax.swing.JList<>();
-        btnAddSuburb = new javax.swing.JButton();
-        btnDeleteSuburb = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Driver Details");
@@ -214,20 +203,6 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(lstRoutes);
 
-        btnAddRoute.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Add.png"))); // NOI18N
-        btnAddRoute.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddRouteActionPerformed(evt);
-            }
-        });
-
-        btnDeleteRoute.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Bin.png"))); // NOI18N
-        btnDeleteRoute.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteRouteActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout pnlRoutesLayout = new javax.swing.GroupLayout(pnlRoutes);
         pnlRoutes.setLayout(pnlRoutesLayout);
         pnlRoutesLayout.setHorizontalGroup(
@@ -235,25 +210,17 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
             .addGroup(pnlRoutesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlRoutesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(pnlRoutesLayout.createSequentialGroup()
-                        .addComponent(lblRoutes, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAddRoute)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnDeleteRoute)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
+                    .addComponent(lblRoutes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlRoutesLayout.setVerticalGroup(
             pnlRoutesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlRoutesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlRoutesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnDeleteRoute, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAddRoute, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblRoutes, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(lblRoutes, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -329,8 +296,17 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
 
         txfSuburbID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbDriverName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        cmbDriverName.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        btnAddDriver.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btnAddDriver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/driver.gif"))); // NOI18N
+        btnAddDriver.setText("Add Driver");
+        btnAddDriver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddDriverActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlDetailsLayout = new javax.swing.GroupLayout(pnlDetails);
         pnlDetails.setLayout(pnlDetailsLayout);
@@ -342,7 +318,9 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                     .addComponent(lblDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlDetailsLayout.createSequentialGroup()
                         .addComponent(btnEdit)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 105, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAddDriver)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnSave)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnBack))
@@ -363,7 +341,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                             .addComponent(txfVehicleReg, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txfRouteID)
                             .addComponent(txfSuburbID)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(cmbDriverName, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         pnlDetailsLayout.setVerticalGroup(
@@ -386,7 +364,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDriverName)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbDriverName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblContactNo)
@@ -403,7 +381,8 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEdit)
                     .addComponent(btnSave)
-                    .addComponent(btnBack))
+                    .addComponent(btnBack)
+                    .addComponent(btnAddDriver))
                 .addContainerGap())
         );
 
@@ -417,20 +396,6 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         lstSuburbs.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane5.setViewportView(lstSuburbs);
 
-        btnAddSuburb.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Add.png"))); // NOI18N
-        btnAddSuburb.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddSuburbActionPerformed(evt);
-            }
-        });
-
-        btnDeleteSuburb.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Bin.png"))); // NOI18N
-        btnDeleteSuburb.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteSuburbActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout pnlSuburbsLayout = new javax.swing.GroupLayout(pnlSuburbs);
         pnlSuburbs.setLayout(pnlSuburbsLayout);
         pnlSuburbsLayout.setHorizontalGroup(
@@ -438,25 +403,17 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
             .addGroup(pnlSuburbsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlSuburbsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(pnlSuburbsLayout.createSequentialGroup()
-                        .addComponent(lblSuburbs, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAddSuburb)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnDeleteSuburb)))
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
+                    .addComponent(lblSuburbs, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlSuburbsLayout.setVerticalGroup(
             pnlSuburbsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlSuburbsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlSuburbsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(btnAddSuburb, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnDeleteSuburb, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(lblSuburbs, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(lblSuburbs, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane5)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -553,82 +510,6 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnSaveActionPerformed
 
-    private void btnAddRouteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRouteActionPerformed
-        clearFields();
-        enableFields();
-        btnEdit.setEnabled(false);
-        btnSave.setText("Add");
-        btnSave.setVisible(true);
-        editClicked = true;
-
-        String query = "SELECT MAX(DriverID) FROM doorstepchef.driver_tb;";
-        ResultSet rs;
-        int numRows = 0;
-
-        try {
-//            Connection c = DBClass.getConnection();
-//            Statement stmt = c.createStatement();
-//            rs = stmt.executeQuery(query);
-//            rs.next();
-//            numRows = rs.getInt(1);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        numRows += 1;
-        txfDriverID.setText(numRows + "");
-
-    }//GEN-LAST:event_btnAddRouteActionPerformed
-
-    private void btnDeleteRouteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteRouteActionPerformed
-        String name = ""; //get from combo box
-
-        int driverID = Integer.parseInt(txfDriverID.getText());
-        int elementIndex = lstRoutes.getSelectedIndex();
-
-        String message = "Are you sure you want to delete " + name + "?";
-        int answer = JOptionPane.showConfirmDialog(this, message, "Confirm", JOptionPane.INFORMATION_MESSAGE);
-
-        switch (answer) {
-            case JOptionPane.YES_OPTION:
-                JOptionPane.showMessageDialog(this, name + " will be deleted", "Delete Notification", JOptionPane.INFORMATION_MESSAGE);
-
-                try {
-//                    Connection c = DBClass.getConnection();
-//                    Statement stmt = c.createStatement();
-//
-//                    String update = "UPDATE route_tb SET DriverID = 0 WHERE DriverID = '" + driverID + "'";
-//                    stmt.executeUpdate(update);
-//
-//                    String deleteDriver = "DELETE FROM doorstepchef.driver_tb WHERE DriverID LIKE '" + driverID + "'";
-//                    stmt.executeUpdate(deleteDriver);
-//
-//                    JOptionPane.showMessageDialog(this, "Driver has been deleted. \nPlease note removing this driver has affected"
-//                            + " \nroute schedules leaving routes without an assigned driver.");
-//                    //refresh jList
-
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
-                }
-                break;
-
-            case JOptionPane.NO_OPTION:
-                JOptionPane.showMessageDialog(this, name + " will not be deleted", "Delete Notification", JOptionPane.INFORMATION_MESSAGE);
-                break;
-
-            case JOptionPane.CANCEL_OPTION:
-
-                break;
-        }
-    }//GEN-LAST:event_btnDeleteRouteActionPerformed
-
-    private void btnAddSuburbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSuburbActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAddSuburbActionPerformed
-
-    private void btnDeleteSuburbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteSuburbActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnDeleteSuburbActionPerformed
-
     private void lstRoutesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstRoutesValueChanged
         int num = lstRoutes.getSelectedIndex();
         num++;
@@ -636,16 +517,17 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         setSuburbs(number);
     }//GEN-LAST:event_lstRoutesValueChanged
 
+    private void btnAddDriverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDriverActionPerformed
+        new DSC_NewDriver().setVisible(true);
+    }//GEN-LAST:event_btnAddDriverActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAddRoute;
-    private javax.swing.JButton btnAddSuburb;
+    private javax.swing.JButton btnAddDriver;
     private javax.swing.JButton btnBack;
-    private javax.swing.JButton btnDeleteRoute;
-    private javax.swing.JButton btnDeleteSuburb;
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnSave;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> cmbDriverName;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JLabel lblAddress;
