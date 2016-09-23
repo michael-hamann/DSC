@@ -845,7 +845,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
 
         Order order = new Order(null, true, client, timeSlot, orderDate, null, routeID, orderMeals, familySize);
 
-        if (allGood || true) {
+        if (allGood) {
             if (online) {
                 clientID = "";
                 Firebase ref = DBClass.getInstance().child("META-Data");
@@ -1438,7 +1438,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         public int FamilySize;
         public String RouteID;
         public long StartingDate;
-        public MealContainer[] Meals;
+        public MealContainer[] meals;
 
         public OrderContainer(boolean Active, String ClientID, String Duration, String EndDate, int FamilySize, String RouteID, long StartingDate, MealContainer[] meals) {
             this.Active = Active;
@@ -1448,7 +1448,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             this.FamilySize = FamilySize;
             this.RouteID = RouteID;
             this.StartingDate = StartingDate;
-            this.Meals = meals;
+            this.meals = meals;
         }
 
     }
