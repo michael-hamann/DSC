@@ -24,6 +24,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class DSC_ViewOrder extends javax.swing.JFrame {
 
+    int tbcounter = 0;
     boolean search = false;
     boolean orderEdited = false;
     boolean editClicked = false;
@@ -131,8 +132,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         boolean empty = false;
 
         if (txfClientName.getText().isEmpty() || txfClientSurname.getText().isEmpty() || txfClientContactNo.getText().isEmpty()
-                || txfClientAddress.getText().isEmpty() || txfAddInfo.getText().isEmpty()
-                || txfClientContactNo.getText().isEmpty() || txfAltNum.getText().isEmpty() || txfClientEmail.getText().isEmpty()) {
+                || txfClientAddress.getText().isEmpty() || txfClientContactNo.getText().isEmpty() || txfClientEmail.getText().isEmpty()) {
             empty = true;
         }
 
@@ -214,11 +214,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 DefaultTableModel model = (DefaultTableModel) tblOrderTable.getModel();
                 for (Order o : allorders) {
                     if (o.isActive()) {
-                        Object[] row = {o.getClient().getName(), o.getClient().getSurname(), o.getClient().getContactNumber(),
-                            o.getClient().getEmail(), o.getClient().getSuburb(), o.isActive(), o.getDuration(), o.getFamilySize()};
-                        orders1.add(o);
-                        model.addRow(row);
-                        model.fireTableDataChanged();
+                        setOrderTB(o, model);
                     }
                 }
             }
@@ -286,14 +282,12 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
     }
 
-    public void setOrderTB(String col, String find, Order order, DefaultTableModel d) {
-
-        orders1.add(order);
-        Object[] row = {order.getClient().getName(), order.getClient().getSurname(), order.getClient().getContactNumber(),
-            order.getClient().getEmail(), order.getClient().getSuburb(), order.isActive(), order.getDuration(), order.getFamilySize()};
-        d.addRow(row);
-        d.fireTableDataChanged();
-
+    public void setOrderTB(Order order, DefaultTableModel d) {
+            orders1.add(order);
+            Object[] row = {order.getClient().getName(), order.getClient().getSurname(), order.getClient().getContactNumber(),
+                order.getClient().getEmail(), order.getClient().getSuburb(), order.isActive(), order.getDuration(), order.getFamilySize()};
+            d.addRow(row);
+            d.fireTableDataChanged();
     }
 
     public void setTextFields() {
@@ -528,17 +522,18 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             .addGroup(pnlTableLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(btnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
-                        .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cmbSearchColumn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblSearchBy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txfSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnDelete)
-                        .addComponent(cmbVeiw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cmbSearchColumn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblSearchBy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txfSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pnlTableLayout.createSequentialGroup()
+                        .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnDelete)
+                            .addComponent(cmbVeiw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 1, Short.MAX_VALUE))
+                    .addComponent(btnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(11, 11, 11)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -700,7 +695,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblSuburb)
                     .addComponent(cmbSuburbs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pnlDetails.setBackground(new java.awt.Color(0, 204, 51));
@@ -821,7 +816,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDuration)
                     .addComponent(txfOrderDuration, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnDeactivate)
                 .addContainerGap())
         );
@@ -909,9 +904,9 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             .addGroup(pnlBackgroundLayout.createSequentialGroup()
                 .addComponent(pnlHeading, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlBackgroundLayout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -990,7 +985,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         boolean empty = checkEmpty();
 
         if (empty) {
-            JOptionPane.showMessageDialog(this, "Please fill in all fields", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please fill in all required fields", "Error", JOptionPane.ERROR_MESSAGE);
             //displays message to user if all fields have not been filled in
         } else {
 
@@ -1063,9 +1058,9 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     allorders.clear();
                     setClients();
                     setOrders();
-                    
+
                     editClicked = false;
-                    orderEdited=false;
+                    orderEdited = false;
 
                     subActive = true;
                     break;
@@ -1140,9 +1135,9 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         allorders.clear();
                         setClients();
                         setOrders();
-                        
+
                         editClicked = false;
-                        orderEdited=false;
+                        orderEdited = false;
 
                         break;
 
@@ -1192,17 +1187,17 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        
+
         String column = (String) cmbSearchColumn.getSelectedItem();
         String searchFor = txfSearch.getText();
         String veiw = (String) cmbVeiw.getSelectedItem();
 
         DefaultTableModel model = (DefaultTableModel) tblOrderTable.getModel();
         model.setRowCount(0);
-        
+
         clearFieldsClient();
         clearFieldsOrder();
-        
+
         search = true;
         orders1.clear();
 
@@ -1217,42 +1212,42 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         case "Name":
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getName())) {
-                                    setOrderTB(column, searchFor, orders, model);
+                                    setOrderTB(orders, model);
                                 }
                             }
                             break;
                         case "Surname":
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getSurname())) {
-                                    setOrderTB(column, searchFor, orders, model);
+                                    setOrderTB(orders, model);
                                 }
                             }
                             break;
                         case "Contact Number":
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getContactNumber())) {
-                                    setOrderTB(column, searchFor, orders, model);
+                                    setOrderTB(orders, model);
                                 }
                             }
                             break;
                         case "Email":
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getEmail())) {
-                                    setOrderTB(column, searchFor, orders, model);
+                                    setOrderTB(orders, model);
                                 }
                             }
                             break;
                         case "Suburb":
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getSuburb())) {
-                                    setOrderTB(column, searchFor, orders, model);
+                                    setOrderTB(orders, model);
                                 }
                             }
                             break;
                         case "Duration":
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase((orders.getDuration()))) {
-                                    setOrderTB(column, searchFor, orders, model);
+                                    setOrderTB(orders, model);
 
                                 }
                             }
@@ -1260,7 +1255,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         case "Family Size":
                             for (Order orders : allorders) {
                                 if ((Integer.parseInt(searchFor)) == orders.getFamilySize()) {
-                                    setOrderTB(column, searchFor, orders, model);
+                                    setOrderTB(orders, model);
                                 }
                             }
                             break;
@@ -1276,7 +1271,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getName())) {
                                     if (orders.isActive()) {
-                                        setOrderTB(column, searchFor, orders, model);
+                                        setOrderTB(orders, model);
                                     }
                                 }
                             }
@@ -1285,7 +1280,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getSurname())) {
                                     if (orders.isActive()) {
-                                        setOrderTB(column, searchFor, orders, model);
+                                        setOrderTB(orders, model);
                                     }
                                 }
                             }
@@ -1294,7 +1289,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getContactNumber())) {
                                     if (orders.isActive()) {
-                                        setOrderTB(column, searchFor, orders, model);
+                                        setOrderTB(orders, model);
                                     }
                                 }
                             }
@@ -1303,7 +1298,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getEmail())) {
                                     if (orders.isActive()) {
-                                        setOrderTB(column, searchFor, orders, model);
+                                        setOrderTB(orders, model);
                                     }
                                 }
                             }
@@ -1312,7 +1307,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getSuburb())) {
                                     if (orders.isActive()) {
-                                        setOrderTB(column, searchFor, orders, model);
+                                        setOrderTB(orders, model);
                                     }
                                 }
                             }
@@ -1321,7 +1316,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             for (Order orders : allorders) {
                                 if (searchFor.equalsIgnoreCase((orders.getDuration()))) {
                                     if (orders.isActive()) {
-                                        setOrderTB(column, searchFor, orders, model);
+                                        setOrderTB(orders, model);
                                     }
                                 }
                             }
@@ -1330,7 +1325,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             for (Order orders : allorders) {
                                 if ((Integer.parseInt(searchFor)) == orders.getFamilySize()) {
                                     if (orders.isActive()) {
-                                        setOrderTB(column, searchFor, orders, model);
+                                        setOrderTB(orders, model);
                                     }
                                 }
                             }
@@ -1349,7 +1344,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getName())) {
                                     if (orders.isActive()) {
                                     } else {
-                                        setOrderTB(column, searchFor, orders, model);
+                                        setOrderTB(orders, model);
                                     }
                                 }
                             }
@@ -1359,7 +1354,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getSurname())) {
                                     if (orders.isActive()) {
                                     } else {
-                                        setOrderTB(column, searchFor, orders, model);
+                                        setOrderTB(orders, model);
                                     }
                                 }
                             }
@@ -1369,7 +1364,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getContactNumber())) {
                                     if (orders.isActive()) {
                                     } else {
-                                        setOrderTB(column, searchFor, orders, model);
+                                        setOrderTB(orders, model);
                                     }
                                 }
                             }
@@ -1379,7 +1374,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getEmail())) {
                                     if (orders.isActive()) {
                                     } else {
-                                        setOrderTB(column, searchFor, orders, model);
+                                        setOrderTB(orders, model);
                                     }
                                 }
                             }
@@ -1389,7 +1384,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                                 if (searchFor.equalsIgnoreCase(orders.getClient().getSuburb())) {
                                     if (orders.isActive()) {
                                     } else {
-                                        setOrderTB(column, searchFor, orders, model);
+                                        setOrderTB(orders, model);
                                     }
                                 }
                             }
@@ -1399,7 +1394,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                                 if (searchFor.equalsIgnoreCase((orders.getDuration()))) {
                                     if (orders.isActive()) {
                                     } else {
-                                        setOrderTB(column, searchFor, orders, model);
+                                        setOrderTB(orders, model);
                                     }
                                 }
                             }
@@ -1409,7 +1404,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                                 if ((Integer.parseInt(searchFor)) == orders.getFamilySize()) {
                                     if (orders.isActive()) {
                                     } else {
-                                        setOrderTB(column, searchFor, orders, model);
+                                        setOrderTB(orders, model);
                                     }
                                 }
                             }
