@@ -246,28 +246,27 @@ public class DriverReport {
             }
             
             Set<String> keySet = data.keySet();
-            int rowNum = 0;
             int longestCustomer = 0;
             int totalWidth = 33800;
-            for (int j = 0; j < keySet.size(); j++) {
+            for (int j = 1; j < keySet.size()+1; j++) {
 
-                Row row = sheet.createRow(rowNum);
-                Object[] arr = data.get((j + 1) + "");
+                Row row = sheet.createRow(j-1);
+                Object[] arr = data.get(j + "");
 
                 for (int i = 0; i < arr.length; i++) {
                     Cell cell = row.createCell(i);
                     cell.setCellValue((String) arr[i]);
-                    if (i == 0 && !((j + 1) + "").equals("1") && longestCustomer < ((String) arr[i]).length()) {
+                    if (i == 0 && !(j + "").equals("1") && longestCustomer < ((String) arr[i]).length()) {
                         longestCustomer = ((String) arr[i]).length();
                     }
                     XSSFCellStyle borderStyle = workbook.createCellStyle();
 
-                    if (!(((j + 1) + "").equals("1") || ((j + 1) + "").equals("2"))) {
+                    if (!((j + "").equals("1") || (j+ "").equals("2"))) {
                         borderStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
                         borderStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
                         borderStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
                         borderStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
-                        if (((j + 1) + "").equals("3")) {
+                        if ((j  + "").equals("3")) {
                             borderStyle.setBorderBottom(XSSFCellStyle.BORDER_MEDIUM);
                             borderStyle.setBorderLeft(XSSFCellStyle.BORDER_MEDIUM);
                             borderStyle.setBorderTop(XSSFCellStyle.BORDER_MEDIUM);
@@ -292,7 +291,7 @@ public class DriverReport {
                                 borderStyle.setBorderRight(XSSFCellStyle.BORDER_MEDIUM);
                             }
 
-                            if ((Integer.parseInt(((j + 1) + ""))) != keySet.size()) {
+                            if ((Integer.parseInt((j + ""))) != keySet.size()) {
                                 borderStyle.setBorderBottom(XSSFCellStyle.BORDER_THIN);
                             } else {
                                 borderStyle.setBorderBottom(XSSFCellStyle.BORDER_MEDIUM);
@@ -300,7 +299,7 @@ public class DriverReport {
                             borderStyle.setBorderTop(XSSFCellStyle.BORDER_THIN);
 
                         }
-                        if ((i == 7 || i == 8) && !((j + 1) + "").equals("3")) {
+                        if ((i == 7 || i == 8) && !(j + "").equals("3")) {
                             borderStyle.setAlignment(XSSFCellStyle.ALIGN_JUSTIFY);
                             borderStyle.setVerticalAlignment(XSSFCellStyle.VERTICAL_JUSTIFY);
                         }
@@ -319,7 +318,6 @@ public class DriverReport {
 
                     cell.setCellStyle(borderStyle);
                 }
-                rowNum++;
             }
 
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 6));

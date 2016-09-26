@@ -20,7 +20,12 @@ import java.util.Set;
 import java.util.TreeMap;
 import javax.swing.JOptionPane;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -89,9 +94,9 @@ public class AccountantReport {
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet("AccountReport - Week " + DriverReport.returnWeekInt());
         Map<String, Object[]> data = new TreeMap<>();
-        data.put("1", new Object[]{"Doorstep Chef Accountant Sheet", "", "", "Week: " + DriverReport.returnWeekString(), "", "", ""});
+        data.put("1", new Object[]{"Doorstep Chef Accountant Sheet", "", "", "", "Week: " + DriverReport.returnWeekString(), "", ""});
         data.put("2", new Object[]{"", "", "", "", "", "", ""});
-        data.put("3", new Object[]{"Name", "Surname", "Contact", "EFT", "Cash", "Date Paid", "Continue"});
+        data.put("3", new Object[]{"Name", "Surname", "Contact", "EFT", "Cash", "Date Paid", "Stay"});
 
         clients.sort(new Comparator<Client>() {
             @Override
@@ -113,17 +118,88 @@ public class AccountantReport {
             });
         }
         Set<String> keySet = data.keySet();
-        int rowNum = 0;
-        for (int i = 0; i < keySet.size(); i++) {
-            System.out.println(i);
-            Row row = sheet.createRow(i);
-            Object[] arr = data.get(i + 1 + "");
+        for (int key = 1; key < keySet.size() + 1; key++) {
+            Row row = sheet.createRow(key - 1);
+            Object[] arr = data.get(key + "");
+            int longestName = 0;
+            int longestSurname = 0;
+            
+            for (int i = 0; i < arr.length; i++) {
+                Cell cell = row.createCell(i);
+                cell.setCellValue((String) arr[i]);
+                XSSFCellStyle borderStyle = workbook.createCellStyle();
+                
+                if (i == 0 && longestName < ((String)arr[i]).length()) {
+                    longestName = ((String)arr[i]).length();
+                }
+                if (i == 1 && longestSurname < ((String)arr[i]).length()) {
+                    longestSurname = ((String)arr[i]).length();
+                }
+                
+                if (!((key + "").equals("1") || (key + "").equals("2"))) {
+                    borderStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+                    borderStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+                    borderStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+                    borderStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+                    if ((key + "").equals("3")) {
+                        borderStyle.setBorderBottom(XSSFCellStyle.BORDER_MEDIUM);
+                        borderStyle.setBorderLeft(XSSFCellStyle.BORDER_MEDIUM);
+                        borderStyle.setBorderTop(XSSFCellStyle.BORDER_MEDIUM);
+                        borderStyle.setBorderRight(XSSFCellStyle.BORDER_MEDIUM);
+                        borderStyle.setAlignment(HorizontalAlignment.CENTER);
+                        borderStyle.setFillPattern(XSSFCellStyle.LESS_DOTS);
+                        borderStyle.setFillBackgroundColor(IndexedColors.GREY_50_PERCENT.getIndex());
+                        XSSFFont font = workbook.createFont();
+                        font.setColor(IndexedColors.WHITE.getIndex());
+                        font.setBold(true);
+                        borderStyle.setFont(font);
 
-            for (int j = 0; j < arr.length; j++) {
-                Cell cell = row.createCell(j);
-                cell.setCellValue((String) arr[j]);
+                    } else {
+                        if (i != 0) {
+                            borderStyle.setBorderLeft(XSSFCellStyle.BORDER_THIN);
+                        } else {
+                            borderStyle.setBorderLeft(XSSFCellStyle.BORDER_MEDIUM);
+                        }
+                        if (i != 8) {
+                            borderStyle.setBorderRight(XSSFCellStyle.BORDER_THIN);
+                        } else {
+                            borderStyle.setBorderRight(XSSFCellStyle.BORDER_MEDIUM);
+                        }
+
+                        if ((Integer.parseInt((key + ""))) != keySet.size()) {
+                            borderStyle.setBorderBottom(XSSFCellStyle.BORDER_THIN);
+                        } else {
+                            borderStyle.setBorderBottom(XSSFCellStyle.BORDER_MEDIUM);
+                        }
+                        borderStyle.setBorderTop(XSSFCellStyle.BORDER_THIN);
+
+                    }
+                    if ((i == 7 || i == 8) && !(key + "").equals("3")) {
+                        borderStyle.setAlignment(XSSFCellStyle.ALIGN_JUSTIFY);
+                        borderStyle.setVerticalAlignment(XSSFCellStyle.VERTICAL_JUSTIFY);
+                    }
+                } else {
+                    if (i == 4) {
+                        borderStyle.setAlignment(HorizontalAlignment.RIGHT);
+                    }
+                    XSSFFont font = workbook.createFont();
+                    font.setFontName("Calibri");
+                    font.setFontHeightInPoints((short) 13);
+                    font.setBold(true);
+                    borderStyle.setFont(font);
+                }
+
+                cell.setCellStyle(borderStyle);
+
             }
-            rowNum++;
+            if (key == 1) {
+                sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 3));
+                sheet.addMergedRegion(new CellRangeAddress(0, 0, 4, 6));
+            }
+            
+            
+            
+            
         }
 
         try {
