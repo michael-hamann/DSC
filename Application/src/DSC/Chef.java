@@ -16,13 +16,23 @@ public class Chef {
     private String exclusions;
     private String route;
     private String mealType;
+    private String familySize;
 
-    public Chef(String quantity, String allergies, String exclusions, String route, String mealType) {
+    public String getFamilySize() {
+        return familySize;
+    }
+
+    public void setFamilySize(String familySize) {
+        this.familySize = familySize;
+    }
+
+    public Chef(String quantity, String allergies, String exclusions, String route, String mealType, String familySize) {
         this.quantity = quantity;
         this.allergies = allergies;
         this.exclusions = exclusions;
         this.route = route;
         this.mealType = mealType;
+        this.familySize = familySize;
     }
 
     public String getQuantity() {
