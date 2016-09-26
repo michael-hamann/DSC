@@ -244,29 +244,30 @@ public class DriverReport {
                     counter++;
                 }
             }
+            
             Set<String> keySet = data.keySet();
             int rowNum = 0;
             int longestCustomer = 0;
             int totalWidth = 33800;
-            for (String key : keySet) {
+            for (int j = 0; j < keySet.size(); j++) {
 
                 Row row = sheet.createRow(rowNum);
-                Object[] arr = data.get(key);
+                Object[] arr = data.get((j + 1) + "");
 
                 for (int i = 0; i < arr.length; i++) {
                     Cell cell = row.createCell(i);
                     cell.setCellValue((String) arr[i]);
-                    if (i == 0 && !key.equals("1") && longestCustomer < ((String) arr[i]).length()) {
+                    if (i == 0 && !((j + 1) + "").equals("1") && longestCustomer < ((String) arr[i]).length()) {
                         longestCustomer = ((String) arr[i]).length();
                     }
                     XSSFCellStyle borderStyle = workbook.createCellStyle();
 
-                    if (!(key.equals("1") || key.equals("2"))) {
+                    if (!(((j + 1) + "").equals("1") || ((j + 1) + "").equals("2"))) {
                         borderStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
                         borderStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
                         borderStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
                         borderStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
-                        if (key.equals("3")) {
+                        if (((j + 1) + "").equals("3")) {
                             borderStyle.setBorderBottom(XSSFCellStyle.BORDER_MEDIUM);
                             borderStyle.setBorderLeft(XSSFCellStyle.BORDER_MEDIUM);
                             borderStyle.setBorderTop(XSSFCellStyle.BORDER_MEDIUM);
@@ -291,7 +292,7 @@ public class DriverReport {
                                 borderStyle.setBorderRight(XSSFCellStyle.BORDER_MEDIUM);
                             }
 
-                            if ((Integer.parseInt(key)) != keySet.size()) {
+                            if ((Integer.parseInt(((j + 1) + ""))) != keySet.size()) {
                                 borderStyle.setBorderBottom(XSSFCellStyle.BORDER_THIN);
                             } else {
                                 borderStyle.setBorderBottom(XSSFCellStyle.BORDER_MEDIUM);
@@ -299,7 +300,7 @@ public class DriverReport {
                             borderStyle.setBorderTop(XSSFCellStyle.BORDER_THIN);
 
                         }
-                        if ((i == 7 || i == 8) && !key.equals("3")) {
+                        if ((i == 7 || i == 8) && !((j + 1) + "").equals("3")) {
                             borderStyle.setAlignment(XSSFCellStyle.ALIGN_JUSTIFY);
                             borderStyle.setVerticalAlignment(XSSFCellStyle.VERTICAL_JUSTIFY);
                         }
@@ -358,7 +359,7 @@ public class DriverReport {
         JOptionPane.showMessageDialog(null, "DriverReports Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    private static String returnWeekString() {
+    public static String returnWeekString() {
         Calendar weekDate = Calendar.getInstance();
         while (weekDate.get(Calendar.DAY_OF_WEEK) != 2) {
             weekDate.add(Calendar.DAY_OF_WEEK, -1);
