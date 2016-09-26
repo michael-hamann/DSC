@@ -120,11 +120,11 @@ public class DSC_Main extends javax.swing.JFrame {
         pnlHeadingLayout.setHorizontalGroup(
             pnlHeadingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlHeadingLayout.createSequentialGroup()
-                .addContainerGap(137, Short.MAX_VALUE)
+                .addContainerGap(143, Short.MAX_VALUE)
                 .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(136, Short.MAX_VALUE))
+                .addContainerGap(142, Short.MAX_VALUE))
         );
         pnlHeadingLayout.setVerticalGroup(
             pnlHeadingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -143,28 +143,36 @@ public class DSC_Main extends javax.swing.JFrame {
         lblView.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblView.setText("View");
 
+        btnRouteView.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnRouteView.setText("Route View");
+        btnRouteView.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnRouteView.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRouteViewActionPerformed(evt);
             }
         });
 
+        btnViewOrders.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnViewOrders.setText("View Orders");
+        btnViewOrders.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnViewOrders.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnViewOrdersActionPerformed(evt);
             }
         });
 
+        btnPlaceOrder.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnPlaceOrder.setText("Place Order");
+        btnPlaceOrder.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnPlaceOrder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPlaceOrderActionPerformed(evt);
             }
         });
 
+        btnSurveyQuestions.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnSurveyQuestions.setText("Change Survey Questions");
+        btnSurveyQuestions.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnSurveyQuestions.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSurveyQuestionsActionPerformed(evt);
@@ -204,7 +212,9 @@ public class DSC_Main extends javax.swing.JFrame {
         pnlReports.setBackground(new java.awt.Color(0, 204, 51));
         pnlReports.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+        btnDriverRpt.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnDriverRpt.setText("Driver Report");
+        btnDriverRpt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnDriverRpt.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnDriverRptMouseClicked(evt);
@@ -216,21 +226,27 @@ public class DSC_Main extends javax.swing.JFrame {
             }
         });
 
+        btnChefRpt.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnChefRpt.setText("Chef Report");
+        btnChefRpt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnChefRpt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnChefRptActionPerformed(evt);
             }
         });
 
+        btnPackerRpt.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnPackerRpt.setText("Packer Report");
+        btnPackerRpt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnPackerRpt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPackerRptActionPerformed(evt);
             }
         });
 
+        btnHandlerRpt.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnHandlerRpt.setText("Handler Report");
+        btnHandlerRpt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnHandlerRpt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHandlerRptActionPerformed(evt);
@@ -341,7 +357,7 @@ public class DSC_Main extends javax.swing.JFrame {
         pnlTextStats.setMinimumSize(new java.awt.Dimension(305, 252));
 
         pnlMealTypeStats.setBackground(new java.awt.Color(102, 102, 102));
-        pnlMealTypeStats.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Meal Type Stats", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(255, 255, 255))); // NOI18N
+        pnlMealTypeStats.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Meal Type Stats", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
         pnlMealTypeStats.setForeground(new java.awt.Color(255, 255, 255));
 
         lblStandardMeal.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
@@ -486,7 +502,7 @@ public class DSC_Main extends javax.swing.JFrame {
         );
 
         pnlFamilySizeStats.setBackground(new java.awt.Color(102, 102, 102));
-        pnlFamilySizeStats.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Family Size Stats", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(255, 255, 255))); // NOI18N
+        pnlFamilySizeStats.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Family Size Stats", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
 
         lblFamilySize.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
         lblFamilySize.setForeground(new java.awt.Color(255, 255, 255));

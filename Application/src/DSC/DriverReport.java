@@ -27,6 +27,7 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -48,6 +49,7 @@ public class DriverReport {
 
     public static void getOrders() {
         Firebase ref = DBClass.getInstance().child("Orders");
+        getClients();
         ref.orderByChild("Active").equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot ds) {
@@ -230,7 +232,7 @@ public class DriverReport {
             XSSFSheet sheet = workbook.createSheet("DriverReports Route - " + route.getID());
 
             Map<String, Object[]> data = new TreeMap<>();
-            data.put("1", new Object[]{"Doorstep Chef Driver Sheet", "", "Week: " + returnWeekString(), "", "", "", "", "Driver: " + route.getDrivers().get(0).getDriver().getDriverName().split(" ")[0] + " - " + route.getDrivers().get(0).getDriver().getContactNumber(), "Route: " + route.getID()});
+            data.put("1", new Object[]{"Doorstep Chef Driver Sheet  Week: " + returnWeekString(), "", "", "", "", "", "", "Driver: " + route.getDrivers().get(0).getDriver().getDriverName().split(" ")[0] + " - " + route.getDrivers().get(0).getDriver().getContactNumber(), "Route: " + route.getID()});
             data.put("2", new Object[]{"", "", "", "", "", "", "", "", ""});
             data.put("3", new Object[]{"Customer", "Contact", "Mon", "Tue", "Wed", "Thu", "Fri", "Address", "AdditionalInfo"});
 
@@ -264,14 +266,19 @@ public class DriverReport {
                         borderStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
                         borderStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
                         borderStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
-                        if (key == "3") {
+                        if (key.equals("3")) {
                             borderStyle.setBorderBottom(XSSFCellStyle.BORDER_MEDIUM);
                             borderStyle.setBorderLeft(XSSFCellStyle.BORDER_MEDIUM);
                             borderStyle.setBorderTop(XSSFCellStyle.BORDER_MEDIUM);
                             borderStyle.setBorderRight(XSSFCellStyle.BORDER_MEDIUM);
                             borderStyle.setAlignment(HorizontalAlignment.CENTER);
-                            borderStyle.setFillForegroundColor(HSSFColor.GREY_50_PERCENT.index);
                             borderStyle.setFillPattern(XSSFCellStyle.LESS_DOTS);
+                            borderStyle.setFillBackgroundColor(IndexedColors.GREY_50_PERCENT.getIndex());
+                            XSSFFont font = workbook.createFont();
+                            font.setColor(IndexedColors.WHITE.getIndex());
+                            font.setBold(true);
+                            borderStyle.setFont(font);
+
                         } else {
                             if (i != 0) {
                                 borderStyle.setBorderLeft(XSSFCellStyle.BORDER_THIN);
@@ -296,10 +303,17 @@ public class DriverReport {
                             borderStyle.setAlignment(XSSFCellStyle.ALIGN_JUSTIFY);
                             borderStyle.setVerticalAlignment(XSSFCellStyle.VERTICAL_JUSTIFY);
                         }
-                    } else if (i == 2 || i == 7) {
+                    } else {
+                        if (i == 2 || i == 7) {
                         borderStyle.setAlignment(HorizontalAlignment.CENTER);
                     } else if (i == 8) {
                         borderStyle.setAlignment(HorizontalAlignment.RIGHT);
+                    }
+                        XSSFFont font = workbook.createFont();
+                        font.setFontName("Calibri");
+                        font.setFontHeightInPoints((short)13);
+                        font.setBold(true);
+                        borderStyle.setFont(font);
                     }
 
                     cell.setCellStyle(borderStyle);
@@ -307,9 +321,12 @@ public class DriverReport {
                 rowNum++;
             }
 
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 1));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, 6));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 6));
 
+            if ((longestCustomer) < 18) {
+                longestCustomer = 18;
+            }
+            
             sheet.setColumnWidth(0, (longestCustomer + 1) * 240);
             sheet.setColumnWidth(1, 12 * 240);
             for (int i = 0; i < 5; i++) {
