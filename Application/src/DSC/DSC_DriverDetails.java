@@ -28,26 +28,26 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         disableFields();
-        btnSave.setText("Save");
+        btnEdit.setVisible(true);
         btnSave.setVisible(false);
-        txfRouteID.setEnabled(false);
-        txfSuburbID.setEnabled(false);
-        txfDriverID.setEnabled(false);
         setRoutes();
     }
 
     public final void enableFields() {
         cmbDriverName.setEnabled(true);
-        txfContactNo.setEnabled(true);
-        txfAddress.setEnabled(true);
-        txfVehicleReg.setEnabled(true);
+        txfContactNo.setEditable(true);
+        txfAddress.setEditable(true);
+        txfVehicleReg.setEditable(true);
     }
 
     public final void disableFields() {
+        txfRouteID.setEditable(false);
+        txfSuburbID.setEditable(false);
+        txfDriverID.setEditable(false);
         cmbDriverName.setEnabled(false);
-        txfContactNo.setEnabled(false);
-        txfAddress.setEnabled(false);
-        txfVehicleReg.setEnabled(false);
+        txfContactNo.setEditable(false);
+        txfAddress.setEditable(false);
+        txfVehicleReg.setEditable(false);
     }
 
     private boolean checkEmpty() {
@@ -59,6 +59,14 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         }
 
         return empty;
+    }
+    
+    private boolean checkChanged(){
+        boolean isChanged = false;
+        
+        
+        
+        return isChanged;
     }
 
     private void setRoutes() {
@@ -80,11 +88,11 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                 }
                 DefaultListModel model = new DefaultListModel();
                 for (Route r : allRoutes) {
-                    model.addElement(r);
+                    model.addElement(r.toString());
                 }
                 lstRoutes.setModel(model);
                 lstRoutes.setSelectedIndex(0);
-                setSuburbs("1");
+                setSuburbs(getSelectedRoute());
             }
 
             @Override
@@ -115,6 +123,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                 }
                 lstSuburbs.setModel(model);
                 lstSuburbs.setSelectedIndex(0);
+                setTextFields();
             }
 
             @Override
@@ -124,19 +133,23 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         });
     }
     
+    private String getSelectedRoute(){
+        String curr = "";
+        try {
+            curr = lstRoutes.getSelectedValue();
+            curr = curr.charAt(curr.length() - 1) + "";
+            curr = curr.trim();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return curr;
+    }
+    
     private void setTextFields(){
-        Firebase tableRef = DBClass.getInstance().child("Routes");
-        tableRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot ds) {
-                
-            }
-
-            @Override
-            public void onCancelled(FirebaseError fe) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-        });
+        String routeID = getSelectedRoute();
+        txfRouteID.setText(routeID);
+        String suburbID = lstSuburbs.getSelectedIndex()+"";
+        txfSuburbID.setText(suburbID);
     }
     
     private void setDrivers(){
@@ -246,15 +259,19 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
 
         txfDriverID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfDriverID.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        txfDriverID.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         txfContactNo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfContactNo.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        txfContactNo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         txfAddress.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfAddress.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        txfAddress.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         txfVehicleReg.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfVehicleReg.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        txfVehicleReg.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         btnBack.setBackground(new java.awt.Color(255, 0, 0));
         btnBack.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -292,14 +309,19 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         lblRouteID.setText("Route ID:");
 
         txfRouteID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txfRouteID.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        txfRouteID.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         lblSuburbID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblSuburbID.setText("Suburb ID:");
 
         txfSuburbID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txfSuburbID.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        txfSuburbID.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         cmbDriverName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cmbDriverName.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbDriverName.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         btnAddDriver.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnAddDriver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/driver.gif"))); // NOI18N
@@ -320,12 +342,12 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlDetailsLayout.createSequentialGroup()
+                        .addComponent(btnAddDriver)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                         .addComponent(btnEdit)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAddDriver)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnSave)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnBack))
                     .addGroup(pnlDetailsLayout.createSequentialGroup()
                         .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -380,12 +402,12 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblVehicleReg)
                     .addComponent(txfVehicleReg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 225, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEdit)
                     .addComponent(btnSave)
                     .addComponent(btnBack)
-                    .addComponent(btnAddDriver))
+                    .addComponent(btnAddDriver)
+                    .addComponent(btnEdit))
                 .addContainerGap())
         );
 
@@ -397,6 +419,11 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
 
         lstSuburbs.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lstSuburbs.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lstSuburbs.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstSuburbsValueChanged(evt);
+            }
+        });
         jScrollPane5.setViewportView(lstSuburbs);
 
         javax.swing.GroupLayout pnlSuburbsLayout = new javax.swing.GroupLayout(pnlSuburbs);
@@ -462,7 +489,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         listRouteIndex = lstRoutes.getSelectedIndex();
         enableFields();
-        btnEdit.setEnabled(false);
+        btnEdit.setVisible(false);
         btnSave.setVisible(true);
         editClicked = true;
     }//GEN-LAST:event_btnEditActionPerformed
@@ -490,27 +517,15 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        boolean back = false;
-        if (btnSave.getText().equals("Save")) {
-            //Update existing driver
+        boolean changed = checkChanged();
+        if(changed){
+            //update driver information
+        } else {
             
-        } else if (btnSave.getText().equals("Add")) {
-            //Add new driver
-            boolean empty = checkEmpty();
-            if (empty) {
-                JOptionPane.showMessageDialog(this, "Please fill in all fields", "Error", JOptionPane.ERROR_MESSAGE);
-            } else {
-                
-            }
         }
-
-        if (back) {
-            disableFields();
-            btnSave.setVisible(false);
-            btnEdit.setEnabled(true);
-            editClicked = false;
-        }
-
+        disableFields();
+        btnSave.setVisible(false);
+        btnEdit.setVisible(true);
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void lstRoutesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstRoutesValueChanged
@@ -523,6 +538,10 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     private void btnAddDriverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDriverActionPerformed
         new DSC_NewDriver().setVisible(true);
     }//GEN-LAST:event_btnAddDriverActionPerformed
+
+    private void lstSuburbsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstSuburbsValueChanged
+        setTextFields();
+    }//GEN-LAST:event_lstSuburbsValueChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

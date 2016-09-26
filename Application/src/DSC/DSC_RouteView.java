@@ -5,6 +5,7 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import java.awt.Cursor;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
@@ -292,7 +293,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnlRoutesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblRoutes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(pnlRoutesLayout.createSequentialGroup()
                         .addComponent(btnAddRoute)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -361,17 +362,17 @@ public class DSC_RouteView extends javax.swing.JFrame {
         txfRouteID.setEditable(false);
         txfRouteID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfRouteID.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        txfRouteID.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txfRouteID.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         txfCurrDriver.setEditable(false);
         txfCurrDriver.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfCurrDriver.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        txfCurrDriver.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txfCurrDriver.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         txfSuburbName.setEditable(false);
         txfSuburbName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfSuburbName.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        txfSuburbName.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txfSuburbName.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel1.setText("Suburb ID:");
@@ -379,7 +380,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
         txfSuburbID.setEditable(false);
         txfSuburbID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfSuburbID.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        txfSuburbID.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txfSuburbID.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         chbAfternoon.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         chbAfternoon.setText("Afternoon");
@@ -399,7 +400,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText("Name:");
 
-        jTextField1.setText("jTextField1");
+        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         javax.swing.GroupLayout pnlNewLayout = new javax.swing.GroupLayout(pnlNew);
         pnlNew.setLayout(pnlNewLayout);
@@ -419,7 +420,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
                 .addGroup(pnlNewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(107, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnlInfoLayout = new javax.swing.GroupLayout(pnlInfo);
@@ -524,11 +525,11 @@ public class DSC_RouteView extends javax.swing.JFrame {
                         .addComponent(btnShowOther)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnChangeDriver)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                         .addComponent(btnSave)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEdit)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(lblInformation, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -541,12 +542,13 @@ public class DSC_RouteView extends javax.swing.JFrame {
                 .addComponent(pnlInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnBack, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnEdit)
+                        .addComponent(btnSave))
                     .addGroup(pnlFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnChangeDriver)
-                        .addComponent(btnShowOther)
-                        .addComponent(btnSave)
-                        .addComponent(btnEdit)))
+                        .addComponent(btnShowOther)))
                 .addContainerGap())
         );
 
@@ -588,7 +590,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
             .addGroup(pnlSuburbsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlSuburbsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(lblSuburbs, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlSuburbsLayout.createSequentialGroup()
                         .addComponent(btnAddSuburb)
@@ -617,9 +619,9 @@ public class DSC_RouteView extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBackgroundLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(pnlRoutes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(pnlSuburbs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(pnlFields, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -658,6 +660,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         enableChecks();
         txfSuburbName.setEditable(true);
+        txfSuburbName.setCursor(new Cursor(Cursor.TEXT_CURSOR));
         btnEdit.setVisible(false);
         btnSave.setVisible(true);
     }//GEN-LAST:event_btnEditActionPerformed
