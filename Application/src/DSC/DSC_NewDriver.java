@@ -54,6 +54,7 @@ public class DSC_NewDriver extends javax.swing.JFrame {
         btnSave = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Add New Driver");
 
         pnlBackground.setBackground(new java.awt.Color(0, 153, 0));
 
@@ -75,6 +76,14 @@ public class DSC_NewDriver extends javax.swing.JFrame {
 
         lblVehicleReg.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblVehicleReg.setText("Vehicle Registration:");
+
+        txfName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        txfContactNum.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        txfAddress.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        txfVehicleReg.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         btnCancel.setBackground(new java.awt.Color(255, 0, 0));
         btnCancel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -189,6 +198,10 @@ public class DSC_NewDriver extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Please fill in all fields", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             //Save new driver
+            String name = txfName.getText().trim();
+            String contactNum = txfContactNum.getText().trim();
+            String address = txfAddress.getText().trim();
+            String vehicleReg = txfVehicleReg.getText().trim();
         }
     }//GEN-LAST:event_btnSaveActionPerformed
 

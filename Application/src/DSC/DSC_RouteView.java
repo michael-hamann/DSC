@@ -31,7 +31,6 @@ public class DSC_RouteView extends javax.swing.JFrame {
         btnSave.setVisible(false);
         pnlNew.setVisible(false);
         setRoutesList("Active");
-        lstRoutes.setSelectedIndex(0);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
@@ -57,7 +56,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
                     DefaultListModel model = new DefaultListModel();
                     for (Route r : allRoutes) {
                         if (r.isActive()) {
-                            model.addElement(r);
+                            model.addElement(r.toString());
                         }
                     }
                     lstRoutes.setModel(model);
@@ -141,6 +140,13 @@ public class DSC_RouteView extends javax.swing.JFrame {
         chbAfternoon.setEnabled(true);
         chbLateAfternoon.setEnabled(true);
         chbEvening.setEnabled(true);
+    }
+    
+    private void disableFields(){
+        txfRouteID.setEditable(false);
+        txfSuburbID.setEditable(false);
+        txfCurrDriver.setEditable(false);
+        txfSuburbName.setEditable(false);
     }
     
     private String getSelectedRoute(){
@@ -356,14 +362,17 @@ public class DSC_RouteView extends javax.swing.JFrame {
         txfRouteID.setEditable(false);
         txfRouteID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfRouteID.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        txfRouteID.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
         txfCurrDriver.setEditable(false);
         txfCurrDriver.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfCurrDriver.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        txfCurrDriver.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
         txfSuburbName.setEditable(false);
         txfSuburbName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfSuburbName.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        txfSuburbName.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel1.setText("Suburb ID:");
@@ -371,15 +380,19 @@ public class DSC_RouteView extends javax.swing.JFrame {
         txfSuburbID.setEditable(false);
         txfSuburbID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfSuburbID.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        txfSuburbID.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
         chbAfternoon.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         chbAfternoon.setText("Afternoon");
+        chbAfternoon.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         chbLateAfternoon.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         chbLateAfternoon.setText("Late Afternoon");
+        chbLateAfternoon.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         chbEvening.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         chbEvening.setText("Evening");
+        chbEvening.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         pnlNew.setBackground(new java.awt.Color(0, 204, 51));
         pnlNew.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "New Thing", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12))); // NOI18N
@@ -645,7 +658,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         enableChecks();
-        txfSuburbName.setEnabled(true);
+        txfSuburbName.setEditable(true);
         btnEdit.setVisible(false);
         btnSave.setVisible(true);
     }//GEN-LAST:event_btnEditActionPerformed
