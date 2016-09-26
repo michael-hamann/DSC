@@ -245,7 +245,7 @@ public class DSC_Main extends javax.swing.JFrame {
         });
 
         btnHandlerRpt.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        btnHandlerRpt.setText("Handler Report");
+        btnHandlerRpt.setText("Account Report");
         btnHandlerRpt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnHandlerRpt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -752,7 +752,7 @@ public class DSC_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPackerRptActionPerformed
 
     private void btnHandlerRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHandlerRptActionPerformed
-        // TODO add your handling code here:
+        AccountantReport.getAccountantData();
     }//GEN-LAST:event_btnHandlerRptActionPerformed
 
     private void btnRouteViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRouteViewActionPerformed

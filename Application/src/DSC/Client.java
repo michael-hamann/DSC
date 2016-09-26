@@ -9,8 +9,8 @@ package DSC;
  *
  * @author Aliens_Ross
  */
-public class Client implements java.io.Serializable{
-    
+public class Client implements java.io.Serializable {
+
     private String clientID;
     private String name;
     private String surname;
@@ -22,11 +22,26 @@ public class Client implements java.io.Serializable{
     private String additionalInfo;
 
     public Client() {
-        
+
+    }
+
+    public Client(String clientID) {
+        this.clientID = clientID;
     }
 
     public Client(String clientID, String name, String surname, String contactNumber, String alternativeNumber, String email, String suburb, String address, String additionalInfo) {
         this.clientID = clientID;
+        this.name = name;
+        this.surname = surname;
+        this.contactNumber = contactNumber;
+        this.alternativeNumber = alternativeNumber;
+        this.email = email;
+        this.suburb = suburb;
+        this.address = address;
+        this.additionalInfo = additionalInfo;
+    }
+
+    public void setData(String name, String surname, String contactNumber, String alternativeNumber, String email, String suburb, String address, String additionalInfo) {
         this.name = name;
         this.surname = surname;
         this.contactNumber = contactNumber;
@@ -44,7 +59,7 @@ public class Client implements java.io.Serializable{
     public void setID(String clientID) {
         this.clientID = clientID;
     }
-    
+
     public String getName() {
         return name;
     }
@@ -117,7 +132,5 @@ public class Client implements java.io.Serializable{
     public String toString() {
         return "Client{" + "clientID=" + clientID + ", name=" + name + ", surname=" + surname + ", contactNumber=" + contactNumber + ", alternativeNumber=" + alternativeNumber + ", email=" + email + ", suburb=" + suburb + ", address=" + address + ", additionalInfo=" + additionalInfo + '}';
     }
-    
-    
-    
+
 }
