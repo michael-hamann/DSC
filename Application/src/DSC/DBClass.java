@@ -1,3 +1,4 @@
+
 package DSC;
 
 import DSC.TokenGeneration.TokenGenerator;
@@ -9,15 +10,19 @@ import java.util.Map;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author Aliens_Michael
- *
+ * @author Rossouw Binedell
  */
 public class DBClass {
 
     private static Firebase ref;
+    /**
+     * Returns whether the database is connected or not
+     */
     public static boolean connected = false;
 
+    /**
+     * Creates an instance of the database
+     */
     public static Firebase getInstance() {
         if (ref == null) {
             ref = new Firebase("https://dsc-database.firebaseio.com/");

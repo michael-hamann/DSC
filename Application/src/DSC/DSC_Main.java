@@ -1,3 +1,4 @@
+
 package DSC;
 
 import com.firebase.client.DataSnapshot;
@@ -15,13 +16,14 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author Aliens_Michael
+ * @author Michael Hamann
+ * @author Rossouw Binedell
+ * @author Keanu Arendze
  */
 public class DSC_Main extends javax.swing.JFrame {
 
     /*
-                Static variables for Condition Statements.
+        Static variables for Condition Statements.
      */
     public static boolean getData = true;
     public static boolean checkGraph = true;
@@ -33,7 +35,6 @@ public class DSC_Main extends javax.swing.JFrame {
         DBClass.getInstance();
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-
     }
 
     /**
@@ -59,7 +60,7 @@ public class DSC_Main extends javax.swing.JFrame {
         btnDriverRpt = new javax.swing.JButton();
         btnChefRpt = new javax.swing.JButton();
         btnPackerRpt = new javax.swing.JButton();
-        btnHandlerRpt = new javax.swing.JButton();
+        btnAccountRpt = new javax.swing.JButton();
         lblGenerate = new javax.swing.JLabel();
         pnlMainChartBackground = new javax.swing.JPanel();
         pnlBarChartActive = new javax.swing.JPanel();
@@ -215,11 +216,6 @@ public class DSC_Main extends javax.swing.JFrame {
         btnDriverRpt.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnDriverRpt.setText("Driver Report");
         btnDriverRpt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnDriverRpt.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnDriverRptMouseClicked(evt);
-            }
-        });
         btnDriverRpt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDriverRptActionPerformed(evt);
@@ -244,18 +240,18 @@ public class DSC_Main extends javax.swing.JFrame {
             }
         });
 
-        btnHandlerRpt.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        btnHandlerRpt.setText("Account Report");
-        btnHandlerRpt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnHandlerRpt.addActionListener(new java.awt.event.ActionListener() {
+        btnAccountRpt.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btnAccountRpt.setText("Account Report");
+        btnAccountRpt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAccountRpt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnHandlerRptActionPerformed(evt);
+                btnAccountRptActionPerformed(evt);
             }
         });
 
         lblGenerate.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblGenerate.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblGenerate.setText("Generate Reports");
+        lblGenerate.setText("Generate");
 
         javax.swing.GroupLayout pnlReportsLayout = new javax.swing.GroupLayout(pnlReports);
         pnlReports.setLayout(pnlReportsLayout);
@@ -267,7 +263,7 @@ public class DSC_Main extends javax.swing.JFrame {
                     .addComponent(btnDriverRpt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnChefRpt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnPackerRpt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnHandlerRpt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAccountRpt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblGenerate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -283,7 +279,7 @@ public class DSC_Main extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnPackerRpt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnHandlerRpt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAccountRpt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(222, Short.MAX_VALUE))
         );
 
@@ -309,7 +305,7 @@ public class DSC_Main extends javax.swing.JFrame {
         pnlBarChartActive.setLayout(pnlBarChartActiveLayout);
         pnlBarChartActiveLayout.setHorizontalGroup(
             pnlBarChartActiveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 301, Short.MAX_VALUE)
+            .addGap(0, 302, Short.MAX_VALUE)
         );
         pnlBarChartActiveLayout.setVerticalGroup(
             pnlBarChartActiveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -751,9 +747,9 @@ public class DSC_Main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnPackerRptActionPerformed
 
-    private void btnHandlerRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHandlerRptActionPerformed
+    private void btnAccountRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccountRptActionPerformed
         AccountantReport.getAccountantData();
-    }//GEN-LAST:event_btnHandlerRptActionPerformed
+    }//GEN-LAST:event_btnAccountRptActionPerformed
 
     private void btnRouteViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRouteViewActionPerformed
         this.dispose();
@@ -774,10 +770,6 @@ public class DSC_Main extends javax.swing.JFrame {
         new DSC_Place_Order(true).setVisible(true);
     }//GEN-LAST:event_btnPlaceOrderActionPerformed
 
-    private void btnDriverRptMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDriverRptMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnDriverRptMouseClicked
-
     private void btnSurveyQuestionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSurveyQuestionsActionPerformed
         DSC_SurveyQuestions pane = new DSC_SurveyQuestions();
         pane.setBack(this);
@@ -788,7 +780,7 @@ public class DSC_Main extends javax.swing.JFrame {
 
     private void pnlBarChartActiveComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_pnlBarChartActiveComponentResized
         /*
-               Gets Executed When JFrame Resizes.
+            Gets Executed When JFrame Resizes.
          */
         try {
 
@@ -869,9 +861,9 @@ public class DSC_Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAccountRpt;
     private javax.swing.JButton btnChefRpt;
     private javax.swing.JButton btnDriverRpt;
-    private javax.swing.JButton btnHandlerRpt;
     private javax.swing.JButton btnPackerRpt;
     private javax.swing.JButton btnPlaceOrder;
     private javax.swing.JButton btnRouteView;

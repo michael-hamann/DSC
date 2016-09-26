@@ -13,8 +13,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 /**
- *
- * @author Aliens_Michael
+ * @author Michael Hamann
  */
 public class DSC_RouteView extends javax.swing.JFrame {
 

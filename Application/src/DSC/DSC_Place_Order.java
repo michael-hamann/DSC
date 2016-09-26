@@ -1,3 +1,4 @@
+
 package DSC;
 
 import com.firebase.client.DataSnapshot;
@@ -16,8 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
- * @author Aliens_Michael
+ * @author Rossouw Binedell
  */
 public class DSC_Place_Order extends javax.swing.JFrame {
 

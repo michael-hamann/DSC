@@ -4,8 +4,7 @@ package DSC;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author Aliens_Michael
+ * @author Michael Hamann
  */
 public class DSC_NewDriver extends javax.swing.JFrame {
 

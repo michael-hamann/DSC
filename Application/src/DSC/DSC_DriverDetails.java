@@ -11,8 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author Aliens_Michael
+  * @author Michael Hamann
  */
 public class DSC_DriverDetails extends javax.swing.JFrame {
 
