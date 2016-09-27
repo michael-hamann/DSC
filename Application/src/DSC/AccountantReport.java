@@ -37,21 +37,43 @@ public class AccountantReport {
 
     private static ArrayList<Client> clients;
     private static int clientCount;
+    private static File file;
+    private static FileOutputStream excelOut;
 
-    public static void getAccountantData() {
+    public static void getAccountantReport() {
+
+        boolean fileFound = false;
+        try {
+            file = new File("AccountReport (" + DriverReport.returnWeekString() + ").xlsx");
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            excelOut = new FileOutputStream(file);
+            fileFound = true;
+        } catch (FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Please close the excel file before using generating.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.err.println("Error - Could not create new AccountReport: File currently in use.");
+        } catch (IOException io) {
+            JOptionPane.showMessageDialog(null, "An error occured\nCould not create AccountReport", "Error", JOptionPane.ERROR_MESSAGE);
+            System.err.println("Error - Could not create new AccountReport: ");
+            io.printStackTrace();
+        }
+
+        if (fileFound) {
+            getActiveOrders();
+        }
+
+    }
+
+    private static void getActiveOrders() {
         clients = new ArrayList<>();
         Firebase ref = DBClass.getInstance();
-        ref.child("Orders").orderByChild("Active").equalTo(true).addValueEventListener(new ValueEventListener() {
+        ref.child("Orders").orderByChild("Active").equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot ds) {
                 for (DataSnapshot dataSnapshot : ds.getChildren()) {
                     Client client = new Client(dataSnapshot.child("ClientID").getValue(String.class));
-
-                    for (DataSnapshot dataSnapshot1 : dataSnapshot.child("Drivers").getChildren()) {
-                        if (dataSnapshot1.child("EndDate").getValue(String.class).equals("-")) {
-                            client.setAdditionalInfo(dataSnapshot1.child("DriverID").getValue(String.class));
-                        }
-                    }
+                    client.setAdditionalInfo(dataSnapshot.child("RouteID").getValue(String.class));
 
                     clients.add(client);
                 }
@@ -99,12 +121,13 @@ public class AccountantReport {
     }
 
     private static void createExcelReport() {
+        System.out.println("Executing");
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet("AccountReport - Week " + DriverReport.returnWeekInt());
         Map<String, Object[]> data = new TreeMap<>();
-        data.put("1", new Object[]{"Doorstep Chef Accountant Sheet", "", "", "", "", "Week: " + DriverReport.returnWeekString(), "", ""});
+        data.put("1", new Object[]{"Doorstep Chef Accountant Sheet", "","Week: " + DriverReport.returnWeekString(), "", "", "",  "", ""});
         data.put("2", new Object[]{"", "", "", "", "", "", ""});
-        data.put("3", new Object[]{"Name", "Surname", "Contact", "Driver", "EFT", "Cash", "Date Paid", "Stay"});
+        data.put("3", new Object[]{"Name", "Surname", "Contact", "R.ID", "EFT", "Cash", "Date Paid", "Stay"});
 
         clients.sort(new Comparator<Client>() {
             @Override
@@ -127,23 +150,16 @@ public class AccountantReport {
             });
         }
         Set<String> keySet = data.keySet();
-        int longestDriverName = 0;
-        int totalSize = 23873;
-        
+        int totalSize = 22000;
+
         for (int key = 1; key < keySet.size() + 1; key++) {
             Row row = sheet.createRow(key - 1);
             Object[] arr = data.get(key + "");
-            
+
             for (int i = 0; i < arr.length; i++) {
                 Cell cell = row.createCell(i);
                 cell.setCellValue((String) arr[i]);
                 XSSFCellStyle borderStyle = workbook.createCellStyle();
-
-                System.out.println(longestDriverName + "--");
-                System.out.println(i);
-                if (i == 3 && longestDriverName< ((String)arr[i]).length()) {
-                    longestDriverName = ((String)arr[i]).length();
-                }
 
                 if (!((key + "").equals("1") || (key + "").equals("2"))) {
                     borderStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
@@ -162,7 +178,6 @@ public class AccountantReport {
                         font.setColor(IndexedColors.WHITE.getIndex());
                         font.setBold(true);
                         borderStyle.setFont(font);
-
                     } else {
                         if (i != 0) {
                             borderStyle.setBorderLeft(XSSFCellStyle.BORDER_THIN);
@@ -188,7 +203,7 @@ public class AccountantReport {
                         borderStyle.setVerticalAlignment(XSSFCellStyle.VERTICAL_JUSTIFY);
                     }
                 } else {
-                    if (i == 4) {
+                    if (i == 2) {
                         borderStyle.setAlignment(HorizontalAlignment.RIGHT);
                     }
                     XSSFFont font = workbook.createFont();
@@ -202,41 +217,33 @@ public class AccountantReport {
 
             }
             if (key == 1) {
-                sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 3));
-                sheet.addMergedRegion(new CellRangeAddress(0, 0, 4, 7));
+                sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 1));
+                sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, 7));
             }
 
         }
-        
-        sheet.setColumnWidth(2, 11 * 240);
-        sheet.setColumnWidth(3, (longestDriverName + 1) * 240);
+
+        sheet.setColumnWidth(2, 13 * 240);
+        sheet.setColumnWidth(3, 5 * 240);
         sheet.setColumnWidth(4, 5 * 240);
         sheet.setColumnWidth(5, 5 * 240);
         sheet.setColumnWidth(6, 13 * 240);
         sheet.setColumnWidth(7, 5 * 240);
-        totalSize = (totalSize - (11 * 240 + 5 * 240 + 5 * 240 + 13 * 240 + 5 * 240 + (longestDriverName + 1) * 240)) / 2;
+        totalSize = (totalSize - (sheet.getColumnWidth(2) + sheet.getColumnWidth(3) + sheet.getColumnWidth(4) + 
+                sheet.getColumnWidth(5) + sheet.getColumnWidth(6) + sheet.getColumnWidth(7))) / 2;
         sheet.setColumnWidth(0, totalSize);
         sheet.setColumnWidth(1, totalSize);
-        
+
         try {
-            File file = new File("AccountReport (" + DriverReport.returnWeekString() + ").xlsx");
-            if (!file.exists()) {
-                file.createNewFile();
-            }
-            FileOutputStream excelOut = new FileOutputStream(file);
             workbook.write(excelOut);
             excelOut.close();
-        } catch (FileNotFoundException ex) {
-            JOptionPane.showMessageDialog(null, "An error occured\nCould not find AccountReport", "Error", JOptionPane.ERROR_MESSAGE);
-            System.err.println("Error - Could not create new AccountReport: ");
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "AccountReports Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
+            System.out.println("Done");
         } catch (IOException io) {
             JOptionPane.showMessageDialog(null, "An error occured\nCould not create AccountReport", "Error", JOptionPane.ERROR_MESSAGE);
             System.err.println("Error - Could not create new AccountReport: ");
             io.printStackTrace();
         }
-        JOptionPane.showMessageDialog(null, "AccountReports Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
-
     }
 
 }
