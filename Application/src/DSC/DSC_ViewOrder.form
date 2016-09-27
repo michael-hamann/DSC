@@ -200,16 +200,16 @@
                               <Component id="lblSearchBy" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="txfSearch" alignment="3" max="32767" attributes="0"/>
                           </Group>
-                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                          <Component id="btnNext" alignment="0" min="-2" pref="23" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="btnDelete" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="cmbVeiw" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnNext" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="btnPrevious" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="btnSearch" alignment="0" min="-2" pref="24" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="161" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="155" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -519,7 +519,7 @@
                           <Component id="lblSuburb" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="cmbSuburbs" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="26" max="32767" attributes="0"/>
+                      <EmptySpace pref="32" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -750,9 +750,9 @@
                                   <Component id="txfOrderID" alignment="0" max="32767" attributes="0"/>
                                   <Component id="spnOrderFamilySize" alignment="0" max="32767" attributes="0"/>
                                   <Component id="txfOrderRouteID" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="cmbStartDate" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="cmbEndDate" alignment="0" max="32767" attributes="0"/>
                                   <Component id="cmbDuration" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="spnStartDate" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="spnEndDate" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -784,12 +784,12 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblStartingDate" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="cmbStartDate" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="spnStartDate" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblEndDate" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="cmbEndDate" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="spnEndDate" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -801,7 +801,7 @@
                           <Component id="lblDuration" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="cmbDuration" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="66" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="btnDeactivate" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -919,26 +919,6 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeactivateActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JComboBox" name="cmbStartDate">
-              <Properties>
-                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="0"/>
-                </Property>
-              </Properties>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-              </AuxValues>
-            </Component>
-            <Component class="javax.swing.JComboBox" name="cmbEndDate">
-              <Properties>
-                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="0"/>
-                </Property>
-              </Properties>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-              </AuxValues>
-            </Component>
             <Component class="javax.swing.JComboBox" name="cmbDuration">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
@@ -951,6 +931,10 @@
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
+            </Component>
+            <Component class="javax.swing.JSpinner" name="spnStartDate">
+            </Component>
+            <Component class="javax.swing.JSpinner" name="spnEndDate">
             </Component>
           </SubComponents>
         </Container>
