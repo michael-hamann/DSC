@@ -783,12 +783,12 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         }
 
         String clientAlternativeNumber = txfClientAlternativeNumber.getText();
-        if (((clientAlternativeNumber.length() != 0 || clientContactNumber.length() != 10) || !clientContactNumber.matches("[0-9]+"))) {
-            invalid += "\nAlternative Contact Number";
-            allGood = false;
-        } else if (clientAlternativeNumber.isEmpty()) {
-            clientAlternativeNumber = "N/A";
-        }
+//        if (((clientAlternativeNumber.length() !=0 || clientAlternativeNumber.length() != 10) || !clientAlternativeNumber.matches("[0-9]+"))) {
+//            invalid += "\nAlternative Contact Number";
+//            allGood = false;
+//        } else if (clientAlternativeNumber.isEmpty()) {
+//            clientAlternativeNumber = "N/A";
+//        }
 
         String clientEmail = txfClientEmail.getText();
 
