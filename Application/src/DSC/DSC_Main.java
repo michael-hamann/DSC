@@ -744,7 +744,9 @@ public class DSC_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnChefRptActionPerformed
 
     private void btnPackerRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPackerRptActionPerformed
-        // TODO add your handling code here:
+        ChefReport.getQuanity();
+        DriverReport.getDriverReports();
+        AccountantReport.getAccountantReport();
     }//GEN-LAST:event_btnPackerRptActionPerformed
 
     private void btnAccountRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccountRptActionPerformed

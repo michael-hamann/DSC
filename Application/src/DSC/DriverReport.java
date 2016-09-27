@@ -403,7 +403,7 @@ public class DriverReport {
             weekDate.add(Calendar.DAY_OF_WEEK, -1);
         }
         Calendar firstWeek = Calendar.getInstance();
-        firstWeek.setTimeInMillis(1440799200000l);
+        firstWeek.setTimeInMillis(1470002400000l);
         int weeks = ((weekDate.get(Calendar.YEAR) - firstWeek.get(Calendar.YEAR)) * 52 + weekDate.get(Calendar.WEEK_OF_YEAR)) - firstWeek.get(Calendar.WEEK_OF_YEAR);
         return weeks;
     }
