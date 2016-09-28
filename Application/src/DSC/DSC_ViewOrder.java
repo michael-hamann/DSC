@@ -5,11 +5,13 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
-import static java.awt.image.ImageObserver.ABORT;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerDateModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -18,10 +20,13 @@ import javax.swing.table.DefaultTableModel;
  */
 public class DSC_ViewOrder extends javax.swing.JFrame {
 
-    int tbcounter = 0;
-    boolean search = false;
+    int tbcounter = 30;
+    int count = 0;
+    
+    boolean search = true;
     boolean orderEdited = false;
     boolean editClicked = false;
+    boolean orderSelected = false;
 
     ArrayList<Client> allclients = new ArrayList<>();
     ArrayList<Order> allorders = new ArrayList<>();
@@ -30,30 +35,41 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     ArrayList<String> suburbs = new ArrayList<>();
     ArrayList<String> activeSuburbs = new ArrayList<>();
 
-    ArrayList<Calendar> startdates = new ArrayList<>();
-    ArrayList<Calendar> enddates = new ArrayList<>();
-
     /**
      * Creates new form DSC_Main
      */
     public DSC_ViewOrder() {
         initComponents();
+
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         txfClientID.setEnabled(false);
         txfOrderID.setEnabled(false);
         txfOrderRouteID.setEnabled(false);
         cmbSuburbs.setEnabled(false);
+
         disableFieldsClient();
         disableFieldsOrder();
+
         btnSave.setEnabled(false);
         cmbVeiw.setSelectedItem("Active");
         cmbSuburbs.removeAllItems();
         cmbSuburbs.addItem("Collection");
+        btnDeactivate.setVisible(true);
+
         saveClient();
         saveOrder();
         callActiveSuburbs();
         callAllSuburbs();
         setTextFields();
+
+        Date datenow = Calendar.getInstance().getTime();
+        SpinnerDateModel smb = new SpinnerDateModel(datenow, null, null, Calendar.HOUR_OF_DAY);
+        spnStartDate.setModel(smb);
+        spnEndDate.setModel(smb);
+        JSpinner.DateEditor sd = new JSpinner.DateEditor(spnStartDate, "dd-MM-yyyy");
+        JSpinner.DateEditor ed = new JSpinner.DateEditor(spnEndDate, "dd-MM-yyyy");
+        spnStartDate.setEditor(sd);
+        spnEndDate.setEditor(ed);
 
     }
 
@@ -90,26 +106,30 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         txfClientEmail.setText(null);
         txfAltNum.setText(null);
         cmbSuburbs.setSelectedIndex(0);
+        orderSelected = false;
     }
+    
 
     public final void enableFieldsOrder() {
         spnOrderFamilySize.setEnabled(true);
         cmbDuration.setEnabled(true);
-        cmbEndDate.setEnabled(true);
-        cmbStartDate.setEnabled(true);
+        spnEndDate.setEnabled(true);
+        spnStartDate.setEnabled(true);
         txfOrderRouteID.setEnabled(true);
         btnAddMeal.setEnabled(true);
         btnRemoveMeal.setEnabled(true);
+        btnDeactivate.setEnabled(true);
     }
 
     public final void disableFieldsOrder() {
         spnOrderFamilySize.setEnabled(false);
-        cmbStartDate.setEnabled(false);
+        spnStartDate.setEnabled(false);
         txfOrderRouteID.setEnabled(false);
         cmbDuration.setEnabled(false);
-        cmbEndDate.setEnabled(false);
+        spnEndDate.setEnabled(false);
         btnAddMeal.setEnabled(false);
         btnRemoveMeal.setEnabled(false);
+        btnDeactivate.setEnabled(false);
 
     }
 
@@ -122,7 +142,9 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         //spnEndDate.setValue("");
         DefaultTableModel model = (DefaultTableModel) tblOrderTable.getModel();
         model.setRowCount(0);
+        boolean orderSelected = false;
     }
+    
 
     private boolean checkEmpty() {
         boolean empty = false;
@@ -134,6 +156,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
         return empty;
     }
+    
 
     public void callActiveSuburbs() {
         Firebase ref = DBClass.getInstance().child("Routes");
@@ -159,7 +182,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 System.err.print("Database connection error (Suburb): " + fe);
             }
         });
-        activeSuburbs.add("Collection.");
+        activeSuburbs.add("Collection");
     }
 
     public void callAllSuburbs() {
@@ -189,6 +212,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         });
 
     }
+    
 
     public void setOrderTB(Order order, DefaultTableModel d) {
         orders1.add(order);
@@ -197,6 +221,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         d.addRow(row);
         d.fireTableDataChanged();
     }
+    
 
     public void setTextFields() {
 
@@ -206,13 +231,9 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             @Override
 
             public void mouseClicked(java.awt.event.MouseEvent evt) {
+                orderSelected = true;
                 if (orderEdited == false || editClicked == false) {
                     mealmodel.setRowCount(0);
-
-                    cmbStartDate.removeAllItems();
-                    cmbEndDate.removeAllItems();
-                    startdates.clear();
-                    enddates.clear();
 
                     int row = tblOrderTable.rowAtPoint(evt.getPoint());
 
@@ -227,18 +248,21 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     cmbSuburbs.setSelectedItem(orders1.get(row).getClient().getSuburb().trim());
                     txfOrderID.setText(orders1.get(row).getID());
                     cmbDuration.setSelectedItem(orders1.get(row).getDuration());
+
+                    Date date = orders1.get(row).getStartingDate().getTime();
+                    SpinnerDateModel smb = new SpinnerDateModel(date, null, null, Calendar.HOUR_OF_DAY);
+                    spnStartDate.setModel(smb);
+                    JSpinner.DateEditor d = new JSpinner.DateEditor(spnStartDate, "dd-MM-yyyy");
+                    spnStartDate.setEditor(d);
+
                     spnOrderFamilySize.setValue(orders1.get(row).getFamilySize());
-                    cmbStartDate.addItem(orders1.get(row).getStartingDate().getTime() + "");
-                    cmbStartDate.setSelectedItem(orders1.get(row).getStartingDate() + "");
-                    startdates.add(orders1.get(row).getStartingDate());
-                    if (orders1.get(row).getEndDate() != null) {
-                        cmbEndDate.addItem(orders1.get(row).getEndDate().getTime() + "");
-                        cmbEndDate.setSelectedItem(orders1.get(row).getEndDate() + "");
-                        enddates.add(orders1.get(row).getEndDate());
+                    if (orders1.get(row).getEndDate() == null) {
                     } else {
-                        cmbEndDate.addItem("None Selected");
-                        cmbEndDate.setSelectedItem("None Selected");
-                        enddates.add(null);
+                        Date enddate = orders1.get(row).getEndDate().getTime();
+                        SpinnerDateModel endD = new SpinnerDateModel(enddate, null, null, Calendar.HOUR_OF_DAY);
+                        spnEndDate.setModel(endD);
+                        JSpinner.DateEditor endDE = new JSpinner.DateEditor(spnEndDate, "dd-MM-yyyy");
+                        spnStartDate.setEditor(endDE);
                     }
                     txfOrderRouteID.setText(orders1.get(row).getRoute());
 
@@ -251,6 +275,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         });
 
     }
+    
 
     public void saveOrder() {
         Firebase ord = DBClass.getInstance().child("Orders");// Go to specific Table
@@ -280,7 +305,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     }
                 }
                 Order o = new Order(ds.getKey(), ds.child("Active").getValue(boolean.class), allclients.get(0),
-                        ds.child("Duration").getValue(String.class), startingDate, null, ds.child("RouteID").getValue(String.class),
+                        ds.child("Duration").getValue(String.class), startingDate, endDate, ds.child("RouteID").getValue(String.class),
                         allmeals, 0);
                 o.setFamilySize(ds.child("FamilySize").getValue(int.class));
 
@@ -295,12 +320,11 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 allorders.add(o);
                 DefaultTableModel model = (DefaultTableModel) tblOrderTable.getModel();
 
-                if (tbcounter < 29) {
-                    if (o.isActive()) {
-                        setOrderTB(o, model);
-                        tbcounter++;
-                    }
+                if (o.isActive() && count < tbcounter) {
+                    setOrderTB(o, model);
+                    count++;
                 }
+
             }
 
             @Override
@@ -475,9 +499,9 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         btnEditOrder = new javax.swing.JButton();
         lblEndDate = new javax.swing.JLabel();
         btnDeactivate = new javax.swing.JButton();
-        cmbStartDate = new javax.swing.JComboBox<>();
-        cmbEndDate = new javax.swing.JComboBox<>();
         cmbDuration = new javax.swing.JComboBox<>();
+        spnStartDate = new javax.swing.JSpinner();
+        spnEndDate = new javax.swing.JSpinner();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblMeals = new javax.swing.JTable();
         btnBack = new javax.swing.JButton();
@@ -625,14 +649,14 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         .addComponent(cmbSearchColumn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblSearchBy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txfSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnDelete)
                         .addComponent(cmbVeiw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnNext)
                         .addComponent(btnPrevious))
                     .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(11, 11, 11)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -795,7 +819,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblSuburb)
                     .addComponent(cmbSuburbs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         pnlDetails.setBackground(new java.awt.Color(0, 204, 51));
@@ -879,9 +903,9 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             .addComponent(txfOrderID)
                             .addComponent(spnOrderFamilySize)
                             .addComponent(txfOrderRouteID, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(cmbStartDate, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cmbEndDate, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cmbDuration, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(cmbDuration, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(spnStartDate)
+                            .addComponent(spnEndDate)))
                     .addGroup(pnlDetailsLayout.createSequentialGroup()
                         .addComponent(btnDeactivate)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -904,11 +928,11 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblStartingDate)
-                    .addComponent(cmbStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(spnStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblEndDate)
-                    .addComponent(cmbEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(spnEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txfOrderRouteID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -917,7 +941,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDuration)
                     .addComponent(cmbDuration, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnDeactivate)
                 .addContainerGap())
         );
@@ -1041,38 +1065,46 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEditClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditClientActionPerformed
-        btnDelete.setEnabled(false);
-        btnSave.setEnabled(true);
-        enableFieldsClient();
-        btnEditClient.setEnabled(false);
-        editClicked = true;
-        orderEdited = true;
+        if (orderSelected) {
+            btnDelete.setEnabled(false);
+            btnSave.setEnabled(true);
+            enableFieldsClient();
+            btnEditClient.setEnabled(false);
+            editClicked = true;
+            orderEdited = true;
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "No order has been selected to edit!");
+        }
     }//GEN-LAST:event_btnEditClientActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        String name = txfClientName.getText() + " " + txfClientSurname.getText();
+        if (orderSelected) {
+            String name = txfClientName.getText() + " " + txfClientSurname.getText();
 
-        String message = "Are you sure you want to delete an order of " + name + "?";
-        int answer = JOptionPane.showConfirmDialog(this, message, "Confirm", JOptionPane.INFORMATION_MESSAGE);
+            String message = "Are you sure you want to delete an order of " + name + "?";
+            int answer = JOptionPane.showConfirmDialog(this, message, "Confirm", JOptionPane.INFORMATION_MESSAGE);
 
-        switch (answer) {
-            case JOptionPane.YES_OPTION:
-                //removes node from database
-                Firebase del = DBClass.getInstance().child("Orders/" + txfOrderID.getText());
-                del.removeValue();
-                clearFieldsClient();
-                clearFieldsOrder();
-                DefaultTableModel m = (DefaultTableModel) tblMeals.getModel();
-                m.setRowCount(0);
-                //clear arraylist and repopulate with updated data
-                break;
+            switch (answer) {
+                case JOptionPane.YES_OPTION:
+                    //removes node from database
+                    Firebase del = DBClass.getInstance().child("Orders/" + txfOrderID.getText());
+                    del.removeValue();
+                    clearFieldsClient();
+                    clearFieldsOrder();
+                    DefaultTableModel m = (DefaultTableModel) tblMeals.getModel();
+                    m.setRowCount(0);
+                    //clear arraylist and repopulate with updated data
+                    break;
 
-            case JOptionPane.NO_OPTION:
-                break;
+                case JOptionPane.NO_OPTION:
+                    break;
 
-            case JOptionPane.CANCEL_OPTION:
+                case JOptionPane.CANCEL_OPTION:
 
-                break;
+                    break;
+            }
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "No order has been selected to delete!");
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
@@ -1114,13 +1146,27 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         updO.child("FamilySize").setValue(spnOrderFamilySize.getValue());
                         updO.child("RouteID").setValue(txfOrderRouteID.getText());
                         updO.child("Duration").setValue(cmbDuration.getSelectedItem());
-                        updO.child("StartingDate").setValue(startdates.get(cmbStartDate.getSelectedIndex()).getTimeInMillis());
+                        Calendar c = Calendar.getInstance();
+                        Date startdate = (Date) spnStartDate.getValue();
+                        c.setTime(startdate);
+                        c.add(Calendar.HOUR, 0);
+                        c.add(Calendar.MINUTE, 0);
+                        c.add(Calendar.SECOND, 0);
 
-                        if (cmbEndDate.getSelectedIndex() != 0) {
-                            updO.child("EndDate").setValue(enddates.get(cmbEndDate.getSelectedIndex()).getTimeInMillis());
+                        updO.child("StartingDate").setValue(c.getTimeInMillis());
+                        if (spnEndDate.isEnabled()) {
+                            Date enddate = (Date) spnEndDate.getValue();
+                            c.setTime(enddate);
+                            c.add(Calendar.HOUR, 0);
+                            c.add(Calendar.MINUTE, 0);
+                            c.add(Calendar.SECOND, 0);
+
+                            updO.child(c.getTimeInMillis() + "");
                         } else {
                             updO.child("EndDate").setValue("-");
                         }
+
+                        updO.child("Duration").setValue(cmbDuration.getSelectedItem());
 
                         updO.child("Meals").removeValue();
 
@@ -1189,13 +1235,26 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             updO.child("FamilySize").setValue(spnOrderFamilySize.getValue());
                             updO.child("RouteID").setValue(txfOrderRouteID.getText());
                             updO.child("Duration").setValue(cmbDuration.getSelectedItem());
-                            updO.child("StartingDate").setValue(startdates.get(cmbStartDate.getSelectedIndex()).getTimeInMillis());
-                            if (cmbEndDate.getSelectedIndex() != 0) {
-                                updO.child("EndDate").setValue(enddates.get(cmbEndDate.getSelectedIndex()).getTimeInMillis());
+
+                            Calendar c = Calendar.getInstance();
+                            Date startdate = (Date) spnStartDate.getValue();
+                            c.setTime(startdate);
+                            c.add(Calendar.HOUR, 0);
+                            c.add(Calendar.MINUTE, 0);
+                            c.add(Calendar.SECOND, 0);
+
+                            updO.child("StartingDate").setValue(c.getTimeInMillis());
+                            if (spnEndDate.isEnabled()) {
+                                Date enddate = (Date) spnEndDate.getValue();
+                                c.setTime(enddate);
+                                c.add(Calendar.HOUR, 0);
+                                c.add(Calendar.MINUTE, 0);
+                                c.add(Calendar.SECOND, 0);
+
+                                updO.child(c.getTimeInMillis() + "");
                             } else {
                                 updO.child("EndDate").setValue("-");
                             }
-
                             for (int i = 0; i < meals.getRowCount(); i++) {
                                 Firebase updmeal = DBClass.getInstance().child("Orders/" + txfOrderID.getText() + "/Meals/" + i);
                                 updmeal.push();
@@ -1286,12 +1345,11 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         clearFieldsClient();
         clearFieldsOrder();
 
-        search = true;
         orders1.clear();
 
         if (txfSearch.getText().equals("")) {
             JOptionPane.showMessageDialog(rootPane, "Please enter search value!");
-
+            search = false;
         } else {
             switch (veiw) {
                 case "All":
@@ -1353,7 +1411,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
                     break;
                 case "Active":
-                    btnDeactivate.setEnabled(true);
+                    btnDeactivate.setVisible(true);
                     switch (column) {
                         case "Name":
                             for (Order orders : allorders) {
@@ -1425,7 +1483,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     break;
                 case "Inactive":
                     model.setRowCount(0);
-                    btnDeactivate.setEnabled(false);
+                    btnDeactivate.setVisible(false);
                     switch (column) {
                         case "Name":
                             for (Order orders : allorders) {
@@ -1501,31 +1559,22 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             }
         }
         setTextFields();
+        if(tblOrderTable.getRowCount()<1 && search ){
+            JOptionPane.showMessageDialog(rootPane, "No orders found for '"+searchFor+"'.");
+        }
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnEditOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditOrderActionPerformed
-        Calendar c;
-
-        for (Order order : allorders) {
-            if (order.getClient().getID().equals(txfClientID.getText())) {
-                c = order.getStartingDate();
-                for (int i = 0; i < 3; i++) {
-                    c.add(Calendar.DATE, 7);  // adds 7 days 
-                    startdates.add(c);
-                    enddates.add(c);
-                    cmbStartDate.addItem(c.getTime() + "");
-                    cmbEndDate.addItem(c.getTime() + "");
-                }
-                break;
-            }
+        if (orderSelected) {
+            btnDelete.setEnabled(false);
+            enableFieldsOrder();
+            btnEditOrder.setEnabled(false);
+            btnSave.setEnabled(true);
+            editClicked = true;
+            orderEdited = true;
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "No order has been selected to edit!");
         }
-
-        btnDelete.setEnabled(false);
-        enableFieldsOrder();
-        btnEditOrder.setEnabled(false);
-        btnSave.setEnabled(true);
-        editClicked = true;
-        orderEdited = true;
     }//GEN-LAST:event_btnEditOrderActionPerformed
 
     private void btnDeactivateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeactivateActionPerformed
@@ -1556,23 +1605,38 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         orders1.clear();
         DefaultTableModel ordertb = (DefaultTableModel) tblOrderTable.getModel();
         ordertb.setRowCount(0);
-        while(tbcounter<tbcounter+30 && tbcounter<=allorders.size()){
-            setOrderTB(allorders.get(tbcounter), ordertb);
-            tbcounter++;
+        if (allorders.size() > tbcounter) {
+            tbcounter = tbcounter + 30;
+            while (count < tbcounter) {
+                if (allorders.size() > count || allorders.size() == count) {
+                    setOrderTB(allorders.get(count), ordertb);
+                    count++;
+                } else {
+                    break;
+                }
+            } 
         }
     }//GEN-LAST:event_btnNextActionPerformed
 
     private void btnPreviousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousActionPerformed
         orders1.clear();
         DefaultTableModel ordertb = (DefaultTableModel) tblOrderTable.getModel();
+        String s = (String) cmbVeiw.getSelectedItem();
+
         ordertb.setRowCount(0);
-        if(tbcounter>30){
-           while(tbcounter>tbcounter-30 && tbcounter>=0){
-               tbcounter--;
-               setOrderTB(allorders.get(tbcounter), ordertb);
-            } 
+        if (tbcounter > 30) {
+            tbcounter = tbcounter - 30;
+            int j = tbcounter % count;
+            count = tbcounter - 30;
+            while (count < tbcounter) {
+                if (allorders.size() > count || allorders.size() == count) {
+                    setOrderTB(allorders.get(count), ordertb);
+                    count++;
+                } else {
+                    break;
+                }
+            }
         }
-        
     }//GEN-LAST:event_btnPreviousActionPerformed
 
     /**
@@ -1628,9 +1692,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnSearch;
     private javax.swing.JComboBox<String> cmbDuration;
-    private javax.swing.JComboBox<String> cmbEndDate;
     private javax.swing.JComboBox<String> cmbSearchColumn;
-    private javax.swing.JComboBox<String> cmbStartDate;
     private javax.swing.JComboBox<String> cmbSuburbs;
     private javax.swing.JComboBox<String> cmbVeiw;
     private javax.swing.JScrollPane jScrollPane1;
@@ -1660,7 +1722,9 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     private javax.swing.JPanel pnlDetailsClient;
     private javax.swing.JPanel pnlHeading;
     private javax.swing.JPanel pnlTable;
+    private javax.swing.JSpinner spnEndDate;
     private javax.swing.JSpinner spnOrderFamilySize;
+    private javax.swing.JSpinner spnStartDate;
     private javax.swing.JTable tblMeals;
     private javax.swing.JTable tblOrderTable;
     private javax.swing.JTextField txfAddInfo;

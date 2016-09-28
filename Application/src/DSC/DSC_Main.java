@@ -736,7 +736,7 @@ public class DSC_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDriverTblActionPerformed
 
     private void btnDriverRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDriverRptActionPerformed
-        DriverReport.getOrders();
+        DriverReport.getDriverReports();
     }//GEN-LAST:event_btnDriverRptActionPerformed
 
     private void btnChefRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChefRptActionPerformed
@@ -745,11 +745,13 @@ public class DSC_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnChefRptActionPerformed
 
     private void btnPackerRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPackerRptActionPerformed
-        // TODO add your handling code here:
+        ChefReport.getQuanity();
+        DriverReport.getDriverReports();
+        AccountantReport.getAccountantReport();
     }//GEN-LAST:event_btnPackerRptActionPerformed
 
     private void btnAccountRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccountRptActionPerformed
-        AccountantReport.getAccountantData();
+        AccountantReport.getAccountantReport();
     }//GEN-LAST:event_btnAccountRptActionPerformed
 
     private void btnRouteViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRouteViewActionPerformed

@@ -20,7 +20,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import javax.swing.JOptionPane;
-import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
@@ -39,21 +38,43 @@ public class DriverReport {
 
     private static ArrayList<Order> orderList;
     private static ArrayList<Route> routeList;
-    private static int clientCounter = 0;
-    private static int driverCounter = 0;
+    private static int clientCounter;
+    private static int driverCounter;
+    private static File file;
+    private static FileOutputStream excelOut;
+    
+    public static void getDriverReports() {
 
-    public static void getClients() {
-        routeList = new ArrayList<>();
-        orderList = new ArrayList<>();
+        boolean fileFound = false;
+
+        try {
+            file = new File("DriverReports Route (" + returnWeekString() + ").xlsx");
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            excelOut = new FileOutputStream(file);
+            fileFound = true;
+        } catch (FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Please close the excel file before using generating.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.err.println("Error - Could not create new DriverReport: File currently in use.");
+        } catch (IOException io) {
+            JOptionPane.showMessageDialog(null, "An error occured\nCould not create Driver Report", "Error", JOptionPane.ERROR_MESSAGE);
+            System.err.println("Error - Could not create new Driver Report: ");
+            io.printStackTrace();
+        }
+        if (fileFound) {
+            routeList = new ArrayList<>();
+            orderList = new ArrayList<>();
+            getActiveOrders();
+        }
+
     }
 
-    public static void getOrders() {
+    private static void getActiveOrders() {
         Firebase ref = DBClass.getInstance().child("Orders");
-        getClients();
         ref.orderByChild("Active").equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot ds) {
-                getClients();
                 for (DataSnapshot dataSnapshot : ds.getChildren()) {
                     Calendar start = Calendar.getInstance();
                     Calendar end = Calendar.getInstance();
@@ -102,7 +123,6 @@ public class DriverReport {
                 System.err.print("Error: Could not get Clients: " + fe.getMessage());
             }
         });
-
     }
 
     private static void getClient(String id, int index) {
@@ -240,17 +260,21 @@ public class DriverReport {
             for (Order order : orderList) {
                 if (order.getRoute().equals(route.getID())) {
                     Client client = order.getClient();
-                    data.put("" + counter, new Object[]{client.getName() + " " + client.getSurname(), client.getContactNumber(), "", "", "", "", "", client.getAddress().replaceAll("\n", ", "), client.getAdditionalInfo()});
+                    String durationMarker = "";
+                    if (order.getDuration().equals("Monday - Thursday")) {
+                        durationMarker = "X";
+                    }
+                    data.put("" + counter, new Object[]{client.getName() + " " + client.getSurname(), client.getContactNumber(), "", "", "", "", durationMarker, client.getAddress().replaceAll("\n", ", "), client.getAdditionalInfo()});
                     counter++;
                 }
             }
-            
+
             Set<String> keySet = data.keySet();
             int longestCustomer = 0;
-            int totalWidth = 33800;
-            for (int j = 1; j < keySet.size()+1; j++) {
+            int totalWidth = 34900;
+            for (int j = 1; j < keySet.size() + 1; j++) {
 
-                Row row = sheet.createRow(j-1);
+                Row row = sheet.createRow(j - 1);
                 Object[] arr = data.get(j + "");
 
                 for (int i = 0; i < arr.length; i++) {
@@ -261,12 +285,12 @@ public class DriverReport {
                     }
                     XSSFCellStyle borderStyle = workbook.createCellStyle();
 
-                    if (!((j + "").equals("1") || (j+ "").equals("2"))) {
+                    if (!((j + "").equals("1") || (j + "").equals("2"))) {
                         borderStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
                         borderStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
                         borderStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
                         borderStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
-                        if ((j  + "").equals("3")) {
+                        if ((j + "").equals("3")) {
                             borderStyle.setBorderBottom(XSSFCellStyle.BORDER_MEDIUM);
                             borderStyle.setBorderLeft(XSSFCellStyle.BORDER_MEDIUM);
                             borderStyle.setBorderTop(XSSFCellStyle.BORDER_MEDIUM);
@@ -291,6 +315,13 @@ public class DriverReport {
                                 borderStyle.setBorderRight(XSSFCellStyle.BORDER_MEDIUM);
                             }
 
+                            if (i == 6 && ((String)arr[i]).contains("X")) {
+                                cell.setCellValue("");
+                                borderStyle.setFillPattern(XSSFCellStyle.FINE_DOTS);
+                                borderStyle.setFillBackgroundColor(IndexedColors.GREY_50_PERCENT.getIndex());
+                                borderStyle.setFillForegroundColor(IndexedColors.GREY_50_PERCENT.getIndex());
+                            }
+                            
                             if ((Integer.parseInt((j + ""))) != keySet.size()) {
                                 borderStyle.setBorderBottom(XSSFCellStyle.BORDER_THIN);
                             } else {
@@ -305,13 +336,13 @@ public class DriverReport {
                         }
                     } else {
                         if (i == 2 || i == 7) {
-                        borderStyle.setAlignment(HorizontalAlignment.CENTER);
-                    } else if (i == 8) {
-                        borderStyle.setAlignment(HorizontalAlignment.RIGHT);
-                    }
+                            borderStyle.setAlignment(HorizontalAlignment.CENTER);
+                        } else if (i == 8) {
+                            borderStyle.setAlignment(HorizontalAlignment.RIGHT);
+                        }
                         XSSFFont font = workbook.createFont();
                         font.setFontName("Calibri");
-                        font.setFontHeightInPoints((short)13);
+                        font.setFontHeightInPoints((short) 13);
                         font.setBold(true);
                         borderStyle.setFont(font);
                     }
@@ -325,7 +356,7 @@ public class DriverReport {
             if ((longestCustomer) < 18) {
                 longestCustomer = 18;
             }
-            
+
             sheet.setColumnWidth(0, (longestCustomer + 1) * 240);
             sheet.setColumnWidth(1, 12 * 240);
             for (int i = 0; i < 5; i++) {
@@ -338,23 +369,24 @@ public class DriverReport {
         }
 
         try {
-            File file = new File("DriverReports Route (" + returnWeekString() + ").xlsx");
+            file = new File("DriverReports Route (" + returnWeekString() + ").xlsx");
             if (!file.exists()) {
                 file.createNewFile();
             }
-            FileOutputStream excelOut = new FileOutputStream(file);
+            excelOut = new FileOutputStream(file);
             workbook.write(excelOut);
             excelOut.close();
+            JOptionPane.showMessageDialog(null, "DriverReports Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
         } catch (FileNotFoundException ex) {
-            JOptionPane.showMessageDialog(null, "An error occured\nCould not find Driver Report", "Error", JOptionPane.ERROR_MESSAGE);
-            System.err.println("Error - Could not create new Driver Report: ");
+            JOptionPane.showMessageDialog(null, "Please close the excel file before using generating.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.err.println("Error - Could not create new DriverReport: File currently in use.");
             ex.printStackTrace();
         } catch (IOException io) {
             JOptionPane.showMessageDialog(null, "An error occured\nCould not create Driver Report", "Error", JOptionPane.ERROR_MESSAGE);
             System.err.println("Error - Could not create new Driver Report: ");
             io.printStackTrace();
         }
-        JOptionPane.showMessageDialog(null, "DriverReports Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
+        System.out.println("Done");
     }
 
     public static String returnWeekString() {
@@ -371,7 +403,7 @@ public class DriverReport {
             weekDate.add(Calendar.DAY_OF_WEEK, -1);
         }
         Calendar firstWeek = Calendar.getInstance();
-        firstWeek.setTimeInMillis(1440799200000l);
+        firstWeek.setTimeInMillis(1470002400000l);
         int weeks = ((weekDate.get(Calendar.YEAR) - firstWeek.get(Calendar.YEAR)) * 52 + weekDate.get(Calendar.WEEK_OF_YEAR)) - firstWeek.get(Calendar.WEEK_OF_YEAR);
         return weeks;
     }
