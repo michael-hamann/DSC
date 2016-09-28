@@ -1,10 +1,10 @@
-
 package DSC;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import java.awt.Color;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -14,6 +14,8 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
  * @author Michael Hamann
@@ -740,12 +742,30 @@ public class DSC_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDriverRptActionPerformed
 
     private void btnChefRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChefRptActionPerformed
+        ChefReport.completeReport = false;
         ChefReport chefObject = new ChefReport();
-        chefObject.getQuanity();
+        chefObject.getChefReport();
+        try {
+            JFrame j = new DSC_ReportLoading("Loading");
+            j.setVisible(true);
+            for (int i = 0; i < 10; i++) {
+                if (!ChefReport.completeReport) {
+                    Thread.sleep(500);
+                } else {
+                    j.setVisible(false);
+                    break;
+                }
+            }
+            j.setVisible(false);
+        } catch (Exception e) {
+
+        }
+        
     }//GEN-LAST:event_btnChefRptActionPerformed
 
     private void btnPackerRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPackerRptActionPerformed
-        ChefReport.getQuanity();
+        ChefReport chefObject = new ChefReport();
+        chefObject.getChefReport();
         DriverReport.getDriverReports();
         AccountantReport.getAccountantReport();
     }//GEN-LAST:event_btnPackerRptActionPerformed
