@@ -248,14 +248,14 @@ public class ChefReport {
                         sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 2));
 
                         for (int i = 0; i < 5; i++) {
-                            if (i == 2) {
+                            if (i == 1) {
+                                sheet.setColumnWidth(i, 3000);
+                            } else if (i == 2) {
                                 sheet.setColumnWidth(i, 8000);
-                            } else if (i == 1) {
-                                sheet.setColumnWidth(i, 3000);
                             } else {
-                                sheet.setColumnWidth(i, 3000);
+                                sheet.setColumnWidth(i, 4000);
                             }
-
+                            
                             if (i == 3) {
                                 sheet.setColumnWidth(i, 8000);
                             }
