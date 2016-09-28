@@ -6,6 +6,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -20,6 +21,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     int listSuburbIndex = 0;
     ArrayList<Route> allRoutes = new ArrayList<>();
     ArrayList<String> suburbs = new ArrayList<>();
+    ArrayList<RouteDrivers> drivers = new ArrayList<>();
 
     /**
      * Creates new form DSC_DriverDetails
@@ -80,7 +82,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                         Route r = new Route();
                         r.setID(data.getKey());
                         r.setActive((boolean) data.child("Active").getValue());
-                        //r.setDrivers(drivers);
+                        r.setDrivers(data.child("Drivers").getValue(ArrayList.class));
                         //r.setSuburbs(suburbs);
                         r.setTimeFrame((String) data.child("TimeFrame").getValue());
                         allRoutes.add(r);
@@ -89,7 +91,13 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                 DefaultListModel model = new DefaultListModel();
                 for (Route r : allRoutes) {
                     model.addElement(r.toString());
+                    //drivers.add(r.getDrivers());
                 }
+                DefaultComboBoxModel comboModel = new DefaultComboBoxModel();
+                for(RouteDrivers r : drivers){
+                    comboModel.addElement(r);
+                }
+                cmbDriverName.setModel(comboModel);
                 lstRoutes.setModel(model);
                 lstRoutes.setSelectedIndex(0);
                 setSuburbs(getSelectedRoute());
@@ -404,10 +412,10 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                     .addComponent(txfVehicleReg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSave)
                     .addComponent(btnBack)
                     .addComponent(btnAddDriver)
-                    .addComponent(btnEdit))
+                    .addComponent(btnEdit)
+                    .addComponent(btnSave))
                 .addContainerGap())
         );
 
