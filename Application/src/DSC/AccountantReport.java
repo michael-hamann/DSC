@@ -125,7 +125,7 @@ public class AccountantReport {
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet("AccountReport - Week " + DriverReport.returnWeekInt());
         Map<String, Object[]> data = new TreeMap<>();
-        data.put("1", new Object[]{"Doorstep Chef Accountant Sheet", "","Week: " + DriverReport.returnWeekString(), "", "", "",  "", ""});
+        data.put("1", new Object[]{"Doorstep Chef Accountant Sheet", "", "Week: " + DriverReport.returnWeekInt() + " (" + DriverReport.returnWeekString() + ")", "", "", "", "", ""});
         data.put("2", new Object[]{"", "", "", "", "", "", ""});
         data.put("3", new Object[]{"Name", "Surname", "Contact", "R.ID", "EFT", "Cash", "Date Paid", "Stay"});
 
@@ -198,10 +198,6 @@ public class AccountantReport {
                         borderStyle.setBorderTop(XSSFCellStyle.BORDER_THIN);
 
                     }
-                    if ((i == 7 || i == 8) && !(key + "").equals("3")) {
-                        borderStyle.setAlignment(XSSFCellStyle.ALIGN_JUSTIFY);
-                        borderStyle.setVerticalAlignment(XSSFCellStyle.VERTICAL_JUSTIFY);
-                    }
                 } else {
                     if (i == 2) {
                         borderStyle.setAlignment(HorizontalAlignment.RIGHT);
@@ -216,12 +212,10 @@ public class AccountantReport {
                 cell.setCellStyle(borderStyle);
 
             }
-            if (key == 1) {
-                sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 1));
-                sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, 7));
-            }
-
         }
+
+        sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 1));
+        sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, 7));
 
         sheet.setColumnWidth(2, 13 * 240);
         sheet.setColumnWidth(3, 5 * 240);
@@ -229,8 +223,8 @@ public class AccountantReport {
         sheet.setColumnWidth(5, 5 * 240);
         sheet.setColumnWidth(6, 13 * 240);
         sheet.setColumnWidth(7, 5 * 240);
-        totalSize = (totalSize - (sheet.getColumnWidth(2) + sheet.getColumnWidth(3) + sheet.getColumnWidth(4) + 
-                sheet.getColumnWidth(5) + sheet.getColumnWidth(6) + sheet.getColumnWidth(7))) / 2;
+        totalSize = (totalSize - (sheet.getColumnWidth(2) + sheet.getColumnWidth(3) + sheet.getColumnWidth(4)
+                + sheet.getColumnWidth(5) + sheet.getColumnWidth(6) + sheet.getColumnWidth(7))) / 2;
         sheet.setColumnWidth(0, totalSize);
         sheet.setColumnWidth(1, totalSize);
 

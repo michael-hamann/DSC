@@ -77,18 +77,11 @@ public class DriverReport {
             public void onDataChange(DataSnapshot ds) {
                 for (DataSnapshot dataSnapshot : ds.getChildren()) {
                     Calendar start = Calendar.getInstance();
-                    Calendar end = Calendar.getInstance();
-                    if (dataSnapshot.child("EndDate").getValue(String.class).equals("-")) {
-                        end = null;
-                    } else {
-                        end.setTimeInMillis(dataSnapshot.child("EndDate").getValue(long.class));
-                    }
-
-                    if (dataSnapshot.child("StartingDate").getValue(String.class).equals("-")) {
-                        start = null;
-                    } else {
+                    Calendar end = null;
+                    
+                    if (!dataSnapshot.child("StartingDate").getValue(String.class).equals("-")) {
+                        start = Calendar.getInstance();
                         start.setTimeInMillis(dataSnapshot.child("StartingDate").getValue(long.class));
-
                     }
 
                     ArrayList<Meal> meals = new ArrayList<>();
@@ -110,6 +103,7 @@ public class DriverReport {
                             meals,
                             dataSnapshot.child("FamilySize").getValue(int.class)
                     ));
+                    System.out.println(meals);
                 }
                 clientCounter = 0;
                 for (Order order : orderList) {
@@ -204,7 +198,7 @@ public class DriverReport {
                     driverCount++;
                 }
 
-                System.out.println("Success!!!");
+                System.out.println("Success (Driver)!!!");
             }
 
             @Override
@@ -252,7 +246,7 @@ public class DriverReport {
             XSSFSheet sheet = workbook.createSheet("DriverReports Route - " + route.getID());
 
             Map<String, Object[]> data = new TreeMap<>();
-            data.put("1", new Object[]{"Doorstep Chef Driver Sheet  Week: " + returnWeekString(), "", "", "", "", "", "", "Driver: " + route.getDrivers().get(0).getDriver().getDriverName().split(" ")[0] + " - " + route.getDrivers().get(0).getDriver().getContactNumber(), "Route: " + route.getID()});
+            data.put("1", new Object[]{"Doorstep Chef Driver Sheet  Week: " + returnWeekInt(), "", "", "", "", "", "", "Driver: " + route.getDrivers().get(0).getDriver().getDriverName().split(" ")[0] + " - " + route.getDrivers().get(0).getDriver().getContactNumber(), "Route: " + route.getID()});
             data.put("2", new Object[]{"", "", "", "", "", "", "", "", ""});
             data.put("3", new Object[]{"Customer", "Contact", "Mon", "Tue", "Wed", "Thu", "Fri", "Address", "AdditionalInfo"});
 
@@ -272,25 +266,25 @@ public class DriverReport {
             Set<String> keySet = data.keySet();
             int longestCustomer = 0;
             int totalWidth = 34900;
-            for (int j = 1; j < keySet.size() + 1; j++) {
+            for (int key = 1; key < keySet.size() + 1; key++) {
 
-                Row row = sheet.createRow(j - 1);
-                Object[] arr = data.get(j + "");
+                Row row = sheet.createRow(key - 1);
+                Object[] arr = data.get(key + "");
 
                 for (int i = 0; i < arr.length; i++) {
                     Cell cell = row.createCell(i);
                     cell.setCellValue((String) arr[i]);
-                    if (i == 0 && !(j + "").equals("1") && longestCustomer < ((String) arr[i]).length()) {
+                    if (i == 0 && !(key + "").equals("1") && longestCustomer < ((String) arr[i]).length()) {
                         longestCustomer = ((String) arr[i]).length();
                     }
                     XSSFCellStyle borderStyle = workbook.createCellStyle();
 
-                    if (!((j + "").equals("1") || (j + "").equals("2"))) {
+                    if (!((key + "").equals("1") || (key + "").equals("2"))) {
                         borderStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
                         borderStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
                         borderStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
                         borderStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
-                        if ((j + "").equals("3")) {
+                        if ((key + "").equals("3")) {
                             borderStyle.setBorderBottom(XSSFCellStyle.BORDER_MEDIUM);
                             borderStyle.setBorderLeft(XSSFCellStyle.BORDER_MEDIUM);
                             borderStyle.setBorderTop(XSSFCellStyle.BORDER_MEDIUM);
@@ -322,7 +316,7 @@ public class DriverReport {
                                 borderStyle.setFillForegroundColor(IndexedColors.GREY_50_PERCENT.getIndex());
                             }
                             
-                            if ((Integer.parseInt((j + ""))) != keySet.size()) {
+                            if ((Integer.parseInt((key + ""))) != keySet.size()) {
                                 borderStyle.setBorderBottom(XSSFCellStyle.BORDER_THIN);
                             } else {
                                 borderStyle.setBorderBottom(XSSFCellStyle.BORDER_MEDIUM);
@@ -330,7 +324,7 @@ public class DriverReport {
                             borderStyle.setBorderTop(XSSFCellStyle.BORDER_THIN);
 
                         }
-                        if ((i == 7 || i == 8) && !(j + "").equals("3")) {
+                        if ((i == 7 || i == 8) && !(key + "").equals("3")) {
                             borderStyle.setAlignment(XSSFCellStyle.ALIGN_JUSTIFY);
                             borderStyle.setVerticalAlignment(XSSFCellStyle.VERTICAL_JUSTIFY);
                         }
