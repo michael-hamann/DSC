@@ -53,7 +53,7 @@ public class DSC_PlaceOrder_Mealpane extends javax.swing.JFrame {
         btnSave = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Meal");
+        setTitle("New Meal");
         setAlwaysOnTop(true);
         setResizable(false);
 
