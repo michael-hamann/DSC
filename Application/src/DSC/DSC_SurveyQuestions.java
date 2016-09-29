@@ -63,7 +63,7 @@ public class DSC_SurveyQuestions extends javax.swing.JFrame {
         btnDelete = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("DoorsepChef");
+        setTitle("Survey Questions");
         setResizable(false);
 
         jPanel5.setBackground(new java.awt.Color(0, 153, 0));

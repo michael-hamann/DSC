@@ -15,17 +15,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.SortedMap;
 import java.util.TreeMap;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import static jdk.nashorn.internal.objects.NativeObject.keys;
+import javax.swing.JOptionPane;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
@@ -44,10 +39,14 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class ChefReport {
 
     private ArrayList<Chef> allOrders = new ArrayList();
-    private ArrayList<String> allRoutes = new ArrayList();
+    public static ArrayList<String> allRoutes = new ArrayList();
+    private String list[] = {"Standard", "Low Carb", "Kiddies"};
+    private String familySizes[] = {"1", "2", "3", "4", "5", "6"};
+    private String familysize = "";
+    private XSSFWorkbook workbook;
+    public static boolean completeReport = false;
 
-    //private static Map<String, String[]> data;
-    public void getQuanity() {
+    public void getChefReport() {
 
         Firebase newRef = DBClass.getInstance().child("Routes");
         newRef.orderByChild("Active").equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -58,13 +57,12 @@ public class ChefReport {
                     allRoutes.add(levelOne.getKey());
 
                 }
-
             }
 
             @Override
             public void onCancelled(FirebaseError fe
             ) {
-                System.err.print("Error: Could not get Clients: " + fe.getMessage());
+                System.err.print("Error: Could not get Routes: " + fe.getMessage());
             }
 
         }
@@ -80,7 +78,6 @@ public class ChefReport {
                         for (DataSnapshot levelThree : levelTwo.getChildren()) {
 
                             if (levelOne.child("Active").getValue(boolean.class).equals(true)) {
-
                                 allOrders.add(new Chef(levelThree.child("Quantity").getValue(String.class),
                                         levelThree.child("Allergies").getValue(String.class),
                                         levelThree.child("Exclusions").getValue(String.class),
@@ -88,17 +85,10 @@ public class ChefReport {
                                         levelThree.child("MealType").getValue(String.class),
                                         levelOne.child("FamilySize").getValue(String.class)
                                 ));
-
                             }
                         }
                     }
-
                 }
-
-                String list[] = {"Standard", "Low Carb", "Kiddies"};
-                String familySizes[] = {"1", "2", "3", "4", "5", "6"};
-                String familysize = "";
-                XSSFWorkbook workbook;
 
                 int excelNumber = 0;
 
@@ -108,15 +98,15 @@ public class ChefReport {
                     for (String currRoute : allRoutes) {
                         int bulkCount = 0;
                         Map<String, Object[]> data = new TreeMap<>();
-                        data.put(0 + "", new String[]{"Doorstep Chef - Chef Report " + currentWeek(), "", "", "Meal Type : " + list[numberOfRoutes] + " " + " " +"Route: " + sheetNumber});
-                        data.put(1 + "", new String[]{"Family Size", "Quantity", "Allergies", "Exclusions"});
-                        int counter = 2;
+                        data.put(0 + "", new String[]{"Doorstep Chef - Chef Report " + currentWeek(), "", "", "Meal Type : " + list[numberOfRoutes] + " " + " " + "Route: " + sheetNumber});
+                        data.put(1 + "", new String[]{"", "", "", "", "", "", ""});
+                        data.put(2 + "", new String[]{"Family Size", "Quantity", "Allergies", "Exclusions"});
+                        int counter = 3;
                         XSSFSheet sheet = workbook.createSheet("ChefReports Route - " + sheetNumber);
                         int rowNum = 0;
                         int cellNum = 0;
                         for (int i = 0; i < familySizes.length; i++) {
                             for (int ordersCount = 0; ordersCount < allOrders.size(); ordersCount++) {
-                                System.out.println(counter);
 
                                 if (allOrders.get(ordersCount).getRoute().equals(currRoute) && allOrders.get(ordersCount).getMealType().equals(list[numberOfRoutes]) && allOrders.get(ordersCount).getFamilySize().equals(familySizes[i])) {
                                     if (allOrders.get(ordersCount).getAllergies().equals("-") && allOrders.get(ordersCount).getAllergies().equals("-") || allOrders.get(ordersCount).getAllergies().equals("") && allOrders.get(ordersCount).getAllergies().equals("")) {
@@ -177,24 +167,26 @@ public class ChefReport {
                                     familysize = "Extra";
                             }
 
-                            data.put(counter + "", new String[]{familysize + " Bulk *", bulkCount + "", "", ""});                          
+                            data.put(counter + "", new String[]{familysize + " Normal *", bulkCount + "", "", ""});
                             counter++;
                         }
 
                         Set<String> keySet = data.keySet();
-                        ArrayList<String> keyList = new ArrayList();
+                        Object[] keys = data.keySet().toArray();
+                        Arrays.sort(keys);
+                        ArrayList<Object> keyList = new ArrayList();
                         int longestCustomer = 5;
                         int totalWidth = 50000;
                         boolean isBulk = false;
-                        for (String key : keySet) {
-                            keyList.add(key);
+
+                        for (Object key : keys) {
+                            keyList.add(data.get(key));
                         }
 
                         for (int keyIterate = 0; keyIterate < keySet.size(); keyIterate++) {
-
                             Row row = sheet.createRow(rowNum);
-                            Object[] arr = data.get(keyList.get(keyIterate));
-                            System.out.println(keyList.get(keyIterate));
+                            Object[] arr = data.get(keyIterate + "");
+
                             for (int i = 0; i < arr.length; i++) {
                                 XSSFFont font = workbook.createFont();
                                 Cell cell = row.createCell(i);
@@ -219,6 +211,7 @@ public class ChefReport {
                                     }
                                     if (i == 1 && isBulk) {
                                         font.setBold(true);
+                                        font.setFontHeightInPoints((short) 13);
                                         borderStyle.setFont(font);
                                         isBulk = false;
                                     }
@@ -227,7 +220,7 @@ public class ChefReport {
                                     borderStyle.setBorderLeft(BorderStyle.THIN);
                                     borderStyle.setBorderRight(BorderStyle.THIN);
                                 }
-                                if ((keyIterate + "").equals("1")) {
+                                if ((keyIterate + "").equals("2")) {
                                     borderStyle.setBorderBottom(XSSFCellStyle.BORDER_MEDIUM);
                                     borderStyle.setBorderLeft(XSSFCellStyle.BORDER_MEDIUM);
                                     borderStyle.setBorderTop(XSSFCellStyle.BORDER_MEDIUM);
@@ -251,12 +244,12 @@ public class ChefReport {
                         sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 2));
 
                         for (int i = 0; i < 5; i++) {
-                            if (i == 2) {
-                                sheet.setColumnWidth(i, 6000);
-                            } else if (i == 1) {
+                            if (i == 1) {
                                 sheet.setColumnWidth(i, 3000);
+                            } else if (i == 2) {
+                                sheet.setColumnWidth(i, 8000);
                             } else {
-                                sheet.setColumnWidth(i, 3000);
+                                sheet.setColumnWidth(i, 4000);
                             }
 
                             if (i == 3) {
@@ -269,10 +262,13 @@ public class ChefReport {
                     }
                     try {
                         creatSheet(excelNumber + "", list[numberOfRoutes], workbook);
+                    } catch (FileNotFoundException ex) {
+                        JOptionPane.showMessageDialog(null, "File is Currently being Used. Please Close the File.");
                     } catch (IOException ex) {
-                        Logger.getLogger(ChefReport.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(null, "File COuld Not Be Found.");
                     }
                     excelNumber++;
+
                 }
 
             }
@@ -281,7 +277,7 @@ public class ChefReport {
 
             public void onCancelled(FirebaseError fe
             ) {
-                System.err.print("Error: Could not get Clients: " + fe.getMessage());
+                System.err.print("Error: Could not get Orders: " + fe.getMessage());
             }
 
         }
@@ -292,23 +288,17 @@ public class ChefReport {
     public static void creatSheet(String excelNumber, String mealType, XSSFWorkbook workbook) throws IOException {
         FileOutputStream excelOut = null;
         try {
-            File file = new File("ChefReports Route - " + excelNumber + " ( " + mealType + " )" + ".xlsx");
+            String path = "C:\\Users\\Aliens_Keanu\\Documents\\GitHub\\DSC\\Application\\Reports\\" + "DSC_ChefReport - " + currentWeek() + " Week Number -  " + returnWeekInt() + "\\";
+            File f = new File(path);
+            f.mkdir();
+            File file = new File(path + "ChefReports Route - " + excelNumber + " ( " + mealType + " )" + ".xlsx");
             excelOut = new FileOutputStream(file);
             workbook.write(excelOut);
             excelOut.close();
             System.out.println("DONE");
 
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(ChefReport.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                excelOut.close();
-
-            } catch (IOException ex) {
-                Logger.getLogger(ChefReport.class
-                        .getName()).log(Level.SEVERE, null, ex);
-            }
+            JOptionPane.showMessageDialog(null, "File is Currently being Used. Please Close the File.");
         }
     }
 
@@ -318,6 +308,17 @@ public class ChefReport {
             weekDate.add(Calendar.DAY_OF_WEEK, -1);
         }
         return new SimpleDateFormat("dd MMM yyyy").format(weekDate.getTime());
+    }
+
+    public static int returnWeekInt() {
+        Calendar weekDate = Calendar.getInstance();
+        while (weekDate.get(Calendar.DAY_OF_WEEK) != 2) {
+            weekDate.add(Calendar.DAY_OF_WEEK, -1);
+        }
+        Calendar firstWeek = Calendar.getInstance();
+        firstWeek.setTimeInMillis(1470002400000l);
+        int weeks = ((weekDate.get(Calendar.YEAR) - firstWeek.get(Calendar.YEAR)) * 52 + weekDate.get(Calendar.WEEK_OF_YEAR)) - firstWeek.get(Calendar.WEEK_OF_YEAR);
+        return weeks;
     }
 
 }
