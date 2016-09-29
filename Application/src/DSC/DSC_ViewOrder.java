@@ -5,9 +5,12 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
@@ -22,7 +25,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
     int tbcounter = 30;
     int count = 0;
-    
+
     boolean search = true;
     boolean orderEdited = false;
     boolean editClicked = false;
@@ -30,7 +33,9 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
     ArrayList<Client> allclients = new ArrayList<>();
     ArrayList<Order> allorders = new ArrayList<>();
-    ArrayList<Order> orders1 = new ArrayList<>();
+    ArrayList<Order> tborders = new ArrayList<>();
+    ArrayList<Order> activeOrders = new ArrayList<>();
+    ArrayList<Order> inactiveOrders = new ArrayList<>();
 
     ArrayList<String> suburbs = new ArrayList<>();
     ArrayList<String> activeSuburbs = new ArrayList<>();
@@ -71,6 +76,8 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         spnStartDate.setEditor(sd);
         spnEndDate.setEditor(ed);
 
+        cmbListener();
+
     }
 
     public final void enableFieldsClient() {
@@ -108,7 +115,6 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         cmbSuburbs.setSelectedIndex(0);
         orderSelected = false;
     }
-    
 
     public final void enableFieldsOrder() {
         spnOrderFamilySize.setEnabled(true);
@@ -144,7 +150,6 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         model.setRowCount(0);
         boolean orderSelected = false;
     }
-    
 
     private boolean checkEmpty() {
         boolean empty = false;
@@ -156,9 +161,8 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
         return empty;
     }
-    
 
-    public void callActiveSuburbs() {
+    private void callActiveSuburbs() {
         Firebase ref = DBClass.getInstance().child("Routes");
         ref.orderByChild("Active").equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -185,7 +189,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         activeSuburbs.add("Collection");
     }
 
-    public void callAllSuburbs() {
+    private void callAllSuburbs() {
         Firebase ref = DBClass.getInstance().child("Routes");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -212,18 +216,16 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         });
 
     }
-    
 
-    public void setOrderTB(Order order, DefaultTableModel d) {
-        orders1.add(order);
+    private void setOrderTB(Order order, DefaultTableModel d) {
+        tborders.add(order);
         Object[] row = {order.getClient().getName(), order.getClient().getSurname(), order.getClient().getContactNumber(),
             order.getClient().getEmail(), order.getClient().getSuburb(), order.isActive(), order.getDuration(), order.getFamilySize()};
         d.addRow(row);
         d.fireTableDataChanged();
     }
-    
 
-    public void setTextFields() {
+    private void setTextFields() {
 
         DefaultTableModel mealmodel = (DefaultTableModel) tblMeals.getModel();
 
@@ -237,36 +239,36 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
                     int row = tblOrderTable.rowAtPoint(evt.getPoint());
 
-                    txfClientID.setText(orders1.get(row).getClient().getID());
-                    txfClientName.setText(orders1.get(row).getClient().getName());
-                    txfClientSurname.setText(orders1.get(row).getClient().getSurname());
-                    txfClientAddress.setText(orders1.get(row).getClient().getAddress());
-                    txfAddInfo.setText(orders1.get(row).getClient().getAdditionalInfo());
-                    txfClientContactNo.setText(orders1.get(row).getClient().getContactNumber());
-                    txfAltNum.setText(orders1.get(row).getClient().getAlternativeNumber());
-                    txfClientEmail.setText(orders1.get(row).getClient().getEmail());
-                    cmbSuburbs.setSelectedItem(orders1.get(row).getClient().getSuburb().trim());
-                    txfOrderID.setText(orders1.get(row).getID());
-                    cmbDuration.setSelectedItem(orders1.get(row).getDuration());
+                    txfClientID.setText(tborders.get(row).getClient().getID());
+                    txfClientName.setText(tborders.get(row).getClient().getName());
+                    txfClientSurname.setText(tborders.get(row).getClient().getSurname());
+                    txfClientAddress.setText(tborders.get(row).getClient().getAddress());
+                    txfAddInfo.setText(tborders.get(row).getClient().getAdditionalInfo());
+                    txfClientContactNo.setText(tborders.get(row).getClient().getContactNumber());
+                    txfAltNum.setText(tborders.get(row).getClient().getAlternativeNumber());
+                    txfClientEmail.setText(tborders.get(row).getClient().getEmail());
+                    cmbSuburbs.setSelectedItem(tborders.get(row).getClient().getSuburb().trim());
+                    txfOrderID.setText(tborders.get(row).getID());
+                    cmbDuration.setSelectedItem(tborders.get(row).getDuration());
 
-                    Date date = orders1.get(row).getStartingDate().getTime();
+                    Date date = tborders.get(row).getStartingDate().getTime();
                     SpinnerDateModel smb = new SpinnerDateModel(date, null, null, Calendar.HOUR_OF_DAY);
                     spnStartDate.setModel(smb);
                     JSpinner.DateEditor d = new JSpinner.DateEditor(spnStartDate, "dd-MM-yyyy");
                     spnStartDate.setEditor(d);
 
-                    spnOrderFamilySize.setValue(orders1.get(row).getFamilySize());
-                    if (orders1.get(row).getEndDate() == null) {
+                    spnOrderFamilySize.setValue(tborders.get(row).getFamilySize());
+                    if (tborders.get(row).getEndDate() == null) {
                     } else {
-                        Date enddate = orders1.get(row).getEndDate().getTime();
+                        Date enddate = tborders.get(row).getEndDate().getTime();
                         SpinnerDateModel endD = new SpinnerDateModel(enddate, null, null, Calendar.HOUR_OF_DAY);
                         spnEndDate.setModel(endD);
                         JSpinner.DateEditor endDE = new JSpinner.DateEditor(spnEndDate, "dd-MM-yyyy");
                         spnStartDate.setEditor(endDE);
                     }
-                    txfOrderRouteID.setText(orders1.get(row).getRoute());
+                    txfOrderRouteID.setText(tborders.get(row).getRoute());
 
-                    for (Meal meals : orders1.get(row).getMeals()) {
+                    for (Meal meals : tborders.get(row).getMeals()) {
                         mealmodel.addRow(meals.returnObj());
                     }
                     mealmodel.fireTableDataChanged();
@@ -275,9 +277,8 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         });
 
     }
-    
 
-    public void saveOrder() {
+    private void saveOrder() {
         Firebase ord = DBClass.getInstance().child("Orders");// Go to specific Table
 
         ord.addChildEventListener(new ChildEventListener() {
@@ -322,7 +323,9 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
                 if (o.isActive() && count < tbcounter) {
                     setOrderTB(o, model);
-                    count++;
+                    activeOrders.add(o);
+                } else if (o.isActive() == false) {
+                    inactiveOrders.add(o);
                 }
 
             }
@@ -386,7 +389,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         });
     }
 
-    public void saveClient() {
+    private void saveClient() {
         Firebase tableRef = DBClass.getInstance().child("Clients");// Go to specific Table
 
         tableRef.addChildEventListener(new ChildEventListener() {
@@ -412,7 +415,6 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     if (ds.getKey().equals(client.getID())) {
                         client.setID(ds.getKey());
                         client.setName(ds.child("Name").getValue(String.class));
-                        System.out.println(ds.child("Name").getValue(String.class));
                         client.setSurname(ds.child("Surname").getValue(String.class));
                         client.setContactNumber((String) ds.child("ContactNum").getValue(String.class));
                         client.setEmail(ds.child("Email").getValue(String.class));
@@ -643,18 +645,25 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         pnlTableLayout.setVerticalGroup(
             pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTableLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cmbSearchColumn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblSearchBy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txfSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnDelete)
-                        .addComponent(cmbVeiw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnPrevious))
-                    .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTableLayout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(btnPrevious, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlTableLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(cmbSearchColumn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblSearchBy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txfSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(pnlTableLayout.createSequentialGroup()
+                                .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(btnDelete)
+                                        .addComponent(cmbVeiw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addGap(11, 11, 11)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
                 .addContainerGap())
@@ -1103,7 +1112,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
                     break;
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(rootPane, "No order has been selected to delete!");
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
@@ -1345,7 +1354,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         clearFieldsClient();
         clearFieldsOrder();
 
-        orders1.clear();
+        tborders.clear();
 
         if (txfSearch.getText().equals("")) {
             JOptionPane.showMessageDialog(rootPane, "Please enter search value!");
@@ -1559,8 +1568,8 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             }
         }
         setTextFields();
-        if(tblOrderTable.getRowCount()<1 && search ){
-            JOptionPane.showMessageDialog(rootPane, "No orders found for '"+searchFor+"'.");
+        if (tblOrderTable.getRowCount() < 1 && search) {
+            JOptionPane.showMessageDialog(rootPane, "No orders found for '" + searchFor + "'.");
         }
     }//GEN-LAST:event_btnSearchActionPerformed
 
@@ -1602,46 +1611,211 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddMealActionPerformed
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
-        orders1.clear();
+        tborders.clear();
         DefaultTableModel ordertb = (DefaultTableModel) tblOrderTable.getModel();
-        ordertb.setRowCount(0);
-        if (allorders.size() > tbcounter) {
-            tbcounter = tbcounter + 30;
-            while (count < tbcounter) {
-                if (allorders.size() > count || allorders.size() == count) {
-                    setOrderTB(allorders.get(count), ordertb);
-                    count++;
-                } else {
-                    break;
+        String view = (String) cmbVeiw.getSelectedItem();
+        ArrayList<List<Order>> arrays;
+        int parts = -1;
+
+        count++;
+        switch (view) {
+            case "All":
+                if((allorders.size() % 30)==0){
+                    parts = (allorders.size() / 30);
+                }else{
+                    parts = (allorders.size() / 30)+1;
                 }
-            } 
+                arrays = split(allorders);
+                if (count < parts) {
+                    ordertb.setRowCount(0);
+                    List<Order> orders = arrays.get(count);
+                    for (Order order : orders) {
+                        setOrderTB(order, ordertb);
+                    }
+                } else {
+                    count--;
+                    JOptionPane.showMessageDialog(rootPane, "No further order entries.");
+                }
+
+                break;
+            case "Active":
+                if((activeOrders.size() % 30)==0){
+                    parts = (activeOrders.size() / 30);
+                }else{
+                    parts = (activeOrders.size() / 30)+1;
+                }
+                arrays = split(activeOrders);
+                if (count < parts ) {
+                    ordertb.setRowCount(0);
+                    List<Order> orders1 = arrays.get(count);
+                    for (Order order : orders1) {
+                        setOrderTB(order, ordertb);
+                    }
+                } else {
+                    count--;
+                    JOptionPane.showMessageDialog(rootPane, "No further order entries.");
+                }
+                break;
+            case "Inactive":
+               if((inactiveOrders.size() % 30)==0){
+                    parts = (inactiveOrders.size() / 30);
+                }else{
+                    parts = (inactiveOrders.size() / 30)+1;
+                }
+                arrays = split(inactiveOrders);
+                if (count < parts ) {
+                    ordertb.setRowCount(0);
+                    List inactorders = arrays.get(count);
+                    for (Object order : inactorders) {
+                        setOrderTB((Order) order, ordertb);
+                    }
+                } else {
+                    count--;
+                    JOptionPane.showMessageDialog(rootPane, "No further order entries.");
+                }
+                break;
         }
+
+
     }//GEN-LAST:event_btnNextActionPerformed
 
     private void btnPreviousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousActionPerformed
-        orders1.clear();
+        tborders.clear();
         DefaultTableModel ordertb = (DefaultTableModel) tblOrderTable.getModel();
-        String s = (String) cmbVeiw.getSelectedItem();
-
-        ordertb.setRowCount(0);
-        if (tbcounter > 30) {
-            tbcounter = tbcounter - 30;
-            int j = tbcounter % count;
-            count = tbcounter - 30;
-            while (count < tbcounter) {
-                if (allorders.size() > count || allorders.size() == count) {
-                    setOrderTB(allorders.get(count), ordertb);
-                    count++;
-                } else {
+        String view = (String) cmbVeiw.getSelectedItem();
+        
+        ArrayList<List<Order>> arrays = new ArrayList();
+        if (count < 1) {
+            JOptionPane.showMessageDialog(rootPane, "No previous order entries.");
+        } else {
+            count--;
+            switch (view) {
+                case "All":
+                    arrays = split(allorders);
+                    ordertb.setRowCount(0);
+                    List orders = arrays.get(count);
+                    for (Object order : orders) {
+                        setOrderTB((Order) order, ordertb);
+                    }
                     break;
-                }
+                case "Active":
+                    arrays = split(activeOrders);
+                    ordertb.setRowCount(0);
+                    List actorders = arrays.get(count);
+                    for (Object order : actorders) {
+                        setOrderTB((Order) order, ordertb);
+                    }
+                    break;
+                case "Inactive":
+                    arrays = split(inactiveOrders);
+                    ordertb.setRowCount(0);
+                    List inactorders = arrays.get(count);
+                    for (Object order : inactorders) {
+                        setOrderTB((Order) order, ordertb);
+                    }
+                    break;
             }
         }
+
     }//GEN-LAST:event_btnPreviousActionPerformed
 
     /**
      * @param args the command line arguments
      */
+    private void cmbListener() {
+        DefaultTableModel ordertb = (DefaultTableModel) tblOrderTable.getModel();
+        cmbVeiw.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String view = (String) cmbVeiw.getSelectedItem();
+                ordertb.setRowCount(0);
+                tborders.clear();
+                tbcounter = 30;
+                int counter = 0;
+                count=0;
+                switch (view) {
+                    case "All":
+                        if (allorders.size() > counter || allorders.size() == counter) {
+                            if (tbcounter > allorders.size()) {
+                                while (counter < (tbcounter - allorders.size())) {
+                                    setOrderTB(allorders.get(counter), ordertb);
+                                    counter++;
+                                }
+                            } else {
+                                while (counter < tbcounter) {
+                                    setOrderTB(allorders.get(counter), ordertb);
+                                    counter++;
+                                }
+                            }
+                        }
+                        break;
+                    case "Inactive":
+                        if (tbcounter > inactiveOrders.size()) {
+                            while (counter < (tbcounter - allorders.size())) {
+                                setOrderTB(inactiveOrders.get(counter), ordertb);
+                                counter++;
+                            }
+                        } else {
+                            while (count < tbcounter) {
+                                setOrderTB(inactiveOrders.get(counter), ordertb);
+                                count++;
+                            }
+                        }
+                        break;
+                    case "Active":
+                        if (tbcounter > activeOrders.size()) {
+                            while (counter < (tbcounter - activeOrders.size())) {
+                                setOrderTB(activeOrders.get(counter), ordertb);
+                                counter++;
+                            }
+                        } else {
+                            while (counter < tbcounter) {
+                                setOrderTB(activeOrders.get(counter), ordertb);
+                                counter++;
+                            }
+                        }
+                        break;
+                }
+            }
+        });
+    }
+
+    public ArrayList<List<Order>> split(ArrayList<Order> list) {
+
+        int k = 0;
+        List<Order> ordersplit;
+        ArrayList<List<Order>> arrays = new ArrayList();
+        int size = list.size();
+        if (size % 30 == 0) {
+            int parts = size / 30;
+            for (int i = 0; i < parts; i++) {
+                ordersplit = new ArrayList();
+                for (int j = 0; j < 30; j++) {
+                    if (k < size) {
+                        ordersplit.add(list.get(k));
+                        k++;
+                    }
+                }
+                arrays.add(ordersplit);
+            }
+        } else {
+            int parts = (size / 30) + 1;
+            for (int i = 0; i < parts; i++) {
+                ordersplit = new ArrayList();
+                for (int j = 0; j < 30; j++) {
+                    if (k < size) {
+                        ordersplit.add(list.get(k));
+                        k++;
+                    }
+                }
+                arrays.add(ordersplit);
+            }
+        }
+
+        return arrays;
+
+    }
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -1653,16 +1827,24 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DSC_ViewOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DSC_ViewOrder.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DSC_ViewOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DSC_ViewOrder.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DSC_ViewOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DSC_ViewOrder.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DSC_ViewOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DSC_ViewOrder.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
