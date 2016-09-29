@@ -760,18 +760,17 @@ public class DSC_Main extends javax.swing.JFrame {
         } catch (Exception e) {
 
         }
-        
+
     }//GEN-LAST:event_btnChefRptActionPerformed
 
     private void btnPackerRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPackerRptActionPerformed
-<<<<<<< HEAD
+
         PackerReport.getPackerData();
-=======
         ChefReport chefObject = new ChefReport();
         chefObject.getChefReport();
         DriverReport.getDriverReports();
         AccountantReport.getAccountantReport();
->>>>>>> origin/master
+
     }//GEN-LAST:event_btnPackerRptActionPerformed
 
     private void btnAccountRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccountRptActionPerformed
