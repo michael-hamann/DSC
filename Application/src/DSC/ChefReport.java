@@ -13,6 +13,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 <<<<<<< HEAD
@@ -26,6 +28,7 @@ import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
@@ -83,7 +86,6 @@ public class ChefReport {
                         for (DataSnapshot levelThree : levelTwo.getChildren()) {
 
                             if (levelOne.child("Active").getValue(boolean.class).equals(true)) {
-
                                 allOrders.add(new Chef(levelThree.child("Quantity").getValue(String.class),
                                         levelThree.child("Allergies").getValue(String.class),
                                         levelThree.child("Exclusions").getValue(String.class),
@@ -113,8 +115,7 @@ public class ChefReport {
                         int cellNum = 0;
                         for (int i = 0; i < familySizes.length; i++) {
                             for (int ordersCount = 0; ordersCount < allOrders.size(); ordersCount++) {
-                                System.out.println(counter);
-
+                              
                                 if (allOrders.get(ordersCount).getRoute().equals(currRoute) && allOrders.get(ordersCount).getMealType().equals(list[numberOfRoutes]) && allOrders.get(ordersCount).getFamilySize().equals(familySizes[i])) {
                                     if (allOrders.get(ordersCount).getAllergies().equals("-") && allOrders.get(ordersCount).getAllergies().equals("-") || allOrders.get(ordersCount).getAllergies().equals("") && allOrders.get(ordersCount).getAllergies().equals("")) {
                                         bulkCount++;
@@ -269,14 +270,14 @@ public class ChefReport {
                     }
                     try {
                         creatSheet(excelNumber + "", list[numberOfRoutes], workbook);
-                    } catch (IOException ex) {
-                        Logger.getLogger(ChefReport.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (FileNotFoundException ex) {
+                        JOptionPane.showMessageDialog(null, "File is Currently being Used. Please Close the File.");
+                    } catch(IOException ex){
+                        JOptionPane.showMessageDialog(null, "File COuld Not Be Found.");
                     }
                     excelNumber++;
                     
-                    if (allRoutes.size() == excelNumber) {
-                        completeReport = true;                       
-                    }
+                 
                 }
 
             }
@@ -296,24 +297,18 @@ public class ChefReport {
     public static void creatSheet(String excelNumber, String mealType, XSSFWorkbook workbook) throws IOException {
         FileOutputStream excelOut = null;
         try {
-            File file = new File("ChefReports Route - " + excelNumber + " ( " + mealType + " )" + ".xlsx");
+            String path = "C:\\Users\\Aliens_Keanu\\Documents\\GitHub\\DSC\\Application\\Reports\\" + "DSC_ChefReport - " + currentWeek() + " Week Number -  " +returnWeekInt() + "\\";
+            File f = new File(path);
+            f.mkdir();
+            File file = new File(path + "ChefReports Route - " + excelNumber + " ( " + mealType + " )" + ".xlsx");
             excelOut = new FileOutputStream(file);
             workbook.write(excelOut);
             excelOut.close();
             System.out.println("DONE");
 
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(ChefReport.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                excelOut.close();
-
-            } catch (IOException ex) {
-                Logger.getLogger(ChefReport.class
-                        .getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+           JOptionPane.showMessageDialog(null, "File is Currently being Used. Please Close the File.");
+        } 
     }
 
     public static String currentWeek() {
@@ -322,6 +317,16 @@ public class ChefReport {
             weekDate.add(Calendar.DAY_OF_WEEK, -1);
         }
         return new SimpleDateFormat("dd MMM yyyy").format(weekDate.getTime());
+    }
+    public static int returnWeekInt() {
+        Calendar weekDate = Calendar.getInstance();
+        while (weekDate.get(Calendar.DAY_OF_WEEK) != 2) {
+            weekDate.add(Calendar.DAY_OF_WEEK, -1);
+        }
+        Calendar firstWeek = Calendar.getInstance();
+        firstWeek.setTimeInMillis(1470002400000l);
+        int weeks = ((weekDate.get(Calendar.YEAR) - firstWeek.get(Calendar.YEAR)) * 52 + weekDate.get(Calendar.WEEK_OF_YEAR)) - firstWeek.get(Calendar.WEEK_OF_YEAR);
+        return weeks;
     }
 
 }

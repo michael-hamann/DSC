@@ -59,12 +59,12 @@ public class MainScreen_Charts extends JPanel {
                 if (getData) {
                     for (DataSnapshot Data : ds.getChildren()) {//entire database
 
-                        boolean activeCheck = (boolean) Data.child("Active").getValue();
+                        boolean activeCheck = Data.child("Active").getValue(boolean.class);
                         long familySizeCheck;
 
                         for (DataSnapshot Data2 : Data.getChildren()) {
 
-                            familySizeCheck = (long) Data.child("FamilySize").getValue();// gets family size from database
+                            familySizeCheck = Data.child("FamilySize").getValue(int.class);// gets family size from database
 
                             if (familySizeCheck == 1) {
                                 countFamilySize_1++;
@@ -88,22 +88,22 @@ public class MainScreen_Charts extends JPanel {
 
                             for (DataSnapshot Data3 : Data2.getChildren()) {
 
-                                if (activeCheck == true && Data3.child("MealType").getValue().equals(STANDARD)) {
+                                if (activeCheck == true && Data3.child("MealType").getValue(String.class).equals(STANDARD)) {
                                     countStandardActive++;
                                 }
-                                if (activeCheck == true && Data3.child("MealType").getValue().equals(LOW_CARB)) {
+                                if (activeCheck == true && Data3.child("MealType").getValue(String.class).equals(LOW_CARB)) {
                                     countLowCarbActive++;
                                 }
-                                if (activeCheck == true && Data3.child("MealType").getValue().equals(KIDDIES)) {
+                                if (activeCheck == true && Data3.child("MealType").getValue(String.class).equals(KIDDIES)) {
                                     countKiddiesActive++;
                                 }
-                                if (activeCheck == false && Data3.child("MealType").getValue().equals(STANDARD)) {
+                                if (activeCheck == false && Data3.child("MealType").getValue(String.class).equals(STANDARD)) {
                                     countStandardInActive++;
                                 }
-                                if (activeCheck == false && Data3.child("MealType").getValue().equals(LOW_CARB)) {
+                                if (activeCheck == false && Data3.child("MealType").getValue(String.class).equals(LOW_CARB)) {
                                     countLowCarbInActive++;
                                 }
-                                if (activeCheck == false && Data3.child("MealType").getValue().equals(KIDDIES)) {
+                                if (activeCheck == false && Data3.child("MealType").getValue(String.class).equals(KIDDIES)) {
                                     countKiddiesInActive++;
                                 }
                                 
@@ -176,7 +176,7 @@ public class MainScreen_Charts extends JPanel {
                 datasetPieChart.setValue("FamilySize_6", countFamilySize_6);
                 datasetPieChart.setValue("FamilySizeMoreThan6", countFamilySizeMoreThanSix);
 
-                JFreeChart pieChart = ChartFactory.createPieChart("PieChart", datasetPieChart, true, false, false);
+                JFreeChart pieChart = ChartFactory.createPieChart("Ordered Family Sizes", datasetPieChart, true, false, false);
 
                 ChartPanel chartPanel_FamilySize = new ChartPanel(pieChart);
                 chartPanel_FamilySize.setBackground(Color.DARK_GRAY);
