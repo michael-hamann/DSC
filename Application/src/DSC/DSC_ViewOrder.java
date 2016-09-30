@@ -46,7 +46,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
      */
     public DSC_ViewOrder() {
         initComponents();
-       
+
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         txfClientID.setEnabled(false);
         txfOrderID.setEnabled(false);
@@ -57,6 +57,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         disableFieldsOrder();
 
         btnSave.setEnabled(false);
+        btnDeactivate.setText("Deactivate");
         cmbVeiw.setSelectedItem("Active");
         cmbSuburbs.removeAllItems();
         cmbSuburbs.addItem("Collection");
@@ -67,7 +68,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         callActiveSuburbs();
         callAllSuburbs();
         setTextFields();
-        
+
         Date datenow = Calendar.getInstance().getTime();
         SpinnerDateModel smb = new SpinnerDateModel(datenow, null, null, Calendar.HOUR_OF_DAY);
         spnStartDate.setModel(smb);
@@ -240,6 +241,12 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
                     int row = tblOrderTable.rowAtPoint(evt.getPoint());
 
+                    if (tborders.get(row).isActive()) {
+                        btnDeactivate.setText("Deactivate");
+                    } else {
+                        btnDeactivate.setText("Activate");
+                    }
+
                     txfClientID.setText(tborders.get(row).getClient().getID());
                     txfClientName.setText(tborders.get(row).getClient().getName());
                     txfClientSurname.setText(tborders.get(row).getClient().getSurname());
@@ -282,16 +289,17 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     private void saveOrder() {
         LoadIcon load = new LoadIcon();
         load.iconLoader(lblLoad);
-        
+
         Firebase ord = DBClass.getInstance().child("Orders");// Go to specific Table
-        
+
         ord.addChildEventListener(new ChildEventListener() {
             // Retrieve new posts as they are added to the database
             long ordercount = 0;
+
             @Override
             public void onChildAdded(DataSnapshot ds, String previousChildKey) {
                 ordercount++;
-                
+
                 ArrayList<Meal> allmeals = new ArrayList<>();
                 Calendar endDate;
 
@@ -327,18 +335,18 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
                 allorders.add(o);
                 DefaultTableModel model = (DefaultTableModel) tblOrderTable.getModel();
-                
-                
+
                 if (o.isActive() && count2 < tbcounter) {
                     setOrderTB(o, model);
                     activeOrders.add(o);
                     count2++;
-                    
-                } else if (o.isActive() == false) {
-                    inactiveOrders.add(o);
+
                 }
-                
-                if(ordercount==ds.getChildrenCount()){
+                if (o.isActive() == false && count2 < tbcounter) {
+                    inactiveOrders.add(o);
+                    count2++;
+                }
+                if (ordercount == ds.getChildrenCount()) {
                     lblLoad.setIcon(null);
                 }
 
@@ -376,23 +384,33 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         }
 
                         o.setMeals(m);
+                        reloadTB();
                     }
                 }
             }
 
             @Override
             public void onChildRemoved(DataSnapshot ds) {
-                String id = ds.getKey();
-                for (Order order : allorders) {
-                    if (order.getID().equals(id)) {
-                        allorders.remove(order);
-                        if(order.isActive()){
-                            activeOrders.remove(order);
-                        }else{
-                            inactiveOrders.remove(order);
+                String id = txfOrderID.getText();
+                for (int i = 0; i < allorders.size(); i++) {
+                    if (allorders.get(i).getID().equals(id)) {
+                        allorders.remove(allorders.get(i));
+                        if (allorders.get(i).isActive()) {
+                            for (int j = 0; j < activeOrders.size(); j++) {
+                                if (activeOrders.get(j).getID().equals(allorders.get(i).getID())) {
+                                    activeOrders.remove(activeOrders.get(j));
+                                }
+                            }
+                        } else {
+                            for (int j = 0; j < inactiveOrders.size(); j++) {
+                                if (inactiveOrders.get(j).getID().equals(allorders.get(i).getID())) {
+                                    inactiveOrders.remove(activeOrders.get(j));
+                                }
+                            }
                         }
                     }
                 }
+                reloadTB();
                 JOptionPane.showMessageDialog(rootPane, id + " has been deleted", "Delete Notification", JOptionPane.INFORMATION_MESSAGE);
             }
 
@@ -1120,7 +1138,6 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     clearFieldsOrder();
                     DefaultTableModel m = (DefaultTableModel) tblMeals.getModel();
                     m.setRowCount(0);
-                    //clear arraylist and repopulate with updated data
                     break;
 
                 case JOptionPane.NO_OPTION:
@@ -1183,10 +1200,11 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         updO.child("StartingDate").setValue(c.getTimeInMillis());
                         if (spnEndDate.isEnabled()) {
                             Date enddate = (Date) spnEndDate.getValue();
-                            c.setTime(enddate);
-                            c.add(Calendar.HOUR, 0);
-                            c.add(Calendar.MINUTE, 0);
-                            c.add(Calendar.SECOND, 0);
+                            Calendar e = Calendar.getInstance();
+                            e.setTime(enddate);
+                            e.add(Calendar.HOUR, 0);
+                            e.add(Calendar.MINUTE, 0);
+                            e.add(Calendar.SECOND, 0);
 
                             updO.child(c.getTimeInMillis() + "");
                         } else {
@@ -1438,7 +1456,6 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
                     break;
                 case "Active":
-                    btnDeactivate.setVisible(true);
                     switch (column) {
                         case "Name":
                             for (Order orders : allorders) {
@@ -1510,7 +1527,6 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     break;
                 case "Inactive":
                     model.setRowCount(0);
-                    btnDeactivate.setVisible(false);
                     switch (column) {
                         case "Name":
                             for (Order orders : allorders) {
@@ -1607,14 +1623,18 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     private void btnDeactivateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeactivateActionPerformed
 
         Firebase updOrder = DBClass.getInstance().child("Orders/" + txfOrderID.getText());
-        updOrder.child("Active").setValue(false);
+
         for (Order o : allorders) {
             if (txfOrderID.getText().equals(o.getID())) {
-                o.setActive(false);
+                if (o.isActive()) {
+                    updOrder.child("Active").setValue(false);
+                    btnDeactivate.setText("Activate");
+                } else {
+                    updOrder.child("Active").setValue(true);
+                    btnDeactivate.setText("Deactivate");
+                }
             }
         }
-        btnDeactivate.setEnabled(false);
-
     }//GEN-LAST:event_btnDeactivateActionPerformed
 
     private void btnRemoveMealActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveMealActionPerformed
@@ -1638,10 +1658,10 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         count++;
         switch (view) {
             case "All":
-                if((allorders.size() % 30)==0){
+                if ((allorders.size() % 30) == 0) {
                     parts = (allorders.size() / 30);
-                }else{
-                    parts = (allorders.size() / 30)+1;
+                } else {
+                    parts = (allorders.size() / 30) + 1;
                 }
                 arrays = split(allorders);
                 if (count < parts) {
@@ -1657,13 +1677,13 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
                 break;
             case "Active":
-                if((activeOrders.size() % 30)==0){
+                if ((activeOrders.size() % 30) == 0) {
                     parts = (activeOrders.size() / 30);
-                }else{
-                    parts = (activeOrders.size() / 30)+1;
+                } else {
+                    parts = (activeOrders.size() / 30) + 1;
                 }
                 arrays = split(activeOrders);
-                if (count < parts ) {
+                if (count < parts) {
                     ordertb.setRowCount(0);
                     List<Order> orders1 = arrays.get(count);
                     for (Order order : orders1) {
@@ -1675,13 +1695,13 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 }
                 break;
             case "Inactive":
-               if((inactiveOrders.size() % 30)==0){
+                if ((inactiveOrders.size() % 30) == 0) {
                     parts = (inactiveOrders.size() / 30);
-                }else{
-                    parts = (inactiveOrders.size() / 30)+1;
+                } else {
+                    parts = (inactiveOrders.size() / 30) + 1;
                 }
                 arrays = split(inactiveOrders);
-                if (count < parts ) {
+                if (count < parts) {
                     ordertb.setRowCount(0);
                     List inactorders = arrays.get(count);
                     for (Object order : inactorders) {
@@ -1701,7 +1721,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         tborders.clear();
         DefaultTableModel ordertb = (DefaultTableModel) tblOrderTable.getModel();
         String view = (String) cmbVeiw.getSelectedItem();
-        
+
         ArrayList<List<Order>> arrays = new ArrayList();
         if (count < 1) {
             JOptionPane.showMessageDialog(rootPane, "No previous order entries.");
@@ -1736,66 +1756,70 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btnPreviousActionPerformed
-
     /**
      * @param args the command line arguments
      */
     private void cmbListener() {
-        DefaultTableModel ordertb = (DefaultTableModel) tblOrderTable.getModel();
+
         cmbVeiw.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String view = (String) cmbVeiw.getSelectedItem();
-                ordertb.setRowCount(0);
-                tborders.clear();
-                tbcounter = 30;
-                int counter = 0;
-                count=0;
-                switch (view) {
-                    case "All":
-                        if (allorders.size() > counter || allorders.size() == counter) {
-                            if (tbcounter > allorders.size()) {
-                                while (counter < (tbcounter - allorders.size())) {
-                                    setOrderTB(allorders.get(counter), ordertb);
-                                    counter++;
-                                }
-                            } else {
-                                while (counter < tbcounter) {
-                                    setOrderTB(allorders.get(counter), ordertb);
-                                    counter++;
-                                }
-                            }
-                        }
-                        break;
-                    case "Inactive":
-                        if (tbcounter > inactiveOrders.size()) {
-                            while (counter < (tbcounter - allorders.size())) {
-                                setOrderTB(inactiveOrders.get(counter), ordertb);
-                                counter++;
-                            }
-                        } else {
-                            while (count < tbcounter) {
-                                setOrderTB(inactiveOrders.get(counter), ordertb);
-                                count++;
-                            }
-                        }
-                        break;
-                    case "Active":
-                        if (tbcounter > activeOrders.size()) {
-                            while (counter < (tbcounter - activeOrders.size())) {
-                                setOrderTB(activeOrders.get(counter), ordertb);
-                                counter++;
-                            }
-                        } else {
-                            while (counter < tbcounter) {
-                                setOrderTB(activeOrders.get(counter), ordertb);
-                                counter++;
-                            }
-                        }
-                        break;
-                }
+                reloadTB();
             }
         });
+    }
+
+    public void reloadTB() {
+        DefaultTableModel ordertb = (DefaultTableModel) tblOrderTable.getModel();
+        String view = (String) cmbVeiw.getSelectedItem();
+        ordertb.setRowCount(0);
+        tborders.clear();
+        tbcounter = 30;
+        int counter = 0;
+        count = 0;
+        switch (view) {
+            case "All":
+                if (allorders.size() > counter || allorders.size() == counter) {
+                    if (tbcounter > allorders.size()) {
+                        while (counter < allorders.size() && counter < tbcounter) {
+                            setOrderTB(allorders.get(counter), ordertb);
+                            counter++;
+                        }
+                    } else {
+                        while (counter < tbcounter) {
+                            setOrderTB(allorders.get(counter), ordertb);
+                            counter++;
+                        }
+                    }
+                }
+                break;
+            case "Inactive":
+                if (tbcounter > inactiveOrders.size()) {
+                    while (counter < inactiveOrders.size() && counter < tbcounter) {
+                        setOrderTB(inactiveOrders.get(counter), ordertb);
+                        counter++;
+                    }
+                } else {
+                    while (counter < tbcounter) {
+                        setOrderTB(inactiveOrders.get(counter), ordertb);
+                        counter++;
+                    }
+                }
+                break;
+            case "Active":
+                if (tbcounter > activeOrders.size()) {
+                    while (counter < activeOrders.size() && counter < tbcounter) {
+                        setOrderTB(activeOrders.get(counter), ordertb);
+                        counter++;
+                    }
+                } else {
+                    while (counter < tbcounter) {
+                        setOrderTB(activeOrders.get(counter), ordertb);
+                        counter++;
+                    }
+                }
+                break;
+        }
     }
 
     public ArrayList<List<Order>> split(ArrayList<Order> list) {
