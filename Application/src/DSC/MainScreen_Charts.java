@@ -45,7 +45,7 @@ public class MainScreen_Charts extends JPanel {
     static final String LOW_CARB = "Low Carb";
     static final String KIDDIES = "Kiddies";
     
-    public static void createBarGraph_ActiveAndInActiveMeals(JPanel pnlBarChartActive,
+    public static void createGraphs(JPanel pnlBarChartActive,
             JPanel pnlBarChartInActive, JPanel pnlPieChart, JLabel lblStandardTotal, JLabel lblLowCarbTotal, JLabel lblKiddiesTotal,
             JLabel lblKiddiesTotalInActive, JLabel lblStandardTotalInActive,
             JLabel lblLowCarbTotalInActive, JLabel lblSingleFamilySizeTotal, JLabel lblCoupleFamilySizeTotal, JLabel lblThreeFamilySizeTotal, JLabel lblFourFamilySizeTotal, JLabel lblFiveFamilySizeTotal,

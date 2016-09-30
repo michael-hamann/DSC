@@ -54,7 +54,8 @@ public class ChefReport {
             public void onDataChange(DataSnapshot ds) {
 
                 for (DataSnapshot levelOne : ds.getChildren()) {
-                    allRoutes.add(levelOne.getKey());
+                    String RoutID = levelOne.getKey();
+                    allRoutes.add(RoutID);
 
                 }
             }
@@ -77,13 +78,20 @@ public class ChefReport {
                     for (DataSnapshot levelTwo : levelOne.getChildren()) {
                         for (DataSnapshot levelThree : levelTwo.getChildren()) {
 
+                            String quantity = levelThree.child("Quantity").getValue(String.class);
+                            String Allergies = levelThree.child("Allergies").getValue(String.class);
+                            String Exclusions = levelThree.child("Exclusions").getValue(String.class);
+                            String RouteID = levelOne.child("RouteID").getValue(String.class);
+                            String MealType = levelThree.child("MealType").getValue(String.class);
+                            String FamilySize = levelOne.child("FamilySize").getValue(String.class);
+
                             if (levelOne.child("Active").getValue(boolean.class).equals(true)) {
-                                allOrders.add(new Chef(levelThree.child("Quantity").getValue(String.class),
-                                        levelThree.child("Allergies").getValue(String.class),
-                                        levelThree.child("Exclusions").getValue(String.class),
-                                        levelOne.child("RouteID").getValue(String.class),
-                                        levelThree.child("MealType").getValue(String.class),
-                                        levelOne.child("FamilySize").getValue(String.class)
+                                allOrders.add(new Chef(quantity,
+                                        Allergies,
+                                        Exclusions,
+                                        RouteID,
+                                        MealType,
+                                        FamilySize
                                 ));
                             }
                         }
@@ -288,14 +296,13 @@ public class ChefReport {
     public static void creatSheet(String excelNumber, String mealType, XSSFWorkbook workbook) throws IOException {
         FileOutputStream excelOut = null;
         try {
-            String path = "C:\\Users\\Aliens_Keanu\\Documents\\GitHub\\DSC\\Application\\Reports\\" + "DSC_ChefReport - " + currentWeek() + " Week Number -  " + returnWeekInt() + "\\";
+            String path = "C:\\Users\\Aliens_Keanu\\Documents\\GitHub\\DSC\\Application\\Reports\\" + "DSC_ChefReport - " + currentWeek() + " Week -  " + returnWeekInt() + "\\";
             File f = new File(path);
             f.mkdir();
             File file = new File(path + "ChefReports Route - " + excelNumber + " ( " + mealType + " )" + ".xlsx");
             excelOut = new FileOutputStream(file);
             workbook.write(excelOut);
             excelOut.close();
-            System.out.println("DONE");
 
         } catch (FileNotFoundException ex) {
             JOptionPane.showMessageDialog(null, "File is Currently being Used. Please Close the File.");

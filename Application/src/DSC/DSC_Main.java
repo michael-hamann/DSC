@@ -4,7 +4,6 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
-import java.awt.Color;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -14,8 +13,6 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 /**
  * @author Michael Hamann
@@ -810,7 +807,7 @@ public class DSC_Main extends javax.swing.JFrame {
          */
         try {
 
-            MainScreen_Charts.createBarGraph_ActiveAndInActiveMeals(pnlBarChartActive, pnlBarChartInActive, pnlPieChart, lblStandardTotal, lblLowCarbTotal,
+            MainScreen_Charts.createGraphs(pnlBarChartActive, pnlBarChartInActive, pnlPieChart, lblStandardTotal, lblLowCarbTotal,
                     lblKiddiesTotal, lblKiddiesTotalinActive, lblStandardTotalInActive, lblLowCarbTotalInActive, lblSingleFamilySizeTotal,
                     lblCoupleFamilySizeTotal, lblThreeFamilySizeTotal, lblFourFamilySizeTotal, lblFiveFamilySizeTotal,
                     lblSixFamilySizeTotal, lblMoreThanSixFamilySizeTotal, getData);
