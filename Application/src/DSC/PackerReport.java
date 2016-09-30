@@ -41,9 +41,11 @@ public class PackerReport {
     private static int clientCounter;
     private static File file;
     private static FileOutputStream excelOut;
+    private static boolean genAll;
 
-    public static void getPackerData() {
+    public static void getPackerData(boolean genAll) {
         boolean fileFound = false;
+        PackerReport.genAll = genAll;
         try {
             file = new File("PackerReports (" + DriverReport.returnWeekString() + ").xlsx");
             if (!file.exists()) {
@@ -240,7 +242,7 @@ public class PackerReport {
             XSSFSheet sheet = workbook.createSheet("PackerReports Route - " + route.getID());
 
             Map<String, String[]> data = new TreeMap<>();
-            data.put("1", new String[]{"Doorstep Chef Packer Sheet  Week: " + DriverReport.returnWeekInt(), "", "", route.getDrivers().get(0).getDriver().getDriverName().split(" ")[0] + " - " + route.getDrivers().get(0).getDriver().getContactNumber(), "", "Route: " + route.getID()});
+            data.put("1", new String[]{"Doorstep Chef Packer Sheet  Week: " + DriverReport.returnWeekInt(), "", "", "", route.getDrivers().get(0).getDriver().getDriverName().split(" ")[0], "Route: " + route.getID()});
             data.put("2", new String[]{"", "", "", "", "", ""});
             data.put("3", new String[]{"Customer", "FamSize", "MealType", "Qty", "Allergies", "Exclutions"});
 
@@ -270,11 +272,11 @@ public class PackerReport {
                     Cell cell = row.createCell(i);
                     cell.setCellValue(arr[i]);
                     XSSFCellStyle borderStyle = workbook.createCellStyle();
-                    
+
                     if (i == 0 && !(key + "").equals("1") && longestCustomer < ((String) arr[i]).length()) {
                         longestCustomer = ((String) arr[i]).length();
                     }
-                    
+
                     if (!((key + "").equals("1") || (key + "").equals("2"))) {
                         borderStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
                         borderStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
@@ -305,13 +307,6 @@ public class PackerReport {
                                 borderStyle.setBorderRight(XSSFCellStyle.BORDER_MEDIUM);
                             }
 
-                            if (i == 6 && ((String) arr[i]).contains("X")) {
-                                cell.setCellValue("");
-                                borderStyle.setFillPattern(XSSFCellStyle.FINE_DOTS);
-                                borderStyle.setFillBackgroundColor(IndexedColors.GREY_50_PERCENT.getIndex());
-                                borderStyle.setFillForegroundColor(IndexedColors.GREY_50_PERCENT.getIndex());
-                            }
-
                             if ((Integer.parseInt((key + ""))) != keySet.size()) {
                                 borderStyle.setBorderBottom(XSSFCellStyle.BORDER_THIN);
                             } else {
@@ -319,16 +314,18 @@ public class PackerReport {
                             }
                             borderStyle.setBorderTop(XSSFCellStyle.BORDER_THIN);
 
+                            if (!arr[0].equals("")) {
+                                borderStyle.setBorderTop(XSSFCellStyle.BORDER_MEDIUM);
+                            }
                         }
                         if (i == 3 || i == 1) {
                             borderStyle.setAlignment(HorizontalAlignment.CENTER);
                         }
+                        borderStyle.setAlignment(XSSFCellStyle.ALIGN_JUSTIFY);
+                        borderStyle.setVerticalAlignment(XSSFCellStyle.VERTICAL_JUSTIFY);
+
                     } else {
-                        if (key != 3 && (i == 4 || i == 5)) {
-                            borderStyle.setAlignment(XSSFCellStyle.ALIGN_JUSTIFY);
-                            borderStyle.setVerticalAlignment(XSSFCellStyle.VERTICAL_JUSTIFY);
-                        }
-                        if (i == 3) {
+                        if (i == 4) {
                             borderStyle.setAlignment(HorizontalAlignment.CENTER);
                         } else if (i == 5) {
                             borderStyle.setAlignment(HorizontalAlignment.RIGHT);
@@ -343,10 +340,9 @@ public class PackerReport {
                     cell.setCellStyle(borderStyle);
                 }
             }
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 2));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 4));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 3));
 
-            sheet.setColumnWidth(0, (longestCustomer + 1)*240);
+            sheet.setColumnWidth(0, (longestCustomer + 1) * 240);
             sheet.setColumnWidth(1, 8 * 240);
             sheet.setColumnWidth(2, 10 * 240);
             sheet.setColumnWidth(3, 4 * 240);
@@ -355,16 +351,21 @@ public class PackerReport {
             for (int i = 0; i <= 3; i++) {
                 usedSize += sheet.getColumnWidth(i);
             }
-            sheet.setColumnWidth(4, (totalSize - usedSize)/2);
-            sheet.setColumnWidth(5, (totalSize - usedSize)/2);
+            sheet.setColumnWidth(4, (totalSize - usedSize) / 2);
+            sheet.setColumnWidth(5, (totalSize - usedSize) / 2);
 
         }
 
         try {
             workbook.write(excelOut);
             excelOut.close();
-            System.out.println("Done");
-            JOptionPane.showMessageDialog(null, "PackerReport Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
+            if (genAll) {
+                DSC_Main.reportsDone++;
+            } else {
+                System.out.println("Done");
+                JOptionPane.showMessageDialog(null, "PackerReport Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
+            }
+
         } catch (IOException io) {
             JOptionPane.showMessageDialog(null, "An error occured\nCould not create PackerReport", "Error", JOptionPane.ERROR_MESSAGE);
             System.err.println("Error - Could not create new PackerReport: ");

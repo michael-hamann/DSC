@@ -26,6 +26,7 @@ public class DSC_Main extends javax.swing.JFrame {
      */
     public static boolean getData = true;
     public static boolean checkGraph = true;
+    public static int reportsDone = 0;
 
     /**
      * Creates new form DSC_Main
@@ -61,6 +62,7 @@ public class DSC_Main extends javax.swing.JFrame {
         btnPackerRpt = new javax.swing.JButton();
         btnAccountRpt = new javax.swing.JButton();
         lblGenerate = new javax.swing.JLabel();
+        btnGenerateAll = new javax.swing.JButton();
         pnlMainChartBackground = new javax.swing.JPanel();
         pnlBarChartActive = new javax.swing.JPanel();
         pnlPieChart = new javax.swing.JPanel();
@@ -252,6 +254,15 @@ public class DSC_Main extends javax.swing.JFrame {
         lblGenerate.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblGenerate.setText("Generate");
 
+        btnGenerateAll.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btnGenerateAll.setText("Generate All");
+        btnGenerateAll.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGenerateAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerateAllActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlReportsLayout = new javax.swing.GroupLayout(pnlReports);
         pnlReports.setLayout(pnlReportsLayout);
         pnlReportsLayout.setHorizontalGroup(
@@ -263,7 +274,8 @@ public class DSC_Main extends javax.swing.JFrame {
                     .addComponent(btnChefRpt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnPackerRpt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnAccountRpt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblGenerate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblGenerate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnGenerateAll, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlReportsLayout.setVerticalGroup(
@@ -271,6 +283,8 @@ public class DSC_Main extends javax.swing.JFrame {
             .addGroup(pnlReportsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblGenerate, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(8, 8, 8)
+                .addComponent(btnGenerateAll, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnDriverRpt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -279,7 +293,7 @@ public class DSC_Main extends javax.swing.JFrame {
                 .addComponent(btnPackerRpt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnAccountRpt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(222, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pnlMainChartBackground.setBackground(new java.awt.Color(0, 153, 0));
@@ -761,13 +775,7 @@ public class DSC_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnChefRptActionPerformed
 
     private void btnPackerRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPackerRptActionPerformed
-
         PackerReport.getPackerData();
-        ChefReport chefObject = new ChefReport();
-        chefObject.getChefReport();
-        DriverReport.getDriverReports();
-        AccountantReport.getAccountantReport();
-
     }//GEN-LAST:event_btnPackerRptActionPerformed
 
     private void btnAccountRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccountRptActionPerformed
@@ -824,6 +832,20 @@ public class DSC_Main extends javax.swing.JFrame {
     private void pnlBarChartInActiveComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_pnlBarChartInActiveComponentResized
         // TODO add your handling code here:
     }//GEN-LAST:event_pnlBarChartInActiveComponentResized
+
+    private void btnGenerateAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerateAllActionPerformed
+        btnAccountRpt.setEnabled(false);
+        btnChefRpt.setEnabled(false);
+        btnDriverRpt.setEnabled(false);
+        btnPackerRpt.setEnabled(false);
+        
+        PackerReport.getPackerData();
+        ChefReport chefObject = new ChefReport();
+        chefObject.getChefReport();
+        DriverReport.getDriverReports();
+        AccountantReport.getAccountantReport();
+        
+    }//GEN-LAST:event_btnGenerateAllActionPerformed
 
     /**
      * @param args the command line arguments
@@ -887,6 +909,7 @@ public class DSC_Main extends javax.swing.JFrame {
     private javax.swing.JButton btnAccountRpt;
     private javax.swing.JButton btnChefRpt;
     private javax.swing.JButton btnDriverRpt;
+    private javax.swing.JButton btnGenerateAll;
     private javax.swing.JButton btnPackerRpt;
     private javax.swing.JButton btnPlaceOrder;
     private javax.swing.JButton btnRouteView;
@@ -986,6 +1009,10 @@ public class DSC_Main extends javax.swing.JFrame {
             System.err.println("Could not read offline orders from serialised file.");
             e.printStackTrace();
         }
+    }
+    
+    public void reportsDone(){
+        // Add done method
     }
 
 }

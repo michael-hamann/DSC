@@ -229,10 +229,11 @@ public class AccountantReport {
         sheet.setColumnWidth(5, 5 * 240);
         sheet.setColumnWidth(6, 13 * 240);
         sheet.setColumnWidth(7, 5 * 240);
-        totalSize = (totalSize - (sheet.getColumnWidth(2) + sheet.getColumnWidth(3) + sheet.getColumnWidth(4) + 
-                sheet.getColumnWidth(5) + sheet.getColumnWidth(6) + sheet.getColumnWidth(7))) / 2;
-        sheet.setColumnWidth(0, totalSize);
-        sheet.setColumnWidth(1, totalSize);
+        for (int i = 2; i < 8; i++) {
+            totalSize -= sheet.getColumnWidth(i);
+        }
+        sheet.setColumnWidth(0, totalSize/2);
+        sheet.setColumnWidth(1, totalSize/2);
 
         try {
             workbook.write(excelOut);
