@@ -38,13 +38,13 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  */
 public class ChefReport {
 
-<<<<<<< HEAD
     private static ArrayList<Chef> allOrders;
     public static ArrayList<String> allRoutes;
     private static String familySizes[] = {"1", "2", "3", "4", "5", "6"};
     private static XSSFWorkbook workbook;
     private static DSC_ReportLoading chefLoadingObj;
-    
+    private static int booksCounter = 0;
+
     public static void getChefReport() {
         chefLoadingObj = new DSC_ReportLoading();
         allOrders = new ArrayList();
@@ -52,22 +52,11 @@ public class ChefReport {
         getActiveRoutes();
     }
 
+    
     public static void getActiveRoutes() {
-=======
-    private ArrayList<Chef> allOrders = new ArrayList();
-    public static ArrayList<String> allRoutes = new ArrayList();
-    private String list[] = {"Standard", "Low Carb", "Kiddies"};
-    private String familySizes[] = {"1", "2", "3", "4", "5", "6"};
-    private String familysize = "";
-    private XSSFWorkbook workbook;
-    public static boolean completeReport = false;
-    private static int booksCounter = 0;
-    
-    
-    public void getChefReport() {
 
         booksCounter = 0;
->>>>>>> 7b456c7fb27ca2196a6c26db1b89f0e5dce8f361
+
         Firebase newRef = DBClass.getInstance().child("Routes");
         newRef.orderByChild("Active").equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -269,7 +258,7 @@ public class ChefReport {
 
             excelNumber++;
             if (excelNumber == allRoutes.size()) {
-              chefLoadingObj.setVisible(false);              
+                chefLoadingObj.setVisible(false);
             }
 
         }
@@ -324,11 +313,9 @@ public class ChefReport {
 
         FileOutputStream excelOut = null;
         try {
-<<<<<<< HEAD
-            String path = "C:\\Users\\Aliens_Keanu\\Documents\\GitHub\\DSC\\Application\\Reports\\" + "ChefReport - " + currentWeek() + " Week -  " + returnWeekInt() + "\\";
-=======
-            String path = "\\Reports\\" + "DSC_ChefReport - " + currentWeek() + " Week -  " + returnWeekInt() + "\\";
->>>>>>> 7b456c7fb27ca2196a6c26db1b89f0e5dce8f361
+
+            String path = "\\Reports\\" + "ChefReport - " + currentWeek() + " Week -  " + returnWeekInt() + "\\";
+
             File f = new File(path);
             f.mkdir();
             File file = new File(path + "ChefReports Week - " + returnWeekInt() + " ( " + mealType + " )" + ".xlsx");
@@ -336,7 +323,7 @@ public class ChefReport {
             workbook.write(excelOut);
             excelOut.close();
             booksCounter++;
-            
+
             if (booksCounter == 3) {
                 System.out.println("Done - Chef");
                 DSC_Main.reportsDone++;
@@ -346,6 +333,7 @@ public class ChefReport {
             }
         } catch (FileNotFoundException ex) {
             JOptionPane.showMessageDialog(null, "File is Currently being Used. Please Close the File.");
+            JOptionPane.showMessageDialog(null, "Directory Cannot be Found!");
         }
     }
 

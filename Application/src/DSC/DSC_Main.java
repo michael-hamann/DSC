@@ -749,7 +749,7 @@ public class DSC_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDriverTblActionPerformed
 
     private void btnDriverRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDriverRptActionPerformed
-        DriverReport.getDriverReports(this);
+       // DriverReport.getDriverReports(this);
     }//GEN-LAST:event_btnDriverRptActionPerformed
 
     private void btnChefRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChefRptActionPerformed
@@ -759,20 +759,19 @@ public class DSC_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnChefRptActionPerformed
 
     private void btnPackerRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPackerRptActionPerformed
-<<<<<<< HEAD
 
         PackerReport.getPackerData();
         ChefReport.getChefReport();
         DriverReport.getDriverReports();
         AccountantReport.getAccountantReport();
 
-=======
-        PackerReport.getPackerData(this);
->>>>>>> 7b456c7fb27ca2196a6c26db1b89f0e5dce8f361
+
+       // PackerReport.getPackerData(this);
+
     }//GEN-LAST:event_btnPackerRptActionPerformed
 
     private void btnAccountRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccountRptActionPerformed
-        AccountantReport.getAccountantReport(this);
+       // AccountantReport.getAccountantReport(this);
     }//GEN-LAST:event_btnAccountRptActionPerformed
 
     private void btnRouteViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRouteViewActionPerformed
@@ -822,11 +821,11 @@ public class DSC_Main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_pnlBarChartInActiveComponentResized
 
-<<<<<<< HEAD
+
     private void pnlPieChartComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_pnlPieChartComponentResized
         // TODO add your handling code here:
     }//GEN-LAST:event_pnlPieChartComponentResized
-=======
+
     private void btnGenerateAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerateAllActionPerformed
         btnAccountRpt.setEnabled(false);
         btnChefRpt.setEnabled(false);
@@ -836,15 +835,15 @@ public class DSC_Main extends javax.swing.JFrame {
         reportsDone = 0;
         generateAllReports = true;
         
-        PackerReport.getPackerData(this);
+        //PackerReport.getPackerData(this);
         ChefReport chefObject = new ChefReport();
         chefObject.getChefReport();
-        DriverReport.getDriverReports(this);
-        AccountantReport.getAccountantReport(this);
+        //DriverReport.getDriverReports(this);
+       // AccountantReport.getAccountantReport(this);
         
         
     }//GEN-LAST:event_btnGenerateAllActionPerformed
->>>>>>> 7b456c7fb27ca2196a6c26db1b89f0e5dce8f361
+
 
     /**
      * @param args the command line arguments
