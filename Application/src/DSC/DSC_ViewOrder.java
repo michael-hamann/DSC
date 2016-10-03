@@ -127,6 +127,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         btnAddMeal.setEnabled(true);
         btnRemoveMeal.setEnabled(true);
         btnDeactivate.setEnabled(true);
+        btnDisable.setEnabled(true);
     }
 
     public final void disableFieldsOrder() {
@@ -138,6 +139,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         btnAddMeal.setEnabled(false);
         btnRemoveMeal.setEnabled(false);
         btnDeactivate.setEnabled(false);
+        btnDisable.setEnabled(false);
 
     }
 
@@ -539,6 +541,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         cmbDuration = new javax.swing.JComboBox<>();
         spnStartDate = new javax.swing.JSpinner();
         spnEndDate = new javax.swing.JSpinner();
+        btnDisable = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblMeals = new javax.swing.JTable();
         btnBack = new javax.swing.JButton();
@@ -688,14 +691,11 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         .addComponent(cmbSearchColumn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblSearchBy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txfSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(pnlTableLayout.createSequentialGroup()
-                        .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(btnDelete)
-                                .addComponent(cmbVeiw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(lblLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnDelete)
+                        .addComponent(cmbVeiw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -919,6 +919,13 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
         cmbDuration.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Monday - Thursday", "Monday - Friday" }));
 
+        btnDisable.setText("-");
+        btnDisable.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDisableActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlDetailsLayout = new javax.swing.GroupLayout(pnlDetails);
         pnlDetails.setLayout(pnlDetailsLayout);
         pnlDetailsLayout.setHorizontalGroup(
@@ -949,10 +956,11 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             .addComponent(txfOrderRouteID, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(cmbDuration, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(spnStartDate)
-                            .addComponent(spnEndDate)))
-                    .addGroup(pnlDetailsLayout.createSequentialGroup()
-                        .addComponent(btnDeactivate)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addGroup(pnlDetailsLayout.createSequentialGroup()
+                                .addComponent(spnEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnDisable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addComponent(btnDeactivate))
                 .addContainerGap())
         );
         pnlDetailsLayout.setVerticalGroup(
@@ -976,7 +984,8 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblEndDate)
-                    .addComponent(spnEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(spnEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDisable))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txfOrderRouteID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1190,21 +1199,21 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
         //method checks if all fields are filled
         boolean empty = checkEmpty();
-        
+
         int famSize = (int) spnOrderFamilySize.getValue();
-        int total =0;
-        
+        int total = 0;
+
         for (int i = 0; i < tblMeals.getRowCount(); i++) {
-            int quantity =Integer.parseInt( tblMeals.getValueAt(i, 0).toString());
-            total = total+quantity;            
+            int quantity = Integer.parseInt(tblMeals.getValueAt(i, 0).toString());
+            total = total + quantity;
         }
 
         if (empty) {
             JOptionPane.showMessageDialog(this, "Please fill in all required fields", "Error", JOptionPane.ERROR_MESSAGE);
             //displays message to user if all fields have not been filled in
-        }else if(total!=famSize){
+        } else if (total != famSize) {
             JOptionPane.showMessageDialog(this, "Total meals does not correspond with family size.", "Error", JOptionPane.ERROR_MESSAGE);
-        }else{
+        } else {
 
             boolean subActive = false; //variable used to track whether suburbs edited are active
 
@@ -1664,18 +1673,40 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     private void btnDeactivateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeactivateActionPerformed
 
         Firebase updOrder = DBClass.getInstance().child("Orders/" + txfOrderID.getText());
+        boolean orderactive = true;
+        int index =-1;
 
         for (Order o : allorders) {
             if (txfOrderID.getText().equals(o.getID())) {
                 if (o.isActive()) {
+                    orderactive = true;
                     updOrder.child("Active").setValue(false);
                     btnDeactivate.setText("Activate");
                 } else {
+                    orderactive = false;
                     updOrder.child("Active").setValue(true);
                     btnDeactivate.setText("Deactivate");
                 }
             }
         }
+        if (orderactive) {
+            for (int i = 0; i < activeOrders.size(); i++) {
+                if (activeOrders.get(i).getID().equals(txfOrderID.getText())) {
+                    index = i;
+                }
+            }
+            inactiveOrders.add(activeOrders.get(index));
+            activeOrders.remove(index);
+        } else {
+            for (int i = 0; i < inactiveOrders.size(); i++) {
+                if (inactiveOrders.get(i).getID().equals(txfOrderID.getText())) {
+                    index = i;
+                }
+            }
+            activeOrders.add(inactiveOrders.get(index));
+            inactiveOrders.remove(index);
+        }
+
     }//GEN-LAST:event_btnDeactivateActionPerformed
 
     private void btnRemoveMealActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveMealActionPerformed
@@ -1797,6 +1828,14 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btnPreviousActionPerformed
+
+    private void btnDisableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDisableActionPerformed
+       if(spnEndDate.isEnabled()){
+           spnEndDate.setEnabled(false);
+       }else{
+           spnEndDate.setEnabled(true);
+       }
+    }//GEN-LAST:event_btnDisableActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -1949,6 +1988,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnDeactivate;
     private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnDisable;
     private javax.swing.JButton btnEditClient;
     private javax.swing.JButton btnEditOrder;
     private javax.swing.JButton btnNext;
