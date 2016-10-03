@@ -41,11 +41,11 @@ public class PackerReport {
     private static int clientCounter;
     private static File file;
     private static FileOutputStream excelOut;
-    private static boolean genAll;
+    private static DSC_Main mainFrame;
 
-    public static void getPackerData(boolean genAll) {
+    public static void getPackerData(DSC_Main main) {
         boolean fileFound = false;
-        PackerReport.genAll = genAll;
+        mainFrame = main;
         try {
             file = new File("PackerReports (" + DriverReport.returnWeekString() + ").xlsx");
             if (!file.exists()) {
@@ -194,8 +194,6 @@ public class PackerReport {
                     getDriverDetails(driverCount, driverID);
                     driverCount++;
                 }
-
-                System.out.println("Success (Packer)!!!");
             }
 
             @Override
@@ -359,10 +357,13 @@ public class PackerReport {
         try {
             workbook.write(excelOut);
             excelOut.close();
-            if (genAll) {
+            System.out.println("Done - Packer");
+            if (DSC_Main.generateAllReports) {
                 DSC_Main.reportsDone++;
+                if (DSC_Main.reportsDone == 4) {
+                    DSC_Main.reportsDone(mainFrame);
+                }
             } else {
-                System.out.println("Done");
                 JOptionPane.showMessageDialog(null, "PackerReport Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
             }
 

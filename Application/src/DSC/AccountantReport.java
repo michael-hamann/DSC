@@ -39,10 +39,12 @@ public class AccountantReport {
     private static int clientCount;
     private static File file;
     private static FileOutputStream excelOut;
+    private static DSC_Main mainFrame;
 
-    public static void getAccountantReport() {
+    public static void getAccountantReport(DSC_Main main) {
 
         boolean fileFound = false;
+        mainFrame = main;
         try {
             file = new File("AccountReport (" + DriverReport.returnWeekString() + ").xlsx");
             if (!file.exists()) {
@@ -125,7 +127,7 @@ public class AccountantReport {
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet("AccountReport - Week " + DriverReport.returnWeekInt());
         Map<String, Object[]> data = new TreeMap<>();
-        data.put("1", new Object[]{"Doorstep Chef Accountant Sheet", "","Week: " + DriverReport.returnWeekString(), "", "", "",  "", ""});
+        data.put("1", new Object[]{"Doorstep Chef Accountant Sheet", "", "Week: " + DriverReport.returnWeekString(), "", "", "", "", ""});
         data.put("2", new Object[]{"", "", "", "", "", "", ""});
         data.put("3", new Object[]{"Name", "Surname", "Contact", "R.ID", "EFT", "Cash", "Date Paid", "Stay"});
 
@@ -232,14 +234,21 @@ public class AccountantReport {
         for (int i = 2; i < 8; i++) {
             totalSize -= sheet.getColumnWidth(i);
         }
-        sheet.setColumnWidth(0, totalSize/2);
-        sheet.setColumnWidth(1, totalSize/2);
+        sheet.setColumnWidth(0, totalSize / 2);
+        sheet.setColumnWidth(1, totalSize / 2);
 
         try {
             workbook.write(excelOut);
             excelOut.close();
-            JOptionPane.showMessageDialog(null, "AccountReports Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
-            System.out.println("Done");
+            System.out.println("Done - Accountant");
+            if (DSC_Main.generateAllReports) {
+                DSC_Main.reportsDone++;
+                if (DSC_Main.reportsDone == 4) {
+                    DSC_Main.reportsDone(mainFrame);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "AccountReports Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
+            }
         } catch (IOException io) {
             JOptionPane.showMessageDialog(null, "An error occured\nCould not create AccountReport", "Error", JOptionPane.ERROR_MESSAGE);
             System.err.println("Error - Could not create new AccountReport: ");

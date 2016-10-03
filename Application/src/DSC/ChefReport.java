@@ -45,9 +45,12 @@ public class ChefReport {
     private String familysize = "";
     private XSSFWorkbook workbook;
     public static boolean completeReport = false;
-
+    private static int booksCounter = 0;
+    
+    
     public void getChefReport() {
 
+        booksCounter = 0;
         Firebase newRef = DBClass.getInstance().child("Routes");
         newRef.orderByChild("Active").equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -296,14 +299,22 @@ public class ChefReport {
     public static void creatSheet(String excelNumber, String mealType, XSSFWorkbook workbook) throws IOException {
         FileOutputStream excelOut = null;
         try {
-            String path = "C:\\Users\\Aliens_Keanu\\Documents\\GitHub\\DSC\\Application\\Reports\\" + "DSC_ChefReport - " + currentWeek() + " Week -  " + returnWeekInt() + "\\";
+            String path = "\\Reports\\" + "DSC_ChefReport - " + currentWeek() + " Week -  " + returnWeekInt() + "\\";
             File f = new File(path);
             f.mkdir();
             File file = new File(path + "ChefReports Route - " + excelNumber + " ( " + mealType + " )" + ".xlsx");
             excelOut = new FileOutputStream(file);
             workbook.write(excelOut);
             excelOut.close();
-
+            booksCounter++;
+            
+            if (booksCounter == 3) {
+                System.out.println("Done - Chef");
+                DSC_Main.reportsDone++;
+                if (DSC_Main.reportsDone == 4) {
+                    DSC_Main.reportsDone(null);
+                }
+            }
         } catch (FileNotFoundException ex) {
             JOptionPane.showMessageDialog(null, "File is Currently being Used. Please Close the File.");
         }

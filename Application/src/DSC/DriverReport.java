@@ -42,11 +42,13 @@ public class DriverReport {
     private static int driverCounter;
     private static File file;
     private static FileOutputStream excelOut;
-    
-    public static void getDriverReports() {
+    private static DSC_Main mainFrame;
+
+    public static void getDriverReports(DSC_Main main) {
 
         boolean fileFound = false;
-
+        mainFrame = main;
+        
         try {
             file = new File("DriverReports Route (" + returnWeekString() + ").xlsx");
             if (!file.exists()) {
@@ -78,7 +80,7 @@ public class DriverReport {
                 for (DataSnapshot dataSnapshot : ds.getChildren()) {
                     Calendar start = Calendar.getInstance();
                     Calendar end = null;
-                    
+
                     if (!dataSnapshot.child("StartingDate").getValue(String.class).equals("-")) {
                         start = Calendar.getInstance();
                         start.setTimeInMillis(dataSnapshot.child("StartingDate").getValue(long.class));
@@ -103,7 +105,6 @@ public class DriverReport {
                             meals,
                             dataSnapshot.child("FamilySize").getValue(int.class)
                     ));
-                    System.out.println(meals);
                 }
                 clientCounter = 0;
                 for (Order order : orderList) {
@@ -197,8 +198,6 @@ public class DriverReport {
                     getDriverDetails(driverCount, driverID);
                     driverCount++;
                 }
-
-                System.out.println("Success (Driver)!!!");
             }
 
             @Override
@@ -309,13 +308,13 @@ public class DriverReport {
                                 borderStyle.setBorderRight(XSSFCellStyle.BORDER_MEDIUM);
                             }
 
-                            if (i == 6 && ((String)arr[i]).contains("X")) {
+                            if (i == 6 && ((String) arr[i]).contains("X")) {
                                 cell.setCellValue("");
                                 borderStyle.setFillPattern(XSSFCellStyle.FINE_DOTS);
                                 borderStyle.setFillBackgroundColor(IndexedColors.GREY_50_PERCENT.getIndex());
                                 borderStyle.setFillForegroundColor(IndexedColors.GREY_50_PERCENT.getIndex());
                             }
-                            
+
                             if ((Integer.parseInt((key + ""))) != keySet.size()) {
                                 borderStyle.setBorderBottom(XSSFCellStyle.BORDER_THIN);
                             } else {
@@ -370,7 +369,15 @@ public class DriverReport {
             excelOut = new FileOutputStream(file);
             workbook.write(excelOut);
             excelOut.close();
-            JOptionPane.showMessageDialog(null, "DriverReports Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
+            System.out.println("Done - Driver");
+            if (DSC_Main.generateAllReports) {
+                DSC_Main.reportsDone++;
+                if (DSC_Main.reportsDone == 4) {
+                    DSC_Main.reportsDone(mainFrame);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "DriverReports Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
+            }
         } catch (FileNotFoundException ex) {
             JOptionPane.showMessageDialog(null, "Please close the excel file before using generating.", "Error", JOptionPane.ERROR_MESSAGE);
             System.err.println("Error - Could not create new DriverReport: File currently in use.");
@@ -380,7 +387,7 @@ public class DriverReport {
             System.err.println("Error - Could not create new Driver Report: ");
             io.printStackTrace();
         }
-        System.out.println("Done");
+
     }
 
     public static String returnWeekString() {

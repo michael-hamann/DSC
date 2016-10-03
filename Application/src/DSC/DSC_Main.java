@@ -27,7 +27,8 @@ public class DSC_Main extends javax.swing.JFrame {
     public static boolean getData = true;
     public static boolean checkGraph = true;
     public static int reportsDone = 0;
-
+    public static boolean generateAllReports = false;
+    
     /**
      * Creates new form DSC_Main
      */
@@ -749,7 +750,7 @@ public class DSC_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDriverTblActionPerformed
 
     private void btnDriverRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDriverRptActionPerformed
-        DriverReport.getDriverReports();
+        DriverReport.getDriverReports(this);
     }//GEN-LAST:event_btnDriverRptActionPerformed
 
     private void btnChefRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChefRptActionPerformed
@@ -775,11 +776,11 @@ public class DSC_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnChefRptActionPerformed
 
     private void btnPackerRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPackerRptActionPerformed
-        PackerReport.getPackerData();
+        PackerReport.getPackerData(this);
     }//GEN-LAST:event_btnPackerRptActionPerformed
 
     private void btnAccountRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccountRptActionPerformed
-        AccountantReport.getAccountantReport();
+        AccountantReport.getAccountantReport(this);
     }//GEN-LAST:event_btnAccountRptActionPerformed
 
     private void btnRouteViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRouteViewActionPerformed
@@ -839,11 +840,13 @@ public class DSC_Main extends javax.swing.JFrame {
         btnDriverRpt.setEnabled(false);
         btnPackerRpt.setEnabled(false);
         
-        PackerReport.getPackerData();
+        reportsDone = 0;
+        generateAllReports = true;
+        PackerReport.getPackerData(this);
         ChefReport chefObject = new ChefReport();
         chefObject.getChefReport();
-        DriverReport.getDriverReports();
-        AccountantReport.getAccountantReport();
+        DriverReport.getDriverReports(this);
+        AccountantReport.getAccountantReport(this);
         
     }//GEN-LAST:event_btnGenerateAllActionPerformed
 
@@ -1011,8 +1014,10 @@ public class DSC_Main extends javax.swing.JFrame {
         }
     }
     
-    public void reportsDone(){
-        // Add done method
+    public static void reportsDone(DSC_Main main){
+        JOptionPane.showMessageDialog(null, "All Reports were successfully made for week " + DriverReport.returnWeekInt(), "Reports", JOptionPane.DEFAULT_OPTION);
+        generateAllReports = false;
+        
     }
 
 }
