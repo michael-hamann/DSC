@@ -5,6 +5,10 @@
  */
 package DSC;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.Icon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 /**
@@ -13,17 +17,19 @@ import javax.swing.JLabel;
  */
 public class DSC_ReportLoading extends javax.swing.JFrame {
 
+    
+   LoadIcon loadObj = new LoadIcon();
+
     /**
      * Creates new form DSC_ReportLoading
      */
-    public DSC_ReportLoading(String complete) {      
+    public DSC_ReportLoading() {
         initComponents();
-         lblLoading.setText(complete + "");
+        this.setVisible(true);
+        loadObj.iconLoader(lblLoading);
     }
-
-    private DSC_ReportLoading() {
-        initComponents();
-    }
+    
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -37,13 +43,15 @@ public class DSC_ReportLoading extends javax.swing.JFrame {
         pnlLoading = new javax.swing.JPanel();
         lblLoading = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setAlwaysOnTop(true);
+        setUndecorated(true);
 
-        pnlLoading.setBorder(new javax.swing.border.MatteBorder(null));
+        pnlLoading.setBackground(new java.awt.Color(0, 255, 0));
+        pnlLoading.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         lblLoading.setBackground(new java.awt.Color(102, 102, 102));
         lblLoading.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblLoading.setText("Done");
         lblLoading.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 lblLoadingPropertyChange(evt);
@@ -54,14 +62,17 @@ public class DSC_ReportLoading extends javax.swing.JFrame {
         pnlLoading.setLayout(pnlLoadingLayout);
         pnlLoadingLayout.setHorizontalGroup(
             pnlLoadingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblLoading, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
+            .addGroup(pnlLoadingLayout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(lblLoading, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
+                .addGap(12, 12, 12))
         );
         pnlLoadingLayout.setVerticalGroup(
             pnlLoadingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlLoadingLayout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(lblLoading)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addGap(12, 12, 12)
+                .addComponent(lblLoading, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
+                .addGap(12, 12, 12))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -72,9 +83,7 @@ public class DSC_ReportLoading extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(pnlLoading, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(pnlLoading, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -82,18 +91,9 @@ public class DSC_ReportLoading extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblLoadingPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_lblLoadingPropertyChange
-          
+
     }//GEN-LAST:event_lblLoadingPropertyChange
 
-    public static void main(String args[]) {
-       
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new DSC_ReportLoading().setVisible(true);
-            }
-        });
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel lblLoading;
     private javax.swing.JPanel pnlLoading;

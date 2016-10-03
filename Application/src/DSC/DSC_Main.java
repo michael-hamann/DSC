@@ -4,6 +4,7 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import java.awt.Frame;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -287,13 +288,6 @@ public class DSC_Main extends javax.swing.JFrame {
         pnlBarChartActive.setBackground(new java.awt.Color(102, 102, 102));
         pnlBarChartActive.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         pnlBarChartActive.setMinimumSize(new java.awt.Dimension(305, 252));
-        pnlBarChartActive.addHierarchyBoundsListener(new java.awt.event.HierarchyBoundsListener() {
-            public void ancestorMoved(java.awt.event.HierarchyEvent evt) {
-            }
-            public void ancestorResized(java.awt.event.HierarchyEvent evt) {
-                pnlBarChartActiveresizeCheck(evt);
-            }
-        });
         pnlBarChartActive.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {
                 pnlBarChartActiveComponentResized(evt);
@@ -314,6 +308,11 @@ public class DSC_Main extends javax.swing.JFrame {
         pnlPieChart.setBackground(new java.awt.Color(102, 102, 102));
         pnlPieChart.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         pnlPieChart.setMinimumSize(new java.awt.Dimension(305, 252));
+        pnlPieChart.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                pnlPieChartComponentResized(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlPieChartLayout = new javax.swing.GroupLayout(pnlPieChart);
         pnlPieChart.setLayout(pnlPieChartLayout);
@@ -352,7 +351,7 @@ public class DSC_Main extends javax.swing.JFrame {
         pnlTextStats.setMinimumSize(new java.awt.Dimension(305, 252));
 
         pnlMealTypeStats.setBackground(new java.awt.Color(102, 102, 102));
-        pnlMealTypeStats.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Meal Type Stats", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
+        pnlMealTypeStats.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Meal Type Stats", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(255, 255, 255))); // NOI18N
         pnlMealTypeStats.setForeground(new java.awt.Color(255, 255, 255));
 
         lblStandardMeal.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
@@ -497,7 +496,7 @@ public class DSC_Main extends javax.swing.JFrame {
         );
 
         pnlFamilySizeStats.setBackground(new java.awt.Color(102, 102, 102));
-        pnlFamilySizeStats.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Family Size Stats", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
+        pnlFamilySizeStats.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Family Size Stats", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(255, 255, 255))); // NOI18N
 
         lblFamilySize.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
         lblFamilySize.setForeground(new java.awt.Color(255, 255, 255));
@@ -739,32 +738,15 @@ public class DSC_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDriverRptActionPerformed
 
     private void btnChefRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChefRptActionPerformed
-        ChefReport.completeReport = false;
-        ChefReport chefObject = new ChefReport();
-        chefObject.getChefReport();
-        try {
-            JFrame j = new DSC_ReportLoading("Loading");
-            j.setVisible(true);
-            for (int i = 0; i < 10; i++) {
-                if (!ChefReport.completeReport) {
-                    Thread.sleep(500);
-                } else {
-                    j.setVisible(false);
-                    break;
-                }
-            }
-            j.setVisible(false);
-        } catch (Exception e) {
 
-        }
-
+        ChefReport.getChefReport();
+        
     }//GEN-LAST:event_btnChefRptActionPerformed
 
     private void btnPackerRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPackerRptActionPerformed
 
         PackerReport.getPackerData();
-        ChefReport chefObject = new ChefReport();
-        chefObject.getChefReport();
+        ChefReport.getChefReport();
         DriverReport.getDriverReports();
         AccountantReport.getAccountantReport();
 
@@ -783,10 +765,6 @@ public class DSC_Main extends javax.swing.JFrame {
         this.dispose();
         new DSC_ViewOrder().setVisible(true);
     }//GEN-LAST:event_btnViewOrdersActionPerformed
-
-    private void pnlBarChartActiveresizeCheck(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_pnlBarChartActiveresizeCheck
-
-    }//GEN-LAST:event_pnlBarChartActiveresizeCheck
 
     private void btnPlaceOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlaceOrderActionPerformed
         this.dispose();
@@ -825,6 +803,10 @@ public class DSC_Main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_pnlBarChartInActiveComponentResized
 
+    private void pnlPieChartComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_pnlPieChartComponentResized
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pnlPieChartComponentResized
+
     /**
      * @param args the command line arguments
      */
@@ -839,16 +821,24 @@ public class DSC_Main extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DSC_Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DSC_Main.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DSC_Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DSC_Main.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DSC_Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DSC_Main.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DSC_Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DSC_Main.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -949,8 +939,10 @@ public class DSC_Main extends javax.swing.JFrame {
             ref.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot ds) {
-                    String lastOrderID = ds.child("OrderID").getValue(String.class);
-                    String lastClientID = ds.child("ClientID").getValue(String.class);
+                    String lastOrderID = ds.child("OrderID").getValue(String.class
+                    );
+                    String lastClientID = ds.child("ClientID").getValue(String.class
+                    );
                     DSC_Place_Order DSC = new DSC_Place_Order();
                     for (Order order : orders) {
                         order.setID(lastOrderID);

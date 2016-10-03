@@ -409,7 +409,6 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="ancestorResized" listener="java.awt.event.HierarchyBoundsListener" parameters="java.awt.event.HierarchyEvent" handler="pnlBarChartActiveresizeCheck"/>
                 <EventHandler event="componentResized" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="pnlBarChartActiveComponentResized"/>
               </Events>
 
@@ -440,6 +439,9 @@
                   <Dimension value="[305, 252]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="componentResized" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="pnlPieChartComponentResized"/>
+              </Events>
 
               <Layout>
                 <DimensionLayout dim="0">
