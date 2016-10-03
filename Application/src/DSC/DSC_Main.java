@@ -836,8 +836,7 @@ public class DSC_Main extends javax.swing.JFrame {
         generateAllReports = true;
         
         PackerReport.getPackerData();
-        ChefReport chefObject = new ChefReport();
-        chefObject.getChefReport();
+        ChefReport.getChefReport();
         DriverReport.getDriverReports();
         AccountantReport.getAccountantReport();
         

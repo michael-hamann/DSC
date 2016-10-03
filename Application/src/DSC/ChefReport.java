@@ -13,6 +13,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,7 +55,6 @@ public class ChefReport {
         getActiveRoutes();
     }
 
-    
     public static void getActiveRoutes() {
 
         booksCounter = 0;
@@ -250,15 +252,14 @@ public class ChefReport {
             }
             try {
                 creatSheet(excelNumber + "", list[numberOfRoutes], workbook);
-            } catch (FileNotFoundException ex) {
-                JOptionPane.showMessageDialog(null, "File is Currently being Used. Please Close the File.");
             } catch (IOException ex) {
-                JOptionPane.showMessageDialog(null, "File COuld Not Be Found.");
+                JOptionPane.showMessageDialog(null, "File Could Not Be Found.");
             }
 
             excelNumber++;
             if (excelNumber == allRoutes.size()) {
                 chefLoadingObj.setVisible(false);
+                chefLoadingObj.dispose();
             }
 
         }
@@ -314,11 +315,14 @@ public class ChefReport {
         FileOutputStream excelOut = null;
         try {
 
-            String path = "\\Reports\\" + "ChefReport - " + currentWeek() + " Week -  " + returnWeekInt() + "\\";
+            Path path = Paths.get("Reports\\ChefReport - " + currentWeek() + " Week -  " + returnWeekInt());
+            File f = path.toFile();
+            Files.createDirectories(path);
 
-            File f = new File(path);
-            f.mkdir();
-            File file = new File(path + "ChefReports Week - " + returnWeekInt() + " ( " + mealType + " )" + ".xlsx");
+            File file = path.resolve("ChefReports Week - " + returnWeekInt() + " ( " + mealType + " )" + ".xlsx").toFile();
+            if (!file.exists()) {
+                file.createNewFile();
+            }
             excelOut = new FileOutputStream(file);
             workbook.write(excelOut);
             excelOut.close();
