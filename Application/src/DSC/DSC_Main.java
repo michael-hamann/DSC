@@ -749,7 +749,7 @@ public class DSC_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDriverTblActionPerformed
 
     private void btnDriverRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDriverRptActionPerformed
-       // DriverReport.getDriverReports(this);
+        DriverReport.getDriverReports();
     }//GEN-LAST:event_btnDriverRptActionPerformed
 
     private void btnChefRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChefRptActionPerformed
@@ -766,12 +766,12 @@ public class DSC_Main extends javax.swing.JFrame {
         AccountantReport.getAccountantReport();
 
 
-       // PackerReport.getPackerData(this);
+       PackerReport.getPackerData();
 
     }//GEN-LAST:event_btnPackerRptActionPerformed
 
     private void btnAccountRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccountRptActionPerformed
-       // AccountantReport.getAccountantReport(this);
+        AccountantReport.getAccountantReport();
     }//GEN-LAST:event_btnAccountRptActionPerformed
 
     private void btnRouteViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRouteViewActionPerformed
@@ -835,11 +835,11 @@ public class DSC_Main extends javax.swing.JFrame {
         reportsDone = 0;
         generateAllReports = true;
         
-        //PackerReport.getPackerData(this);
+        PackerReport.getPackerData();
         ChefReport chefObject = new ChefReport();
         chefObject.getChefReport();
-        //DriverReport.getDriverReports(this);
-       // AccountantReport.getAccountantReport(this);
+        DriverReport.getDriverReports();
+        AccountantReport.getAccountantReport();
         
         
     }//GEN-LAST:event_btnGenerateAllActionPerformed
