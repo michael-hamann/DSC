@@ -144,10 +144,8 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     public final void clearFieldsOrder() {
         txfOrderID.setText(null);
         spnOrderFamilySize.setValue(0);
-        //spnOrderStartingDate.setValue("");
         txfOrderRouteID.setText(null);
         cmbDuration.setSelectedIndex(0);
-        //spnEndDate.setValue("");
         DefaultTableModel model = (DefaultTableModel) tblOrderTable.getModel();
         model.setRowCount(0);
         boolean orderSelected = false;
@@ -199,7 +197,6 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 for (DataSnapshot dataSnapshot : ds.getChildren()) {
                     String subArr[] = dataSnapshot.child("Suburbs").getValue(String[].class);
                     if (subArr[0].equals("Collection")) {
-                        continue;
                     } else {
                         for (int i = 0; i < subArr.length; i++) {
                             suburbs.add(subArr[i]);
@@ -672,12 +669,12 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(cmbVeiw, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 413, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlTableLayout.createSequentialGroup()
                         .addComponent(btnPrevious)
-                        .addGap(381, 381, 381)
-                        .addComponent(lblLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -691,18 +688,20 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         .addComponent(cmbSearchColumn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblSearchBy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txfSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnDelete)
-                        .addComponent(cmbVeiw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(pnlTableLayout.createSequentialGroup()
+                        .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnDelete)
+                                .addComponent(cmbVeiw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnPrevious, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(lblLoad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnPrevious, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         pnlDetailsClient.setBackground(new java.awt.Color(0, 204, 51));
@@ -1129,8 +1128,40 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             String message = "Are you sure you want to delete an order of " + name + "?";
             int answer = JOptionPane.showConfirmDialog(this, message, "Confirm", JOptionPane.INFORMATION_MESSAGE);
 
+            int orderindex = -1;
+            boolean active = true;
+            String id = txfOrderID.getText();
+
             switch (answer) {
                 case JOptionPane.YES_OPTION:
+                    for (int i = 0; i < allorders.size(); i++) {
+                        if (allorders.get(i).getID().equals(id)) {
+                            orderindex = i;
+                            if (allorders.get(orderindex).isActive()) {
+                                active = true;
+                            } else {
+                                active = false;
+                            }
+                        }
+                    }
+                    if (orderindex != -1) {
+                        allorders.remove(orderindex);
+                    }
+                    if (active) {
+                        for (int i = 0; i < activeOrders.size(); i++) {
+                            if (activeOrders.get(i).getID().equals(id)) {
+                                orderindex = i;
+                            }
+                        }
+                        activeOrders.remove(orderindex);
+                    } else {
+                        for (int i = 0; i < inactiveOrders.size(); i++) {
+                            if (inactiveOrders.get(i).getID().equals(id)) {
+                                orderindex = i;
+                            }
+                        }
+                        inactiveOrders.remove(orderindex);
+                    }
                     //removes node from database
                     Firebase del = DBClass.getInstance().child("Orders/" + txfOrderID.getText());
                     del.removeValue();
@@ -1159,11 +1190,21 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
         //method checks if all fields are filled
         boolean empty = checkEmpty();
+        
+        int famSize = (int) spnOrderFamilySize.getValue();
+        int total =0;
+        
+        for (int i = 0; i < tblMeals.getRowCount(); i++) {
+            int quantity =Integer.parseInt( tblMeals.getValueAt(i, 0).toString());
+            total = total+quantity;            
+        }
 
         if (empty) {
             JOptionPane.showMessageDialog(this, "Please fill in all required fields", "Error", JOptionPane.ERROR_MESSAGE);
             //displays message to user if all fields have not been filled in
-        } else {
+        }else if(total!=famSize){
+            JOptionPane.showMessageDialog(this, "Total meals does not correspond with family size.", "Error", JOptionPane.ERROR_MESSAGE);
+        }else{
 
             boolean subActive = false; //variable used to track whether suburbs edited are active
 
