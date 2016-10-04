@@ -41,8 +41,10 @@ public class PackerReport {
     private static int clientCounter;
     private static File file;
     private static FileOutputStream excelOut;
+    private static DSC_ReportLoading packerLoadingObj;
 
     public static void getPackerData() {
+        packerLoadingObj = new DSC_ReportLoading();
         boolean fileFound = false;
         try {
             file = new File("PackerReports (" + DriverReport.returnWeekString() + ").xlsx");
@@ -52,9 +54,13 @@ public class PackerReport {
             excelOut = new FileOutputStream(file);
             fileFound = true;
         } catch (FileNotFoundException ex) {
+            packerLoadingObj.setVisible(false);
+            packerLoadingObj.dispose();
             JOptionPane.showMessageDialog(null, "Please close the excel file before using generating.", "Error", JOptionPane.ERROR_MESSAGE);
             System.err.println("Error - Could not create new PackerReports: File currently in use.");
         } catch (IOException io) {
+            packerLoadingObj.setVisible(false);
+            packerLoadingObj.dispose();
             JOptionPane.showMessageDialog(null, "An error occured\nCould not create Packer Reports", "Error", JOptionPane.ERROR_MESSAGE);
             System.err.println("Error - Could not create new Packer Reports");
         }
@@ -268,11 +274,11 @@ public class PackerReport {
                     Cell cell = row.createCell(i);
                     cell.setCellValue(arr[i]);
                     XSSFCellStyle borderStyle = workbook.createCellStyle();
-                    
+
                     if (i == 0 && !(key + "").equals("1") && longestCustomer < ((String) arr[i]).length()) {
                         longestCustomer = ((String) arr[i]).length();
                     }
-                    
+
                     if (!((key + "").equals("1") || (key + "").equals("2"))) {
                         borderStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
                         borderStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
@@ -344,7 +350,7 @@ public class PackerReport {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 2));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 4));
 
-            sheet.setColumnWidth(0, (longestCustomer + 1)*240);
+            sheet.setColumnWidth(0, (longestCustomer + 1) * 240);
             sheet.setColumnWidth(1, 8 * 240);
             sheet.setColumnWidth(2, 10 * 240);
             sheet.setColumnWidth(3, 4 * 240);
@@ -353,8 +359,8 @@ public class PackerReport {
             for (int i = 0; i <= 3; i++) {
                 usedSize += sheet.getColumnWidth(i);
             }
-            sheet.setColumnWidth(4, (totalSize - usedSize)/2);
-            sheet.setColumnWidth(5, (totalSize - usedSize)/2);
+            sheet.setColumnWidth(4, (totalSize - usedSize) / 2);
+            sheet.setColumnWidth(5, (totalSize - usedSize) / 2);
 
         }
 
@@ -362,8 +368,12 @@ public class PackerReport {
             workbook.write(excelOut);
             excelOut.close();
             System.out.println("Done - Packer");
+            packerLoadingObj.setVisible(false);
+            packerLoadingObj.dispose();
             JOptionPane.showMessageDialog(null, "PackerReport Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
         } catch (IOException io) {
+            packerLoadingObj.setVisible(false);
+            packerLoadingObj.dispose();
             JOptionPane.showMessageDialog(null, "An error occured\nCould not create PackerReport", "Error", JOptionPane.ERROR_MESSAGE);
             System.err.println("Error - Could not create new PackerReport: ");
             io.printStackTrace();

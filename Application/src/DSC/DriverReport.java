@@ -42,9 +42,10 @@ public class DriverReport {
     private static int driverCounter;
     private static File file;
     private static FileOutputStream excelOut;
-    
-    public static void getDriverReports() {
+    private static DSC_ReportLoading driverLoadingObj;
 
+    public static void getDriverReports() {
+        driverLoadingObj = new DSC_ReportLoading();
         boolean fileFound = false;
 
         try {
@@ -55,9 +56,13 @@ public class DriverReport {
             excelOut = new FileOutputStream(file);
             fileFound = true;
         } catch (FileNotFoundException ex) {
+            driverLoadingObj.setVisible(false);
+            driverLoadingObj.dispose();
             JOptionPane.showMessageDialog(null, "Please close the excel file before using generating.", "Error", JOptionPane.ERROR_MESSAGE);
             System.err.println("Error - Could not create new DriverReport: File currently in use.");
         } catch (IOException io) {
+            driverLoadingObj.setVisible(false);
+            driverLoadingObj.dispose();
             JOptionPane.showMessageDialog(null, "An error occured\nCould not create Driver Report", "Error", JOptionPane.ERROR_MESSAGE);
             System.err.println("Error - Could not create new Driver Report: ");
             io.printStackTrace();
@@ -78,7 +83,7 @@ public class DriverReport {
                 for (DataSnapshot dataSnapshot : ds.getChildren()) {
                     Calendar start = Calendar.getInstance();
                     Calendar end = null;
-                    
+
                     if (!dataSnapshot.child("StartingDate").getValue(String.class).equals("-")) {
                         start = Calendar.getInstance();
                         start.setTimeInMillis(dataSnapshot.child("StartingDate").getValue(long.class));
@@ -306,13 +311,13 @@ public class DriverReport {
                                 borderStyle.setBorderRight(XSSFCellStyle.BORDER_MEDIUM);
                             }
 
-                            if (i == 6 && ((String)arr[i]).contains("X")) {
+                            if (i == 6 && ((String) arr[i]).contains("X")) {
                                 cell.setCellValue("");
                                 borderStyle.setFillPattern(XSSFCellStyle.FINE_DOTS);
                                 borderStyle.setFillBackgroundColor(IndexedColors.GREY_50_PERCENT.getIndex());
                                 borderStyle.setFillForegroundColor(IndexedColors.GREY_50_PERCENT.getIndex());
                             }
-                            
+
                             if ((Integer.parseInt((key + ""))) != keySet.size()) {
                                 borderStyle.setBorderBottom(XSSFCellStyle.BORDER_THIN);
                             } else {
@@ -367,7 +372,8 @@ public class DriverReport {
             excelOut = new FileOutputStream(file);
             workbook.write(excelOut);
             excelOut.close();
-            
+            driverLoadingObj.setVisible(false);
+            driverLoadingObj.dispose();
             JOptionPane.showMessageDialog(null, "DriverReports Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
         } catch (FileNotFoundException ex) {
             JOptionPane.showMessageDialog(null, "Please close the excel file before using generating.", "Error", JOptionPane.ERROR_MESSAGE);
