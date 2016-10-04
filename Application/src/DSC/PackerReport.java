@@ -192,8 +192,6 @@ public class PackerReport {
                     getDriverDetails(driverCount, driverID);
                     driverCount++;
                 }
-
-                System.out.println("Success (Packer)!!!");
             }
 
             @Override
@@ -363,7 +361,7 @@ public class PackerReport {
         try {
             workbook.write(excelOut);
             excelOut.close();
-            System.out.println("Done");
+            System.out.println("Done - Packer");
             JOptionPane.showMessageDialog(null, "PackerReport Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
         } catch (IOException io) {
             JOptionPane.showMessageDialog(null, "An error occured\nCould not create PackerReport", "Error", JOptionPane.ERROR_MESSAGE);

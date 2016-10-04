@@ -103,7 +103,6 @@ public class DriverReport {
                             meals,
                             dataSnapshot.child("FamilySize").getValue(int.class)
                     ));
-                    System.out.println(meals);
                 }
                 clientCounter = 0;
                 for (Order order : orderList) {
@@ -197,8 +196,6 @@ public class DriverReport {
                     getDriverDetails(driverCount, driverID);
                     driverCount++;
                 }
-
-                System.out.println("Success (Driver)!!!");
             }
 
             @Override
@@ -370,6 +367,7 @@ public class DriverReport {
             excelOut = new FileOutputStream(file);
             workbook.write(excelOut);
             excelOut.close();
+            
             JOptionPane.showMessageDialog(null, "DriverReports Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
         } catch (FileNotFoundException ex) {
             JOptionPane.showMessageDialog(null, "Please close the excel file before using generating.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -380,7 +378,7 @@ public class DriverReport {
             System.err.println("Error - Could not create new Driver Report: ");
             io.printStackTrace();
         }
-        System.out.println("Done");
+        System.out.println("Done - Driver");
     }
 
     public static String returnWeekString() {

@@ -121,7 +121,6 @@ public class AccountantReport {
     }
 
     private static void createExcelReport() {
-        System.out.println("Executing");
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet("AccountReport - Week " + DriverReport.returnWeekInt());
         Map<String, Object[]> data = new TreeMap<>();
@@ -238,12 +237,11 @@ public class AccountantReport {
             workbook.write(excelOut);
             excelOut.close();
             JOptionPane.showMessageDialog(null, "AccountReports Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
-            System.out.println("Done");
+            System.out.println("Done - Accountant");
         } catch (IOException io) {
             JOptionPane.showMessageDialog(null, "An error occured\nCould not create AccountReport", "Error", JOptionPane.ERROR_MESSAGE);
             System.err.println("Error - Could not create new AccountReport: ");
             io.printStackTrace();
         }
     }
-
 }
