@@ -360,10 +360,14 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     activeOrders.add(o);
                     count2++;
 
+                }else{
+                    activeOrders.add(o);
                 }
                 if (o.isActive() == false && count2 < tbcounter) {
                     inactiveOrders.add(o);
                     count2++;
+                }else{
+                    inactiveOrders.add(o);
                 }
                 if (ordercount == ds.getChildrenCount()) {
                     lblLoad.setIcon(null);
@@ -1765,8 +1769,8 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 arrays = split(activeOrders);
                 if (count < parts) {
                     ordertb.setRowCount(0);
-                    List<Order> orders1 = arrays.get(count);
-                    for (Order order : orders1) {
+                    List<Order> orders2 = arrays.get(count);
+                    for (Order order : orders2) {
                         setOrderTB(order, ordertb);
                     }
                 } else {
