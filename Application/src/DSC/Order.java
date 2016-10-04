@@ -35,6 +35,7 @@ public class Order implements java.io.Serializable{
         this.endDate = endDate;
         this.route = route;
         this.meals = meals;
+        
     }
     
     public Order(String orderID, boolean active, String clientID, String duration, Calendar startingDate, Calendar endDate, String route, ArrayList<Meal> meals, int familySize) {

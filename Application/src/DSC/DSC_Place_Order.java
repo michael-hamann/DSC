@@ -750,12 +750,13 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         }
 
         String clientAlternativeNumber = txfClientAlternativeNumber.getText();
-        if (((clientAlternativeNumber.length() !=0 && clientAlternativeNumber.length() != 10) || !clientAlternativeNumber.matches("[0-9]+"))) {
-            invalid += "\nAlternative Contact Number";
-            allGood = false;
-        } else if (clientAlternativeNumber.isEmpty()) {
+        System.out.println(clientAlternativeNumber.matches("[0-9]+"));
+//        if (((clientAlternativeNumber.length() !=0 && clientAlternativeNumber.length() != 10) || !clientAlternativeNumber.matches("[0-9]+"))) {
+//            invalid += "\nAlternative Contact Number";
+//            allGood = false;
+//        } else if (clientAlternativeNumber.isEmpty()) {
             clientAlternativeNumber = "N/A";
-        }
+//        }
 
         String clientEmail = txfClientEmail.getText();
 
@@ -797,7 +798,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             }
         }
 
-        String timeFrame;
+        String timeFrame = "";
         if (rbtMonToFri.isSelected()) {
             timeFrame = "Monday - Friday";
         } else if (rbtMonToThur.isSelected()) {
@@ -817,7 +818,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         Client client = new Client(null, clientname, clientSurname, clientContactNumber,
                 clientAlternativeNumber, clientEmail, clientSuburb, clientAddress, clientAdditionalInfo);
 
-        Order order = new Order(null, true, client, timeSlot, orderDate, null, routeID, orderMeals, familySize);
+        Order order = new Order(null, true, client, timeFrame, orderDate, null, routeID, orderMeals, familySize);
 
         if (allGood) {
             if (online) {
