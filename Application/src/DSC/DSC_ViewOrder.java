@@ -32,6 +32,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     boolean editClicked = false;
     boolean orderSelected = false;
 
+    //ArrayList initialization
     ArrayList<Client> allclients = new ArrayList<>();
     ArrayList<Order> allorders = new ArrayList<>();
     ArrayList<Order> tborders = new ArrayList<>();
@@ -63,21 +64,30 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         cmbSuburbs.addItem("Collection");
         btnDeactivate.setVisible(true);
 
+        //methods getting client and order data from database
         saveClient();
         saveOrder();
+
+        //methods getting suburbs from database
         callActiveSuburbs();
         callAllSuburbs();
+
+        //contains table listener, if row selected it populates client fields, order fields and the meal table accordingly
         setTextFields();
 
+        //spinner initialization for start and end dates
         Date datenow = Calendar.getInstance().getTime();
         SpinnerDateModel smb = new SpinnerDateModel(datenow, null, null, Calendar.HOUR_OF_DAY);
         spnStartDate.setModel(smb);
         spnEndDate.setModel(smb);
+
+        //edit spinner to specific format of date
         JSpinner.DateEditor sd = new JSpinner.DateEditor(spnStartDate, "dd-MM-yyyy");
         JSpinner.DateEditor ed = new JSpinner.DateEditor(spnEndDate, "dd-MM-yyyy");
         spnStartDate.setEditor(sd);
         spnEndDate.setEditor(ed);
 
+        //combobox listener, when item clicked table loads accordingly
         cmbListener();
 
     }
@@ -127,7 +137,6 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         btnAddMeal.setEnabled(true);
         btnRemoveMeal.setEnabled(true);
         btnDeactivate.setEnabled(true);
-        btnDisable.setEnabled(true);
     }
 
     public final void disableFieldsOrder() {
@@ -139,8 +148,6 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         btnAddMeal.setEnabled(false);
         btnRemoveMeal.setEnabled(false);
         btnDeactivate.setEnabled(false);
-        btnDisable.setEnabled(false);
-
     }
 
     public final void clearFieldsOrder() {
@@ -166,18 +173,24 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
     private void callActiveSuburbs() {
         Firebase ref = DBClass.getInstance().child("Routes");
+
+        //gets all active suburbs
         ref.orderByChild("Active").equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot ds) {
                 for (DataSnapshot dataSnapshot : ds.getChildren()) {
+                    //stores all suburbs within node into an array
                     String subList[] = dataSnapshot.child("Suburbs").getValue(String[].class);
-                    if (subList[0].equals("Collection")) {
-                        continue;
-                    } else {
-                        for (int i = 0; i < subList.length; i++) {
+                    //iterates through array
+                    for (int i = 0; i < subList.length; i++) {
+                        if (subList[i].equals("Collection")) {
+                        } else {
+                            //adds suburb to arraylist
                             activeSuburbs.add(subList[i]);
                         }
+
                     }
+
                 }
 
             }
@@ -197,21 +210,25 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             @Override
             public void onDataChange(DataSnapshot ds) {
                 for (DataSnapshot dataSnapshot : ds.getChildren()) {
+                    //stores all suburbs within node into an array
                     String subArr[] = dataSnapshot.child("Suburbs").getValue(String[].class);
-                    if (subArr[0].equals("Collection")) {
-                    } else {
-                        for (int i = 0; i < subArr.length; i++) {
+                    //iterates through array
+                    for (int i = 0; i < subArr.length; i++) {
+                        if (subArr[0].equals("Collection")) {
+                        } else {
+                            //adds suburb to arraylist of all suburbs as well as to the combobox
                             suburbs.add(subArr[i]);
                             cmbSuburbs.addItem(subArr[i]);
                         }
                     }
+
                 }
 
             }
 
             @Override
             public void onCancelled(FirebaseError fe) {
-                JOptionPane.showMessageDialog(null, "Could not fetch suburbs.\nCheck logs for error report.", "Suburb Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Unable to fetch suburbs.\nCheck logs for error report.", "Suburb Error", JOptionPane.ERROR_MESSAGE);
                 System.err.print("Database connection error (Suburb): " + fe);
             }
         });
@@ -220,9 +237,12 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
     private void setOrderTB(Order order, DefaultTableModel d) {
         tborders.add(order);
+        //creates row object
         Object[] row = {order.getClient().getName(), order.getClient().getSurname(), order.getClient().getContactNumber(),
             order.getClient().getEmail(), order.getClient().getSuburb(), order.isActive(), order.getDuration(), order.getFamilySize()};
+        //adds this object to the order table
         d.addRow(row);
+        //notifies all listeners cell values may have changed
         d.fireTableDataChanged();
     }
 
@@ -541,7 +561,6 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         cmbDuration = new javax.swing.JComboBox<>();
         spnStartDate = new javax.swing.JSpinner();
         spnEndDate = new javax.swing.JSpinner();
-        btnDisable = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblMeals = new javax.swing.JTable();
         btnBack = new javax.swing.JButton();
@@ -919,13 +938,6 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
         cmbDuration.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Monday - Thursday", "Monday - Friday" }));
 
-        btnDisable.setText("-");
-        btnDisable.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDisableActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout pnlDetailsLayout = new javax.swing.GroupLayout(pnlDetails);
         pnlDetails.setLayout(pnlDetailsLayout);
         pnlDetailsLayout.setHorizontalGroup(
@@ -956,10 +968,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             .addComponent(txfOrderRouteID, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(cmbDuration, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(spnStartDate)
-                            .addGroup(pnlDetailsLayout.createSequentialGroup()
-                                .addComponent(spnEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnDisable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(spnEndDate)))
                     .addComponent(btnDeactivate))
                 .addContainerGap())
         );
@@ -984,8 +993,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblEndDate)
-                    .addComponent(spnEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDisable))
+                    .addComponent(spnEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txfOrderRouteID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1674,7 +1682,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
         Firebase updOrder = DBClass.getInstance().child("Orders/" + txfOrderID.getText());
         boolean orderactive = true;
-        int index =-1;
+        int index = -1;
 
         for (Order o : allorders) {
             if (txfOrderID.getText().equals(o.getID())) {
@@ -1828,14 +1836,6 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btnPreviousActionPerformed
-
-    private void btnDisableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDisableActionPerformed
-       if(spnEndDate.isEnabled()){
-           spnEndDate.setEnabled(false);
-       }else{
-           spnEndDate.setEnabled(true);
-       }
-    }//GEN-LAST:event_btnDisableActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -1900,6 +1900,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 }
                 break;
         }
+        ordertb.fireTableDataChanged();
     }
 
     public ArrayList<List<Order>> split(ArrayList<Order> list) {
@@ -1988,7 +1989,6 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnDeactivate;
     private javax.swing.JButton btnDelete;
-    private javax.swing.JButton btnDisable;
     private javax.swing.JButton btnEditClient;
     private javax.swing.JButton btnEditOrder;
     private javax.swing.JButton btnNext;
