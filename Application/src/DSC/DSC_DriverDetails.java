@@ -4,6 +4,7 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import java.awt.Cursor;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
@@ -95,7 +96,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
 
             @Override
             public void onCancelled(FirebaseError fe) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                JOptionPane.showMessageDialog(null, "Error: " + fe.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 
@@ -127,7 +128,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
 
             @Override
             public void onCancelled(FirebaseError fe) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                JOptionPane.showMessageDialog(null, "Error: " + fe.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
             }
         });
     }
@@ -168,7 +169,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
 
             @Override
             public void onCancelled(FirebaseError fe) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                JOptionPane.showMessageDialog(null, "Error: " + fe.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
             }
         });
     }
@@ -337,7 +338,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         txfSuburbID.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         cmbDriverName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        cmbDriverName.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbDriverName.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Driver Name" }));
         cmbDriverName.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         btnAddDriver.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -421,10 +422,10 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                     .addComponent(txfVehicleReg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSave)
                     .addComponent(btnBack)
                     .addComponent(btnAddDriver)
-                    .addComponent(btnEdit)
-                    .addComponent(btnSave))
+                    .addComponent(btnEdit))
                 .addContainerGap())
         );
 
@@ -509,6 +510,9 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         btnEdit.setVisible(false);
         btnSave.setVisible(true);
         editClicked = true;
+        txfAddress.setCursor(new Cursor(Cursor.TEXT_CURSOR));
+        txfContactNo.setCursor(new Cursor(Cursor.TEXT_CURSOR));
+        txfVehicleReg.setCursor(new Cursor(Cursor.TEXT_CURSOR));
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
@@ -520,11 +524,10 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                     btnEdit.setEnabled(true);
                     disableFields();
                     lstRoutes.setSelectedIndex(listRouteIndex);
+                    txfAddress.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                    txfContactNo.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                    txfVehicleReg.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                     editClicked = false;
-                    break;
-                case JOptionPane.NO_OPTION:
-                    break;
-                default:
                     break;
             }
         } else {

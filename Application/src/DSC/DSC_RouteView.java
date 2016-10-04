@@ -17,6 +17,7 @@ import javax.swing.border.TitledBorder;
  */
 public class DSC_RouteView extends javax.swing.JFrame {
 
+    boolean editClicked = false;
     ArrayList<Route> allRoutes = new ArrayList<>();
     ArrayList<String> suburbs = new ArrayList<>();
     String driverName;
@@ -32,6 +33,32 @@ public class DSC_RouteView extends javax.swing.JFrame {
         pnlNew.setVisible(false);
         setRoutesList("Active");
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+    }
+
+    private void disableTime() {
+        rbtAfternoon.setEnabled(false);
+        rbtLateAfternoon.setEnabled(false);
+        rbtEvening.setEnabled(false);
+    }
+
+    private void enableTime() {
+        rbtAfternoon.setEnabled(true);
+        rbtLateAfternoon.setEnabled(true);
+        rbtEvening.setEnabled(true);
+    }
+
+    private void disableFields() {
+        txfRouteID.setEditable(false);
+        txfSuburbID.setEditable(false);
+        txfCurrDriver.setEditable(false);
+        txfSuburbName.setEditable(false);
+    }
+
+    private void clearFields() {
+        txfRouteID.setText(null);
+        txfSuburbID.setText(null);
+        txfSuburbName.setText(null);
+        txfCurrDriver.setText(null);
     }
 
     private void setRoutesList(String active) {
@@ -83,7 +110,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
 
             @Override
             public void onCancelled(FirebaseError fe) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                JOptionPane.showMessageDialog(null, "Error: " + fe.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 
@@ -124,36 +151,10 @@ public class DSC_RouteView extends javax.swing.JFrame {
 
             @Override
             public void onCancelled(FirebaseError fe) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                JOptionPane.showMessageDialog(null, "Error: " + fe.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 
-    }
-
-    private void disableTime() {
-        rbtAfternoon.setEnabled(false);
-        rbtLateAfternoon.setEnabled(false);
-        rbtEvening.setEnabled(false);
-    }
-
-    private void enableTime() {
-        rbtAfternoon.setEnabled(true);
-        rbtLateAfternoon.setEnabled(true);
-        rbtEvening.setEnabled(true);
-    }
-
-    private void disableFields() {
-        txfRouteID.setEditable(false);
-        txfSuburbID.setEditable(false);
-        txfCurrDriver.setEditable(false);
-        txfSuburbName.setEditable(false);
-    }
-
-    private void clearFields() {
-        txfRouteID.setText(null);
-        txfSuburbID.setText(null);
-        txfSuburbName.setText(null);
-        txfCurrDriver.setText(null);
     }
 
     private String getSelectedRoute() {
@@ -187,7 +188,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
 
             @Override
             public void onCancelled(FirebaseError fe) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                JOptionPane.showMessageDialog(null, "Error: " + fe.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
             }
         });
     }
@@ -203,7 +204,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
 
             @Override
             public void onCancelled(FirebaseError fe) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                JOptionPane.showMessageDialog(null, "Error: " + fe.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
             }
         });
     }
@@ -774,8 +775,22 @@ public class DSC_RouteView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        this.dispose();
-        new DSC_Main().setVisible(true);
+        if (editClicked) {
+            int ans = JOptionPane.showConfirmDialog(this, "Do you wish to discard unsaved changes?");
+            switch (ans) {
+                case JOptionPane.YES_OPTION:
+                    disableTime();
+                    txfSuburbName.setEditable(false);
+                    txfSuburbName.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                    btnEdit.setVisible(true);
+                    btnSave.setVisible(false);
+                    editClicked = false;
+                    break;
+            }
+        } else {
+            this.dispose();
+            new DSC_Main().setVisible(true);
+        }
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
@@ -784,6 +799,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
         txfSuburbName.setCursor(new Cursor(Cursor.TEXT_CURSOR));
         btnEdit.setVisible(false);
         btnSave.setVisible(true);
+        editClicked = true;
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnShowOtherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowOtherActionPerformed

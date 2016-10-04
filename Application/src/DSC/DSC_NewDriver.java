@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
  * @author Michael Hamann
  */
 public class DSC_NewDriver extends javax.swing.JFrame {
-    
+
     private String id = getNewDriverID();
     private DSC_DriverDetails main;
 
@@ -35,14 +35,14 @@ public class DSC_NewDriver extends javax.swing.JFrame {
 
         return empty;
     }
-    
-    private boolean validateFields(){
+
+    private boolean validNumberLength() {
         boolean valid = false;
-        
+
         if (txfContactNum.getText().length() == 10) {
             valid = true;
         }
-        
+
         return valid;
     }
 
@@ -212,35 +212,33 @@ public class DSC_NewDriver extends javax.swing.JFrame {
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         if (checkEmpty()) {
             JOptionPane.showMessageDialog(this, "Please fill in all fields", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if (validNumberLength()) {
+            //Save new driver
+            Firebase ref = DBClass.getInstance().child("Drivers");
+            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot ds) {
+                    String name = txfName.getText().trim();
+                    String contactNum = txfContactNum.getText().trim();
+                    String address = txfAddress.getText().trim();
+                    String vehicleReg = txfVehicleReg.getText().trim();
+
+                    Driver driver = new Driver(address, contactNum, name, vehicleReg);
+                    addToFirebase(driver);
+                    String currID = getNewDriverID();
+                    addToMetaData("DriverID", Integer.parseInt(currID) + 1);
+                }
+
+                @Override
+                public void onCancelled(FirebaseError fe) {
+                    JOptionPane.showMessageDialog(null, "Error: " + fe.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+                }
+            });
+            JOptionPane.showMessageDialog(this, "New Driver Saved", "Saved", JOptionPane.INFORMATION_MESSAGE);
+            main.setDrivers();
+            this.dispose();
         } else {
-            if (validateFields()) {
-                //Save new driver
-                Firebase ref = DBClass.getInstance().child("Drivers");
-                ref.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot ds) {
-                        String name = txfName.getText().trim();
-                        String contactNum = txfContactNum.getText().trim();
-                        String address = txfAddress.getText().trim();
-                        String vehicleReg = txfVehicleReg.getText().trim();
-                        
-                        Driver driver = new Driver(address, contactNum, name, vehicleReg);
-                        addToFirebase(driver);
-                        String currID = getNewDriverID();
-                        addToMetaData("DriverID", Integer.parseInt(currID) + 1);
-                    }
-                    
-                    @Override
-                    public void onCancelled(FirebaseError fe) {
-                        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                    }
-                });
-                JOptionPane.showMessageDialog(this, "New Driver Saved", "Saved", JOptionPane.INFORMATION_MESSAGE);
-                main.setDrivers();
-                this.dispose();
-            } else {
-                JOptionPane.showMessageDialog(this, "Please enter a valid contact number", "Error", JOptionPane.ERROR_MESSAGE);
-            }
+            JOptionPane.showMessageDialog(this, "Please enter a valid contact number", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnSaveActionPerformed
 
@@ -274,20 +272,20 @@ public class DSC_NewDriver extends javax.swing.JFrame {
         public String DriverName;
         public String VehicleReg;
 
-        public DriverContainer(String Address, String ContactNumber, String DriverName, String VehicleReg){
+        public DriverContainer(String Address, String ContactNumber, String DriverName, String VehicleReg) {
             this.Address = Address;
             this.ContactNumber = ContactNumber;
             this.DriverName = DriverName;
             this.VehicleReg = VehicleReg;
         }
     }
-    
+
     protected void addToMetaData(String ids, int value) {
         Firebase ref = DBClass.getInstance().child("META-Data");
         ref.child(ids).setValue(value);
     }
-    
-    protected String getNewDriverID(){
+
+    protected String getNewDriverID() {
         Firebase ref = DBClass.getInstance().child("META-Data");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -297,19 +295,19 @@ public class DSC_NewDriver extends javax.swing.JFrame {
 
             @Override
             public void onCancelled(FirebaseError fe) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                JOptionPane.showMessageDialog(null, "Error: " + fe.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
             }
         });
         return id;
     }
-    
-    protected void addToFirebase(Driver d){
+
+    protected void addToFirebase(Driver d) {
         String newID = getNewDriverID();
         Firebase ref = DBClass.getInstance().child("Drivers");
         DriverContainer driver = new DriverContainer(
-                d.isAddress(), 
-                d.getContactNumber(), 
-                d.getDriverName(), 
+                d.isAddress(),
+                d.getContactNumber(),
+                d.getDriverName(),
                 d.getVehicleRegistration()
         );
         ref.child(newID).setValue(driver);
