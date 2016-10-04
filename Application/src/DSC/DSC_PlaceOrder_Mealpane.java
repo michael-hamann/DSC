@@ -1,6 +1,8 @@
 
 package DSC;
 
+import javax.swing.table.DefaultTableModel;
+
 /**
  * @author Rossouw Binedell
  */
@@ -9,13 +11,28 @@ public class DSC_PlaceOrder_Mealpane extends javax.swing.JFrame {
     /**
      * Creates new form DSC_PlaceOrder_MealPane
      */
-    private DSC_Place_Order pane;
+    private DSC_Place_Order pane1;
+    private DSC_ViewOrder pane2;
     private int index = -1;
+    boolean veiwOrder = false;
 
     public DSC_PlaceOrder_Mealpane(Meal meal, int index) {
         initComponents();
         this.setLocationRelativeTo(null);
 
+        spnQuantity.setValue(meal.getQuantity());
+        cmbMealType.setSelectedItem(meal.getMealType());
+        txfAllergy.setText(meal.getAllergies());
+        txfExclusions.setText(meal.getExclusions());
+
+        this.index = index;
+    }
+    
+    public DSC_PlaceOrder_Mealpane(int index, Meal meal) {
+        initComponents();
+        this.setLocationRelativeTo(null);
+
+        veiwOrder = true;
         spnQuantity.setValue(meal.getQuantity());
         cmbMealType.setSelectedItem(meal.getMealType());
         txfAllergy.setText(meal.getAllergies());
@@ -208,21 +225,34 @@ public class DSC_PlaceOrder_Mealpane extends javax.swing.JFrame {
 
         Meal meal = new Meal(quantity, mealtype, allergy, exclusions);
 
-        if (index == -1) {
-            pane.addMealToList(meal);
-        }else{
-            pane.replaceMealOnList(meal, index);
+        if (veiwOrder) {
+            if (index == -1) {
+                pane2.addMealToList(meal);
+            } else {
+                pane2.replaceMealOnList(meal, index);
+            }
+
+            pane2.setEnabled(true);
+            this.dispose();
+        } else {
+            if (index == -1) {
+                pane1.addMealToList(meal);
+            } else {
+                pane1.replaceMealOnList(meal, index);
+            }
+
+            pane1.refreshTable();
+
+            pane1.setEnabled(true);
+            this.dispose();
+
         }
-
-        pane.refreshTable();
-
-        pane.setEnabled(true);
-        this.dispose();
+		
 
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-        pane.setEnabled(true);
+        pane1.setEnabled(true);
         this.dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
 
@@ -245,6 +275,10 @@ public class DSC_PlaceOrder_Mealpane extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     public void setBack(DSC_Place_Order pane) {
-        this.pane = pane;
+        this.pane1 = pane;
+    }
+    
+    public void setBackViewOrder(DSC_ViewOrder pane) {
+        this.pane2 = pane;
     }
 }

@@ -29,7 +29,6 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
     boolean search = true;
     boolean orderEdited = false;
-    boolean editClicked = false;
     boolean orderSelected = false;
 
     //ArrayList initialization
@@ -137,6 +136,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         btnAddMeal.setEnabled(true);
         btnRemoveMeal.setEnabled(true);
         btnDeactivate.setEnabled(true);
+        btnEditMeal.setEnabled(true);
     }
 
     public final void disableFieldsOrder() {
@@ -148,6 +148,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         btnAddMeal.setEnabled(false);
         btnRemoveMeal.setEnabled(false);
         btnDeactivate.setEnabled(false);
+        btnEditMeal.setEnabled(false);
     }
 
     public final void clearFieldsOrder() {
@@ -255,7 +256,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 orderSelected = true;
-                if (orderEdited == false || editClicked == false) {
+                if (orderEdited == false) {
                     mealmodel.setRowCount(0);
 
                     int row = tblOrderTable.rowAtPoint(evt.getPoint());
@@ -360,13 +361,13 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     activeOrders.add(o);
                     count2++;
 
-                }else if(o.isActive()){
+                } else if (o.isActive()) {
                     activeOrders.add(o);
                 }
                 if (o.isActive() == false && count2 < tbcounter) {
                     inactiveOrders.add(o);
                     count2++;
-                }else if(o.isActive()== false){
+                } else if (o.isActive() == false) {
                     inactiveOrders.add(o);
                 }
                 if (ordercount == ds.getChildrenCount()) {
@@ -542,7 +543,6 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         txfClientContactNo = new javax.swing.JTextField();
         txfClientAddress = new javax.swing.JTextField();
         txfAddInfo = new javax.swing.JTextField();
-        btnEditClient = new javax.swing.JButton();
         lblAltNum = new javax.swing.JLabel();
         lblEmail = new javax.swing.JLabel();
         txfClientEmail = new javax.swing.JTextField();
@@ -571,6 +571,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         btnSave = new javax.swing.JButton();
         btnAddMeal = new javax.swing.JButton();
         btnRemoveMeal = new javax.swing.JButton();
+        btnEditMeal = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("View Order");
@@ -696,7 +697,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(cmbVeiw, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(lblLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlTableLayout.createSequentialGroup()
@@ -715,10 +716,11 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         .addComponent(lblSearchBy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txfSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnDelete)
-                        .addComponent(cmbVeiw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(lblLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(lblLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnDelete)
+                            .addComponent(cmbVeiw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -769,16 +771,6 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         txfAddInfo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfAddInfo.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
 
-        btnEditClient.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        btnEditClient.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Edit 2.png"))); // NOI18N
-        btnEditClient.setText(" Edit");
-        btnEditClient.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnEditClient.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditClientActionPerformed(evt);
-            }
-        });
-
         lblAltNum.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblAltNum.setText("Alternative Number:");
 
@@ -807,8 +799,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlDetailsClientLayout.createSequentialGroup()
                         .addComponent(lblClientDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnEditClient))
+                        .addGap(75, 75, 75))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDetailsClientLayout.createSequentialGroup()
                         .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -847,9 +838,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDetailsClientLayout.createSequentialGroup()
                 .addGap(4, 4, 4)
-                .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblClientDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEditClient))
+                .addComponent(lblClientDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(pnlDetailsClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblClientID)
@@ -973,7 +962,9 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             .addComponent(cmbDuration, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(spnStartDate)
                             .addComponent(spnEndDate)))
-                    .addComponent(btnDeactivate))
+                    .addGroup(pnlDetailsLayout.createSequentialGroup()
+                        .addComponent(btnDeactivate)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnlDetailsLayout.setVerticalGroup(
@@ -1067,6 +1058,14 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             }
         });
 
+        btnEditMeal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Edit 2.png"))); // NOI18N
+        btnEditMeal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEditMeal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditMealActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlBackgroundLayout = new javax.swing.GroupLayout(pnlBackground);
         pnlBackground.setLayout(pnlBackgroundLayout);
         pnlBackgroundLayout.setHorizontalGroup(
@@ -1087,6 +1086,8 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                                 .addComponent(btnAddMeal, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnRemoveMeal)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnEditMeal)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnSave)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1108,7 +1109,8 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             .addComponent(btnSave)
                             .addComponent(btnBack)
                             .addComponent(btnAddMeal)
-                            .addComponent(btnRemoveMeal)))
+                            .addComponent(btnRemoveMeal)
+                            .addComponent(btnEditMeal)))
                     .addComponent(pnlDetailsClient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pnlDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -1128,19 +1130,6 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnEditClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditClientActionPerformed
-        if (orderSelected) {
-            btnDelete.setEnabled(false);
-            btnSave.setEnabled(true);
-            enableFieldsClient();
-            btnEditClient.setEnabled(false);
-            editClicked = true;
-            orderEdited = true;
-        } else {
-            JOptionPane.showMessageDialog(rootPane, "No order has been selected to edit!");
-        }
-    }//GEN-LAST:event_btnEditClientActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         if (orderSelected) {
@@ -1232,8 +1221,9 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             //loops through all active suburbs and checks whether the suburb changed is active
             for (String s : activeSuburbs) {
                 if (s.equals(cmbSuburbs.getSelectedItem().toString())) {
-                    if (editClicked) {
-                        editClicked = false;
+
+                    if (orderEdited) {
+
                         //updates all values in database
                         upd.child("Suburb").setValue(cmbSuburbs.getSelectedItem().toString());
                         upd.child("Name").setValue(txfClientName.getText().trim());
@@ -1243,9 +1233,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         upd.child("AdditionalInfo").setValue(txfAddInfo.getText().trim());
                         upd.child("AlternativeNumber").setValue(txfAltNum.getText().trim());
                         upd.child("Email").setValue(txfClientEmail.getText().trim());
-                    }
 
-                    if (orderEdited) {
                         DefaultTableModel meals = (DefaultTableModel) tblMeals.getModel();
                         orderEdited = false;
                         Firebase updO = DBClass.getInstance().child("Orders/" + txfOrderID.getText());
@@ -1303,10 +1291,8 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     disableFieldsOrder();
                     btnSave.setEnabled(false);
                     btnEditOrder.setEnabled(true);
-                    btnEditClient.setEnabled(true);
                     btnDelete.setEnabled(true);
 
-                    editClicked = false;
                     orderEdited = false;
 
                     subActive = true;
@@ -1321,9 +1307,11 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 switch (answer) {
                     case JOptionPane.YES_OPTION:
 
-                        if (editClicked) {
-                            editClicked = false;
-                            //updates all values in database if edit client button pressed
+                        if (orderEdited) {
+                            orderEdited = false;
+                            DefaultTableModel meals = (DefaultTableModel) tblMeals.getModel();
+
+                            //updates all values in database
                             upd.child("Suburb").setValue(cmbSuburbs.getSelectedItem().toString());
                             upd.child("Name").setValue(txfClientName.getText().trim());
                             upd.child("Surname").setValue(txfClientSurname.getText().trim());
@@ -1332,11 +1320,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                             upd.child("AdditionalInfo").setValue(txfAddInfo.getText().trim());
                             upd.child("AlternativeNumber").setValue(txfAltNum.getText().trim());
                             upd.child("Email").setValue(txfClientEmail.getText().trim());
-                        }
 
-                        if (orderEdited) {
-                            orderEdited = false;
-                            DefaultTableModel meals = (DefaultTableModel) tblMeals.getModel();
                             //updates all values in database if edit orders button pressed
                             Firebase updO = DBClass.getInstance().child("Orders/" + txfOrderID.getText());
                             updO.child("FamilySize").setValue(spnOrderFamilySize.getValue());
@@ -1387,10 +1371,8 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         disableFieldsOrder();
                         btnSave.setEnabled(false);
                         btnEditOrder.setEnabled(true);
-                        btnEditClient.setEnabled(true);
                         btnDelete.setEnabled(true);
 
-                        editClicked = false;
                         orderEdited = false;
 
                         break;
@@ -1404,8 +1386,6 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         disableFieldsClient();
                         btnSave.setEnabled(false);
                         btnEditOrder.setEnabled(true);
-                        btnEditClient.setEnabled(true);
-                        editClicked = false;
                         btnDelete.setEnabled(true);
                         break;
                 }
@@ -1416,16 +1396,15 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        if (editClicked) {
+        if (orderEdited) {
             int ans = JOptionPane.showConfirmDialog(this, "Do you wish to discard unsaved changes?");
             switch (ans) {
                 case JOptionPane.YES_OPTION:
                     disableFieldsClient();
                     disableFieldsOrder();
-                    btnEditClient.setEnabled(true);
                     btnEditOrder.setEnabled(true);
                     btnDelete.setEnabled(true);
-                    editClicked = false;
+                    orderEdited= false;
                     break;
                 case JOptionPane.NO_OPTION:
                     btnSave.setEnabled(true);
@@ -1673,9 +1652,9 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         if (orderSelected) {
             btnDelete.setEnabled(false);
             enableFieldsOrder();
+            enableFieldsClient();
             btnEditOrder.setEnabled(false);
             btnSave.setEnabled(true);
-            editClicked = true;
             orderEdited = true;
         } else {
             JOptionPane.showMessageDialog(rootPane, "No order has been selected to edit!");
@@ -1727,9 +1706,14 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRemoveMealActionPerformed
 
     private void btnAddMealActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddMealActionPerformed
-        DefaultTableModel mealmod = (DefaultTableModel) tblMeals.getModel();
-        Object[] row = {"0", "Standard", "-", "-"};
-        mealmod.addRow(row);
+       Meal m = new Meal(0,"Standard","-","-");
+       
+        
+        DSC_PlaceOrder_Mealpane mp = new DSC_PlaceOrder_Mealpane(tblMeals.getSelectedRow(),m);
+        mp.setBackViewOrder(this);
+        mp.setVisible(true);
+        mp.setFocusableWindowState(true);
+        this.setEnabled(false);
     }//GEN-LAST:event_btnAddMealActionPerformed
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
@@ -1840,6 +1824,17 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btnPreviousActionPerformed
+
+    private void btnEditMealActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditMealActionPerformed
+        Meal m = new Meal((int) tblMeals.getValueAt(tblMeals.getSelectedRow(),0),tblMeals.getValueAt(tblMeals.getSelectedRow(),1)+"",
+                tblMeals.getValueAt(tblMeals.getSelectedRow(),2)+"",tblMeals.getValueAt(tblMeals.getSelectedRow(),3)+"");
+       
+        DSC_PlaceOrder_Mealpane mp = new DSC_PlaceOrder_Mealpane(tblMeals.getSelectedRow(),m);
+        mp.setBackViewOrder(this);
+        mp.setVisible(true);
+        mp.setFocusableWindowState(true);
+        this.setEnabled(false);
+    }//GEN-LAST:event_btnEditMealActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -1907,6 +1902,22 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         }
         ordertb.fireTableDataChanged();
     }
+    
+    protected void addMealToList(Meal meal) {
+        DefaultTableModel mealmod = (DefaultTableModel)tblMeals.getModel();
+        Object[] row = {meal.getQuantity(),meal.getMealType(),meal.getAllergies(),meal.getExclusions()};
+        mealmod.addRow(row);
+        mealmod.fireTableDataChanged();
+    }
+
+    protected void replaceMealOnList(Meal meal, int index) {
+        DefaultTableModel mealmod = (DefaultTableModel) tblMeals.getModel();
+        mealmod.removeRow(index);
+        Object[] row = {meal.getQuantity(),meal.getMealType(),meal.getAllergies(),meal.getExclusions()};
+        mealmod.addRow(row);
+        mealmod.fireTableDataChanged();
+    }
+
 
     public ArrayList<List<Order>> split(ArrayList<Order> list) {
 
@@ -1994,7 +2005,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnDeactivate;
     private javax.swing.JButton btnDelete;
-    private javax.swing.JButton btnEditClient;
+    private javax.swing.JButton btnEditMeal;
     private javax.swing.JButton btnEditOrder;
     private javax.swing.JButton btnNext;
     private javax.swing.JButton btnPrevious;
