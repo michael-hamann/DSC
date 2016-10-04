@@ -79,7 +79,7 @@ public class AccountantReport {
             public void onDataChange(DataSnapshot ds) {
                 for (DataSnapshot dataSnapshot : ds.getChildren()) {
                     Client client = new Client(dataSnapshot.child("ClientID").getValue(String.class));
-                    client.setAdditionalInfo(dataSnapshot.child("RouteID").getValue(String.class));
+                    client.setAdditionalInfo(dataSnapshot.child("FamilySize").getValue(String.class));
 
                     Calendar start = null;
 
@@ -147,35 +147,36 @@ public class AccountantReport {
 
         int lastIndex = 0;
         for (int letter = 0; letter < 26; letter++) {
-            XSSFSheet sheet = workbook.createSheet("AccountReport "+(char)(65+letter));
+            XSSFSheet sheet = workbook.createSheet("AccountReport " + (char) (65 + letter));
             Map<String, Object[]> data = new TreeMap<>();
-            data.put("1", new Object[]{"Doorstep Chef Accountant Sheet", "", "Week: " + DriverReport.returnWeekString(), "", "", "", "", ""});
-            data.put("2", new Object[]{"", "", "", "", "", "", ""});
-            data.put("3", new Object[]{"Name", "Surname", "Contact", "R.ID", "EFT", "Cash", "Date Paid", "Stay"});
+            data.put("1", new Object[]{"Doorstep Chef Accountant Sheet", "", "", "", "", "", "", "Week: " + DriverReport.returnWeekInt(), "", ""});
+            data.put("2", new Object[]{"", "", "", "", "", "", "", "", "", ""});
+            data.put("3", new Object[]{"Customer", "Contact", "Fam", "4Day", "Mthly", "EFT", "Cash", "Date Paid", "Stay", "Comments"});
 
             int reduction = 0;
             for (int i = 0; i < clients.size(); i++) {
                 Client client = clients.get(i);
                 if (client.getSurname().toUpperCase().charAt(0) == (char) (65 + letter)) {
                     data.put((i + 4 - reduction) + "", new Object[]{
-                        client.getName(),
-                        client.getSurname(),
+                        client.getName() + " " + client.getSurname(),
                         client.getContactNumber(),
                         client.getAdditionalInfo(),
                         "",
                         "",
                         "",
+                        "",
+                        "",
+                        "",
                         ""
                     });
-                }else{
+                } else {
                     reduction++;
                 }
-                
-
             }
 
             Set<String> keySet = data.keySet();
             int totalSize = 34900;
+            int longestCustomer = 0;
 
             for (int key = 1; key < keySet.size() + 1; key++) {
                 Row row = sheet.createRow(key - 1);
@@ -183,6 +184,10 @@ public class AccountantReport {
                 for (int i = 0; i < arr.length; i++) {
                     Cell cell = row.createCell(i);
                     cell.setCellValue((String) arr[i]);
+
+                    if (i == 0 && !(key + "").equals("1") && longestCustomer < ((String) arr[i]).length()) {
+                        longestCustomer = ((String) arr[i]).length();
+                    }
                     XSSFCellStyle borderStyle = workbook.createCellStyle();
 
                     if (!((key + "").equals("1") || (key + "").equals("2"))) {
@@ -208,7 +213,7 @@ public class AccountantReport {
                             } else {
                                 borderStyle.setBorderLeft(XSSFCellStyle.BORDER_MEDIUM);
                             }
-                            if (i != 8) {
+                            if (i != 9) {
                                 borderStyle.setBorderRight(XSSFCellStyle.BORDER_THIN);
                             } else {
                                 borderStyle.setBorderRight(XSSFCellStyle.BORDER_MEDIUM);
@@ -222,12 +227,8 @@ public class AccountantReport {
                             borderStyle.setBorderTop(XSSFCellStyle.BORDER_THIN);
 
                         }
-                        if ((i == 7 || i == 8) && !(key + "").equals("3")) {
-                            borderStyle.setAlignment(XSSFCellStyle.ALIGN_JUSTIFY);
-                            borderStyle.setVerticalAlignment(XSSFCellStyle.VERTICAL_JUSTIFY);
-                        }
                     } else {
-                        if (i == 2) {
+                        if (i == 7) {
                             borderStyle.setAlignment(HorizontalAlignment.RIGHT);
                         }
                         XSSFFont font = workbook.createFont();
@@ -241,22 +242,25 @@ public class AccountantReport {
 
                 }
                 if (key == 1) {
-                    sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 1));
-                    sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, 7));
+                    sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 6));
+                    sheet.addMergedRegion(new CellRangeAddress(0, 0, 7, 9));
                 }
 
             }
-
-            sheet.setColumnWidth(2, 13 * 240);
+            sheet.setColumnWidth(0, (longestCustomer + 1) * 240);
+            sheet.setColumnWidth(1, 11 * 240);
+            sheet.setColumnWidth(2, 5 * 240);
             sheet.setColumnWidth(3, 5 * 240);
             sheet.setColumnWidth(4, 5 * 240);
             sheet.setColumnWidth(5, 5 * 240);
-            sheet.setColumnWidth(6, 13 * 240);
-            sheet.setColumnWidth(7, 5 * 240);
-            totalSize = (totalSize - (sheet.getColumnWidth(2) + sheet.getColumnWidth(3) + sheet.getColumnWidth(4)
-                    + sheet.getColumnWidth(5) + sheet.getColumnWidth(6) + sheet.getColumnWidth(7))) / 2;
-            sheet.setColumnWidth(0, totalSize);
-            sheet.setColumnWidth(1, totalSize);
+            sheet.setColumnWidth(6, 5 * 240);
+            sheet.setColumnWidth(7, 13 * 240);
+            sheet.setColumnWidth(8, 5 * 240);
+            for (int i = 0; i < 9; i++) {
+                totalSize -= sheet.getColumnWidth(i);
+            }
+            sheet.setColumnWidth(9, totalSize);
+
         }
 
         try {
