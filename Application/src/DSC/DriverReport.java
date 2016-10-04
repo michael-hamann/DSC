@@ -73,6 +73,7 @@ public class DriverReport {
             routeList = new ArrayList<>();
             orderList = new ArrayList<>();
             getActiveOrders();
+
         }
 
     }
@@ -85,13 +86,10 @@ public class DriverReport {
                 for (DataSnapshot dataSnapshot : ds.getChildren()) {
                     Calendar start = Calendar.getInstance();
 
-                    if (start.getTimeInMillis()>DriverReport.returnWeekMili()) {
+                    start.setTimeInMillis(dataSnapshot.child("StartingDate").getValue(long.class));
+
+                    if (start.getTimeInMillis() > DriverReport.returnWeekMili()) {
                         continue;
-                    }
-                    
-                    if (!dataSnapshot.child("StartingDate").getValue(String.class).equals("-")) {
-                        start = Calendar.getInstance();
-                        start.setTimeInMillis(dataSnapshot.child("StartingDate").getValue(long.class));
                     }
 
                     ArrayList<Meal> meals = new ArrayList<>();
@@ -116,6 +114,7 @@ public class DriverReport {
                 }
                 clientCounter = 0;
                 for (Order order : orderList) {
+
                     getClient(order.getClientID(), orderList.indexOf(order));
                 }
 
@@ -253,9 +252,9 @@ public class DriverReport {
             XSSFSheet sheet = workbook.createSheet("DriverReports Route - " + route.getID());
 
             Map<String, Object[]> data = new TreeMap<>();
-            data.put("1", new Object[]{"Doorstep Chef Driver Sheet  Week: " + returnWeekInt(), "", "", "", "", "", "", "Driver: " + route.getDrivers().get(0).getDriver().getDriverName().split(" ")[0] + " - " + route.getDrivers().get(0).getDriver().getContactNumber(), "Route: " + route.getID()});
+            data.put("1", new Object[]{"Doorstep Chef Driver Sheet  Week: " + returnWeekInt() + " - " + returnWeekString(), "", "", "", "", "", "", "", "", "Driver: " + route.getDrivers().get(0).getDriver().getDriverName().split(" ")[0] + " - " + route.getDrivers().get(0).getDriver().getContactNumber(), "Route: " + route.getID()});
             data.put("2", new Object[]{"", "", "", "", "", "", "", "", ""});
-            data.put("3", new Object[]{"Customer", "Contact", "Mon", "Tue", "Wed", "Thu", "Fri", "Address", "AdditionalInfo"});
+            data.put("3", new Object[]{"Customer", "Contact", "Cash", "DatePaid","Mon", "Tue", "Wed", "Thu", "Fri", "Address", "AdditionalInfo"});
 
             int counter = 4;
             for (Order order : orderList) {
@@ -265,7 +264,7 @@ public class DriverReport {
                     if (order.getDuration().equals("Monday - Thursday")) {
                         durationMarker = "X";
                     }
-                    data.put("" + counter, new Object[]{client.getName() + " " + client.getSurname(), client.getContactNumber(), "", "", "", "", durationMarker, client.getAddress().replaceAll("\n", ", "), client.getAdditionalInfo()});
+                    data.put("" + counter, new Object[]{client.getName() + " " + client.getSurname(), client.getContactNumber(), "", "","", "", "", "",  durationMarker, client.getAddress().replaceAll("\n", ", "), client.getAdditionalInfo()});
                     counter++;
                 }
             }
@@ -310,13 +309,13 @@ public class DriverReport {
                             } else {
                                 borderStyle.setBorderLeft(XSSFCellStyle.BORDER_MEDIUM);
                             }
-                            if (i != 8) {
+                            if (i != 10) {
                                 borderStyle.setBorderRight(XSSFCellStyle.BORDER_THIN);
                             } else {
                                 borderStyle.setBorderRight(XSSFCellStyle.BORDER_MEDIUM);
                             }
 
-                            if (i == 6 && ((String) arr[i]).contains("X")) {
+                            if (i == 8 && ((String) arr[i]).contains("X")) {
                                 cell.setCellValue("");
                                 borderStyle.setFillPattern(XSSFCellStyle.FINE_DOTS);
                                 borderStyle.setFillBackgroundColor(IndexedColors.GREY_50_PERCENT.getIndex());
@@ -331,14 +330,14 @@ public class DriverReport {
                             borderStyle.setBorderTop(XSSFCellStyle.BORDER_THIN);
 
                         }
-                        if ((i == 7 || i == 8) && !(key + "").equals("3")) {
+                        if ((i == 9 || i == 10) && !(key + "").equals("3")) {
                             borderStyle.setAlignment(XSSFCellStyle.ALIGN_JUSTIFY);
                             borderStyle.setVerticalAlignment(XSSFCellStyle.VERTICAL_JUSTIFY);
                         }
                     } else {
-                        if (i == 2 || i == 7) {
+                        if (i == 9) {
                             borderStyle.setAlignment(HorizontalAlignment.CENTER);
-                        } else if (i == 8) {
+                        } else if (i == 10) {
                             borderStyle.setAlignment(HorizontalAlignment.RIGHT);
                         }
                         XSSFFont font = workbook.createFont();
@@ -352,20 +351,24 @@ public class DriverReport {
                 }
             }
 
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 6));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 8));
 
-            if ((longestCustomer) < 18) {
-                longestCustomer = 18;
+            if ((longestCustomer) < 14) {
+                longestCustomer = 14;
             }
 
             sheet.setColumnWidth(0, (longestCustomer + 1) * 240);
             sheet.setColumnWidth(1, 12 * 240);
-            for (int i = 0; i < 5; i++) {
-                sheet.setColumnWidth(i + 2, 1000);
+            for (int i = 0; i < 6; i++) {
+                sheet.setColumnWidth(i + 4, 1000);
             }
-            totalWidth = (totalWidth - (720 * 5 + 11 * 240 + (longestCustomer + 1) * 240)) / 3;
-            sheet.setColumnWidth(7, totalWidth * 2);
-            sheet.setColumnWidth(8, totalWidth);
+            sheet.setColumnWidth(2, 1000);
+            sheet.setColumnWidth(3, 10 * 240);
+            for (int i = 0; i < 9; i++) {
+                totalWidth -= sheet.getColumnWidth(i);
+            }
+            sheet.setColumnWidth(9, (totalWidth / 3) * 2);
+            sheet.setColumnWidth(10, totalWidth / 3);
 
         }
 
@@ -374,6 +377,7 @@ public class DriverReport {
             if (!file.exists()) {
                 file.createNewFile();
             }
+
             excelOut = new FileOutputStream(file);
             workbook.write(excelOut);
             excelOut.close();

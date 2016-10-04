@@ -255,7 +255,7 @@ public class AccountantReport {
             sheet.setColumnWidth(4, 5 * 240);
             sheet.setColumnWidth(5, 5 * 240);
             sheet.setColumnWidth(6, 5 * 240);
-            sheet.setColumnWidth(7, 13 * 240);
+            sheet.setColumnWidth(7, 10 * 240);
             sheet.setColumnWidth(8, 5 * 240);
             for (int i = 0; i < 9; i++) {
                 totalSize -= sheet.getColumnWidth(i);
