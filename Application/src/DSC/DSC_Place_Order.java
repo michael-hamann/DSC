@@ -1,4 +1,3 @@
-
 package DSC;
 
 import com.firebase.client.DataSnapshot;
@@ -28,8 +27,6 @@ public class DSC_Place_Order extends javax.swing.JFrame {
     private ArrayList<Route> routes = new ArrayList<>();
     private boolean online;
     private boolean connection;
-    private String surveyReasons[];
-    private String surveySources[];
 
     /**
      * Creates new form DSC_Main
@@ -44,6 +41,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         if (online) {
             initComponents();
             getSuburbs();
+
         } else {
             retryConnection();
             initComponents();
@@ -52,10 +50,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             lblName.setText(lblName.getText() + "          --Offline");
         }
 
-        surveyReasons = getSurveyReasons();
-        surveySources = getSurveySources();
-        cmbSurveyReason.setModel(new DefaultComboBoxModel<>(surveyReasons));
-        cmbSurveySource.setModel(new DefaultComboBoxModel<>(surveySources));
+        getSurveyQuestions(online);
         getDates();
         refreshTable();
         rbtAfternoon.setEnabled(false);
@@ -129,7 +124,6 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         btnDeleteMeal = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
-        btnDummyData = new javax.swing.JButton();
         lblOrderInfo1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -327,26 +321,8 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         lblSurveySource.setText("Refrence Source: ");
 
         cmbSurveyReason.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cmbSurveyReason.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
-            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
-            }
-            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
-            }
-            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
-                cmbSurveyReasonPopupMenuWillBecomeVisible(evt);
-            }
-        });
 
         cmbSurveySource.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cmbSurveySource.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
-            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
-            }
-            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
-            }
-            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
-                cmbSurveySourcePopupMenuWillBecomeVisible(evt);
-            }
-        });
 
         txaSurveyComments.setColumns(20);
         txaSurveyComments.setLineWrap(true);
@@ -601,13 +577,6 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             }
         });
 
-        btnDummyData.setText("Gen Dummy Data");
-        btnDummyData.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDummyDataActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -616,8 +585,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(btnDummyData)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnSave)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnBack))
@@ -650,8 +618,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSave)
-                    .addComponent(btnBack)
-                    .addComponent(btnDummyData)))
+                    .addComponent(btnBack)))
         );
 
         lblOrderInfo1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -783,12 +750,12 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         }
 
         String clientAlternativeNumber = txfClientAlternativeNumber.getText();
-//        if (((clientAlternativeNumber.length() !=0 || clientAlternativeNumber.length() != 10) || !clientAlternativeNumber.matches("[0-9]+"))) {
-//            invalid += "\nAlternative Contact Number";
-//            allGood = false;
-//        } else if (clientAlternativeNumber.isEmpty()) {
-//            clientAlternativeNumber = "N/A";
-//        }
+        if (((clientAlternativeNumber.length() !=0 && clientAlternativeNumber.length() != 10) || !clientAlternativeNumber.matches("[0-9]+"))) {
+            invalid += "\nAlternative Contact Number";
+            allGood = false;
+        } else if (clientAlternativeNumber.isEmpty()) {
+            clientAlternativeNumber = "N/A";
+        }
 
         String clientEmail = txfClientEmail.getText();
 
@@ -951,33 +918,10 @@ public class DSC_Place_Order extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnAddMealActionPerformed
 
-    private void cmbSurveyReasonPopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cmbSurveyReasonPopupMenuWillBecomeVisible
-        String[] arr = new String[surveyReasons.length - 1];
-        for (int i = 0; i < surveyReasons.length - 1; i++) {
-            arr[i] = surveyReasons[i + 1];
-        }
-
-        cmbSurveyReason.setModel(new DefaultComboBoxModel<>(arr));
-    }//GEN-LAST:event_cmbSurveyReasonPopupMenuWillBecomeVisible
-
-    private void cmbSurveySourcePopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cmbSurveySourcePopupMenuWillBecomeVisible
-        String[] arr = new String[surveySources.length - 1];
-        for (int i = 0; i < surveySources.length - 1; i++) {
-            arr[i] = surveySources[i + 1];
-        }
-
-        cmbSurveySource.setModel(new DefaultComboBoxModel<>(arr));
-    }//GEN-LAST:event_cmbSurveySourcePopupMenuWillBecomeVisible
-
-    private void btnDummyDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDummyDataActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnDummyDataActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddMeal;
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnDeleteMeal;
-    private javax.swing.JButton btnDummyData;
     private javax.swing.JButton btnEditMeal;
     private javax.swing.JButton btnSave;
     private javax.swing.JCheckBox ckbClientCollection;
@@ -1381,14 +1325,40 @@ public class DSC_Place_Order extends javax.swing.JFrame {
 
     }
 
-    private String[] getSurveyReasons() {
-        String[] arr = {"Item1", "Item2", "Item3", "Item4", "Item5", "Item6", "Item7", "Item8", "Item9"};
-        return arr;
-    }
+    private void getSurveyQuestions(boolean online) {
+        if (online) {
+            Firebase ref = DBClass.getInstance().child("Survey/Questions");
+            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot ds) {
+                    String surveyReasons[] = new String[(int) ds.child("Reason").getChildrenCount()+1];
+                    String surveySources[] = new String[(int) ds.child("Source").getChildrenCount()+1];
 
-    private String[] getSurveySources() {
-        String[] arr = {"Item1", "Item2", "Item3", "Item4", "Item5", "Item6", "Item7", "Item8", "Item9"};
-        return arr;
+                    surveyReasons[0] = "Reasons For Choosing";
+                    int counter = 1;
+                    for (DataSnapshot dataSnapshot : ds.child("Reason").getChildren()) {
+                        surveyReasons[counter] = dataSnapshot.getValue(String.class);
+                        counter++;
+                    }
+
+                    counter = 1;
+                    surveySources[0] = "Source of Refrence";
+                    for (DataSnapshot dataSnapshot : ds.child("Source").getChildren()) {
+                        surveySources[counter] = dataSnapshot.getValue(String.class);
+                        counter++;
+                    }
+
+                    cmbSurveyReason.setModel(new DefaultComboBoxModel<>(surveyReasons));
+                    cmbSurveySource.setModel(new DefaultComboBoxModel<>(surveySources));
+
+                }
+
+                @Override
+                public void onCancelled(FirebaseError fe) {
+                    System.err.println("Unable to connect to database" + fe.getDetails());
+                }
+            });
+        }
     }
 
 //---------------------------------------------------------------------------------------------------------------------------AnonymousClasses        

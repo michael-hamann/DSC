@@ -251,7 +251,7 @@ public class ChefReport {
                 sheetNumber++;
             }
             try {
-                creatSheet(excelNumber + "", list[numberOfRoutes], workbook);
+                creatSheet(list[numberOfRoutes], workbook);
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(null, "File Could Not Be Found.");
             }
@@ -260,6 +260,7 @@ public class ChefReport {
             if (excelNumber == allRoutes.size()) {
                 chefLoadingObj.setVisible(false);
                 chefLoadingObj.dispose();
+                JOptionPane.showMessageDialog(null, "Chef Reports Successfully Generated.");
             }
 
         }
@@ -310,13 +311,12 @@ public class ChefReport {
 
     }
 
-    public static void creatSheet(String excelNumber, String mealType, XSSFWorkbook workbook) throws IOException {
+    public static void creatSheet(String mealType, XSSFWorkbook workbook) throws IOException {
 
         FileOutputStream excelOut = null;
         try {
-
-            Path path = Paths.get("Reports\\ChefReport - " + currentWeek() + " Week -  " + returnWeekInt());
-            File f = path.toFile();
+            
+            Path path = Paths.get("Reports\\Week " + DriverReport.returnWeekInt() + " (" + DriverReport.returnWeekString() + ")\\ChefReport - " + currentWeek() + " Week -  " + returnWeekInt());
             Files.createDirectories(path);
 
             File file = path.resolve("ChefReports Week - " + returnWeekInt() + " ( " + mealType + " )" + ".xlsx").toFile();

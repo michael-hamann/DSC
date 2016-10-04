@@ -12,11 +12,13 @@ import javax.swing.JOptionPane;
 public class DSC_NewDriver extends javax.swing.JFrame {
     
     private String id = getNewDriverID();
+    private DSC_DriverDetails main;
 
     /**
      * Creates new form DSC_NewDriver
      */
-    public DSC_NewDriver() {
+    public DSC_NewDriver(DSC_DriverDetails main) {
+        this.main = main;
         initComponents();
     }
 
@@ -26,12 +28,22 @@ public class DSC_NewDriver extends javax.swing.JFrame {
     private boolean checkEmpty() {
         boolean empty = false;
 
-        if (txfName.getText().isEmpty() && txfContactNum.getText().isEmpty()
-                && txfAddress.getText().isEmpty() && txfVehicleReg.getText().isEmpty()) {
+        if (txfName.getText().trim().isEmpty() && txfContactNum.getText().trim().isEmpty()
+                && txfAddress.getText().trim().isEmpty() && txfVehicleReg.getText().trim().isEmpty()) {
             empty = true;
         }
 
         return empty;
+    }
+    
+    private boolean validateFields(){
+        boolean valid = false;
+        
+        if (txfContactNum.getText().length() == 10) {
+            valid = true;
+        }
+        
+        return valid;
     }
 
     /**
@@ -201,29 +213,34 @@ public class DSC_NewDriver extends javax.swing.JFrame {
         if (checkEmpty()) {
             JOptionPane.showMessageDialog(this, "Please fill in all fields", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            //Save new driver
-            Firebase ref = DBClass.getInstance().child("Drivers");
-            ref.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot ds) {
-                    String name = txfName.getText().trim();
-                    String contactNum = txfContactNum.getText().trim();
-                    String address = txfAddress.getText().trim();
-                    String vehicleReg = txfVehicleReg.getText().trim();
-
-                    Driver driver = new Driver(address, contactNum, name, vehicleReg);
-                    addToFirebase(driver);
-                    String currID = getNewDriverID();
-                    addToMetaData("DriverID", Integer.parseInt(currID)+1);
-                }
-
-                @Override
-                public void onCancelled(FirebaseError fe) {
-                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                }
-            });
-            JOptionPane.showMessageDialog(this, "New Driver Saved", "Saved", JOptionPane.INFORMATION_MESSAGE);
-            this.dispose();
+            if (validateFields()) {
+                //Save new driver
+                Firebase ref = DBClass.getInstance().child("Drivers");
+                ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot ds) {
+                        String name = txfName.getText().trim();
+                        String contactNum = txfContactNum.getText().trim();
+                        String address = txfAddress.getText().trim();
+                        String vehicleReg = txfVehicleReg.getText().trim();
+                        
+                        Driver driver = new Driver(address, contactNum, name, vehicleReg);
+                        addToFirebase(driver);
+                        String currID = getNewDriverID();
+                        addToMetaData("DriverID", Integer.parseInt(currID) + 1);
+                    }
+                    
+                    @Override
+                    public void onCancelled(FirebaseError fe) {
+                        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    }
+                });
+                JOptionPane.showMessageDialog(this, "New Driver Saved", "Saved", JOptionPane.INFORMATION_MESSAGE);
+                main.setDrivers();
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "Please enter a valid contact number", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_btnSaveActionPerformed
 
@@ -233,41 +250,6 @@ public class DSC_NewDriver extends javax.swing.JFrame {
             this.dispose();
         }
     }//GEN-LAST:event_btnCancelActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DSC_NewDriver.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DSC_NewDriver.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DSC_NewDriver.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DSC_NewDriver.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new DSC_NewDriver().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;

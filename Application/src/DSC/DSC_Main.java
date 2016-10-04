@@ -30,6 +30,8 @@ public class DSC_Main extends javax.swing.JFrame {
     public static int reportsDone = 0;
     public static boolean generateAllReports = false;
     
+    
+    
     /**
      * Creates new form DSC_Main
      */
@@ -366,7 +368,7 @@ public class DSC_Main extends javax.swing.JFrame {
         pnlTextStats.setMinimumSize(new java.awt.Dimension(305, 252));
 
         pnlMealTypeStats.setBackground(new java.awt.Color(102, 102, 102));
-        pnlMealTypeStats.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Meal Type Stats", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(255, 255, 255))); // NOI18N
+        pnlMealTypeStats.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Meal Type Stats", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
         pnlMealTypeStats.setForeground(new java.awt.Color(255, 255, 255));
 
         lblStandardMeal.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
@@ -511,7 +513,7 @@ public class DSC_Main extends javax.swing.JFrame {
         );
 
         pnlFamilySizeStats.setBackground(new java.awt.Color(102, 102, 102));
-        pnlFamilySizeStats.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Family Size Stats", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(255, 255, 255))); // NOI18N
+        pnlFamilySizeStats.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Family Size Stats", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
 
         lblFamilySize.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
         lblFamilySize.setForeground(new java.awt.Color(255, 255, 255));
@@ -760,12 +762,6 @@ public class DSC_Main extends javax.swing.JFrame {
 
     private void btnPackerRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPackerRptActionPerformed
 
-        PackerReport.getPackerData();
-        ChefReport.getChefReport();
-        DriverReport.getDriverReports();
-        AccountantReport.getAccountantReport();
-
-
        PackerReport.getPackerData();
 
     }//GEN-LAST:event_btnPackerRptActionPerformed
@@ -827,11 +823,7 @@ public class DSC_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_pnlPieChartComponentResized
 
     private void btnGenerateAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerateAllActionPerformed
-        btnAccountRpt.setEnabled(false);
-        btnChefRpt.setEnabled(false);
-        btnDriverRpt.setEnabled(false);
-        btnPackerRpt.setEnabled(false);
-        
+
         reportsDone = 0;
         generateAllReports = true;
         
@@ -839,7 +831,6 @@ public class DSC_Main extends javax.swing.JFrame {
         ChefReport.getChefReport();
         DriverReport.getDriverReports();
         AccountantReport.getAccountantReport();
-        
         
     }//GEN-LAST:event_btnGenerateAllActionPerformed
 
@@ -885,7 +876,7 @@ public class DSC_Main extends javax.swing.JFrame {
                 DSC_Main main = new DSC_Main();
                 DBClass.getInstance();
                 try {
-                    for (int i = 0; i < 10; i++) {
+                    for (int i = 0; i < 100; i++) {
                         if (!DBClass.connected) {
                             Thread.sleep(500);
                         } else {

@@ -39,9 +39,10 @@ public class AccountantReport {
     private static int clientCount;
     private static File file;
     private static FileOutputStream excelOut;
+    private static DSC_ReportLoading accountLoadObj;
 
     public static void getAccountantReport() {
-
+        accountLoadObj = new DSC_ReportLoading();
         boolean fileFound = false;
         try {
             file = new File("AccountReport (" + DriverReport.returnWeekString() + ").xlsx");
@@ -51,9 +52,13 @@ public class AccountantReport {
             excelOut = new FileOutputStream(file);
             fileFound = true;
         } catch (FileNotFoundException ex) {
+            accountLoadObj.setVisible(false);
+            accountLoadObj.dispose();
             JOptionPane.showMessageDialog(null, "Please close the excel file before using generating.", "Error", JOptionPane.ERROR_MESSAGE);
             System.err.println("Error - Could not create new AccountReport: File currently in use.");
         } catch (IOException io) {
+            accountLoadObj.setVisible(false);
+            accountLoadObj.dispose();
             JOptionPane.showMessageDialog(null, "An error occured\nCould not create AccountReport", "Error", JOptionPane.ERROR_MESSAGE);
             System.err.println("Error - Could not create new AccountReport: ");
             io.printStackTrace();
@@ -124,7 +129,7 @@ public class AccountantReport {
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet("AccountReport - Week " + DriverReport.returnWeekInt());
         Map<String, Object[]> data = new TreeMap<>();
-        data.put("1", new Object[]{"Doorstep Chef Accountant Sheet", "","Week: " + DriverReport.returnWeekString(), "", "", "",  "", ""});
+        data.put("1", new Object[]{"Doorstep Chef Accountant Sheet", "", "Week: " + DriverReport.returnWeekString(), "", "", "", "", ""});
         data.put("2", new Object[]{"", "", "", "", "", "", ""});
         data.put("3", new Object[]{"Name", "Surname", "Contact", "R.ID", "EFT", "Cash", "Date Paid", "Stay"});
 
@@ -228,17 +233,21 @@ public class AccountantReport {
         sheet.setColumnWidth(5, 5 * 240);
         sheet.setColumnWidth(6, 13 * 240);
         sheet.setColumnWidth(7, 5 * 240);
-        totalSize = (totalSize - (sheet.getColumnWidth(2) + sheet.getColumnWidth(3) + sheet.getColumnWidth(4) + 
-                sheet.getColumnWidth(5) + sheet.getColumnWidth(6) + sheet.getColumnWidth(7))) / 2;
+        totalSize = (totalSize - (sheet.getColumnWidth(2) + sheet.getColumnWidth(3) + sheet.getColumnWidth(4)
+                + sheet.getColumnWidth(5) + sheet.getColumnWidth(6) + sheet.getColumnWidth(7))) / 2;
         sheet.setColumnWidth(0, totalSize);
         sheet.setColumnWidth(1, totalSize);
 
         try {
             workbook.write(excelOut);
             excelOut.close();
+            accountLoadObj.setVisible(false);
+            accountLoadObj.dispose();
             JOptionPane.showMessageDialog(null, "AccountReports Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
             System.out.println("Done - Accountant");
         } catch (IOException io) {
+            accountLoadObj.setVisible(false);
+            accountLoadObj.dispose();
             JOptionPane.showMessageDialog(null, "An error occured\nCould not create AccountReport", "Error", JOptionPane.ERROR_MESSAGE);
             System.err.println("Error - Could not create new AccountReport: ");
             io.printStackTrace();
