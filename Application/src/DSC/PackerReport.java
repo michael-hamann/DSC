@@ -78,12 +78,14 @@ public class PackerReport {
             public void onDataChange(DataSnapshot ds) {
                 for (DataSnapshot dataSnapshot : ds.getChildren()) {
                     Calendar start = null;
-                    Calendar end = null;
 
-                    if (!dataSnapshot.child("StartingDate").getValue(String.class).equals("-")) {
-                        start = Calendar.getInstance();
-                        start.setTimeInMillis(dataSnapshot.child("StartingDate").getValue(long.class));
+                    start = Calendar.getInstance();
+                    start.setTimeInMillis(dataSnapshot.child("StartingDate").getValue(long.class));
+                    
+                    if (start.getTimeInMillis()>DriverReport.returnWeekMili()) {
+                        continue;
                     }
+                    
                     ArrayList<Meal> meals = new ArrayList<>();
                     for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                         for (DataSnapshot dataSnapshot2 : dataSnapshot1.getChildren()) {
@@ -101,7 +103,7 @@ public class PackerReport {
                             dataSnapshot.child("ClientID").getValue(String.class),
                             dataSnapshot.child("Duration").getValue(String.class),
                             start,
-                            end,
+                            null,
                             dataSnapshot.child("RouteID").getValue(String.class),
                             meals,
                             dataSnapshot.child("FamilySize").getValue(int.class)

@@ -82,8 +82,11 @@ public class DriverReport {
             public void onDataChange(DataSnapshot ds) {
                 for (DataSnapshot dataSnapshot : ds.getChildren()) {
                     Calendar start = Calendar.getInstance();
-                    Calendar end = null;
 
+                    if (start.getTimeInMillis()>DriverReport.returnWeekMili()) {
+                        continue;
+                    }
+                    
                     if (!dataSnapshot.child("StartingDate").getValue(String.class).equals("-")) {
                         start = Calendar.getInstance();
                         start.setTimeInMillis(dataSnapshot.child("StartingDate").getValue(long.class));
@@ -103,7 +106,7 @@ public class DriverReport {
                             dataSnapshot.child("ClientID").getValue(String.class),
                             dataSnapshot.child("Duration").getValue(String.class),
                             start,
-                            end,
+                            null,
                             dataSnapshot.child("RouteID").getValue(String.class),
                             meals,
                             dataSnapshot.child("FamilySize").getValue(int.class)
@@ -411,7 +414,6 @@ public class DriverReport {
         while (weekDate.get(Calendar.DAY_OF_WEEK) != 2) {
             weekDate.add(Calendar.DAY_OF_WEEK, -1);
         }
-        weekDate.add(7, Calendar.DAY_OF_WEEK);
         return weekDate.getTimeInMillis();
     }
 

@@ -14,6 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.Set;
@@ -80,6 +81,15 @@ public class AccountantReport {
                     Client client = new Client(dataSnapshot.child("ClientID").getValue(String.class));
                     client.setAdditionalInfo(dataSnapshot.child("RouteID").getValue(String.class));
 
+                    Calendar start = null;
+
+                    start = Calendar.getInstance();
+                    start.setTimeInMillis(dataSnapshot.child("StartingDate").getValue(long.class));
+
+                    if (start.getTimeInMillis() > DriverReport.returnWeekMili()) {
+                        continue;
+                    }
+
                     clients.add(client);
                 }
 
@@ -127,11 +137,6 @@ public class AccountantReport {
 
     private static void createExcelReport() {
         XSSFWorkbook workbook = new XSSFWorkbook();
-        XSSFSheet sheet = workbook.createSheet("AccountReport - Week " + DriverReport.returnWeekInt());
-        Map<String, Object[]> data = new TreeMap<>();
-        data.put("1", new Object[]{"Doorstep Chef Accountant Sheet", "", "Week: " + DriverReport.returnWeekString(), "", "", "", "", ""});
-        data.put("2", new Object[]{"", "", "", "", "", "", ""});
-        data.put("3", new Object[]{"Name", "Surname", "Contact", "R.ID", "EFT", "Cash", "Date Paid", "Stay"});
 
         clients.sort(new Comparator<Client>() {
             @Override
@@ -140,103 +145,119 @@ public class AccountantReport {
             }
         });
 
-        for (int i = 0; i < clients.size(); i++) {
-            Client client = clients.get(i);
-            data.put(i + 4 + "", new Object[]{
-                client.getName(),
-                client.getSurname(),
-                client.getContactNumber(),
-                client.getAdditionalInfo(),
-                "",
-                "",
-                "",
-                ""
-            });
-        }
-        Set<String> keySet = data.keySet();
-        int totalSize = 22000;
+        int lastIndex = 0;
+        for (int letter = 0; letter < 26; letter++) {
+            XSSFSheet sheet = workbook.createSheet("AccountReport "+(char)(65+letter));
+            Map<String, Object[]> data = new TreeMap<>();
+            data.put("1", new Object[]{"Doorstep Chef Accountant Sheet", "", "Week: " + DriverReport.returnWeekString(), "", "", "", "", ""});
+            data.put("2", new Object[]{"", "", "", "", "", "", ""});
+            data.put("3", new Object[]{"Name", "Surname", "Contact", "R.ID", "EFT", "Cash", "Date Paid", "Stay"});
 
-        for (int key = 1; key < keySet.size() + 1; key++) {
-            Row row = sheet.createRow(key - 1);
-            Object[] arr = data.get(key + "");
+            int reduction = 0;
+            for (int i = 0; i < clients.size(); i++) {
+                Client client = clients.get(i);
+                if (client.getSurname().toUpperCase().charAt(0) == (char) (65 + letter)) {
+                    data.put((i + 4 - reduction) + "", new Object[]{
+                        client.getName(),
+                        client.getSurname(),
+                        client.getContactNumber(),
+                        client.getAdditionalInfo(),
+                        "",
+                        "",
+                        "",
+                        ""
+                    });
+                }else{
+                    reduction++;
+                }
+                
 
-            for (int i = 0; i < arr.length; i++) {
-                Cell cell = row.createCell(i);
-                cell.setCellValue((String) arr[i]);
-                XSSFCellStyle borderStyle = workbook.createCellStyle();
+            }
 
-                if (!((key + "").equals("1") || (key + "").equals("2"))) {
-                    borderStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-                    borderStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-                    borderStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
-                    borderStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
-                    if ((key + "").equals("3")) {
-                        borderStyle.setBorderBottom(XSSFCellStyle.BORDER_MEDIUM);
-                        borderStyle.setBorderLeft(XSSFCellStyle.BORDER_MEDIUM);
-                        borderStyle.setBorderTop(XSSFCellStyle.BORDER_MEDIUM);
-                        borderStyle.setBorderRight(XSSFCellStyle.BORDER_MEDIUM);
-                        borderStyle.setAlignment(HorizontalAlignment.CENTER);
-                        borderStyle.setFillPattern(XSSFCellStyle.LESS_DOTS);
-                        borderStyle.setFillBackgroundColor(IndexedColors.GREY_50_PERCENT.getIndex());
+            Set<String> keySet = data.keySet();
+            int totalSize = 34900;
+
+            for (int key = 1; key < keySet.size() + 1; key++) {
+                Row row = sheet.createRow(key - 1);
+                Object[] arr = data.get(key + "");
+                for (int i = 0; i < arr.length; i++) {
+                    Cell cell = row.createCell(i);
+                    cell.setCellValue((String) arr[i]);
+                    XSSFCellStyle borderStyle = workbook.createCellStyle();
+
+                    if (!((key + "").equals("1") || (key + "").equals("2"))) {
+                        borderStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+                        borderStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+                        borderStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+                        borderStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+                        if ((key + "").equals("3")) {
+                            borderStyle.setBorderBottom(XSSFCellStyle.BORDER_MEDIUM);
+                            borderStyle.setBorderLeft(XSSFCellStyle.BORDER_MEDIUM);
+                            borderStyle.setBorderTop(XSSFCellStyle.BORDER_MEDIUM);
+                            borderStyle.setBorderRight(XSSFCellStyle.BORDER_MEDIUM);
+                            borderStyle.setAlignment(HorizontalAlignment.CENTER);
+                            borderStyle.setFillPattern(XSSFCellStyle.LESS_DOTS);
+                            borderStyle.setFillBackgroundColor(IndexedColors.GREY_50_PERCENT.getIndex());
+                            XSSFFont font = workbook.createFont();
+                            font.setColor(IndexedColors.WHITE.getIndex());
+                            font.setBold(true);
+                            borderStyle.setFont(font);
+                        } else {
+                            if (i != 0) {
+                                borderStyle.setBorderLeft(XSSFCellStyle.BORDER_THIN);
+                            } else {
+                                borderStyle.setBorderLeft(XSSFCellStyle.BORDER_MEDIUM);
+                            }
+                            if (i != 8) {
+                                borderStyle.setBorderRight(XSSFCellStyle.BORDER_THIN);
+                            } else {
+                                borderStyle.setBorderRight(XSSFCellStyle.BORDER_MEDIUM);
+                            }
+
+                            if ((Integer.parseInt((key + ""))) != keySet.size()) {
+                                borderStyle.setBorderBottom(XSSFCellStyle.BORDER_THIN);
+                            } else {
+                                borderStyle.setBorderBottom(XSSFCellStyle.BORDER_MEDIUM);
+                            }
+                            borderStyle.setBorderTop(XSSFCellStyle.BORDER_THIN);
+
+                        }
+                        if ((i == 7 || i == 8) && !(key + "").equals("3")) {
+                            borderStyle.setAlignment(XSSFCellStyle.ALIGN_JUSTIFY);
+                            borderStyle.setVerticalAlignment(XSSFCellStyle.VERTICAL_JUSTIFY);
+                        }
+                    } else {
+                        if (i == 2) {
+                            borderStyle.setAlignment(HorizontalAlignment.RIGHT);
+                        }
                         XSSFFont font = workbook.createFont();
-                        font.setColor(IndexedColors.WHITE.getIndex());
+                        font.setFontName("Calibri");
+                        font.setFontHeightInPoints((short) 13);
                         font.setBold(true);
                         borderStyle.setFont(font);
-                    } else {
-                        if (i != 0) {
-                            borderStyle.setBorderLeft(XSSFCellStyle.BORDER_THIN);
-                        } else {
-                            borderStyle.setBorderLeft(XSSFCellStyle.BORDER_MEDIUM);
-                        }
-                        if (i != 8) {
-                            borderStyle.setBorderRight(XSSFCellStyle.BORDER_THIN);
-                        } else {
-                            borderStyle.setBorderRight(XSSFCellStyle.BORDER_MEDIUM);
-                        }
+                    }
 
-                        if ((Integer.parseInt((key + ""))) != keySet.size()) {
-                            borderStyle.setBorderBottom(XSSFCellStyle.BORDER_THIN);
-                        } else {
-                            borderStyle.setBorderBottom(XSSFCellStyle.BORDER_MEDIUM);
-                        }
-                        borderStyle.setBorderTop(XSSFCellStyle.BORDER_THIN);
+                    cell.setCellStyle(borderStyle);
 
-                    }
-                    if ((i == 7 || i == 8) && !(key + "").equals("3")) {
-                        borderStyle.setAlignment(XSSFCellStyle.ALIGN_JUSTIFY);
-                        borderStyle.setVerticalAlignment(XSSFCellStyle.VERTICAL_JUSTIFY);
-                    }
-                } else {
-                    if (i == 2) {
-                        borderStyle.setAlignment(HorizontalAlignment.RIGHT);
-                    }
-                    XSSFFont font = workbook.createFont();
-                    font.setFontName("Calibri");
-                    font.setFontHeightInPoints((short) 13);
-                    font.setBold(true);
-                    borderStyle.setFont(font);
+                }
+                if (key == 1) {
+                    sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 1));
+                    sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, 7));
                 }
 
-                cell.setCellStyle(borderStyle);
-
-            }
-            if (key == 1) {
-                sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 1));
-                sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, 7));
             }
 
+            sheet.setColumnWidth(2, 13 * 240);
+            sheet.setColumnWidth(3, 5 * 240);
+            sheet.setColumnWidth(4, 5 * 240);
+            sheet.setColumnWidth(5, 5 * 240);
+            sheet.setColumnWidth(6, 13 * 240);
+            sheet.setColumnWidth(7, 5 * 240);
+            totalSize = (totalSize - (sheet.getColumnWidth(2) + sheet.getColumnWidth(3) + sheet.getColumnWidth(4)
+                    + sheet.getColumnWidth(5) + sheet.getColumnWidth(6) + sheet.getColumnWidth(7))) / 2;
+            sheet.setColumnWidth(0, totalSize);
+            sheet.setColumnWidth(1, totalSize);
         }
-
-        sheet.setColumnWidth(2, 13 * 240);
-        sheet.setColumnWidth(3, 5 * 240);
-        sheet.setColumnWidth(4, 5 * 240);
-        sheet.setColumnWidth(5, 5 * 240);
-        sheet.setColumnWidth(6, 13 * 240);
-        sheet.setColumnWidth(7, 5 * 240);
-        totalSize = (totalSize - (sheet.getColumnWidth(2) + sheet.getColumnWidth(3) + sheet.getColumnWidth(4)
-                + sheet.getColumnWidth(5) + sheet.getColumnWidth(6) + sheet.getColumnWidth(7))) / 2;
-        sheet.setColumnWidth(0, totalSize);
-        sheet.setColumnWidth(1, totalSize);
 
         try {
             workbook.write(excelOut);

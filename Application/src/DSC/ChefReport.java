@@ -274,6 +274,14 @@ public class ChefReport {
             public void onDataChange(DataSnapshot ds) {
 
                 for (DataSnapshot levelOne : ds.getChildren()) {
+                    Calendar start = null;
+                    start = Calendar.getInstance();
+                    start.setTimeInMillis(levelOne.child("StartingDate").getValue(long.class));
+                    
+                    if (start.getTimeInMillis()>DriverReport.returnWeekMili()) {
+                        continue;
+                    }
+                    
                     for (DataSnapshot levelTwo : levelOne.getChildren()) {
                         for (DataSnapshot levelThree : levelTwo.getChildren()) {
 
@@ -315,7 +323,7 @@ public class ChefReport {
 
         FileOutputStream excelOut = null;
         try {
-            
+
             Path path = Paths.get("Reports\\Week " + DriverReport.returnWeekInt() + " (" + DriverReport.returnWeekString() + ")\\ChefReport - " + currentWeek() + " Week -  " + returnWeekInt());
             Files.createDirectories(path);
 

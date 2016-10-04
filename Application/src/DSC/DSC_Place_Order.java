@@ -750,13 +750,13 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         }
 
         String clientAlternativeNumber = txfClientAlternativeNumber.getText();
-        System.out.println(clientAlternativeNumber.matches("[0-9]+"));
-//        if (((clientAlternativeNumber.length() !=0 && clientAlternativeNumber.length() != 10) || !clientAlternativeNumber.matches("[0-9]+"))) {
-//            invalid += "\nAlternative Contact Number";
-//            allGood = false;
-//        } else if (clientAlternativeNumber.isEmpty()) {
+        if ((!(clientAlternativeNumber.length() ==0 || clientAlternativeNumber.length() == 10) ||
+                (!clientAlternativeNumber.matches("[0-9]+") && !clientAlternativeNumber.isEmpty()))) {
+            invalid += "\nAlternative Contact Number";
+            allGood = false;
+        } else if (clientAlternativeNumber.isEmpty()) {
             clientAlternativeNumber = "N/A";
-//        }
+        }
 
         String clientEmail = txfClientEmail.getText();
 
