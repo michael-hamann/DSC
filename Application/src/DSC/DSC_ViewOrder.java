@@ -360,13 +360,13 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     activeOrders.add(o);
                     count2++;
 
-                }else{
+                }else if(o.isActive()){
                     activeOrders.add(o);
                 }
                 if (o.isActive() == false && count2 < tbcounter) {
                     inactiveOrders.add(o);
                     count2++;
-                }else{
+                }else if(o.isActive()== false){
                     inactiveOrders.add(o);
                 }
                 if (ordercount == ds.getChildrenCount()) {
@@ -1876,6 +1876,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         }
                     }
                 }
+                System.out.println("All work done!");
                 break;
             case "Inactive":
                 if (tbcounter > inactiveOrders.size()) {
