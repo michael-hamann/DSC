@@ -32,33 +32,48 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  */
 public class QuantityReport {
     // all active meals counter's
-    private static int countStandardActive = 0;
-    private static int countKiddiesActive = 0;
-    private static int countLowCarbActive = 0;
+    private static int countStandardActive;
+    private static int countKiddiesActive;
+    private static int countLowCarbActive;
     // total active cliens/orders
-    private static int activeClientCount = 0;
+    private static int activeClientCount;
     // total of each family size
-    private static int countFamilySize_1 = 0;
-    private static int countFamilySize_2 = 0;
-    private static int countFamilySize_3 = 0;
-    private static int countFamilySize_4 = 0;
-    private static int countFamilySize_5 = 0;
-    private static int countFamilySize_6 = 0;
-    // count family size per meal type
-    private static int countFamSize1_Single = 0;
-    private static int countFamSize2_Couple = 0;
-    private static int countFamSize3_Three = 0;
-    private static int countFamSize4_Four = 0;
-    private static int countFamSize5_Single = 0;
-    private static int countFamSize6_Single = 0;
-    private static int countExtraFamSize_Single = 0;
-    
-    
-    
-    private static int countFamilySizeMoreThanSix = 0;
+    private static int countFamilySize_1;
+    private static int countFamilySize_2;
+    private static int countFamilySize_3;
+    private static int countFamilySize_4;
+    private static int countFamilySize_5;
+    private static int countFamilySize_6;
+    private static int countFamilySizeMoreThanSix;
+    // count family size per standard meal type
+    private static int countFamSize1_Standard;
+    private static int countFamSize2_Standard;
+    private static int countFamSize3_Standard;
+    private static int countFamSize4_Standard;
+    private static int countFamSize5_Standard;
+    private static int countFamSize6_Standard;
+    private static int countFamilySizeMoreThanSix_Standard;
+    // count family size per low carb meal type
+    private static int countFamSize1_LC;
+    private static int countFamSize2_LC;
+    private static int countFamSize3_LC;
+    private static int countFamSize4_LC;
+    private static int countFamSize5_LC;
+    private static int countFamSize6_LC;
+    private static int countFamilySizeMoreThanSix_LC;
+    // count family size per kiddies meal type
+    private static int countFamSize1_KD;
+    private static int countFamSize2_KD;
+    private static int countFamSize3_KD;
+    private static int countFamSize4_KD;
+    private static int countFamSize5_KD;
+    private static int countFamSize6_KD;
+    private static int countFamilySizeMoreThanSix_KD;
+    // final variables
     private static final String STANDARD = "Standard";
     private static final String LOW_CARB = "Low Carb";
     private static final String KIDDIES = "Kiddies";
+
     private static QuantityReportData quantityReportData;
     private static XSSFWorkbook workbook;
 
@@ -93,29 +108,119 @@ public class QuantityReport {
                                 countFamilySize_6++;
                             }
 
-                            for (DataSnapshot levelThree : levelTwo.getChildren()) {
+                            if (activeCheck == true && familySizeCheck > 6) {
+                                countFamilySizeMoreThanSix++;
+                            }
 
-                                if (activeCheck == true && levelThree.child("MealType").getValue(String.class).equals(STANDARD)) {
+                            for (DataSnapshot levelThree : levelTwo.getChildren()) {
+                                String mealType = levelThree.child("MealType").getValue(String.class);
+                                if (activeCheck == true && mealType.equals(STANDARD)) {
                                     countStandardActive++;
                                 }
-                                if (activeCheck == true && levelThree.child("MealType").getValue(String.class).equals(LOW_CARB)) {
+                                if (activeCheck == true && mealType.equals(LOW_CARB)) {
                                     countLowCarbActive++;
                                 }
-                                if (activeCheck == true && levelThree.child("MealType").getValue(String.class).equals(KIDDIES)) {
+                                if (activeCheck == true && mealType.equals(KIDDIES)) {
                                     countKiddiesActive++;
                                 }
-                               
-                                if (familySizeCheck > 6) {
-                                    countFamilySizeMoreThanSix++;
+
+                                if (familySizeCheck == 1 && mealType.equals(STANDARD)) {
+                                    countFamSize1_Standard++;
                                 }
+
+                                if (familySizeCheck == 2 && mealType.equals(STANDARD)) {
+                                    countFamSize2_Standard++;
+                                }
+
+                                if (familySizeCheck == 3 && mealType.equals(STANDARD)) {
+                                    countFamSize3_Standard++;
+                                }
+
+                                if (familySizeCheck == 4 && mealType.equals(STANDARD)) {
+                                    countFamSize4_Standard++;
+                                }
+
+                                if (familySizeCheck == 5 && mealType.equals(STANDARD)) {
+                                    countFamSize5_Standard++;
+                                }
+
+                                if (familySizeCheck == 6 && mealType.equals(STANDARD)) {
+                                    countFamSize6_Standard++;
+                                }
+
+                                if (familySizeCheck > 6 && mealType.equals(STANDARD)) {
+                                    countFamilySizeMoreThanSix_Standard++;
+                                }
+
+                                // Low Carb
+                                
+                                if (familySizeCheck == 1 && mealType.equals(LOW_CARB)) {
+                                    countFamSize1_LC++;
+                                }
+
+                                if (familySizeCheck == 2 && mealType.equals(LOW_CARB)) {
+                                    countFamSize2_LC++;
+                                }
+
+                                if (familySizeCheck == 3 && mealType.equals(LOW_CARB)) {
+                                    countFamSize3_LC++;
+                                }
+
+                                if (familySizeCheck == 4 && mealType.equals(LOW_CARB)) {
+                                    countFamSize4_LC++;
+                                }
+
+                                if (familySizeCheck == 5 && mealType.equals(LOW_CARB)) {
+                                    countFamSize5_LC++;
+                                }
+
+                                if (familySizeCheck == 6 && mealType.equals(LOW_CARB)) {
+                                    countFamSize6_LC++;
+                                }
+
+                                if (familySizeCheck > 6 && mealType.equals(LOW_CARB)) {
+                                    countFamilySizeMoreThanSix_LC++;
+                                }
+                                
+                                // Kiddies
+                                
+                                if (familySizeCheck == 1 && mealType.equals(KIDDIES)) {
+                                    countFamSize1_KD++;
+                                }
+
+                                if (familySizeCheck == 2 && mealType.equals(KIDDIES)) {
+                                    countFamSize2_KD++;
+                                }
+
+                                if (familySizeCheck == 3 && mealType.equals(KIDDIES)) {
+                                    countFamSize3_KD++;
+                                }
+
+                                if (familySizeCheck == 4 && mealType.equals(KIDDIES)) {
+                                    countFamSize4_KD++;
+                                }
+
+                                if (familySizeCheck == 5 && mealType.equals(KIDDIES)) {
+                                    countFamSize5_KD++;
+                                }
+
+                                if (familySizeCheck == 6 && mealType.equals(KIDDIES)) {
+                                    countFamSize6_KD++;
+                                }
+
+                                if (familySizeCheck > 6 && mealType.equals(KIDDIES)) {
+                                   countFamilySizeMoreThanSix_KD++;
+                                }
+                                
+                                
 
                             }
                         }
                     }
                 }
-                
-            }
 
+            }
+            
             @Override
             public void onCancelled(FirebaseError fe) {
                 System.err.print("Error: Could not get Orders: " + fe.getMessage());
