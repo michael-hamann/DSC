@@ -1,4 +1,3 @@
-
 package DSC;
 
 import com.firebase.client.DataSnapshot;
@@ -20,7 +19,8 @@ public class DSC_RouteView extends javax.swing.JFrame {
 
     ArrayList<Route> allRoutes = new ArrayList<>();
     ArrayList<String> suburbs = new ArrayList<>();
-    
+    String driverName;
+
     /**
      * Creates new form DSC_Main
      */
@@ -115,7 +115,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
                     }
                     lstSuburbs.setModel(model);
                     lstSuburbs.setSelectedIndex(0);
-                    
+
                 } else if (active.equalsIgnoreCase("Inactive")) {
 
                 }
@@ -135,21 +135,28 @@ public class DSC_RouteView extends javax.swing.JFrame {
         chbLateAfternoon.setEnabled(false);
         chbEvening.setEnabled(false);
     }
-    
-    private void enableChecks(){
+
+    private void enableChecks() {
         chbAfternoon.setEnabled(true);
         chbLateAfternoon.setEnabled(true);
         chbEvening.setEnabled(true);
     }
-    
-    private void disableFields(){
+
+    private void disableFields() {
         txfRouteID.setEditable(false);
         txfSuburbID.setEditable(false);
         txfCurrDriver.setEditable(false);
         txfSuburbName.setEditable(false);
     }
     
-    private String getSelectedRoute(){
+    private void clearFields(){
+        txfRouteID.setText(null);
+        txfSuburbID.setText(null);
+        txfSuburbName.setText(null);
+        txfCurrDriver.setText(null);
+    }
+
+    private String getSelectedRoute() {
         String curr = "";
         try {
             curr = lstRoutes.getSelectedValue();
@@ -160,14 +167,55 @@ public class DSC_RouteView extends javax.swing.JFrame {
         }
         return curr;
     }
+
+    private void getRouteDriver(String routeNum) {
+        Firebase ref = DBClass.getInstance().child("Routes/" + routeNum);
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot ds) {
+                for (DataSnapshot data : ds.getChildren()) {
+                    for (DataSnapshot data2 : data.getChildren()) {
+                        if (data.getKey().equalsIgnoreCase("Drivers")) {
+                            if (data2.child("EndDate").getValue(String.class).equalsIgnoreCase("-")) {
+                                String currDriverID = data2.child("DriverID").getValue(String.class);
+                                getDriverName(currDriverID);
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError fe) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
+    }
     
-    private void setTextFields(){
+    private void getDriverName(String id){
+        Firebase ref = DBClass.getInstance().child("Drivers/"+id);
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot ds) {
+                driverName = ds.child("DriverName").getValue(String.class);
+                txfCurrDriver.setText(driverName);
+            }
+
+            @Override
+            public void onCancelled(FirebaseError fe) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
+    }
+
+    private void setTextFields() {
         String routeID = getSelectedRoute();
         txfRouteID.setText(routeID);
-        String suburbID = lstSuburbs.getSelectedIndex()+"";
+        String suburbID = lstSuburbs.getSelectedIndex() + "";
         txfSuburbID.setText(suburbID);
         String suburb = lstSuburbs.getSelectedValue();
         txfSuburbName.setText(suburb);
+        getRouteDriver(routeID);
     }
 
     /**
@@ -666,6 +714,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnShowOtherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowOtherActionPerformed
+        clearFields();
         lstRoutes.setModel(new DefaultListModel<>());
         lstSuburbs.setModel(new DefaultListModel<>());
         if (btnShowOther.getText().equalsIgnoreCase("Show inactive")) {
@@ -710,8 +759,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnChangeDriverActionPerformed
 
     private void lstRoutesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstRoutesValueChanged
-        String curr = lstRoutes.getSelectedIndex() + 1 + "";
-        txfRouteID.setText(curr);
+        String curr = getSelectedRoute();
         String active = btnShowOther.getText();
         if (active.equalsIgnoreCase("Show inactive")) {
             active = "Active";

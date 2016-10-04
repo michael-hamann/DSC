@@ -1,4 +1,3 @@
-
 package DSC;
 
 import com.firebase.client.DataSnapshot;
@@ -12,7 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
-  * @author Michael Hamann
+ * @author Michael Hamann
  */
 public class DSC_DriverDetails extends javax.swing.JFrame {
 
@@ -62,12 +61,10 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
 
         return empty;
     }
-    
-    private boolean checkChanged(){
+
+    private boolean checkChanged() {
         boolean isChanged = false;
-        
-        
-        
+
         return isChanged;
     }
 
@@ -83,7 +80,6 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                         r.setID(data.getKey());
                         r.setActive((boolean) data.child("Active").getValue());
                         r.setDrivers(data.child("Drivers").getValue(ArrayList.class));
-                        //r.setSuburbs(suburbs);
                         r.setTimeFrame((String) data.child("TimeFrame").getValue());
                         allRoutes.add(r);
                     }
@@ -91,13 +87,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                 DefaultListModel model = new DefaultListModel();
                 for (Route r : allRoutes) {
                     model.addElement(r.toString());
-                    //drivers.add(r.getDrivers());
                 }
-                DefaultComboBoxModel comboModel = new DefaultComboBoxModel();
-                for(RouteDrivers r : drivers){
-                    comboModel.addElement(r);
-                }
-                cmbDriverName.setModel(comboModel);
                 lstRoutes.setModel(model);
                 lstRoutes.setSelectedIndex(0);
                 setSuburbs(getSelectedRoute());
@@ -118,9 +108,9 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
             public void onDataChange(DataSnapshot ds) {
                 suburbs.clear();
                 for (DataSnapshot data : ds.getChildren()) {
-                    if(data.getKey().equals(routeNum)){
-                       String subArr[] = data.child("Suburbs").getValue(String[].class);
-                       for (int i = 0; i < subArr.length; i++) {
+                    if (data.getKey().equals(routeNum)) {
+                        String subArr[] = data.child("Suburbs").getValue(String[].class);
+                        for (int i = 0; i < subArr.length; i++) {
                             suburbs.add(subArr[i]);
                         }
                     }
@@ -132,6 +122,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                 lstSuburbs.setModel(model);
                 lstSuburbs.setSelectedIndex(0);
                 setTextFields();
+                setDrivers();
             }
 
             @Override
@@ -140,8 +131,8 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
             }
         });
     }
-    
-    private String getSelectedRoute(){
+
+    private String getSelectedRoute() {
         String curr = "";
         try {
             curr = lstRoutes.getSelectedValue();
@@ -152,16 +143,34 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         }
         return curr;
     }
-    
-    private void setTextFields(){
+
+    private void setTextFields() {
         String routeID = getSelectedRoute();
         txfRouteID.setText(routeID);
-        String suburbID = lstSuburbs.getSelectedIndex()+"";
+        String suburbID = lstSuburbs.getSelectedIndex() + "";
         txfSuburbID.setText(suburbID);
     }
-    
-    private void setDrivers(){
-        
+
+    protected void setDrivers() {
+        Firebase ref = DBClass.getInstance().child("Drivers");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot ds) {
+                DefaultComboBoxModel comboModel = new DefaultComboBoxModel();
+                for (DataSnapshot data : ds.getChildren()) {
+                    if (!data.getKey().equalsIgnoreCase("0")) {
+                        String name = data.child("DriverName").getValue(String.class);
+                        comboModel.addElement(name);
+                    }
+                }
+                cmbDriverName.setModel(comboModel);
+            }
+
+            @Override
+            public void onCancelled(FirebaseError fe) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
     }
 
     /**
@@ -526,10 +535,10 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         boolean changed = checkChanged();
-        if(changed){
+        if (changed) {
             //update driver information
         } else {
-            
+
         }
         disableFields();
         btnSave.setVisible(false);
@@ -544,7 +553,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     }//GEN-LAST:event_lstRoutesValueChanged
 
     private void btnAddDriverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDriverActionPerformed
-        new DSC_NewDriver().setVisible(true);
+        new DSC_NewDriver(this).setVisible(true);
     }//GEN-LAST:event_btnAddDriverActionPerformed
 
     private void lstSuburbsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstSuburbsValueChanged
