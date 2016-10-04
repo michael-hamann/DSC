@@ -30,6 +30,8 @@ public class DSC_Main extends javax.swing.JFrame {
     public static int reportsDone = 0;
     public static boolean generateAllReports = false;
     
+    
+    
     /**
      * Creates new form DSC_Main
      */
@@ -760,12 +762,6 @@ public class DSC_Main extends javax.swing.JFrame {
 
     private void btnPackerRptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPackerRptActionPerformed
 
-        PackerReport.getPackerData();
-        ChefReport.getChefReport();
-        DriverReport.getDriverReports();
-        AccountantReport.getAccountantReport();
-
-
        PackerReport.getPackerData();
 
     }//GEN-LAST:event_btnPackerRptActionPerformed
@@ -827,11 +823,7 @@ public class DSC_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_pnlPieChartComponentResized
 
     private void btnGenerateAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerateAllActionPerformed
-        btnAccountRpt.setEnabled(false);
-        btnChefRpt.setEnabled(false);
-        btnDriverRpt.setEnabled(false);
-        btnPackerRpt.setEnabled(false);
-        
+
         reportsDone = 0;
         generateAllReports = true;
         
@@ -839,7 +831,6 @@ public class DSC_Main extends javax.swing.JFrame {
         ChefReport.getChefReport();
         DriverReport.getDriverReports();
         AccountantReport.getAccountantReport();
-        
         
     }//GEN-LAST:event_btnGenerateAllActionPerformed
 
@@ -885,7 +876,7 @@ public class DSC_Main extends javax.swing.JFrame {
                 DSC_Main main = new DSC_Main();
                 DBClass.getInstance();
                 try {
-                    for (int i = 0; i < 10; i++) {
+                    for (int i = 0; i < 100; i++) {
                         if (!DBClass.connected) {
                             Thread.sleep(500);
                         } else {

@@ -315,9 +315,8 @@ public class ChefReport {
 
         FileOutputStream excelOut = null;
         try {
-
-            Path path = Paths.get("Reports\\ChefReport - " + currentWeek() + " Week -  " + returnWeekInt());
-            File f = path.toFile();
+            
+            Path path = Paths.get("Reports\\Week " + DriverReport.returnWeekInt() + " (" + DriverReport.returnWeekString() + ")\\ChefReport - " + currentWeek() + " Week -  " + returnWeekInt());
             Files.createDirectories(path);
 
             File file = path.resolve("ChefReports Week - " + returnWeekInt() + " ( " + mealType + " )" + ".xlsx").toFile();
