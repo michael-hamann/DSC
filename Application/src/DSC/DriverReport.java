@@ -45,7 +45,9 @@ public class DriverReport {
     private static DSC_ReportLoading driverLoadingObj;
 
     public static void getDriverReports() {
-        driverLoadingObj = new DSC_ReportLoading();
+        if (!(DSC_Main.generateAllReports)) {
+            driverLoadingObj = new DSC_ReportLoading();
+        }
         boolean fileFound = false;
 
         try {
@@ -375,9 +377,12 @@ public class DriverReport {
             excelOut = new FileOutputStream(file);
             workbook.write(excelOut);
             excelOut.close();
-            driverLoadingObj.setVisible(false);
-            driverLoadingObj.dispose();
-            JOptionPane.showMessageDialog(null, "DriverReports Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
+            if (!(DSC_Main.generateAllReports)) {
+                driverLoadingObj.setVisible(false);
+                driverLoadingObj.dispose();
+                JOptionPane.showMessageDialog(null, "DriverReports Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
+            }
+
         } catch (FileNotFoundException ex) {
             JOptionPane.showMessageDialog(null, "Please close the excel file before using generating.", "Error", JOptionPane.ERROR_MESSAGE);
             System.err.println("Error - Could not create new DriverReport: File currently in use.");

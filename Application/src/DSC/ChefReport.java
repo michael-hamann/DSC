@@ -49,7 +49,9 @@ public class ChefReport {
     private static int booksCounter = 0;
 
     public static void getChefReport() {
-        chefLoadingObj = new DSC_ReportLoading();
+        if (!(DSC_Main.generateAllReports)) {
+            chefLoadingObj = new DSC_ReportLoading();
+        }
         allOrders = new ArrayList();
         allRoutes = new ArrayList();
         getActiveRoutes();
@@ -258,9 +260,12 @@ public class ChefReport {
 
             excelNumber++;
             if (excelNumber == allRoutes.size()) {
-                chefLoadingObj.setVisible(false);
-                chefLoadingObj.dispose();
-                JOptionPane.showMessageDialog(null, "Chef Reports Successfully Generated.");
+                if (!(DSC_Main.generateAllReports)) {
+                    chefLoadingObj.setVisible(false);
+                    chefLoadingObj.dispose();
+                    
+                    JOptionPane.showMessageDialog(null, "Chef Reports Successfully Generated.");
+                }
             }
 
         }

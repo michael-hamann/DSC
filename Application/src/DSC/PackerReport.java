@@ -44,7 +44,9 @@ public class PackerReport {
     private static DSC_ReportLoading packerLoadingObj;
 
     public static void getPackerData() {
-        packerLoadingObj = new DSC_ReportLoading();
+        if (!(DSC_Main.generateAllReports)) {
+            packerLoadingObj = new DSC_ReportLoading();
+        }
         boolean fileFound = false;
         try {
             file = new File("PackerReports (" + DriverReport.returnWeekString() + ").xlsx");
@@ -370,9 +372,11 @@ public class PackerReport {
             workbook.write(excelOut);
             excelOut.close();
             System.out.println("Done - Packer");
-            packerLoadingObj.setVisible(false);
-            packerLoadingObj.dispose();
-            JOptionPane.showMessageDialog(null, "PackerReport Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
+            if (!(DSC_Main.generateAllReports)) {
+                packerLoadingObj.setVisible(false);
+                packerLoadingObj.dispose();
+                JOptionPane.showMessageDialog(null, "PackerReport Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
+            }
         } catch (IOException io) {
             packerLoadingObj.setVisible(false);
             packerLoadingObj.dispose();

@@ -41,6 +41,7 @@ public class AccountantReport {
     private static File file;
     private static FileOutputStream excelOut;
     private static DSC_ReportLoading accountLoadObj;
+    protected static boolean open = false;
 
     public static void getAccountantReport() {
         accountLoadObj = new DSC_ReportLoading();
@@ -268,8 +269,16 @@ public class AccountantReport {
             excelOut.close();
             accountLoadObj.setVisible(false);
             accountLoadObj.dispose();
-            JOptionPane.showMessageDialog(null, "AccountReports Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
-            System.out.println("Done - Accountant");
+            if (!(DSC_Main.generateAllReports)) {
+                accountLoadObj.setVisible(false);
+                accountLoadObj.dispose();
+                JOptionPane.showMessageDialog(null, "AccountReports Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
+                System.out.println("Done - Accountant");
+            } else {
+                JOptionPane.showMessageDialog(null, "All Reports Generated");
+                open = true;
+            }
+
         } catch (IOException io) {
             accountLoadObj.setVisible(false);
             accountLoadObj.dispose();

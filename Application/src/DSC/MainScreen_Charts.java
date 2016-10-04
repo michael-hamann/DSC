@@ -41,10 +41,10 @@ public class MainScreen_Charts extends JPanel {
     private static int countFamilySize_5 = 0;
     private static int countFamilySize_6 = 0;
     private static int countFamilySizeMoreThanSix = 0;
-    static final String STANDARD = "Standard";
-    static final String LOW_CARB = "Low Carb";
-    static final String KIDDIES = "Kiddies";
-    
+    private static final String STANDARD = "Standard";
+    private static final String LOW_CARB = "Low Carb";
+    private static final String KIDDIES = "Kiddies";
+
     public static void createGraphs(JPanel pnlBarChartActive,
             JPanel pnlBarChartInActive, JPanel pnlPieChart, JLabel lblStandardTotal, JLabel lblLowCarbTotal, JLabel lblKiddiesTotal,
             JLabel lblKiddiesTotalInActive, JLabel lblStandardTotalInActive,
@@ -84,7 +84,6 @@ public class MainScreen_Charts extends JPanel {
                             if (familySizeCheck == 6) {
                                 countFamilySize_6++;
                             }
-                            
 
                             for (DataSnapshot Data3 : Data2.getChildren()) {
 
@@ -106,10 +105,10 @@ public class MainScreen_Charts extends JPanel {
                                 if (activeCheck == false && Data3.child("MealType").getValue(String.class).equals(KIDDIES)) {
                                     countKiddiesInActive++;
                                 }
-                                
+
                                 if (familySizeCheck > 6) {
-                                countFamilySizeMoreThanSix++;
-                            }
+                                    countFamilySizeMoreThanSix++;
+                                }
 
                             }
 

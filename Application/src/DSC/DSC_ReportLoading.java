@@ -19,6 +19,7 @@ public class DSC_ReportLoading extends javax.swing.JFrame {
 
     
    LoadIcon loadObj = new LoadIcon();
+   
 
     /**
      * Creates new form DSC_ReportLoading
