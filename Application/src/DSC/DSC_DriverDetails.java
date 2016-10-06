@@ -8,6 +8,7 @@ import java.awt.Cursor;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -173,6 +174,10 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
             }
         });
     }
+    
+    private void deleteDriver(String driverName){
+        
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -208,6 +213,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         txfSuburbID = new javax.swing.JTextField();
         cmbDriverName = new javax.swing.JComboBox<>();
         btnAddDriver = new javax.swing.JButton();
+        btnDeleteDriver = new javax.swing.JButton();
         pnlSuburbs = new javax.swing.JPanel();
         lblSuburbs = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
@@ -351,6 +357,16 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
             }
         });
 
+        btnDeleteDriver.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btnDeleteDriver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Bin.png"))); // NOI18N
+        btnDeleteDriver.setText("Delete Driver");
+        btnDeleteDriver.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnDeleteDriver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteDriverActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlDetailsLayout = new javax.swing.GroupLayout(pnlDetails);
         pnlDetails.setLayout(pnlDetailsLayout);
         pnlDetailsLayout.setHorizontalGroup(
@@ -361,7 +377,9 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                     .addComponent(lblDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlDetailsLayout.createSequentialGroup()
                         .addComponent(btnAddDriver)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnDeleteDriver)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnEdit)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSave)
@@ -425,7 +443,8 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                     .addComponent(btnSave)
                     .addComponent(btnBack)
                     .addComponent(btnAddDriver)
-                    .addComponent(btnEdit))
+                    .addComponent(btnEdit)
+                    .addComponent(btnDeleteDriver))
                 .addContainerGap())
         );
 
@@ -563,10 +582,31 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         setTextFields();
     }//GEN-LAST:event_lstSuburbsValueChanged
 
+    private void btnDeleteDriverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteDriverActionPerformed
+        JComboBox jcb = cmbDriverName;
+        jcb.setEnabled(true);
+        jcb.setSelectedIndex(-1);
+        JOptionPane.showMessageDialog(null, jcb, "Select a driver to delete", JOptionPane.QUESTION_MESSAGE);
+        if (jcb.getSelectedIndex() == -1) {
+            JOptionPane.showMessageDialog(null, "No driver selected", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            String selected = jcb.getSelectedItem().toString();
+            int ans = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete "+selected+"?", "Please confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            switch(ans){
+                case JOptionPane.YES_OPTION:
+                    deleteDriver(selected);
+                    break;
+                case JOptionPane.NO_OPTION:
+                    break;
+            }
+        }
+    }//GEN-LAST:event_btnDeleteDriverActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddDriver;
     private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnDeleteDriver;
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnSave;
     private javax.swing.JComboBox<String> cmbDriverName;

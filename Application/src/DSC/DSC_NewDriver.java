@@ -15,7 +15,8 @@ public class DSC_NewDriver extends javax.swing.JFrame {
     private DSC_DriverDetails main;
 
     /**
-     * Creates new form DSC_NewDriver
+     * Creates new form DSC_NewDriver with access to DSC_DriverDetails
+     * @param main
      */
     public DSC_NewDriver(DSC_DriverDetails main) {
         this.main = main;
