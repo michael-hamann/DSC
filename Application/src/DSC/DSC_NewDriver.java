@@ -70,8 +70,9 @@ public class DSC_NewDriver extends javax.swing.JFrame {
         btnCancel = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Add New Driver");
+        setResizable(false);
 
         pnlBackground.setBackground(new java.awt.Color(0, 153, 0));
 
@@ -130,7 +131,7 @@ public class DSC_NewDriver extends javax.swing.JFrame {
             .addGroup(pnlNewDriverLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlNewDriverLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblNewDriver, javax.swing.GroupLayout.DEFAULT_SIZE, 456, Short.MAX_VALUE)
+                    .addComponent(lblNewDriver, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)
                     .addGroup(pnlNewDriverLayout.createSequentialGroup()
                         .addGroup(pnlNewDriverLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(lblVehicleReg, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)

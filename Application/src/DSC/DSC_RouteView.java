@@ -7,6 +7,7 @@ import com.firebase.client.ValueEventListener;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.util.ArrayList;
+import java.util.Calendar;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -22,6 +23,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
     ArrayList<Route> allRoutes = new ArrayList<>();
     ArrayList<String> suburbs = new ArrayList<>();
     String driverName;
+    String newRouteNum;
 
     /**
      * Creates new form DSC_Main
@@ -254,6 +256,62 @@ public class DSC_RouteView extends javax.swing.JFrame {
     private void updateTimeFrame(String route, String newTime) {
         Firebase ref = DBClass.getInstance().child("Routes/" + route);
         ref.child("TimeFrame").setValue(newTime);
+    }
+
+    protected void addToMetaData(String ids, int value) {
+        Firebase ref = DBClass.getInstance().child("META-Data");
+        ref.child(ids).setValue(value);
+    }
+
+    private String getNewRoute() {
+        Firebase ref = DBClass.getInstance().child("META-Data");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot ds) {
+                newRouteNum = ds.child("RouteID").getValue(Integer.class) + "";
+            }
+
+            @Override
+            public void onCancelled(FirebaseError fe) {
+                JOptionPane.showMessageDialog(null, "Error: " + fe.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+        return newRouteNum;
+    }
+
+    private class RouteContainer {
+
+        public boolean Active;
+        public String Drivers;
+        public String EndDate;
+        public String StartingDate;
+        public String Suburbs;
+        public String TimeFrame;
+
+        public RouteContainer(boolean Active, String Drivers, String EndDate, String StartingDate, String Suburbs, String TimeFrame) {
+            this.Active = Active;
+            this.Drivers = Drivers;
+            this.EndDate = EndDate;
+            this.StartingDate = StartingDate;
+            this.Suburbs = Suburbs;
+            this.TimeFrame = TimeFrame;
+        }
+
+    }
+
+    private void addRoute() {
+        String newRouteID = getNewRoute();
+        Calendar cal = Calendar.getInstance();
+        String startingDate = cal.getTimeInMillis() + "";
+        Firebase ref = DBClass.getInstance().child("Routes");
+        RouteContainer route = new RouteContainer(
+                true,
+                null,
+                "-",
+                startingDate,
+                null,
+                "Afternoon");
+        ref.child(newRouteID).setValue(route);
     }
 
     private void addSuburb(String name, String route) {
@@ -902,7 +960,9 @@ public class DSC_RouteView extends javax.swing.JFrame {
 
     private void btnAddRouteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRouteActionPerformed
         //Add new route to firebase
-
+        addRoute();
+        String currID = getNewRoute();
+        addToMetaData("RouteID", Integer.parseInt(currID) + 1);
         //refresh list
 
     }//GEN-LAST:event_btnAddRouteActionPerformed
