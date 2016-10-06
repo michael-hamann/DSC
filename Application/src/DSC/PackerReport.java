@@ -13,8 +13,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -85,7 +88,7 @@ public class PackerReport {
                     start.setTimeInMillis(dataSnapshot.child("StartingDate").getValue(long.class));
 
                     if (start.getTimeInMillis() > DriverReport.returnWeekMili()) {
-                        continue;
+                        //continue;
                     }
 
                     ArrayList<Meal> meals = new ArrayList<>();
@@ -245,18 +248,36 @@ public class PackerReport {
     }
 
     private static void createSpreadsheets() {
+        orderList.sort(new Comparator<Order>() {
+            @Override
+            public int compare(Order o1, Order o2) {
+                int result;
+                if (o1.getFamilySize() < o2.getFamilySize()) {
+                    result = -1;
+                } else if (o1.getFamilySize() == o2.getFamilySize()) {
+                    result = 0;
+                } else {
+                    result = 1;
+                }
+                return result;
+            }
+        });
+
         XSSFWorkbook workbook = new XSSFWorkbook();
         for (Route route : routeList) {
             XSSFSheet sheet = workbook.createSheet("PackerReports Route - " + route.getID());
 
             Map<String, String[]> data = new TreeMap<>();
-            data.put("1", new String[]{"Doorstep Chef Packer Sheet  Week: " + DriverReport.returnWeekInt(), "", "", route.getDrivers().get(0).getDriver().getDriverName().split(" ")[0] + " - " + route.getDrivers().get(0).getDriver().getContactNumber(), "", "Route: " + route.getID()});
+            data.put("1", new String[]{"Doorstep Chef Packer Sheet", "", "", route.getDrivers().get(0).getDriver().getDriverName().split(" ")[0] + " - " + route.getDrivers().get(0).getDriver().getContactNumber(), "", " Week: " + DriverReport.returnWeekInt() + " Route: " + route.getID()});
             data.put("2", new String[]{"", "", "", "", "", ""});
             data.put("3", new String[]{"Customer", "FamSize", "MealType", "Qty", "Allergies", "Exclutions"});
+
+            int[] totals = new int[11];
 
             int counter = 4;
             for (Order order : orderList) {
                 if (order.getRoute().equals(route.getID())) {
+
                     Client client = order.getClient();
                     String customer = client.getName() + " " + client.getSurname();
                     String famSize = order.getFamilySize() + "";
@@ -265,7 +286,40 @@ public class PackerReport {
                         customer = "";
                         famSize = "";
                         counter++;
+                        if (meal.getMealType().equals("Standard")) {
+                            totals[1] += meal.getQuantity();
+                        } else if (meal.getMealType().equals("Low Carb")) {
+                            totals[2] += meal.getQuantity();
+                        } else if (meal.getMealType().equals("Kiddies")) {
+                            totals[3] += meal.getQuantity();
+                        }
+
+                        switch (meal.getQuantity()) {
+                            case 1:
+                                totals[4]++;
+                                break;
+                            case 2:
+                                totals[5]++;
+                                break;
+                            case 3:
+                                totals[6]++;
+                                break;
+                            case 4:
+                                totals[7]++;
+                                break;
+                            case 5:
+                                totals[8]++;
+                                break;
+                            case 6:
+                                totals[9]++;
+                                break;
+                            default:
+                                if (meal.getQuantity() > 6) {
+                                    totals[10]++;
+                                }
+                        }
                     }
+                    totals[0]++;
                 }
             }
 
@@ -309,17 +363,15 @@ public class PackerReport {
                             } else {
                                 borderStyle.setBorderLeft(XSSFCellStyle.BORDER_MEDIUM);
                             }
-                            if (i != 8) {
+                            if (i != 5) {
                                 borderStyle.setBorderRight(XSSFCellStyle.BORDER_THIN);
                             } else {
                                 borderStyle.setBorderRight(XSSFCellStyle.BORDER_MEDIUM);
                             }
 
-                            if (i == 6 && ((String) arr[i]).contains("X")) {
-                                cell.setCellValue("");
-                                borderStyle.setFillPattern(XSSFCellStyle.FINE_DOTS);
-                                borderStyle.setFillBackgroundColor(IndexedColors.GREY_50_PERCENT.getIndex());
-                                borderStyle.setFillForegroundColor(IndexedColors.GREY_50_PERCENT.getIndex());
+                            if (i == 5 || i == 4) {
+                                borderStyle.setAlignment(XSSFCellStyle.ALIGN_JUSTIFY);
+                                borderStyle.setVerticalAlignment(XSSFCellStyle.VERTICAL_JUSTIFY);
                             }
 
                             if ((Integer.parseInt((key + ""))) != keySet.size()) {
@@ -353,8 +405,137 @@ public class PackerReport {
                     cell.setCellStyle(borderStyle);
                 }
             }
+
+            //<editor-fold defaultstate="collapsed" desc="Add Totals">
+            
+            
+            Row row = sheet.createRow(keySet.size());
+            Cell cell1 = row.createCell(0);
+            cell1.setCellValue("Clients: " + totals[0]);
+            XSSFCellStyle cellStyle1 = workbook.createCellStyle();
+            XSSFFont font = workbook.createFont();
+            font.setBold(true);
+            cellStyle1.setBorderLeft(XSSFCellStyle.BORDER_MEDIUM);
+            cellStyle1.setFont(font);
+            cell1.setCellStyle(cellStyle1);
+
+            
+            
+            Cell cell2 = row.createCell(1);
+            cell2.setCellValue("Standard: " + totals[1]);
+            XSSFCellStyle cellStyle2 = workbook.createCellStyle();
+            font.setBold(true);
+            cellStyle2.setFont(font);
+            cell2.setCellStyle(cellStyle2);
+
+            
+            
+            Cell cell3 = row.createCell(4);
+            cell3.setCellValue("Low Carb:  " + totals[2]);
+            XSSFCellStyle cellStyle3 = workbook.createCellStyle();
+            font.setBold(true);
+            cellStyle3.setFont(font);
+            cell3.setCellStyle(cellStyle3);
+            
+            
+            
+            Cell cell4 = row.createCell(5);
+            cell4.setCellValue("Kiddies: " + totals[3]);
+            XSSFCellStyle cellStyle4 = workbook.createCellStyle();
+            font.setBold(true);
+            cellStyle4.setBorderRight(XSSFCellStyle.BORDER_MEDIUM);
+            cellStyle4.setFont(font);
+            cell4.setCellStyle(cellStyle4);
+
+            
+            
+            row = sheet.createRow(keySet.size() + 1);
+            
+            Cell holder = row.createCell(0);
+            XSSFCellStyle border1 = workbook.createCellStyle();
+            border1.setBorderLeft(XSSFCellStyle.BORDER_MEDIUM);
+            holder.setCellStyle(border1);
+            
+            
+            cell2 = row.createCell(1);
+            cell2.setCellValue("Single: " + totals[4]);
+            XSSFCellStyle cellStyle6 = workbook.createCellStyle();
+            font.setBold(true);
+            cellStyle6.setFont(font);
+            cell2.setCellStyle(cellStyle6);
+
+            
+            
+            cell3 = row.createCell(4);
+            cell3.setCellValue("Couple:  " + totals[5]);
+            XSSFCellStyle cellStyle7 = workbook.createCellStyle();
+            font.setBold(true);
+            cellStyle7.setFont(font);
+            cell3.setCellStyle(cellStyle7);
+
+            
+            
+            cell4 = row.createCell(5);
+            cell4.setCellValue("Small(3): " + totals[6]);
+            XSSFCellStyle cellStyle8 = workbook.createCellStyle();
+            font.setBold(true);
+            cellStyle8.setBorderRight(XSSFCellStyle.BORDER_MEDIUM);
+            cellStyle8.setFont(font);
+            cell4.setCellStyle(cellStyle8);
+
+            
+            
+            row = sheet.createRow(keySet.size() + 2);
+            
+            Cell holder2 = row.createCell(0);
+            XSSFCellStyle border2 = workbook.createCellStyle();
+            border2.setBorderLeft(XSSFCellStyle.BORDER_MEDIUM);
+            border2.setBorderBottom(XSSFCellStyle.BORDER_MEDIUM);
+            holder2.setCellStyle(border2);
+            
+            cell2 = row.createCell(1);
+            cell2.setCellValue("Medium(4): " + totals[7]);
+            XSSFCellStyle cellStyle9 = workbook.createCellStyle();
+            font.setBold(true);
+            cellStyle9.setBorderBottom(XSSFCellStyle.BORDER_MEDIUM);
+            cellStyle9.setFont(font);
+            cell2.setCellStyle(cellStyle9);
+
+            Cell holder3 = row.createCell(2);
+            XSSFCellStyle border3 = workbook.createCellStyle();
+            border3.setBorderBottom(XSSFCellStyle.BORDER_MEDIUM);
+            holder3.setCellStyle(border3);
+            
+            Cell holder4 = row.createCell(3);
+            XSSFCellStyle border4 = workbook.createCellStyle();
+            border4.setBorderBottom(XSSFCellStyle.BORDER_MEDIUM);
+            holder4.setCellStyle(border4);
+            
+            cell3 = row.createCell(4);
+            cell3.setCellValue("Large(5):  " + totals[8]);
+            XSSFCellStyle cellStyle10 = workbook.createCellStyle();
+            font.setBold(true);
+            cellStyle10.setBorderBottom(XSSFCellStyle.BORDER_MEDIUM);
+            cellStyle10.setFont(font);
+            cell3.setCellStyle(cellStyle10);
+
+            
+            
+            cell4 = row.createCell(5);
+            cell4.setCellValue("XLarge(6): " + totals[9]);
+            XSSFCellStyle cellStyle11 = workbook.createCellStyle();
+            font.setBold(true);
+            cellStyle11.setBorderBottom(XSSFCellStyle.BORDER_MEDIUM);
+            cellStyle11.setBorderRight(XSSFCellStyle.BORDER_MEDIUM);
+            cellStyle11.setFont(font);
+            cell4.setCellStyle(cellStyle11);
+            
+//</editor-fold>
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 2));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 4));
+            sheet.addMergedRegion(new CellRangeAddress(keySet.size(), keySet.size(), 1, 3));
+            sheet.addMergedRegion(new CellRangeAddress(keySet.size() + 1, keySet.size() + 1, 1, 3));
+            sheet.addMergedRegion(new CellRangeAddress(keySet.size() + 2, keySet.size() + 2, 1, 3));
 
             sheet.setColumnWidth(0, (longestCustomer + 1) * 240);
             sheet.setColumnWidth(1, 8 * 240);
@@ -368,6 +549,16 @@ public class PackerReport {
             sheet.setColumnWidth(4, (totalSize - usedSize) / 2);
             sheet.setColumnWidth(5, (totalSize - usedSize) / 2);
 
+            Row rowDate = sheet.createRow(keySet.size() + 4);
+            Cell cell = rowDate.createCell(0);
+            SimpleDateFormat sf = new SimpleDateFormat("EEE MMM yyyy HH:mm:ss");
+            
+            cell.setCellValue(sf.format(Calendar.getInstance().getTime()));
+            XSSFCellStyle cellStyle = workbook.createCellStyle();
+            cellStyle.setAlignment(XSSFCellStyle.ALIGN_RIGHT);
+            cell.setCellStyle(cellStyle);
+            sheet.addMergedRegion(new CellRangeAddress(keySet.size() + 4, keySet.size() + 4, 0, 5));
+            
         }
 
         try {
@@ -393,5 +584,4 @@ public class PackerReport {
         }
 
     }
-
 }

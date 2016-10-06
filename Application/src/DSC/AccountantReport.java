@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
@@ -261,6 +262,17 @@ public class AccountantReport {
                 totalSize -= sheet.getColumnWidth(i);
             }
             sheet.setColumnWidth(9, totalSize);
+            
+            Row rowDate = sheet.createRow(keySet.size() + 1);
+            Cell cell = rowDate.createCell(0);
+            SimpleDateFormat sf = new SimpleDateFormat("EEE MMM yyyy HH:mm:ss");
+            
+            cell.setCellValue(sf.format(Calendar.getInstance().getTime()));
+            XSSFCellStyle cellStyle = workbook.createCellStyle();
+            cellStyle.setAlignment(XSSFCellStyle.ALIGN_RIGHT);
+            cell.setCellStyle(cellStyle);
+            sheet.addMergedRegion(new CellRangeAddress(keySet.size() + 1, keySet.size() + 1, 0, 9));
+            
         }
 
         try {
@@ -268,9 +280,9 @@ public class AccountantReport {
             excelOut.close();
             System.out.println("Done - Accountant");
             if (!(DSC_Main.generateAllReports)) {
-                JOptionPane.showMessageDialog(null, "AccountReports Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
                 accountLoadObj.setVisible(false);
                 accountLoadObj.dispose();
+                JOptionPane.showMessageDialog(null, "AccountReports Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 DSC_Main.reportsDone++;
                 if (DSC_Main.reportsDone == 4) {

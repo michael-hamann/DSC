@@ -250,6 +250,16 @@ public class ChefReport {
 
                 }
 
+                Row rowDate = sheet.createRow(keySet.size() + 1);
+                Cell cell = rowDate.createCell(0);
+                SimpleDateFormat sf = new SimpleDateFormat("EEE MMM yyyy HH:mm:ss");
+
+                cell.setCellValue(sf.format(Calendar.getInstance().getTime()));
+                XSSFCellStyle cellStyle = workbook.createCellStyle();
+                cellStyle.setAlignment(XSSFCellStyle.ALIGN_RIGHT);
+                cell.setCellStyle(cellStyle);
+                sheet.addMergedRegion(new CellRangeAddress(keySet.size() + 1, keySet.size() + 1, 0, 3));
+
                 sheetNumber++;
             }
             try {
