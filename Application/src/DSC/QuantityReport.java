@@ -24,9 +24,15 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import javax.swing.JOptionPane;
+import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -43,7 +49,7 @@ public class QuantityReport {
 
     private static QuantityReportData quantityReportData;
     private static XSSFWorkbook workbook;
-    private static QuantityReportData quantityObj = new QuantityReportData();
+
     private static int totalIndividuals = 0;
     private static int totalClients = 0;
     private static int totalSingle = 0;
@@ -53,8 +59,10 @@ public class QuantityReport {
     private static int totalFive = 0;
     private static int totalSix = 0;
     private static int totalExtra = 0;
+    private static QuantityReportData quantityObj;
 
     public static void getActiveClients() {
+        quantityObj = new QuantityReportData();
         Firebase newRef = DBClass.getInstance().child("Orders");
         newRef.orderByChild("Active").equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -197,7 +205,7 @@ public class QuantityReport {
         int sheetNumber = 0;
         workbook = new XSSFWorkbook();
         Map<String, String[]> data = new TreeMap<>();
-        data.put(0 + "", new String[]{"Doorstep Chef - Quantity Report " + currentWeek(), "", "", "Meal Type : " + "" + " " + " "});
+        data.put(0 + "", new String[]{"Doorstep Chef - Quantity Report " + currentWeek(), "", "", "Week : " + returnWeekInt() + " " + " "});
         data.put(1 + "", new String[]{"", "", "", "", "", "", ""});
         data.put(2 + "", new String[]{"Total Of ", "Single", "Couple", "Three", "Four", "Five", "Six", "Extra"});
 
@@ -259,16 +267,70 @@ public class QuantityReport {
         for (int keyIterate = 0; keyIterate < keySet.size(); keyIterate++) {
             Row row = sheet.createRow(rowNum);
             Object[] arr = data.get(keyIterate + "");
-
+            XSSFCellStyle borderStyle = workbook.createCellStyle();
+            XSSFCellStyle borderStyle2 = workbook.createCellStyle();
             for (int i = 0; i < arr.length; i++) {
+                XSSFFont font = workbook.createFont();
                 Cell cell = row.createCell(i);
                 cell.setCellValue((String) arr[i]);
 
+                if ((keyIterate + "").equals("0") || (keyIterate + "").equals("1")) {
+
+                    font.setFontName("Calibri");
+                    font.setFontHeightInPoints((short) 13);
+                    font.setBold(true);
+                    borderStyle.setFont(font);
+                    borderStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+                    borderStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+                    borderStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+                    borderStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+                    borderStyle.setAlignment(HorizontalAlignment.LEFT);
+
+                } else if (keyIterate > 1 && keyIterate < 12) {
+                    borderStyle.setBorderBottom(BorderStyle.THIN);
+                    borderStyle.setBorderTop(BorderStyle.THIN);
+                    borderStyle.setBorderLeft(BorderStyle.THIN);
+                    borderStyle.setBorderRight(BorderStyle.THIN);
+
+                }
+
+                if ((keyIterate + "").equals("2")) {
+                    borderStyle.setBorderBottom(XSSFCellStyle.BORDER_MEDIUM);
+                    borderStyle.setBorderLeft(XSSFCellStyle.BORDER_MEDIUM);
+                    borderStyle.setBorderTop(XSSFCellStyle.BORDER_MEDIUM);
+                    borderStyle.setBorderRight(XSSFCellStyle.BORDER_MEDIUM);
+                    borderStyle.setAlignment(HorizontalAlignment.CENTER);
+                    borderStyle.setFillPattern(XSSFCellStyle.LESS_DOTS);
+                    borderStyle.setFillBackgroundColor(IndexedColors.GREY_50_PERCENT.getIndex());
+                    XSSFFont font2 = workbook.createFont();
+                    font2.setColor(IndexedColors.WHITE.getIndex());
+                    borderStyle.setFont(font2);
+
+                }
+
+//                if (keyIterate >= 1) {
+//                    borderStyle2.setAlignment(HorizontalAlignment.CENTER);   
+//                    cell.setCellStyle(borderStyle2);
+//                }
+//                 cell.setCellStyle(borderStyle2);
+                cell.setCellStyle(borderStyle);
             }
 
             rowNum++;
             cellNum++;
             sheetNumber++;
+        }
+
+        sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 4));
+
+        for (int i = 0; i < 8; i++) {
+            if (i == 0) {
+                sheet.setColumnWidth(i, 5000);
+            } else {
+                sheet.setColumnWidth(i, 2000);
+
+            }
+
         }
 
         try {
@@ -300,7 +362,7 @@ public class QuantityReport {
             System.out.println("Done - Chef");
 
             if (DSC_Main.reportsDone == 4) {
-                DSC_Main.reportsDone(null);
+                DSC_Main.reportsDone();
             }
 
         } catch (FileNotFoundException ex) {
