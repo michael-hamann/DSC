@@ -267,7 +267,9 @@ public class DSC_Main extends javax.swing.JFrame {
             }
         });
 
+        btnQuantityReport.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnQuantityReport.setText("Quantity Report");
+        btnQuantityReport.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnQuantityReport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnQuantityReportActionPerformed(evt);

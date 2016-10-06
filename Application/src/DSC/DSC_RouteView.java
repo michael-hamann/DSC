@@ -4,6 +4,7 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import java.awt.Color;
 import java.awt.Cursor;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
@@ -237,6 +238,24 @@ public class DSC_RouteView extends javax.swing.JFrame {
         }
     }
 
+    private boolean timeChanged(String curr, String selected) {
+        boolean changed = false;
+        for (Route r : allRoutes) {
+            if (r.getID().equalsIgnoreCase(curr)) {
+                if (!r.getTimeFrame().equalsIgnoreCase(selected)) {
+                    changed = true;
+                    r.setTimeFrame(selected);
+                }
+            }
+        }
+        return changed;
+    }
+
+    private void updateTimeFrame(String route, String newTime) {
+        Firebase ref = DBClass.getInstance().child("Routes/" + route);
+        ref.child("TimeFrame").setValue(newTime);
+    }
+
     private void addSuburb(String name, String route) {
         int count = 0;
         for (String s : suburbs) {
@@ -245,6 +264,11 @@ public class DSC_RouteView extends javax.swing.JFrame {
         String index = count + "";
         Firebase ref = DBClass.getInstance().child("Routes/" + route + "/Suburbs");
         ref.child(index).setValue(name);
+    }
+
+    private void updateSuburbName(String route, String index, String newName) {
+        Firebase ref = DBClass.getInstance().child("Routes/" + route + "/Suburbs");
+        ref.child(index).setValue(newName);
     }
 
     private void deleteSuburb(String subIndex, String route) {
@@ -779,12 +803,8 @@ public class DSC_RouteView extends javax.swing.JFrame {
             int ans = JOptionPane.showConfirmDialog(this, "Do you wish to discard unsaved changes?");
             switch (ans) {
                 case JOptionPane.YES_OPTION:
-                    disableTime();
-                    txfSuburbName.setEditable(false);
-                    txfSuburbName.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-                    btnEdit.setVisible(true);
-                    btnSave.setVisible(false);
-                    editClicked = false;
+                    this.dispose();
+                    new DSC_Main().setVisible(true);
                     break;
             }
         } else {
@@ -794,12 +814,23 @@ public class DSC_RouteView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        enableTime();
-        txfSuburbName.setEditable(true);
-        txfSuburbName.setCursor(new Cursor(Cursor.TEXT_CURSOR));
-        btnEdit.setVisible(false);
-        btnSave.setVisible(true);
-        editClicked = true;
+        if (lstRoutes.getSelectedIndex() >= 0) {
+            enableTime();
+            txfSuburbName.setEditable(true);
+            txfSuburbName.setCursor(new Cursor(Cursor.TEXT_CURSOR));
+            rbtAfternoon.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            rbtLateAfternoon.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            rbtEvening.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            btnEdit.setVisible(false);
+            btnSave.setVisible(true);
+            editClicked = true;
+            txfSuburbName.setForeground(Color.red);
+            rbtAfternoon.setForeground(Color.red);
+            rbtLateAfternoon.setForeground(Color.red);
+            rbtEvening.setForeground(Color.red);
+        } else {
+            JOptionPane.showMessageDialog(null, "There is nothing to edit", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnShowOtherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowOtherActionPerformed
@@ -818,12 +849,53 @@ public class DSC_RouteView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnShowOtherActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        if (txfSuburbName.getText().trim().equalsIgnoreCase(lstSuburbs.getSelectedValue())) {
-            //save changes of times
-        } else {
-            //save change of suburb name
+        boolean changesMade = false;
+        boolean changed = false;
+        String time = "";
+        if (rbtAfternoon.isSelected()) {
+            time = "Afternoon";
+        } else if (rbtLateAfternoon.isSelected()) {
+            time = "Late Afternoon";
+        } else if (rbtEvening.isSelected()) {
+            time = "Evening";
         }
+
+        changed = timeChanged(getSelectedRoute(), time);
+
+        if (changed) {
+            //save changes of times
+            updateTimeFrame(getSelectedRoute(), time);
+            changesMade = true;
+        }
+
+        if (!txfSuburbName.getText().trim().equalsIgnoreCase(lstSuburbs.getSelectedValue().toString())) {
+            //save change of suburb name
+            updateSuburbName(getSelectedRoute(), lstSuburbs.getSelectedIndex() + "", txfSuburbName.getText().trim());
+            changesMade = true;
+            String active = btnShowOther.getText();
+            if (active.equalsIgnoreCase("Show inactive")) {
+                active = "Active";
+            } else {
+                active = "Inactive";
+            }
+            setSuburbsList(getSelectedRoute(), active);
+        }
+
+        if (changesMade) {
+            JOptionPane.showMessageDialog(null, "Changes saved", "Saved", JOptionPane.INFORMATION_MESSAGE);
+        }
+
         disableTime();
+        editClicked = false;
+        txfSuburbName.setForeground(Color.black);
+        rbtAfternoon.setForeground(Color.gray);
+        rbtLateAfternoon.setForeground(Color.gray);
+        rbtEvening.setForeground(Color.gray);
+        txfSuburbName.setEditable(false);
+        txfSuburbName.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        rbtAfternoon.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        rbtLateAfternoon.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        rbtEvening.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         btnSave.setVisible(false);
         btnEdit.setVisible(true);
     }//GEN-LAST:event_btnSaveActionPerformed
@@ -843,8 +915,18 @@ public class DSC_RouteView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddSuburbActionPerformed
 
     private void btnChangeDriverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeDriverActionPerformed
-        this.dispose();
-        new DSC_DriverDetails().setVisible(true);
+        if (editClicked) {
+            int ans = JOptionPane.showConfirmDialog(this, "Do you wish to discard unsaved changes?");
+            switch (ans) {
+                case JOptionPane.YES_OPTION:
+                    this.dispose();
+                    new DSC_DriverDetails().setVisible(true);
+                    break;
+            }
+        } else {
+            this.dispose();
+            new DSC_DriverDetails().setVisible(true);
+        }
     }//GEN-LAST:event_btnChangeDriverActionPerformed
 
     private void lstRoutesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstRoutesValueChanged

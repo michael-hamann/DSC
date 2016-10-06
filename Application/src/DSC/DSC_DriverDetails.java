@@ -18,8 +18,7 @@ import javax.swing.JOptionPane;
 public class DSC_DriverDetails extends javax.swing.JFrame {
 
     boolean editClicked = false;
-    int listRouteIndex = 0;
-    int listSuburbIndex = 0;
+    ArrayList<Driver> allDrivers = new ArrayList<>();
     ArrayList<Route> allRoutes = new ArrayList<>();
     ArrayList<String> suburbs = new ArrayList<>();
     ArrayList<RouteDrivers> drivers = new ArrayList<>();
@@ -80,9 +79,9 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                     if (!data.getKey().equals("0")) {
                         Route r = new Route();
                         r.setID(data.getKey());
-                        r.setActive((boolean) data.child("Active").getValue());
+                        r.setActive(data.child("Active").getValue(boolean.class));
                         r.setDrivers(data.child("Drivers").getValue(ArrayList.class));
-                        r.setTimeFrame((String) data.child("TimeFrame").getValue());
+                        r.setTimeFrame(data.child("TimeFrame").getValue(String.class));
                         allRoutes.add(r);
                     }
                 }
@@ -123,7 +122,6 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                 }
                 lstSuburbs.setModel(model);
                 lstSuburbs.setSelectedIndex(0);
-                setTextFields();
                 setDrivers();
             }
 
@@ -151,6 +149,14 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         txfRouteID.setText(routeID);
         String suburbID = lstSuburbs.getSelectedIndex() + "";
         txfSuburbID.setText(suburbID);
+//        for (Driver d : allDrivers) {
+//            if (d.getDriverName().equalsIgnoreCase(cmbDriverName.getSelectedItem().toString())) {
+//                txfDriverID.setText(d.getID());
+//                txfContactNo.setText(d.getContactNumber());
+//                txfAddress.setText(d.getAddress());
+//                txfVehicleReg.setText(d.getVehicleRegistration());
+//            }
+//        }
     }
 
     protected void setDrivers() {
@@ -161,11 +167,18 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                 DefaultComboBoxModel comboModel = new DefaultComboBoxModel();
                 for (DataSnapshot data : ds.getChildren()) {
                     if (!data.getKey().equalsIgnoreCase("0")) {
-                        String name = data.child("DriverName").getValue(String.class);
-                        comboModel.addElement(name);
+                        Driver d = new Driver();
+                        d.setID(data.getKey());
+                        d.setDriverName(data.child("DriverName").getValue(String.class));
+                        d.setAddress(data.child("Address").getValue(String.class));
+                        d.setContactNumber(data.child("ContactNumber").getValue(String.class));
+                        d.setVehicleRegistration(data.child("VehicleReg").getValue(String.class));
+                        allDrivers.add(d);
+                        comboModel.addElement(d.getDriverName());
                     }
                 }
                 cmbDriverName.setModel(comboModel);
+                setTextFields();
             }
 
             @Override
@@ -174,9 +187,9 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
             }
         });
     }
-    
-    private void deleteDriver(String driverName){
-        
+
+    private void deleteDriver(String driverName) {
+
     }
 
     /**
@@ -524,7 +537,6 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        listRouteIndex = lstRoutes.getSelectedIndex();
         enableFields();
         btnEdit.setVisible(false);
         btnSave.setVisible(true);
@@ -539,15 +551,8 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
             int ans = JOptionPane.showConfirmDialog(this, "Do you wish to discard unsaved changes?");
             switch (ans) {
                 case JOptionPane.YES_OPTION:
-                    btnSave.setVisible(false);
-                    btnEdit.setEnabled(true);
-                    disableFields();
-                    lstRoutes.setSelectedIndex(listRouteIndex);
-                    txfAddress.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-                    txfContactNo.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-                    txfVehicleReg.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-                    editClicked = false;
-                    break;
+                    this.dispose();
+                    new DSC_RouteView().setVisible(true);
             }
         } else {
             this.dispose();
@@ -563,15 +568,16 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
 
         }
         disableFields();
+        txfAddress.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        txfContactNo.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        txfVehicleReg.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        editClicked = false;
         btnSave.setVisible(false);
         btnEdit.setVisible(true);
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void lstRoutesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstRoutesValueChanged
-        int num = lstRoutes.getSelectedIndex();
-        num++;
-        String number = num + "";
-        setSuburbs(number);
+        setSuburbs(getSelectedRoute());
     }//GEN-LAST:event_lstRoutesValueChanged
 
     private void btnAddDriverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDriverActionPerformed
@@ -591,8 +597,8 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "No driver selected", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             String selected = jcb.getSelectedItem().toString();
-            int ans = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete "+selected+"?", "Please confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            switch(ans){
+            int ans = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " + selected + "?", "Please confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            switch (ans) {
                 case JOptionPane.YES_OPTION:
                     deleteDriver(selected);
                     break;

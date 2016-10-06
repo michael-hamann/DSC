@@ -306,7 +306,7 @@ public class DSC_NewDriver extends javax.swing.JFrame {
         String newID = getNewDriverID();
         Firebase ref = DBClass.getInstance().child("Drivers");
         DriverContainer driver = new DriverContainer(
-                d.isAddress(),
+                d.getAddress(),
                 d.getContactNumber(),
                 d.getDriverName(),
                 d.getVehicleRegistration()

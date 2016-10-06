@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package DSC;
 
 /**
@@ -27,7 +23,11 @@ public class Driver implements java.io.Serializable{
         this.driverID = id;
     }
 
-    public String isAddress() {
+    public Driver() {
+        
+    }
+
+    public String getAddress() {
         return address;
     }
 
