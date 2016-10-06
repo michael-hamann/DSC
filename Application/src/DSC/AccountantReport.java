@@ -41,10 +41,12 @@ public class AccountantReport {
     private static File file;
     private static FileOutputStream excelOut;
     private static DSC_ReportLoading accountLoadObj;
-    protected static boolean open = false;
 
     public static void getAccountantReport() {
-        accountLoadObj = new DSC_ReportLoading();
+        clientCount = 0;
+        if (!DSC_Main.generateAllReports) {
+            accountLoadObj = new DSC_ReportLoading();
+        }
         boolean fileFound = false;
         try {
             file = new File("AccountReport (" + DriverReport.returnWeekString() + ").xlsx");
@@ -90,7 +92,6 @@ public class AccountantReport {
                     if (start.getTimeInMillis() > DriverReport.returnWeekMili()) {
                         continue;
                     }
-
                     clients.add(client);
                 }
 
@@ -138,7 +139,6 @@ public class AccountantReport {
 
     private static void createExcelReport() {
         XSSFWorkbook workbook = new XSSFWorkbook();
-
         clients.sort(new Comparator<Client>() {
             @Override
             public int compare(Client o1, Client o2) {
@@ -261,22 +261,21 @@ public class AccountantReport {
                 totalSize -= sheet.getColumnWidth(i);
             }
             sheet.setColumnWidth(9, totalSize);
-
         }
 
         try {
             workbook.write(excelOut);
             excelOut.close();
-            accountLoadObj.setVisible(false);
-            accountLoadObj.dispose();
+            System.out.println("Done - Accountant");
             if (!(DSC_Main.generateAllReports)) {
+                JOptionPane.showMessageDialog(null, "AccountReports Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
                 accountLoadObj.setVisible(false);
                 accountLoadObj.dispose();
-                JOptionPane.showMessageDialog(null, "AccountReports Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
-                System.out.println("Done - Accountant");
             } else {
-                JOptionPane.showMessageDialog(null, "All Reports Generated");
-                open = true;
+                DSC_Main.reportsDone++;
+                if (DSC_Main.reportsDone == 4) {
+                    DSC_Main.reportsDone();
+                }
             }
 
         } catch (IOException io) {

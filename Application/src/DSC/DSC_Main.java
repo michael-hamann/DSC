@@ -27,8 +27,9 @@ public class DSC_Main extends javax.swing.JFrame {
      */
     public static boolean getData = true;
     public static boolean checkGraph = true;
-    public static int reportsDone = 0;
+    public static int reportsDone;
     public static boolean generateAllReports = false;
+    public static DSC_ReportLoading objLoadingScreen;
 
     /**
      * Creates new form DSC_Main
@@ -831,19 +832,16 @@ public class DSC_Main extends javax.swing.JFrame {
 
         reportsDone = 0;
         generateAllReports = true;
+        objLoadingScreen = new DSC_ReportLoading();
         PackerReport.getPackerData();
         ChefReport.getChefReport();
         DriverReport.getDriverReports();
         AccountantReport.getAccountantReport();
-        if(AccountantReport.open){
-            generateAllReports = false;
-        }
-        
 
     }//GEN-LAST:event_btnGenerateAllActionPerformed
 
     private void btnQuantityReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuantityReportActionPerformed
-       QuantityReport.getActiveClients();
+        QuantityReport.getActiveClients();
     }//GEN-LAST:event_btnQuantityReportActionPerformed
 
     /**
@@ -1021,9 +1019,11 @@ public class DSC_Main extends javax.swing.JFrame {
         }
     }
 
-    public static void reportsDone(DSC_Main main) {
-        JOptionPane.showMessageDialog(null, "All Reports were successfully made for week " + DriverReport.returnWeekInt(), "Reports", JOptionPane.DEFAULT_OPTION);
+    public static void reportsDone() {
         generateAllReports = false;
+        objLoadingScreen.setVisible(false);
+        objLoadingScreen.dispose();
+        JOptionPane.showMessageDialog(null, "All Reports were successfully made for week " + DriverReport.returnWeekInt(), "Reports", JOptionPane.DEFAULT_OPTION);
 
     }
 

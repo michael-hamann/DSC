@@ -49,7 +49,7 @@ public class ChefReport {
     private static int booksCounter = 0;
 
     public static void getChefReport() {
-        if (!(DSC_Main.generateAllReports)) {
+        if (!DSC_Main.generateAllReports) {
             chefLoadingObj = new DSC_ReportLoading();
         }
         allOrders = new ArrayList();
@@ -263,7 +263,7 @@ public class ChefReport {
                 if (!(DSC_Main.generateAllReports)) {
                     chefLoadingObj.setVisible(false);
                     chefLoadingObj.dispose();
-                    
+
                     JOptionPane.showMessageDialog(null, "Chef Reports Successfully Generated.");
                 }
             }
@@ -282,11 +282,11 @@ public class ChefReport {
                     Calendar start = null;
                     start = Calendar.getInstance();
                     start.setTimeInMillis(levelOne.child("StartingDate").getValue(long.class));
-                    
-                    if (start.getTimeInMillis()>DriverReport.returnWeekMili()) {
+
+                    if (start.getTimeInMillis() > DriverReport.returnWeekMili()) {
                         continue;
                     }
-                    
+
                     for (DataSnapshot levelTwo : levelOne.getChildren()) {
                         for (DataSnapshot levelThree : levelTwo.getChildren()) {
 
@@ -343,9 +343,11 @@ public class ChefReport {
 
             if (booksCounter == 3) {
                 System.out.println("Done - Chef");
-                DSC_Main.reportsDone++;
-                if (DSC_Main.reportsDone == 4) {
-                    DSC_Main.reportsDone(null);
+                if (DSC_Main.generateAllReports) {
+                    DSC_Main.reportsDone++;
+                    if (DSC_Main.reportsDone == 4) {
+                        DSC_Main.reportsDone();
+                    }
                 }
             }
         } catch (FileNotFoundException ex) {

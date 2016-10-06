@@ -385,6 +385,11 @@ public class DriverReport {
                 driverLoadingObj.setVisible(false);
                 driverLoadingObj.dispose();
                 JOptionPane.showMessageDialog(null, "DriverReports Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
+            }else{
+                DSC_Main.reportsDone++;
+                if (DSC_Main.reportsDone == 4) {
+                    DSC_Main.reportsDone();
+                }
             }
 
         } catch (FileNotFoundException ex) {

@@ -44,7 +44,7 @@ public class PackerReport {
     private static DSC_ReportLoading packerLoadingObj;
 
     public static void getPackerData() {
-        if (!(DSC_Main.generateAllReports)) {
+        if (!DSC_Main.generateAllReports) {
             packerLoadingObj = new DSC_ReportLoading();
         }
         boolean fileFound = false;
@@ -83,11 +83,11 @@ public class PackerReport {
 
                     start = Calendar.getInstance();
                     start.setTimeInMillis(dataSnapshot.child("StartingDate").getValue(long.class));
-                    
-                    if (start.getTimeInMillis()>DriverReport.returnWeekMili()) {
+
+                    if (start.getTimeInMillis() > DriverReport.returnWeekMili()) {
                         continue;
                     }
-                    
+
                     ArrayList<Meal> meals = new ArrayList<>();
                     for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                         for (DataSnapshot dataSnapshot2 : dataSnapshot1.getChildren()) {
@@ -144,6 +144,7 @@ public class PackerReport {
                 ));
                 clientCounter++;
                 if (clientCounter == orderList.size()) {
+                    driverCounter = 0;
                     getAllRoutes();
                 }
             }
@@ -199,6 +200,7 @@ public class PackerReport {
                             start,
                             end
                     ));
+
                     getDriverDetails(driverCount, driverID);
                     driverCount++;
                 }
@@ -372,7 +374,12 @@ public class PackerReport {
             workbook.write(excelOut);
             excelOut.close();
             System.out.println("Done - Packer");
-            if (!(DSC_Main.generateAllReports)) {
+            if (DSC_Main.generateAllReports) {
+                DSC_Main.reportsDone++;
+                if (DSC_Main.reportsDone == 4) {
+                    DSC_Main.reportsDone();
+                }
+            } else {
                 packerLoadingObj.setVisible(false);
                 packerLoadingObj.dispose();
                 JOptionPane.showMessageDialog(null, "PackerReport Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
