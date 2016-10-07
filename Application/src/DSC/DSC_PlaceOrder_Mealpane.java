@@ -1,8 +1,6 @@
 
 package DSC;
 
-import javax.swing.table.DefaultTableModel;
-
 /**
  * @author Rossouw Binedell
  */
