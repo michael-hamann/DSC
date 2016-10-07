@@ -67,6 +67,7 @@ public class DSC_Main extends javax.swing.JFrame {
         lblGenerate = new javax.swing.JLabel();
         btnGenerateAll = new javax.swing.JButton();
         btnQuantityReport = new javax.swing.JButton();
+        btnNewQlientReport = new javax.swing.JButton();
         pnlMainChartBackground = new javax.swing.JPanel();
         pnlBarChartActive = new javax.swing.JPanel();
         pnlPieChart = new javax.swing.JPanel();
@@ -126,11 +127,11 @@ public class DSC_Main extends javax.swing.JFrame {
         pnlHeadingLayout.setHorizontalGroup(
             pnlHeadingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlHeadingLayout.createSequentialGroup()
-                .addContainerGap(143, Short.MAX_VALUE)
+                .addContainerGap(146, Short.MAX_VALUE)
                 .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(142, Short.MAX_VALUE))
+                .addContainerGap(146, Short.MAX_VALUE))
         );
         pnlHeadingLayout.setVerticalGroup(
             pnlHeadingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -276,6 +277,15 @@ public class DSC_Main extends javax.swing.JFrame {
             }
         });
 
+        btnNewQlientReport.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btnNewQlientReport.setText("NewClient Report");
+        btnNewQlientReport.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnNewQlientReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNewQlientReportActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlReportsLayout = new javax.swing.GroupLayout(pnlReports);
         pnlReports.setLayout(pnlReportsLayout);
         pnlReportsLayout.setHorizontalGroup(
@@ -289,7 +299,8 @@ public class DSC_Main extends javax.swing.JFrame {
                     .addComponent(btnPackerRpt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnAccountRpt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblGenerate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnGenerateAll, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnGenerateAll, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnNewQlientReport, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlReportsLayout.setVerticalGroup(
@@ -309,6 +320,8 @@ public class DSC_Main extends javax.swing.JFrame {
                 .addComponent(btnAccountRpt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnQuantityReport, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnNewQlientReport, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -327,7 +340,7 @@ public class DSC_Main extends javax.swing.JFrame {
         pnlBarChartActive.setLayout(pnlBarChartActiveLayout);
         pnlBarChartActiveLayout.setHorizontalGroup(
             pnlBarChartActiveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 302, Short.MAX_VALUE)
+            .addGap(0, 301, Short.MAX_VALUE)
         );
         pnlBarChartActiveLayout.setVerticalGroup(
             pnlBarChartActiveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -846,6 +859,10 @@ public class DSC_Main extends javax.swing.JFrame {
         QuantityReport.getActiveClients();
     }//GEN-LAST:event_btnQuantityReportActionPerformed
 
+    private void btnNewQlientReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewQlientReportActionPerformed
+        newClientReport.getNewClientsReport();
+    }//GEN-LAST:event_btnNewQlientReportActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -917,6 +934,7 @@ public class DSC_Main extends javax.swing.JFrame {
     private javax.swing.JButton btnChefRpt;
     private javax.swing.JButton btnDriverRpt;
     private javax.swing.JButton btnGenerateAll;
+    private javax.swing.JButton btnNewQlientReport;
     private javax.swing.JButton btnPackerRpt;
     private javax.swing.JButton btnPlaceOrder;
     private javax.swing.JButton btnQuantityReport;

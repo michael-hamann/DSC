@@ -359,7 +359,7 @@ public class ChefReport {
                 System.out.println("Done - Chef");
                 if (DSC_Main.generateAllReports) {
                     DSC_Main.reportsDone++;
-                    if (DSC_Main.reportsDone == 4) {
+                    if (DSC_Main.reportsDone == 5) {
                         DSC_Main.reportsDone();
                     }
                 }

@@ -81,6 +81,7 @@ public class PackerReport {
         ref.orderByChild("Active").equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot ds) {
+                boolean hasValue = false;
                 for (DataSnapshot dataSnapshot : ds.getChildren()) {
                     Calendar start = null;
 
@@ -88,7 +89,7 @@ public class PackerReport {
                     start.setTimeInMillis(dataSnapshot.child("StartingDate").getValue(long.class));
 
                     if (start.getTimeInMillis() > DriverReport.returnWeekMili()) {
-                        //continue;
+                        continue;
                     }
 
                     ArrayList<Meal> meals = new ArrayList<>();
@@ -115,8 +116,22 @@ public class PackerReport {
                     ));
                 }
                 clientCounter = 0;
-                for (Order order : orderList) {
-                    getClient(order.getClientID(), orderList.indexOf(order));
+                if (hasValue) {
+                    for (Order order : orderList) {
+                        getClient(order.getClientID(), orderList.indexOf(order));
+                    }
+                } else {
+                    System.out.println("Done - Packer");
+                    if (DSC_Main.generateAllReports) {
+                        DSC_Main.reportsDone++;
+                        if (DSC_Main.reportsDone == 5) {
+                            DSC_Main.reportsDone();
+                        }
+                    } else {
+                        packerLoadingObj.setVisible(false);
+                        packerLoadingObj.dispose();
+                        JOptionPane.showMessageDialog(null, "No Values to Process", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    }
                 }
 
             }
@@ -407,8 +422,6 @@ public class PackerReport {
             }
 
             //<editor-fold defaultstate="collapsed" desc="Add Totals">
-            
-            
             Row row = sheet.createRow(keySet.size());
             Cell cell1 = row.createCell(0);
             cell1.setCellValue("Clients: " + totals[0]);
@@ -419,8 +432,6 @@ public class PackerReport {
             cellStyle1.setFont(font);
             cell1.setCellStyle(cellStyle1);
 
-            
-            
             Cell cell2 = row.createCell(1);
             cell2.setCellValue("Standard: " + totals[1]);
             XSSFCellStyle cellStyle2 = workbook.createCellStyle();
@@ -428,17 +439,13 @@ public class PackerReport {
             cellStyle2.setFont(font);
             cell2.setCellStyle(cellStyle2);
 
-            
-            
             Cell cell3 = row.createCell(4);
             cell3.setCellValue("Low Carb:  " + totals[2]);
             XSSFCellStyle cellStyle3 = workbook.createCellStyle();
             font.setBold(true);
             cellStyle3.setFont(font);
             cell3.setCellStyle(cellStyle3);
-            
-            
-            
+
             Cell cell4 = row.createCell(5);
             cell4.setCellValue("Kiddies: " + totals[3]);
             XSSFCellStyle cellStyle4 = workbook.createCellStyle();
@@ -447,16 +454,13 @@ public class PackerReport {
             cellStyle4.setFont(font);
             cell4.setCellStyle(cellStyle4);
 
-            
-            
             row = sheet.createRow(keySet.size() + 1);
-            
+
             Cell holder = row.createCell(0);
             XSSFCellStyle border1 = workbook.createCellStyle();
             border1.setBorderLeft(XSSFCellStyle.BORDER_MEDIUM);
             holder.setCellStyle(border1);
-            
-            
+
             cell2 = row.createCell(1);
             cell2.setCellValue("Single: " + totals[4]);
             XSSFCellStyle cellStyle6 = workbook.createCellStyle();
@@ -464,8 +468,6 @@ public class PackerReport {
             cellStyle6.setFont(font);
             cell2.setCellStyle(cellStyle6);
 
-            
-            
             cell3 = row.createCell(4);
             cell3.setCellValue("Couple:  " + totals[5]);
             XSSFCellStyle cellStyle7 = workbook.createCellStyle();
@@ -473,8 +475,6 @@ public class PackerReport {
             cellStyle7.setFont(font);
             cell3.setCellStyle(cellStyle7);
 
-            
-            
             cell4 = row.createCell(5);
             cell4.setCellValue("Small(3): " + totals[6]);
             XSSFCellStyle cellStyle8 = workbook.createCellStyle();
@@ -483,16 +483,14 @@ public class PackerReport {
             cellStyle8.setFont(font);
             cell4.setCellStyle(cellStyle8);
 
-            
-            
             row = sheet.createRow(keySet.size() + 2);
-            
+
             Cell holder2 = row.createCell(0);
             XSSFCellStyle border2 = workbook.createCellStyle();
             border2.setBorderLeft(XSSFCellStyle.BORDER_MEDIUM);
             border2.setBorderBottom(XSSFCellStyle.BORDER_MEDIUM);
             holder2.setCellStyle(border2);
-            
+
             cell2 = row.createCell(1);
             cell2.setCellValue("Medium(4): " + totals[7]);
             XSSFCellStyle cellStyle9 = workbook.createCellStyle();
@@ -505,12 +503,12 @@ public class PackerReport {
             XSSFCellStyle border3 = workbook.createCellStyle();
             border3.setBorderBottom(XSSFCellStyle.BORDER_MEDIUM);
             holder3.setCellStyle(border3);
-            
+
             Cell holder4 = row.createCell(3);
             XSSFCellStyle border4 = workbook.createCellStyle();
             border4.setBorderBottom(XSSFCellStyle.BORDER_MEDIUM);
             holder4.setCellStyle(border4);
-            
+
             cell3 = row.createCell(4);
             cell3.setCellValue("Large(5):  " + totals[8]);
             XSSFCellStyle cellStyle10 = workbook.createCellStyle();
@@ -519,8 +517,6 @@ public class PackerReport {
             cellStyle10.setFont(font);
             cell3.setCellStyle(cellStyle10);
 
-            
-            
             cell4 = row.createCell(5);
             cell4.setCellValue("XLarge(6): " + totals[9]);
             XSSFCellStyle cellStyle11 = workbook.createCellStyle();
@@ -529,7 +525,7 @@ public class PackerReport {
             cellStyle11.setBorderRight(XSSFCellStyle.BORDER_MEDIUM);
             cellStyle11.setFont(font);
             cell4.setCellStyle(cellStyle11);
-            
+
 //</editor-fold>
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 2));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 4));
@@ -552,13 +548,13 @@ public class PackerReport {
             Row rowDate = sheet.createRow(keySet.size() + 4);
             Cell cell = rowDate.createCell(0);
             SimpleDateFormat sf = new SimpleDateFormat("EEE MMM yyyy HH:mm:ss");
-            
+
             cell.setCellValue(sf.format(Calendar.getInstance().getTime()));
             XSSFCellStyle cellStyle = workbook.createCellStyle();
             cellStyle.setAlignment(XSSFCellStyle.ALIGN_RIGHT);
             cell.setCellStyle(cellStyle);
             sheet.addMergedRegion(new CellRangeAddress(keySet.size() + 4, keySet.size() + 4, 0, 5));
-            
+
         }
 
         try {
@@ -567,7 +563,7 @@ public class PackerReport {
             System.out.println("Done - Packer");
             if (DSC_Main.generateAllReports) {
                 DSC_Main.reportsDone++;
-                if (DSC_Main.reportsDone == 4) {
+                if (DSC_Main.reportsDone == 5) {
                     DSC_Main.reportsDone();
                 }
             } else {
