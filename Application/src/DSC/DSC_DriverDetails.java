@@ -7,6 +7,7 @@ import com.firebase.client.ValueEventListener;
 import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
@@ -405,6 +406,11 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         cmbDriverName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cmbDriverName.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Driver Name" }));
         cmbDriverName.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cmbDriverName.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbDriverNameItemStateChanged(evt);
+            }
+        });
 
         btnAddDriver.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnAddDriver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/driver.gif"))); // NOI18N
@@ -655,6 +661,15 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnDeleteDriverActionPerformed
+
+    private void cmbDriverNameItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbDriverNameItemStateChanged
+        switch(evt.getStateChange()){
+            case ItemEvent.SELECTED:
+                break;
+            case ItemEvent.DESELECTED:
+                break;
+        }
+    }//GEN-LAST:event_cmbDriverNameItemStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddDriver;
