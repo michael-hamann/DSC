@@ -105,7 +105,7 @@ public class AccountantReport {
                     if (!(DSC_Main.generateAllReports)) {
                         accountLoadObj.setVisible(false);
                         accountLoadObj.dispose();
-                        JOptionPane.showMessageDialog(null, "AccountReports Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Not enough data in Database to generate AccountReport", "Success", JOptionPane.INFORMATION_MESSAGE);
                     } else {
                         DSC_Main.reportsDone++;
                         if (DSC_Main.reportsDone == 5) {

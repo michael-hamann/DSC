@@ -130,7 +130,7 @@ public class PackerReport {
                     } else {
                         packerLoadingObj.setVisible(false);
                         packerLoadingObj.dispose();
-                        JOptionPane.showMessageDialog(null, "No Values to Process", "Success", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Not enough data in Database to generate PackerReport", "Success", JOptionPane.INFORMATION_MESSAGE);
                     }
                 }
 

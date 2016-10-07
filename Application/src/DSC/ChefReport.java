@@ -90,7 +90,7 @@ public class ChefReport {
             for (String currRoute : allRoutes) {
                 int bulkCount = 0;
                 Map<String, Object[]> data = new TreeMap<>();
-                data.put(0 + "", new String[]{"Doorstep Chef - Chef Report " + currentWeek(), "", "", "Meal Type : " + list[numberOfRoutes] + " " + " " + "Route: " + sheetNumber});
+                data.put(0 + "", new String[]{"Doorstep Chef - Chef Report " + currentWeek(), "", "", "Meal Type : " + list[excelNumber] + " " + " " + "Route: " + sheetNumber});
                 data.put(1 + "", new String[]{"", "", "", "", "", "", ""});
                 data.put(2 + "", new String[]{"Family Size", "Quantity", "Allergies", "Exclusions"});
                 int counter = 3;

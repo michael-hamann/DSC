@@ -107,7 +107,7 @@ public class newClientReport {
                     if (!(DSC_Main.generateAllReports)) {
                         newClientLoadObj.setVisible(false);
                         newClientLoadObj.dispose();
-                        JOptionPane.showMessageDialog(null, "No values to process", "Success", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Not enough data in Database to generate ClientReport", "Success", JOptionPane.INFORMATION_MESSAGE);
                     } else {
                         DSC_Main.reportsDone++;
                         if (DSC_Main.reportsDone == 5) {

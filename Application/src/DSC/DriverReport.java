@@ -5,6 +5,8 @@
  */
 package DSC;
 
+import static DSC.ChefReport.currentWeek;
+import static DSC.ChefReport.returnWeekInt;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -13,6 +15,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -51,7 +56,10 @@ public class DriverReport {
         boolean fileFound = false;
 
         try {
-            file = new File("DriverReports Route (" + returnWeekString() + ").xlsx");
+            Path path = Paths.get("Reports\\Week " + DriverReport.returnWeekInt() + " (" + DriverReport.returnWeekString() + ")");
+            Files.createDirectories(path);
+            
+            file = path.resolve("DriverReports Route (" + returnWeekString() + ").xlsx").toFile();
             if (!file.exists()) {
                 file.createNewFile();
             }
@@ -121,7 +129,7 @@ public class DriverReport {
                 } else if (!(DSC_Main.generateAllReports)) {
                     driverLoadingObj.setVisible(false);
                     driverLoadingObj.dispose();
-                    JOptionPane.showMessageDialog(null, "DriverReports Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Not enough data in Database to generate DriverReport", "Success", JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     DSC_Main.reportsDone++;
                     if (DSC_Main.reportsDone == 5) {
