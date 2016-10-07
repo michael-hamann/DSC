@@ -14,10 +14,10 @@ import java.util.Calendar;
 public class RouteDrivers {
 
     private Driver driver;
-    private Calendar endDate;
-    private Calendar startDate;
+    private String endDate;
+    private String startDate;
 
-    public RouteDrivers(Driver driver, Calendar endDate, Calendar startDate) {
+    public RouteDrivers(Driver driver, String endDate, String startDate) {
         this.driver = driver;
         this.endDate = endDate;
         this.startDate = startDate;
@@ -35,19 +35,19 @@ public class RouteDrivers {
         this.driver = driver;
     }
 
-    public Calendar getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Calendar endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 
-    public Calendar getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Calendar startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
     

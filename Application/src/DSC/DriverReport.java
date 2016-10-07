@@ -98,7 +98,7 @@ public class DriverReport {
                     start.setTimeInMillis(dataSnapshot.child("StartingDate").getValue(long.class));
 
                     if (start.getTimeInMillis() > DriverReport.returnWeekMili()) {
-                        continue;
+                        //continue;
                     }
 
                     ArrayList<Meal> meals = new ArrayList<>();
