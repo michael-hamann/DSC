@@ -101,7 +101,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
                     }
                     lstRoutes.setModel(model);
                     lstRoutes.setSelectedIndex(0);
-                    if (lstRoutes.getSelectedIndex() <= 0) {
+                    if (lstRoutes.getSelectedIndex() < 0) {
                         JOptionPane.showMessageDialog(null, "There are no inactive routes");
                     } else {
                         String curr = getSelectedRoute();
@@ -129,25 +129,37 @@ public class DSC_RouteView extends javax.swing.JFrame {
                 for (DataSnapshot data : ds.getChildren()) {
                     if (!data.getKey().equals("0")) {
                         if (data.getKey().equals(routeNum)) {
-                            String subArr[] = data.child("Suburbs").getValue(String[].class);
-                            for (int i = 0; i < subArr.length; i++) {
-                                suburbs.add(subArr[i]);
+                            try {
+                                String subArr[] = data.child("Suburbs").getValue(String[].class);
+                                for (int i = 0; i < subArr.length; i++) {
+                                    suburbs.add(subArr[i]);
+                                }
+                            } catch (NullPointerException e) {
+                                JOptionPane.showMessageDialog(null, "There are no suburbs in this route", "Error", JOptionPane.ERROR_MESSAGE);
+                                break;
                             }
+
                         }
                     }
                 }
                 if (active.equalsIgnoreCase("Active")) {
                     DefaultListModel model = new DefaultListModel();
-                    for (String s : suburbs) {
-//                        if () {
-                        model.addElement(s);
-//                        }
+                    if (suburbs.size() > 0) {
+                        for (String s : suburbs) {
+                            model.addElement(s);
+                        }
                     }
                     lstSuburbs.setModel(model);
                     lstSuburbs.setSelectedIndex(0);
-
                 } else if (active.equalsIgnoreCase("Inactive")) {
-
+                    DefaultListModel model = new DefaultListModel();
+                    if (suburbs.size() > 0) {
+                        for (String s : suburbs) {
+                            model.addElement(s);
+                        }
+                    }
+                    lstSuburbs.setModel(model);
+                    lstSuburbs.setSelectedIndex(0);
                 }
                 setTextFields();
             }
@@ -299,19 +311,27 @@ public class DSC_RouteView extends javax.swing.JFrame {
 
     }
 
-    private void addRoute() {
+    private void addRoute(String firstSub) {
         String newRouteID = getNewRoute();
         Calendar cal = Calendar.getInstance();
         String startingDate = cal.getTimeInMillis() + "";
         Firebase ref = DBClass.getInstance().child("Routes");
         RouteContainer route = new RouteContainer(
                 true,
-                null,
+                "Drivers",
                 "-",
                 startingDate,
-                null,
+                "Suburbs",
                 "Afternoon");
         ref.child(newRouteID).setValue(route);
+        ref.child(newRouteID).child("Suburbs/0").setValue(firstSub);
+        //RouteDrivers routeDriver = new RouteDrivers(new Driver(), "-", startingDate);
+        //ref.child(newRouteID).child("Drivers/0").setValue(routeDriver);
+    }
+
+    private void deactivateRoute(String route) {
+        Firebase ref = DBClass.getInstance().child("Routes/" + route);
+        ref.child("Active").setValue(false);
     }
 
     private void addSuburb(String name, String route) {
@@ -451,6 +471,11 @@ public class DSC_RouteView extends javax.swing.JFrame {
         btnDeleteRoute.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Bin.png"))); // NOI18N
         btnDeleteRoute.setText("Delete");
         btnDeleteRoute.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnDeleteRoute.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteRouteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlRoutesLayout = new javax.swing.GroupLayout(pnlRoutes);
         pnlRoutes.setLayout(pnlRoutesLayout);
@@ -927,17 +952,19 @@ public class DSC_RouteView extends javax.swing.JFrame {
             changesMade = true;
         }
 
-        if (!txfSuburbName.getText().trim().equalsIgnoreCase(lstSuburbs.getSelectedValue().toString())) {
-            //save change of suburb name
-            updateSuburbName(getSelectedRoute(), lstSuburbs.getSelectedIndex() + "", txfSuburbName.getText().trim());
-            changesMade = true;
-            String active = btnShowOther.getText();
-            if (active.equalsIgnoreCase("Show inactive")) {
-                active = "Active";
-            } else {
-                active = "Inactive";
+        if (lstSuburbs.getSelectedIndex() != -1) {
+            if (!txfSuburbName.getText().trim().equalsIgnoreCase(lstSuburbs.getSelectedValue())) {
+                //save change of suburb name
+                updateSuburbName(getSelectedRoute(), lstSuburbs.getSelectedIndex() + "", txfSuburbName.getText().trim());
+                changesMade = true;
+                String active = btnShowOther.getText();
+                if (active.equalsIgnoreCase("Show inactive")) {
+                    active = "Active";
+                } else {
+                    active = "Inactive";
+                }
+                setSuburbsList(getSelectedRoute(), active);
             }
-            setSuburbsList(getSelectedRoute(), active);
         }
 
         if (changesMade) {
@@ -961,15 +988,17 @@ public class DSC_RouteView extends javax.swing.JFrame {
 
     private void btnAddRouteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRouteActionPerformed
         //Add new route to firebase
-        addRoute();
+        String firstSub = JOptionPane.showInputDialog(null, "Please enter a first suburb:");
+        addRoute(firstSub);
         String currID = getNewRoute();
         addToMetaData("RouteID", Integer.parseInt(currID) + 1);
         //refresh list
-
+        setRoutesList("Active");
     }//GEN-LAST:event_btnAddRouteActionPerformed
 
     private void btnAddSuburbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSuburbActionPerformed
         pnlNew.setBorder(new TitledBorder(new EtchedBorder(), "New Suburb"));
+        txfNewSuburb.requestFocusInWindow();
         pnlNew.setVisible(true);
         btnEdit.setVisible(false);
         btnSave.setVisible(false);
@@ -1053,6 +1082,16 @@ public class DSC_RouteView extends javax.swing.JFrame {
         pnlNew.setVisible(false);
         btnEdit.setVisible(true);
     }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void btnDeleteRouteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteRouteActionPerformed
+        String route = getSelectedRoute();
+        JOptionPane.showMessageDialog(null, "Once a route is deactivated, it cannot be activated again", "Warning", JOptionPane.WARNING_MESSAGE);
+        int ans = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete Route " + route + "?");
+        if (ans == JOptionPane.YES_OPTION) {
+            deactivateRoute(route);
+            setRoutesList("Active");
+        }
+    }//GEN-LAST:event_btnDeleteRouteActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
