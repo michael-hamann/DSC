@@ -68,6 +68,7 @@ public class DSC_Main extends javax.swing.JFrame {
         btnGenerateAll = new javax.swing.JButton();
         btnQuantityReport = new javax.swing.JButton();
         btnNewQlientReport = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         pnlMainChartBackground = new javax.swing.JPanel();
         pnlBarChartActive = new javax.swing.JPanel();
         pnlPieChart = new javax.swing.JPanel();
@@ -190,14 +191,14 @@ public class DSC_Main extends javax.swing.JFrame {
         pnlTables.setLayout(pnlTablesLayout);
         pnlTablesLayout.setHorizontalGroup(
             pnlTablesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlTablesLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTablesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlTablesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnRouteView, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnViewOrders, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnPlaceOrder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnSurveyQuestions, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(pnlTablesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblView, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnRouteView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnViewOrders, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnPlaceOrder, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnSurveyQuestions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlTablesLayout.setVerticalGroup(
@@ -286,6 +287,13 @@ public class DSC_Main extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Refresh Graphs");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlReportsLayout = new javax.swing.GroupLayout(pnlReports);
         pnlReports.setLayout(pnlReportsLayout);
         pnlReportsLayout.setHorizontalGroup(
@@ -300,7 +308,10 @@ public class DSC_Main extends javax.swing.JFrame {
                     .addComponent(btnAccountRpt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblGenerate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnGenerateAll, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnNewQlientReport, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnNewQlientReport, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(pnlReportsLayout.createSequentialGroup()
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnlReportsLayout.setVerticalGroup(
@@ -322,7 +333,8 @@ public class DSC_Main extends javax.swing.JFrame {
                 .addComponent(btnQuantityReport, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnNewQlientReport, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pnlMainChartBackground.setBackground(new java.awt.Color(0, 153, 0));
@@ -340,7 +352,7 @@ public class DSC_Main extends javax.swing.JFrame {
         pnlBarChartActive.setLayout(pnlBarChartActiveLayout);
         pnlBarChartActiveLayout.setHorizontalGroup(
             pnlBarChartActiveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 301, Short.MAX_VALUE)
+            .addGap(0, 318, Short.MAX_VALUE)
         );
         pnlBarChartActiveLayout.setVerticalGroup(
             pnlBarChartActiveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -364,7 +376,7 @@ public class DSC_Main extends javax.swing.JFrame {
         );
         pnlPieChartLayout.setVerticalGroup(
             pnlPieChartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 251, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         pnlBarChartInActive.setBackground(new java.awt.Color(102, 102, 102));
@@ -384,7 +396,7 @@ public class DSC_Main extends javax.swing.JFrame {
         );
         pnlBarChartInActiveLayout.setVerticalGroup(
             pnlBarChartInActiveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 261, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         pnlTextStats.setBackground(new java.awt.Color(102, 102, 102));
@@ -393,7 +405,7 @@ public class DSC_Main extends javax.swing.JFrame {
         pnlTextStats.setMinimumSize(new java.awt.Dimension(305, 252));
 
         pnlMealTypeStats.setBackground(new java.awt.Color(102, 102, 102));
-        pnlMealTypeStats.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Meal Type Stats", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
+        pnlMealTypeStats.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Meal Type Stats", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(255, 255, 255))); // NOI18N
         pnlMealTypeStats.setForeground(new java.awt.Color(255, 255, 255));
 
         lblStandardMeal.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
@@ -508,7 +520,7 @@ public class DSC_Main extends javax.swing.JFrame {
                     .addComponent(lblTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblActive)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pnlMealTypeStatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblStandardTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblStandardMeal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -520,7 +532,7 @@ public class DSC_Main extends javax.swing.JFrame {
                 .addGroup(pnlMealTypeStatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblKiddiesTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblKiddies, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblInActive)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pnlMealTypeStatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -538,7 +550,7 @@ public class DSC_Main extends javax.swing.JFrame {
         );
 
         pnlFamilySizeStats.setBackground(new java.awt.Color(102, 102, 102));
-        pnlFamilySizeStats.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Family Size Stats", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
+        pnlFamilySizeStats.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Family Size Stats", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(255, 255, 255))); // NOI18N
 
         lblFamilySize.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
         lblFamilySize.setForeground(new java.awt.Color(255, 255, 255));
@@ -863,6 +875,20 @@ public class DSC_Main extends javax.swing.JFrame {
         newClientReport.getNewClientsReport();
     }//GEN-LAST:event_btnNewQlientReportActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+        MainScreen_Charts.createGraphs(pnlBarChartActive, pnlBarChartInActive, pnlPieChart, lblStandardTotal, lblLowCarbTotal,
+                lblKiddiesTotal, lblKiddiesTotalinActive, lblStandardTotalInActive, lblLowCarbTotalInActive, lblSingleFamilySizeTotal,
+                lblCoupleFamilySizeTotal, lblThreeFamilySizeTotal, lblFourFamilySizeTotal, lblFiveFamilySizeTotal,
+                lblSixFamilySizeTotal, lblMoreThanSixFamilySizeTotal, true);
+
+        pnlBarChartActive.repaint();
+        pnlBarChartInActive.repaint();
+        pnlPieChart.repaint();
+
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -941,6 +967,7 @@ public class DSC_Main extends javax.swing.JFrame {
     private javax.swing.JButton btnRouteView;
     private javax.swing.JButton btnSurveyQuestions;
     private javax.swing.JButton btnViewOrders;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel lblActive;
     private javax.swing.JLabel lblCoupleFamilySize;
     private javax.swing.JLabel lblCoupleFamilySizeTotal;

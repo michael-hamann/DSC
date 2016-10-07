@@ -26,21 +26,21 @@ public class MainScreen_Charts extends JPanel {
     /*
     *Static counters for Specific Items.
      */
-    private static int countStandardActive = 0;
-    private static int countKiddiesActive = 0;
-    private static int countLowCarbActive = 0;
+    private static int countStandardActive;
+    private static int countKiddiesActive;
+    private static int countLowCarbActive;
 
-    private static int countStandardInActive = 0;
-    private static int countKiddiesInActive = 0;
-    private static int countLowCarbInActive = 0;
+    private static int countStandardInActive;
+    private static int countKiddiesInActive;
+    private static int countLowCarbInActive;
 
-    private static int countFamilySize_1 = 0;
-    private static int countFamilySize_2 = 0;
-    private static int countFamilySize_3 = 0;
-    private static int countFamilySize_4 = 0;
-    private static int countFamilySize_5 = 0;
-    private static int countFamilySize_6 = 0;
-    private static int countFamilySizeMoreThanSix = 0;
+    private static int countFamilySize_1;
+    private static int countFamilySize_2;
+    private static int countFamilySize_3;
+    private static int countFamilySize_4;
+    private static int countFamilySize_5;
+    private static int countFamilySize_6;
+    private static int countFamilySizeMoreThanSix;
     private static final String STANDARD = "Standard";
     private static final String LOW_CARB = "Low Carb";
     private static final String KIDDIES = "Kiddies";
@@ -50,6 +50,26 @@ public class MainScreen_Charts extends JPanel {
             JLabel lblKiddiesTotalInActive, JLabel lblStandardTotalInActive,
             JLabel lblLowCarbTotalInActive, JLabel lblSingleFamilySizeTotal, JLabel lblCoupleFamilySizeTotal, JLabel lblThreeFamilySizeTotal, JLabel lblFourFamilySizeTotal, JLabel lblFiveFamilySizeTotal,
             JLabel lblSixFamilySizeTotal, JLabel lblMoreThanSixFamilySizeTotal, boolean getData) {
+
+        countStandardActive = 0;
+        countKiddiesActive = 0;
+        countLowCarbActive = 0;
+
+        countStandardInActive = 0;
+        countKiddiesInActive = 0;
+        countLowCarbInActive = 0;
+
+        countFamilySize_1 = 0;
+        countFamilySize_2 = 0;
+        countFamilySize_3 = 0;
+        countFamilySize_4 = 0;
+        countFamilySize_5 = 0;
+        countFamilySize_6 = 0;
+        countFamilySizeMoreThanSix = 0;
+        
+        final String STANDARD = "Standard";
+        final String LOW_CARB = "Low Carb";
+        final String KIDDIES = "Kiddies";
 
         Firebase tableRef = DBClass.getInstance().child("Orders");// Go to specific Table
 
