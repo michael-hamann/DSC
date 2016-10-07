@@ -19,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Aliens_Amina
+ * @author Amina Latief
  */
 public class DSC_ViewOrder extends javax.swing.JFrame {
 
@@ -100,7 +100,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         txfClientEmail.setEnabled(true);
         txfAltNum.setEnabled(true);
         cmbSuburbs.setEnabled(true);
-    }
+    } 
 
     public final void disableFieldsClient() {
         txfClientName.setEnabled(false);
@@ -113,7 +113,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         cmbSuburbs.setEnabled(false);
         cmbSuburbs.setEnabled(false);
     }
-
+  
     public final void clearFieldsClient() {
         txfClientID.setText(null);
         txfClientName.setText(null);
@@ -250,7 +250,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     private void setTextFields() {
 
         DefaultTableModel mealmodel = (DefaultTableModel) tblMeals.getModel();
-
+        
         tblOrderTable.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
 
@@ -300,6 +300,8 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         mealmodel.addRow(meals.returnObj());
                     }
                     mealmodel.fireTableDataChanged();
+                }else{
+                    tblOrderTable.setEnabled(false);
                 }
             }
         });
@@ -522,13 +524,13 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         cmbSearchColumn = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblOrderTable = new javax.swing.JTable();
-        btnDelete = new javax.swing.JButton();
         lblSearchBy = new javax.swing.JLabel();
         btnSearch = new javax.swing.JButton();
         cmbVeiw = new javax.swing.JComboBox<>();
         btnPrevious = new javax.swing.JButton();
         btnNext = new javax.swing.JButton();
         lblLoad = new javax.swing.JLabel();
+        lblPrevious = new javax.swing.JLabel();
         pnlDetailsClient = new javax.swing.JPanel();
         lblClientDetails = new javax.swing.JLabel();
         lblClientID = new javax.swing.JLabel();
@@ -607,6 +609,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
         pnlTable.setBackground(new java.awt.Color(0, 204, 51));
         pnlTable.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        pnlTable.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         txfSearch.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfSearch.setMinimumSize(new java.awt.Dimension(6, 23));
@@ -640,16 +643,6 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblOrderTable);
 
-        btnDelete.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/Bin.png"))); // NOI18N
-        btnDelete.setText("Delete");
-        btnDelete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnDelete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteActionPerformed(evt);
-            }
-        });
-
         lblSearchBy.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblSearchBy.setText("Search by :");
         lblSearchBy.setMaximumSize(new java.awt.Dimension(62, 23));
@@ -664,14 +657,14 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
         cmbVeiw.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Active", "Inactive" }));
 
-        btnPrevious.setText("<");
+        btnPrevious.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/go_previous_1.png"))); // NOI18N
         btnPrevious.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPreviousActionPerformed(evt);
             }
         });
 
-        btnNext.setText(">");
+        btnNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/go_previous.png"))); // NOI18N
         btnNext.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNextActionPerformed(evt);
@@ -698,11 +691,12 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         .addComponent(cmbVeiw, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(lblLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(pnlTableLayout.createSequentialGroup()
                         .addComponent(btnPrevious)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
+                        .addComponent(lblPrevious)
+                        .addGap(956, 956, 956)
                         .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -718,15 +712,17 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(lblLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnDelete)
-                            .addComponent(cmbVeiw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(cmbVeiw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnPrevious, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnPrevious, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTableLayout.createSequentialGroup()
+                        .addComponent(lblPrevious)
+                        .addContainerGap())))
         );
 
         pnlDetailsClient.setBackground(new java.awt.Color(0, 204, 51));
@@ -1013,11 +1009,20 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
         });
+        tblMeals.setSurrendersFocusOnKeystroke(true);
+        tblMeals.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tblMeals);
 
         btnBack.setBackground(new java.awt.Color(255, 0, 0));
@@ -1081,7 +1086,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         .addComponent(pnlDetails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addGroup(pnlBackgroundLayout.createSequentialGroup()
                                 .addComponent(btnAddMeal, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1105,12 +1110,13 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     .addGroup(pnlBackgroundLayout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnSave)
-                            .addComponent(btnBack)
-                            .addComponent(btnAddMeal)
-                            .addComponent(btnRemoveMeal)
-                            .addComponent(btnEditMeal)))
+                        .addGroup(pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnEditMeal)
+                            .addGroup(pnlBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnSave)
+                                .addComponent(btnBack)
+                                .addComponent(btnAddMeal)
+                                .addComponent(btnRemoveMeal))))
                     .addComponent(pnlDetailsClient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pnlDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -1130,68 +1136,6 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        if (orderSelected) {
-            String name = txfClientName.getText() + " " + txfClientSurname.getText();
-
-            String message = "Are you sure you want to delete an order of " + name + "?";
-            int answer = JOptionPane.showConfirmDialog(this, message, "Confirm", JOptionPane.INFORMATION_MESSAGE);
-
-            int orderindex = -1;
-            boolean active = true;
-            String id = txfOrderID.getText();
-
-            switch (answer) {
-                case JOptionPane.YES_OPTION:
-                    for (int i = 0; i < allorders.size(); i++) {
-                        if (allorders.get(i).getID().equals(id)) {
-                            orderindex = i;
-                            if (allorders.get(orderindex).isActive()) {
-                                active = true;
-                            } else {
-                                active = false;
-                            }
-                        }
-                    }
-                    if (orderindex != -1) {
-                        allorders.remove(orderindex);
-                    }
-                    if (active) {
-                        for (int i = 0; i < activeOrders.size(); i++) {
-                            if (activeOrders.get(i).getID().equals(id)) {
-                                orderindex = i;
-                            }
-                        }
-                        activeOrders.remove(orderindex);
-                    } else {
-                        for (int i = 0; i < inactiveOrders.size(); i++) {
-                            if (inactiveOrders.get(i).getID().equals(id)) {
-                                orderindex = i;
-                            }
-                        }
-                        inactiveOrders.remove(orderindex);
-                    }
-                    //removes node from database
-                    Firebase del = DBClass.getInstance().child("Orders/" + txfOrderID.getText());
-                    del.removeValue();
-                    clearFieldsClient();
-                    clearFieldsOrder();
-                    DefaultTableModel m = (DefaultTableModel) tblMeals.getModel();
-                    m.setRowCount(0);
-                    break;
-
-                case JOptionPane.NO_OPTION:
-                    break;
-
-                case JOptionPane.CANCEL_OPTION:
-
-                    break;
-            }
-        } else {
-            JOptionPane.showMessageDialog(rootPane, "No order has been selected to delete!");
-        }
-    }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
 
@@ -1291,7 +1235,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     disableFieldsOrder();
                     btnSave.setEnabled(false);
                     btnEditOrder.setEnabled(true);
-                    btnDelete.setEnabled(true);
+                    tblOrderTable.setEnabled(true);
 
                     orderEdited = false;
 
@@ -1371,7 +1315,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         disableFieldsOrder();
                         btnSave.setEnabled(false);
                         btnEditOrder.setEnabled(true);
-                        btnDelete.setEnabled(true);
+                        tblOrderTable.setEnabled(true);
 
                         orderEdited = false;
 
@@ -1386,7 +1330,6 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         disableFieldsClient();
                         btnSave.setEnabled(false);
                         btnEditOrder.setEnabled(true);
-                        btnDelete.setEnabled(true);
                         break;
                 }
             }
@@ -1403,7 +1346,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     disableFieldsClient();
                     disableFieldsOrder();
                     btnEditOrder.setEnabled(true);
-                    btnDelete.setEnabled(true);
+                    tblOrderTable.setEnabled(true);
                     orderEdited= false;
                     break;
                 case JOptionPane.NO_OPTION:
@@ -1650,7 +1593,6 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
     private void btnEditOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditOrderActionPerformed
         if (orderSelected) {
-            btnDelete.setEnabled(false);
             enableFieldsOrder();
             enableFieldsClient();
             btnEditOrder.setEnabled(false);
@@ -1706,9 +1648,8 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRemoveMealActionPerformed
 
     private void btnAddMealActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddMealActionPerformed
-       Meal m = new Meal(0,"Standard","-","-");
+        Meal m = new Meal(0,"Standard","-","-");
        
-        
         DSC_PlaceOrder_Mealpane mp = new DSC_PlaceOrder_Mealpane(tblMeals.getSelectedRow(),m);
         mp.setBackViewOrder(this);
         mp.setVisible(true);
@@ -1871,7 +1812,6 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         }
                     }
                 }
-                System.out.println("All work done!");
                 break;
             case "Inactive":
                 if (tbcounter > inactiveOrders.size()) {
@@ -2004,7 +1944,6 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     private javax.swing.JButton btnAddMeal;
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnDeactivate;
-    private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEditMeal;
     private javax.swing.JButton btnEditOrder;
     private javax.swing.JButton btnNext;
@@ -2034,6 +1973,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     private javax.swing.JLabel lblName;
     private javax.swing.JLabel lblOrderID;
     private javax.swing.JLabel lblOrdersDetails;
+    private javax.swing.JLabel lblPrevious;
     private javax.swing.JLabel lblRouteID;
     private javax.swing.JLabel lblSearchBy;
     private javax.swing.JLabel lblStartingDate;
