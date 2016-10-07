@@ -23,7 +23,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
     ArrayList<Route> allRoutes = new ArrayList<>();
     ArrayList<String> suburbs = new ArrayList<>();
     String driverName;
-    String newRouteNum;
+    String newRouteNum = getNewRoute();
 
     /**
      * Creates new form DSC_Main
