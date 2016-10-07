@@ -55,8 +55,8 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     private boolean checkEmpty() {
         boolean empty = false;
 
-        if (txfContactNo.getText().isEmpty() //and driver name
-                && txfAddress.getText().isEmpty() && txfVehicleReg.getText().isEmpty()) {
+        if (txfContactNo.getText().isEmpty() && txfAddress.getText().isEmpty() 
+                && txfVehicleReg.getText().isEmpty()) {
             empty = true;
         }
 
@@ -74,7 +74,6 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         tableRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot ds) {
-
                 for (DataSnapshot data : ds.getChildren()) {
                     if (!data.getKey().equals("0")) {
                         Route r = new Route();
@@ -240,7 +239,8 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         pnlRoutes.setBackground(new java.awt.Color(0, 204, 51));
         pnlRoutes.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        lblRoutes.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblRoutes.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblRoutes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblRoutes.setText("Routes:");
 
         lstRoutes.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -259,8 +259,8 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
             .addGroup(pnlRoutesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlRoutesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
-                    .addComponent(lblRoutes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblRoutes, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlRoutesLayout.setVerticalGroup(
@@ -276,7 +276,8 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         pnlDetails.setBackground(new java.awt.Color(0, 204, 51));
         pnlDetails.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        lblDetails.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblDetails.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblDetails.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblDetails.setText("Details:");
 
         lblDriverID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -359,6 +360,11 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         cmbDriverName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cmbDriverName.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Driver Name" }));
         cmbDriverName.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cmbDriverName.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbDriverNameItemStateChanged(evt);
+            }
+        });
 
         btnAddDriver.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnAddDriver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/driver.gif"))); // NOI18N
@@ -464,7 +470,8 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         pnlSuburbs.setBackground(new java.awt.Color(0, 204, 51));
         pnlSuburbs.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        lblSuburbs.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblSuburbs.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblSuburbs.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblSuburbs.setText("Suburbs:");
 
         lstSuburbs.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -483,8 +490,8 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
             .addGroup(pnlSuburbsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlSuburbsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
-                    .addComponent(lblSuburbs, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblSuburbs, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlSuburbsLayout.setVerticalGroup(
@@ -504,9 +511,9 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
             .addGroup(pnlBackgroundLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(pnlRoutes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(pnlSuburbs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(pnlDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -541,6 +548,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         btnEdit.setVisible(false);
         btnSave.setVisible(true);
         editClicked = true;
+        txfContactNo.requestFocusInWindow();
         txfAddress.setCursor(new Cursor(Cursor.TEXT_CURSOR));
         txfContactNo.setCursor(new Cursor(Cursor.TEXT_CURSOR));
         txfVehicleReg.setCursor(new Cursor(Cursor.TEXT_CURSOR));
@@ -608,6 +616,14 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnDeleteDriverActionPerformed
 
+    private void cmbDriverNameItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbDriverNameItemStateChanged
+        String routeDriver = "previous driver";
+        String selectedDriver = cmbDriverName.getSelectedItem().toString();
+        int ans = JOptionPane.showConfirmDialog(null, "Do you want to replace "+routeDriver+" with "+selectedDriver+"?");
+        if (ans == JOptionPane.YES_OPTION) {
+            JOptionPane.showMessageDialog(null, selectedDriver+" will replace "+routeDriver+" for Route "+getSelectedRoute());
+        }
+    }//GEN-LAST:event_cmbDriverNameItemStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddDriver;
