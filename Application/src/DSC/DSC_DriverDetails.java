@@ -5,6 +5,8 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import java.awt.Cursor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
@@ -18,6 +20,7 @@ import javax.swing.JOptionPane;
 public class DSC_DriverDetails extends javax.swing.JFrame {
 
     boolean editClicked = false;
+    String driverName;
     ArrayList<Driver> allDrivers = new ArrayList<>();
     ArrayList<Route> allRoutes = new ArrayList<>();
     ArrayList<String> suburbs = new ArrayList<>();
@@ -148,6 +151,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         txfRouteID.setText(routeID);
         String suburbID = lstSuburbs.getSelectedIndex() + "";
         txfSuburbID.setText(suburbID);
+        getRouteDriver(routeID);
 //        for (Driver d : allDrivers) {
 //            if (d.getDriverName().equalsIgnoreCase(cmbDriverName.getSelectedItem().toString())) {
 //                txfDriverID.setText(d.getID());
@@ -156,6 +160,47 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
 //                txfVehicleReg.setText(d.getVehicleRegistration());
 //            }
 //        }
+    }
+    
+    private String getRouteDriver(String routeNum) {
+        Firebase ref = DBClass.getInstance().child("Routes/" + routeNum);
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot ds) {
+                for (DataSnapshot data : ds.getChildren()) {
+                    for (DataSnapshot data2 : data.getChildren()) {
+                        if (data.getKey().equalsIgnoreCase("Drivers")) {
+                            if (data2.child("EndDate").getValue(String.class).equalsIgnoreCase("-")) {
+                                String currDriverID = data2.child("DriverID").getValue(String.class);
+                                driverName = getDriverName(currDriverID);
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError fe) {
+                JOptionPane.showMessageDialog(null, "Error: " + fe.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+        return driverName;
+    }
+
+    private String getDriverName(String id) {
+        Firebase ref = DBClass.getInstance().child("Drivers/" + id);
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot ds) {
+                driverName = ds.child("DriverName").getValue(String.class);
+            }
+
+            @Override
+            public void onCancelled(FirebaseError fe) {
+                JOptionPane.showMessageDialog(null, "Error: " + fe.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+        return driverName;
     }
 
     protected void setDrivers() {
@@ -360,11 +405,6 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         cmbDriverName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cmbDriverName.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Driver Name" }));
         cmbDriverName.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        cmbDriverName.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cmbDriverNameItemStateChanged(evt);
-            }
-        });
 
         btnAddDriver.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnAddDriver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/driver.gif"))); // NOI18N
@@ -616,15 +656,6 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnDeleteDriverActionPerformed
 
-    private void cmbDriverNameItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbDriverNameItemStateChanged
-        String routeDriver = "previous driver";
-        String selectedDriver = cmbDriverName.getSelectedItem().toString();
-        int ans = JOptionPane.showConfirmDialog(null, "Do you want to replace "+routeDriver+" with "+selectedDriver+"?");
-        if (ans == JOptionPane.YES_OPTION) {
-            JOptionPane.showMessageDialog(null, selectedDriver+" will replace "+routeDriver+" for Route "+getSelectedRoute());
-        }
-    }//GEN-LAST:event_cmbDriverNameItemStateChanged
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddDriver;
     private javax.swing.JButton btnBack;
@@ -657,4 +688,17 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     private javax.swing.JTextField txfSuburbID;
     private javax.swing.JTextField txfVehicleReg;
     // End of variables declaration//GEN-END:variables
+
+    private void cmbListener() {
+
+        cmbDriverName.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String previous = getRouteDriver(getSelectedRoute());
+                String selected = cmbDriverName.getSelectedItem().toString();
+                int ans = JOptionPane.showConfirmDialog(null, "Do you want to replace "+previous+" with "+selected+"?");
+            }
+        });
+    }
+    
 }
