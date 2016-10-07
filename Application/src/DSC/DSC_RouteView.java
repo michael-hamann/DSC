@@ -23,7 +23,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
     ArrayList<Route> allRoutes = new ArrayList<>();
     ArrayList<String> suburbs = new ArrayList<>();
     String driverName;
-    String newRouteNum;
+    String newRouteNum = getNewRoute();
 
     /**
      * Creates new form DSC_Main
@@ -584,24 +584,24 @@ public class DSC_RouteView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnlNewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlNewLayout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(txfNewSuburb, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlNewLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnAdd)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCancel)))
+                        .addComponent(btnCancel))
+                    .addGroup(pnlNewLayout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(txfNewSuburb, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnlNewLayout.setVerticalGroup(
             pnlNewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlNewLayout.createSequentialGroup()
-                .addGap(53, 53, 53)
+                .addGap(34, 34, 34)
                 .addGroup(pnlNewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txfNewSuburb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addGroup(pnlNewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdd)
                     .addComponent(btnCancel))
@@ -678,8 +678,8 @@ public class DSC_RouteView extends javax.swing.JFrame {
                         .addComponent(rbtLateAfternoon)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(rbtEvening)))
-                .addGap(3, 3, 3)
-                .addComponent(pnlNew, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pnlNew, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -875,6 +875,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
         if (lstRoutes.getSelectedIndex() >= 0) {
             enableTime();
             txfSuburbName.setEditable(true);
+            txfSuburbName.requestFocusInWindow();
             txfSuburbName.setCursor(new Cursor(Cursor.TEXT_CURSOR));
             rbtAfternoon.setCursor(new Cursor(Cursor.HAND_CURSOR));
             rbtLateAfternoon.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -1021,8 +1022,9 @@ public class DSC_RouteView extends javax.swing.JFrame {
             txfNewSuburb.setText(null);
             pnlNew.setVisible(false);
             btnEdit.setVisible(true);
+            JOptionPane.showMessageDialog(null, newSuburb + " has been added to Route " + getSelectedRoute(), "Success", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(this, "Please enter a suburb name", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please enter a suburb name", "Error", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnAddActionPerformed
 
@@ -1042,6 +1044,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
                 active = "Inactive";
             }
             setSuburbsList(route, active);
+            JOptionPane.showMessageDialog(null, suburb + " has been deleted from Route " + route, "Success", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnDeleteSuburbActionPerformed
 

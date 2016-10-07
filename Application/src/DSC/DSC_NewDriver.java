@@ -37,6 +37,9 @@ public class DSC_NewDriver extends javax.swing.JFrame {
         return empty;
     }
 
+    /**
+     * Checks if the entered contact number is 10 digits
+     */
     private boolean validNumberLength() {
         boolean valid = false;
 
@@ -282,11 +285,19 @@ public class DSC_NewDriver extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Adds to a META-Data child
+     * @param ids Child Name
+     * @param value New value to be assigned
+     */
     protected void addToMetaData(String ids, int value) {
         Firebase ref = DBClass.getInstance().child("META-Data");
         ref.child(ids).setValue(value);
     }
 
+    /**
+     * Gets the value of the next ID to be used for a driver
+     */
     protected String getNewDriverID() {
         Firebase ref = DBClass.getInstance().child("META-Data");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -303,6 +314,10 @@ public class DSC_NewDriver extends javax.swing.JFrame {
         return id;
     }
 
+    /**
+     * Adds a driver to the database
+     * @param d The driver to be added
+     */
     protected void addToFirebase(Driver d) {
         String newID = getNewDriverID();
         Firebase ref = DBClass.getInstance().child("Drivers");

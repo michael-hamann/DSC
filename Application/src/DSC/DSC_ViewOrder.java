@@ -58,7 +58,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
         btnSave.setEnabled(false);
         btnDeactivate.setText("Deactivate");
-        cmbVeiw.setSelectedItem("Active");
+        cmbView.setSelectedItem("Active");
         cmbSuburbs.removeAllItems();
         cmbSuburbs.addItem("Collection");
         btnDeactivate.setVisible(true);
@@ -526,7 +526,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         tblOrderTable = new javax.swing.JTable();
         lblSearchBy = new javax.swing.JLabel();
         btnSearch = new javax.swing.JButton();
-        cmbVeiw = new javax.swing.JComboBox<>();
+        cmbView = new javax.swing.JComboBox<>();
         btnPrevious = new javax.swing.JButton();
         btnNext = new javax.swing.JButton();
         lblLoad = new javax.swing.JLabel();
@@ -655,7 +655,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             }
         });
 
-        cmbVeiw.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Active", "Inactive" }));
+        cmbView.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Active", "Inactive" }));
 
         btnPrevious.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/go_previous_1.png"))); // NOI18N
         btnPrevious.addActionListener(new java.awt.event.ActionListener() {
@@ -688,7 +688,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(cmbVeiw, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cmbView, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(lblLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -712,7 +712,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(lblLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(cmbVeiw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cmbView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1366,7 +1366,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
         String column = (String) cmbSearchColumn.getSelectedItem();
         String searchFor = txfSearch.getText();
-        String veiw = (String) cmbVeiw.getSelectedItem();
+        String veiw = (String) cmbView.getSelectedItem();
 
         DefaultTableModel model = (DefaultTableModel) tblOrderTable.getModel();
         model.setRowCount(0);
@@ -1660,7 +1660,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
         tborders.clear();
         DefaultTableModel ordertb = (DefaultTableModel) tblOrderTable.getModel();
-        String view = (String) cmbVeiw.getSelectedItem();
+        String view = (String) cmbView.getSelectedItem();
         ArrayList<List<Order>> arrays;
         int parts = -1;
 
@@ -1729,7 +1729,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     private void btnPreviousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousActionPerformed
         tborders.clear();
         DefaultTableModel ordertb = (DefaultTableModel) tblOrderTable.getModel();
-        String view = (String) cmbVeiw.getSelectedItem();
+        String view = (String) cmbView.getSelectedItem();
 
         ArrayList<List<Order>> arrays = new ArrayList();
         if (count < 1) {
@@ -1781,7 +1781,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
      */
     private void cmbListener() {
 
-        cmbVeiw.addActionListener(new ActionListener() {
+        cmbView.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 reloadTB();
@@ -1791,7 +1791,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
     public void reloadTB() {
         DefaultTableModel ordertb = (DefaultTableModel) tblOrderTable.getModel();
-        String view = (String) cmbVeiw.getSelectedItem();
+        String view = (String) cmbView.getSelectedItem();
         ordertb.setRowCount(0);
         tborders.clear();
         tbcounter = 30;
@@ -1954,7 +1954,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmbDuration;
     private javax.swing.JComboBox<String> cmbSearchColumn;
     private javax.swing.JComboBox<String> cmbSuburbs;
-    private javax.swing.JComboBox<String> cmbVeiw;
+    private javax.swing.JComboBox<String> cmbView;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblAltNum;

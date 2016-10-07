@@ -81,6 +81,7 @@ public class AccountantReport {
         ref.child("Orders").orderByChild("Active").equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot ds) {
+                boolean hasValue = false;
                 for (DataSnapshot dataSnapshot : ds.getChildren()) {
                     Client client = new Client(dataSnapshot.child("ClientID").getValue(String.class));
                     client.setAdditionalInfo(dataSnapshot.child("FamilySize").getValue(String.class));
@@ -95,10 +96,24 @@ public class AccountantReport {
                     }
                     clients.add(client);
                 }
-
-                for (int i = 0; i < clients.size(); i++) {
-                    getClient(clients.get(i), i);
+                if (hasValue) {
+                    for (int i = 0; i < clients.size(); i++) {
+                        getClient(clients.get(i), i);
+                    }
+                } else {
+                    System.out.println("Done - Accountant");
+                    if (!(DSC_Main.generateAllReports)) {
+                        accountLoadObj.setVisible(false);
+                        accountLoadObj.dispose();
+                        JOptionPane.showMessageDialog(null, "AccountReports Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        DSC_Main.reportsDone++;
+                        if (DSC_Main.reportsDone == 5) {
+                            DSC_Main.reportsDone();
+                        }
+                    }
                 }
+
             }
 
             @Override
@@ -161,7 +176,7 @@ public class AccountantReport {
                 if (client.getSurname().toUpperCase().charAt(0) == (char) (65 + letter)) {
                     data.put((i + 4 - reduction) + "", new Object[]{
                         client.getName() + " " + client.getSurname(),
-                        client.getContactNumber(),
+                        client.getContactNumber().substring(0, 3) + " " + client.getContactNumber().substring(3, 6) + " " + client.getContactNumber().substring(6, 10),
                         client.getAdditionalInfo(),
                         "",
                         "",
@@ -262,17 +277,17 @@ public class AccountantReport {
                 totalSize -= sheet.getColumnWidth(i);
             }
             sheet.setColumnWidth(9, totalSize);
-            
+
             Row rowDate = sheet.createRow(keySet.size() + 1);
             Cell cell = rowDate.createCell(0);
             SimpleDateFormat sf = new SimpleDateFormat("EEE MMM yyyy HH:mm:ss");
-            
+
             cell.setCellValue(sf.format(Calendar.getInstance().getTime()));
             XSSFCellStyle cellStyle = workbook.createCellStyle();
             cellStyle.setAlignment(XSSFCellStyle.ALIGN_RIGHT);
             cell.setCellStyle(cellStyle);
             sheet.addMergedRegion(new CellRangeAddress(keySet.size() + 1, keySet.size() + 1, 0, 9));
-            
+
         }
 
         try {
@@ -285,7 +300,7 @@ public class AccountantReport {
                 JOptionPane.showMessageDialog(null, "AccountReports Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 DSC_Main.reportsDone++;
-                if (DSC_Main.reportsDone == 4) {
+                if (DSC_Main.reportsDone == 5) {
                     DSC_Main.reportsDone();
                 }
             }

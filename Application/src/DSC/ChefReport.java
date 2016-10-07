@@ -47,6 +47,7 @@ public class ChefReport {
     private static XSSFWorkbook workbook;
     private static DSC_ReportLoading chefLoadingObj;
     private static int booksCounter = 0;
+    private static int mealCounter = 0;
 
     public static void getChefReport() {
         if (!DSC_Main.generateAllReports) {
@@ -84,15 +85,18 @@ public class ChefReport {
         boolean firstFamEntry = true;
         String list[] = {"Standard", "Low Carb", "Kiddies"};
         int excelNumber = 0;
+
         for (int numberOfRoutes = 0; numberOfRoutes < allRoutes.size(); numberOfRoutes++) {
             int sheetNumber = 0;
+
             workbook = new XSSFWorkbook();
             for (String currRoute : allRoutes) {
-                int bulkCount = 0;
                 Map<String, Object[]> data = new TreeMap<>();
-                data.put(0 + "", new String[]{"Doorstep Chef - Chef Report " + currentWeek(), "", "", "Meal Type : " + list[numberOfRoutes] + " " + " " + "Route: " + sheetNumber});
+                int bulkCount = 0;
+                data.put(0 + "", new String[]{"Doorstep Chef - Chef Report " + currentWeek(), "", "", "Meal Type : " + list[mealCounter] + " " + " " + "Route: " + sheetNumber});
                 data.put(1 + "", new String[]{"", "", "", "", "", "", ""});
                 data.put(2 + "", new String[]{"Family Size", "Quantity", "Allergies", "Exclusions"});
+
                 int counter = 3;
                 XSSFSheet sheet = workbook.createSheet("ChefReports Route - " + sheetNumber);
                 int rowNum = 0;
@@ -100,7 +104,7 @@ public class ChefReport {
                 for (int i = 0; i < familySizes.length; i++) {
                     for (int ordersCount = 0; ordersCount < allOrders.size(); ordersCount++) {
                         String familysize = "";
-                        if (allOrders.get(ordersCount).getRoute().equals(currRoute) && allOrders.get(ordersCount).getMealType().equals(list[numberOfRoutes]) && allOrders.get(ordersCount).getFamilySize().equals(familySizes[i])) {
+                        if (allOrders.get(ordersCount).getRoute().equals(currRoute) && allOrders.get(ordersCount).getMealType().equals(list[mealCounter]) && allOrders.get(ordersCount).getFamilySize().equals(familySizes[i])) {
                             if (allOrders.get(ordersCount).getAllergies().equals("-") && allOrders.get(ordersCount).getAllergies().equals("-") || allOrders.get(ordersCount).getAllergies().equals("") && allOrders.get(ordersCount).getAllergies().equals("")) {
                                 bulkCount++;
                             } else {
@@ -236,12 +240,16 @@ public class ChefReport {
                 sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 2));
 
                 for (int i = 0; i < 5; i++) {
-                    if (i == 1) {
-                        sheet.setColumnWidth(i, 3000);
-                    } else if (i == 2) {
-                        sheet.setColumnWidth(i, 8000);
-                    } else {
-                        sheet.setColumnWidth(i, 4000);
+                    switch (i) {
+                        case 1:
+                            sheet.setColumnWidth(i, 3000);
+                            break;
+                        case 2:
+                            sheet.setColumnWidth(i, 8000);
+                            break;
+                        default:
+                            sheet.setColumnWidth(i, 4000);
+                            break;
                     }
 
                     if (i == 3) {
@@ -263,12 +271,13 @@ public class ChefReport {
                 sheetNumber++;
             }
             try {
-                creatSheet(list[numberOfRoutes], workbook);
+                creatSheet(list[mealCounter], workbook);
+
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(null, "File Could Not Be Found.");
             }
-
             excelNumber++;
+
             if (excelNumber == allRoutes.size()) {
                 if (!(DSC_Main.generateAllReports)) {
                     chefLoadingObj.setVisible(false);
@@ -279,6 +288,7 @@ public class ChefReport {
             }
 
         }
+
     }
 
     public static void getActiveOrders() {
@@ -289,13 +299,13 @@ public class ChefReport {
             public void onDataChange(DataSnapshot ds) {
 
                 for (DataSnapshot levelOne : ds.getChildren()) {
-                    Calendar start = null;
-                    start = Calendar.getInstance();
-                    start.setTimeInMillis(levelOne.child("StartingDate").getValue(long.class));
-
-                    if (start.getTimeInMillis() > DriverReport.returnWeekMili()) {
-                        continue;
-                    }
+//                    Calendar start = null;
+//                    start = Calendar.getInstance();
+//                    start.setTimeInMillis(levelOne.child("StartingDate").getValue(long.class));
+//
+//                    if (start.getTimeInMillis() > DriverReport.returnWeekMili()) {
+//                        continue;
+//                    }
 
                     for (DataSnapshot levelTwo : levelOne.getChildren()) {
                         for (DataSnapshot levelThree : levelTwo.getChildren()) {
@@ -335,7 +345,6 @@ public class ChefReport {
     }
 
     public static void creatSheet(String mealType, XSSFWorkbook workbook) throws IOException {
-
         FileOutputStream excelOut = null;
         try {
 
@@ -351,11 +360,17 @@ public class ChefReport {
             excelOut.close();
             booksCounter++;
 
+            if (mealCounter < 2) {
+                mealCounter++;
+            } else {
+                mealCounter = 0;
+            }
+
             if (booksCounter == 3) {
                 System.out.println("Done - Chef");
                 if (DSC_Main.generateAllReports) {
                     DSC_Main.reportsDone++;
-                    if (DSC_Main.reportsDone == 4) {
+                    if (DSC_Main.reportsDone == 5) {
                         DSC_Main.reportsDone();
                     }
                 }
@@ -364,6 +379,7 @@ public class ChefReport {
             JOptionPane.showMessageDialog(null, "File is Currently being Used. Please Close the File.");
             JOptionPane.showMessageDialog(null, "Directory Cannot be Found!");
         }
+
     }
 
     public static String currentWeek() {

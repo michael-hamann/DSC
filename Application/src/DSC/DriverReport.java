@@ -83,6 +83,7 @@ public class DriverReport {
         ref.orderByChild("Active").equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot ds) {
+                boolean hasValue = false;
                 for (DataSnapshot dataSnapshot : ds.getChildren()) {
                     Calendar start = Calendar.getInstance();
 
@@ -113,9 +114,19 @@ public class DriverReport {
                     ));
                 }
                 clientCounter = 0;
-                for (Order order : orderList) {
-
-                    getClient(order.getClientID(), orderList.indexOf(order));
+                if (hasValue) {
+                    for (Order order : orderList) {
+                        getClient(order.getClientID(), orderList.indexOf(order));
+                    }
+                } else if (!(DSC_Main.generateAllReports)) {
+                    driverLoadingObj.setVisible(false);
+                    driverLoadingObj.dispose();
+                    JOptionPane.showMessageDialog(null, "DriverReports Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    DSC_Main.reportsDone++;
+                    if (DSC_Main.reportsDone == 5) {
+                        DSC_Main.reportsDone();
+                    }
                 }
 
             }
@@ -254,7 +265,7 @@ public class DriverReport {
             Map<String, Object[]> data = new TreeMap<>();
             data.put("1", new Object[]{"Doorstep Chef Driver Sheet  Week: " + returnWeekInt() + " - " + returnWeekString(), "", "", "", "", "", "", "", "", "Driver: " + route.getDrivers().get(0).getDriver().getDriverName().split(" ")[0] + " - " + route.getDrivers().get(0).getDriver().getContactNumber(), "Route: " + route.getID()});
             data.put("2", new Object[]{"", "", "", "", "", "", "", "", ""});
-            data.put("3", new Object[]{"Customer", "Contact", "Cash", "DatePaid","Mon", "Tue", "Wed", "Thu", "Fri", "Address", "AdditionalInfo"});
+            data.put("3", new Object[]{"Customer", "Contact", "Cash", "DatePaid", "Mon", "Tue", "Wed", "Thu", "Fri", "Address", "AdditionalInfo"});
 
             int counter = 4;
             for (Order order : orderList) {
@@ -264,7 +275,7 @@ public class DriverReport {
                     if (order.getDuration().equals("Monday - Thursday")) {
                         durationMarker = "X";
                     }
-                    data.put("" + counter, new Object[]{client.getName() + " " + client.getSurname(), client.getContactNumber(), "", "","", "", "", "",  durationMarker, client.getAddress().replaceAll("\n", ", "), client.getAdditionalInfo()});
+                    data.put("" + counter, new Object[]{client.getName() + " " + client.getSurname(), client.getContactNumber().substring(0, 3) + " " + client.getContactNumber().substring(3, 6) + " " + client.getContactNumber().substring(6, 10), "", "", "", "", "", "", durationMarker, client.getAddress().replaceAll("\n", ", "), client.getAdditionalInfo()});
                     counter++;
                 }
             }
@@ -373,13 +384,13 @@ public class DriverReport {
             Row rowDate = sheet.createRow(keySet.size() + 1);
             Cell cell = rowDate.createCell(0);
             SimpleDateFormat sf = new SimpleDateFormat("EEE MMM yyyy HH:mm:ss");
-            
+
             cell.setCellValue(sf.format(Calendar.getInstance().getTime()));
             XSSFCellStyle cellStyle = workbook.createCellStyle();
             cellStyle.setAlignment(XSSFCellStyle.ALIGN_RIGHT);
             cell.setCellStyle(cellStyle);
             sheet.addMergedRegion(new CellRangeAddress(keySet.size() + 1, keySet.size() + 1, 0, 10));
-            
+
         }
 
         try {
@@ -395,9 +406,9 @@ public class DriverReport {
                 driverLoadingObj.setVisible(false);
                 driverLoadingObj.dispose();
                 JOptionPane.showMessageDialog(null, "DriverReports Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
-            }else{
+            } else {
                 DSC_Main.reportsDone++;
-                if (DSC_Main.reportsDone == 4) {
+                if (DSC_Main.reportsDone == 5) {
                     DSC_Main.reportsDone();
                 }
             }
@@ -435,9 +446,14 @@ public class DriverReport {
 
     public static long returnWeekMili() {
         Calendar weekDate = Calendar.getInstance();
+        weekDate.set(Calendar.HOUR_OF_DAY, 0);
+        weekDate.set(Calendar.MINUTE, 0);
+        weekDate.set(Calendar.SECOND, 0);
+        weekDate.set(Calendar.MILLISECOND, 0);
         while (weekDate.get(Calendar.DAY_OF_WEEK) != 2) {
             weekDate.add(Calendar.DAY_OF_WEEK, -1);
         }
+        weekDate.add(Calendar.WEEK_OF_MONTH, 1);
         return weekDate.getTimeInMillis();
     }
 
