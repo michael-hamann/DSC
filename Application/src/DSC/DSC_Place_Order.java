@@ -1126,7 +1126,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         try {
             ObjectOutputStream subOut = new ObjectOutputStream(new java.io.FileOutputStream("Suburb.ser"));
             subOut.writeObject(routes);
-            System.out.println("Suburbs Succesfully Written.");
+            System.out.println("Suburbs Successfully Written.");
         } catch (IOException ex) {
             System.err.println("Error: Could not write to existing file. (" + ex.toString() + ")");
             System.err.println("Creating new Serialized File.");
@@ -1154,8 +1154,8 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         try {
             ObjectOutputStream ordersOut = new ObjectOutputStream(new java.io.FileOutputStream(path));
             ordersOut.writeObject(offOrders);
-            System.out.println("File Order's succsesfully topped up.");
-            JOptionPane.showMessageDialog(null, "Order Succsesfully added.", "Success", JOptionPane.PLAIN_MESSAGE);
+            System.out.println("File Order's successfully topped up.");
+            JOptionPane.showMessageDialog(null, "Order Successfully added.", "Success", JOptionPane.PLAIN_MESSAGE);
         } catch (IOException e) {
             System.err.print("Error Writing '" + path + "' (IOException) : " + e.getLocalizedMessage());
             e.printStackTrace();
@@ -1262,7 +1262,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             writeSurveyInfo();
         }
         if (orderPane) {
-            JOptionPane.showMessageDialog(null, "Order Succsesfully placed!", "Success", JOptionPane.PLAIN_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Order Successfully placed!", "Success", JOptionPane.PLAIN_MESSAGE);
             btnBack.doClick();
         }
     }
