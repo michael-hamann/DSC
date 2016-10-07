@@ -69,77 +69,96 @@ public class QuantityReport {
             public void onDataChange(DataSnapshot ds) {
                 for (DataSnapshot levelOne : ds.getChildren()) {
 
-                    Calendar start = null;
-
-                    start = Calendar.getInstance();
-                    start.setTimeInMillis(levelOne.child("StartingDate").getValue(long.class));
-
-                    if (start.getTimeInMillis() > DriverReport.returnWeekMili()) {
-                        continue;
-                    }
-
+//                    Calendar start = null;
+//
+//                    start = Calendar.getInstance();
+//                    start.setTimeInMillis(levelOne.child("StartingDate").getValue(long.class));
+//
+//                    if (start.getTimeInMillis() > DriverReport.returnWeekMili()) {
+//                        continue;
+//                    }
                     boolean activeCheck = levelOne.child("Active").getValue(boolean.class).equals(true);
                     if (activeCheck) {
                         quantityObj.incrementActiveClientCount();
                         int familySizeCheck;
                         int quantity;
                         familySizeCheck = levelOne.child("FamilySize").getValue(int.class);// gets family size from database
-                        totalIndividuals += levelOne.child("FamilySize").getValue(int.class);
+
+                        // increment orders per family size
+                        if (familySizeCheck == 1) {
+                            quantityObj.incrementCountFamilySize_1();// Orders Count - Perfect
+                        } else if (familySizeCheck == 2) {
+                            quantityObj.incrementCountFamilySize_2();
+                        } else if (familySizeCheck == 3) {
+                            quantityObj.incrementCountFamilySize_3();
+                        } else if (familySizeCheck == 4) {
+                            quantityObj.incrementCountFamilySize_4();
+                        } else if (familySizeCheck == 5) {
+                            quantityObj.incrementCountFamilySize_5();
+                        } else if (familySizeCheck == 6) {
+                            quantityObj.incrementCountFamilySize_6();
+                        } else if (familySizeCheck > 6) {
+                            quantityObj.incrementCountFamilySizeMoreThanSix();
+                        }
+                        /////////////////////////////////////////////////////////////// Perfect
+
                         for (DataSnapshot levelTwo : levelOne.getChildren()) {
 
                             for (DataSnapshot levelThree : levelTwo.getChildren()) {
+                                quantity = levelThree.child("Quantity").getValue(int.class);
                                 String mealType = levelThree.child("MealType").getValue(String.class);
+
                                 // Standard Totals
-                                if (familySizeCheck == 1 && mealType.equals(STANDARD)) {
+                                if (mealType.equals(STANDARD) && quantity == 1) { // Meal Count Per Family Size
                                     quantityObj.incrementCountFamSize1_Standard();
-                                } else if (familySizeCheck == 2 && mealType.equals(STANDARD)) {
+                                } else if (mealType.equals(STANDARD) && quantity == 2) {
                                     quantityObj.incrementCountFamSize2_Standard();
-                                } else if (familySizeCheck == 3 && mealType.equals(STANDARD)) {
+                                } else if (mealType.equals(STANDARD) && quantity == 3) {
                                     quantityObj.incrementCountFamSize3_Standard();
-                                } else if (familySizeCheck == 4 && mealType.equals(STANDARD)) {
+                                } else if (mealType.equals(STANDARD) && quantity == 4) {
                                     quantityObj.incrementCountFamSize4_Standard();
-                                } else if (familySizeCheck == 5 && mealType.equals(STANDARD)) {
+                                } else if (mealType.equals(STANDARD) && quantity == 5) {
                                     quantityObj.incrementCountFamSize5_Standard();
-                                } else if (familySizeCheck == 6 && mealType.equals(STANDARD)) {
+                                } else if (mealType.equals(STANDARD) && quantity == 6) {
                                     quantityObj.incrementCountFamSize6_Standard();
-                                } else if (familySizeCheck > 6 && mealType.equals(STANDARD)) {
+                                } else if (mealType.equals(STANDARD) && quantity > 6) {
                                     quantityObj.incrementCountFamilySizeMoreThanSix_Standard();
                                 }
 
+                                ///////////////////////////////////////////////////////////////////////////////////// Average
                                 // Low Carb Totals
-                                if (familySizeCheck == 1 && mealType.equals(LOW_CARB)) {
+                                if (mealType.equals(LOW_CARB) && quantity == 1) {
                                     quantityObj.incrementCountFamSize1_LC();
-                                } else if (familySizeCheck == 2 && mealType.equals(LOW_CARB)) {
+                                } else if (mealType.equals(LOW_CARB) && quantity == 2) {
                                     quantityObj.incrementCountFamSize2_LC();
-                                } else if (familySizeCheck == 3 && mealType.equals(LOW_CARB)) {
+                                } else if (mealType.equals(LOW_CARB) && quantity == 3) {
                                     quantityObj.incrementCountFamSize3_LC();
-                                } else if (familySizeCheck == 4 && mealType.equals(LOW_CARB)) {
+                                } else if (mealType.equals(LOW_CARB) && quantity == 4) {
                                     quantityObj.incrementCountFamSize4_LC();
-                                } else if (familySizeCheck == 5 && mealType.equals(LOW_CARB)) {
+                                } else if (mealType.equals(LOW_CARB) && quantity == 5) {
                                     quantityObj.incrementCountFamSize5_LC();
-                                } else if (familySizeCheck == 6 && mealType.equals(LOW_CARB)) {
+                                } else if (mealType.equals(LOW_CARB) && quantity == 6) {
                                     quantityObj.incrementCountFamSize6_LC();
-                                } else if (familySizeCheck > 6 && mealType.equals(LOW_CARB)) {
+                                } else if (mealType.equals(LOW_CARB) && quantity > 6) {
                                     quantityObj.incrementCountFamilySizeMoreThanSix_LC();
                                 }
 
                                 // Kiddies Totals
-                                if (familySizeCheck == 1 && mealType.equals(KIDDIES)) {
+                                if (mealType.equals(KIDDIES) && quantity == 1) {
                                     quantityObj.incrementCountFamSize1_KD();
-                                } else if (familySizeCheck == 2 && mealType.equals(KIDDIES)) {
+                                } else if (mealType.equals(KIDDIES) && quantity == 2) {
                                     quantityObj.incrementCountFamSize2_KD();
-                                } else if (familySizeCheck == 3 && mealType.equals(KIDDIES)) {
+                                } else if (mealType.equals(KIDDIES) && quantity == 3) {
                                     quantityObj.incrementCountFamSize3_KD();
-                                } else if (familySizeCheck == 4 && mealType.equals(KIDDIES)) {
+                                } else if (mealType.equals(KIDDIES) && quantity == 4) {
                                     quantityObj.incrementCountFamSize4_KD();
-                                } else if (familySizeCheck == 5 && mealType.equals(KIDDIES)) {
+                                } else if (mealType.equals(KIDDIES) && quantity == 5) {
                                     quantityObj.incrementCountFamSize5_KD();
-                                } else if (familySizeCheck == 6 && mealType.equals(KIDDIES)) {
+                                } else if (mealType.equals(KIDDIES) && quantity == 6) {
                                     quantityObj.incrementCountFamSize6_KD();
-                                } else if (familySizeCheck > 6 && mealType.equals(KIDDIES)) {
+                                } else if (mealType.equals(KIDDIES) && quantity > 6) {
                                     quantityObj.incrementCountFamilySizeMoreThanSix_KD();
                                 }
-                                quantity = levelThree.child("Quantity").getValue(int.class);
 
                                 if (mealType.equals(STANDARD)) {
                                     quantityObj.incrementCountStandardActive(quantity);
@@ -166,22 +185,6 @@ public class QuantityReport {
                                     quantityObj.incrementQuantityFamSizeMoreThanSix();
                                 }
 
-                                ///////////////
-                                if (activeCheck == true && familySizeCheck == 1 && quantity == 1) {
-                                    quantityObj.incrementCountFamilySize_1();
-                                } else if (activeCheck == true && familySizeCheck == 2 && quantity == 1) {
-                                    quantityObj.incrementCountFamilySize_2();
-                                } else if (activeCheck == true && familySizeCheck == 3 && quantity == 2) {
-                                    quantityObj.incrementCountFamilySize_3();
-                                } else if (activeCheck == true && familySizeCheck == 4 && quantity == 3) {
-                                    quantityObj.incrementCountFamilySize_4();
-                                } else if (activeCheck == true && familySizeCheck == 5 && quantity == 4) {
-                                    quantityObj.incrementCountFamilySize_5();
-                                } else if (activeCheck == true && familySizeCheck == 6 && quantity == 5) {
-                                    quantityObj.incrementCountFamilySize_6();
-                                } else if (activeCheck == true && familySizeCheck > 6 && quantity > 6) {
-                                    quantityObj.incrementCountFamilySizeMoreThanSix();
-                                }
                             }
                         }
                     }
@@ -255,10 +258,10 @@ public class QuantityReport {
             } else if (i == 16) {
                 data.put(i + "", new String[]{"", "", "", "", "", "", "", ""});
             } else if (i == 17) {
-                totalClients = quantityObj.getCountKiddiesActive() + quantityObj.getCountLowCarbActive() + quantityObj.getCountStandardActive();
-                data.put(i + "", new String[]{"Total Clients", "", "", "", "", "", "", totalClients + ""});
+                data.put(i + "", new String[]{"Total Clients", "", "", "", "", "", "", quantityObj.returnTotalClients() + ""});
             } else if (i == 18) {
-                data.put(i + "", new String[]{"Total Individuals", "", "", "", "", "", "", totalIndividuals + ""});
+
+                data.put(i + "", new String[]{"Total Individuals", "", "", "", "", "", "", quantityObj.returnTotalIndividuals() + ""});
             }
         }
 
@@ -308,11 +311,6 @@ public class QuantityReport {
 
                 }
 
-//                if (keyIterate >= 1) {
-//                    borderStyle2.setAlignment(HorizontalAlignment.CENTER);   
-//                    cell.setCellStyle(borderStyle2);
-//                }
-//                 cell.setCellStyle(borderStyle2);
                 cell.setCellStyle(borderStyle);
             }
 
@@ -351,7 +349,7 @@ public class QuantityReport {
             Path path = Paths.get("Reports\\Week " + returnWeekInt() + "\\Quantity Report - " + currentWeek() + " Week -  " + returnWeekInt());
             Files.createDirectories(path);
 
-            File file = path.resolve("Quantity Week - " + returnWeekInt() + " ( " + mealType + " )" + ".xlsx").toFile();
+            File file = path.resolve("Quantity Report Week - " + returnWeekInt() + ".xlsx").toFile();
             if (!file.exists()) {
                 file.createNewFile();
             }
@@ -359,7 +357,7 @@ public class QuantityReport {
             workbook.write(excelOut);
             excelOut.close();
 
-            System.out.println("Done - Chef");
+            System.out.println("Done -Quantity");
 
             if (DSC_Main.reportsDone == 4) {
                 DSC_Main.reportsDone();
@@ -367,7 +365,7 @@ public class QuantityReport {
 
         } catch (FileNotFoundException ex) {
             JOptionPane.showMessageDialog(null, "File is Currently being Used. Please Close the File.");
-            JOptionPane.showMessageDialog(null, "Directory Cannot be Found!");
+
         }
     }
 

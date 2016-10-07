@@ -371,4 +371,21 @@ public class QuantityReportData {
         this.QuantityFamSizeMoreThanSix++;
     }
 
+    // add totals
+    public int returnTotalClients() {
+
+        int totalClients = getCountFamilySize_1() + getCountFamilySize_2() + getCountFamilySize_3() + getCountFamilySize_4()
+                + getCountFamilySize_5() + getCountFamilySize_6() + getCountFamilySizeMoreThanSix();
+
+        return totalClients;
+    }
+
+    public int returnTotalIndividuals() {
+
+        int totalIndividuals = getQuantityFamSize1() + getQuantityFamSize2() + getQuantityFamSize3()
+                + getQuantityFamSize4() + getQuantityFamSize5() + getQuantityFamSize6() + getQuantityFamSizeMoreThanSix();
+        
+        return totalIndividuals;
+    }
+
 }
