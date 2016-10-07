@@ -47,6 +47,7 @@ public class ChefReport {
     private static XSSFWorkbook workbook;
     private static DSC_ReportLoading chefLoadingObj;
     private static int booksCounter = 0;
+    private static int mealCounter = 0;
 
     public static void getChefReport() {
         if (!DSC_Main.generateAllReports) {
@@ -90,7 +91,7 @@ public class ChefReport {
             for (String currRoute : allRoutes) {
                 int bulkCount = 0;
                 Map<String, Object[]> data = new TreeMap<>();
-                data.put(0 + "", new String[]{"Doorstep Chef - Chef Report " + currentWeek(), "", "", "Meal Type : " + list[excelNumber] + " " + " " + "Route: " + sheetNumber});
+                data.put(0 + "", new String[]{"Doorstep Chef - Chef Report " + currentWeek(), "", "", "Meal Type : " + list[mealCounter] + " " + " " + "Route: " + sheetNumber});
                 data.put(1 + "", new String[]{"", "", "", "", "", "", ""});
                 data.put(2 + "", new String[]{"Family Size", "Quantity", "Allergies", "Exclusions"});
                 int counter = 3;
@@ -100,7 +101,7 @@ public class ChefReport {
                 for (int i = 0; i < familySizes.length; i++) {
                     for (int ordersCount = 0; ordersCount < allOrders.size(); ordersCount++) {
                         String familysize = "";
-                        if (allOrders.get(ordersCount).getRoute().equals(currRoute) && allOrders.get(ordersCount).getMealType().equals(list[numberOfRoutes]) && allOrders.get(ordersCount).getFamilySize().equals(familySizes[i])) {
+                        if (allOrders.get(ordersCount).getRoute().equals(currRoute) && allOrders.get(ordersCount).getMealType().equals(list[mealCounter]) && allOrders.get(ordersCount).getFamilySize().equals(familySizes[i])) {
                             if (allOrders.get(ordersCount).getAllergies().equals("-") && allOrders.get(ordersCount).getAllergies().equals("-") || allOrders.get(ordersCount).getAllergies().equals("") && allOrders.get(ordersCount).getAllergies().equals("")) {
                                 bulkCount++;
                             } else {
@@ -266,11 +267,7 @@ public class ChefReport {
 
                 sheetNumber++;
             }
-            try {
-                creatSheet(list[numberOfRoutes], workbook);
-            } catch (IOException ex) {
-                JOptionPane.showMessageDialog(null, "File Could Not Be Found.");
-            }
+            creatSheet(list[mealCounter], workbook);
 
             excelNumber++;
             if (excelNumber == allRoutes.size()) {
@@ -354,6 +351,12 @@ public class ChefReport {
             workbook.write(excelOut);
             excelOut.close();
             booksCounter++;
+
+            if (mealCounter < 2) {
+                mealCounter++;
+            } else {
+                mealCounter = 0;
+            }
 
             if (booksCounter == 3) {
                 System.out.println("Done - Chef");
