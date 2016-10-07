@@ -23,6 +23,8 @@ import java.util.Calendar;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
@@ -81,7 +83,7 @@ public class ChefReport {
         );
     }
 
-    public static void processChefReport() {
+    public static void processChefReport() throws IOException {
         boolean firstFamEntry = true;
         String list[] = {"Standard", "Low Carb", "Kiddies"};
         int excelNumber = 0;
@@ -289,38 +291,42 @@ public class ChefReport {
             @Override
             public void onDataChange(DataSnapshot ds) {
 
-                for (DataSnapshot levelOne : ds.getChildren()) {
-                    Calendar start = null;
-                    start = Calendar.getInstance();
-                    start.setTimeInMillis(levelOne.child("StartingDate").getValue(long.class));
-
-                    if (start.getTimeInMillis() > DriverReport.returnWeekMili()) {
-                        continue;
-                    }
-
-                    for (DataSnapshot levelTwo : levelOne.getChildren()) {
-                        for (DataSnapshot levelThree : levelTwo.getChildren()) {
-
-                            String quantity = levelThree.child("Quantity").getValue(String.class);
-                            String Allergies = levelThree.child("Allergies").getValue(String.class);
-                            String Exclusions = levelThree.child("Exclusions").getValue(String.class);
-                            String RouteID = levelOne.child("RouteID").getValue(String.class);
-                            String MealType = levelThree.child("MealType").getValue(String.class);
-                            String FamilySize = levelOne.child("FamilySize").getValue(String.class);
-
-                            if (levelOne.child("Active").getValue(boolean.class).equals(true)) {
-                                allOrders.add(new Chef(quantity,
-                                        Allergies,
-                                        Exclusions,
-                                        RouteID,
-                                        MealType,
-                                        FamilySize
-                                ));
+                try {
+                    for (DataSnapshot levelOne : ds.getChildren()) {
+                        Calendar start = null;
+                        start = Calendar.getInstance();
+                        start.setTimeInMillis(levelOne.child("StartingDate").getValue(long.class));
+                        
+                        if (start.getTimeInMillis() > DriverReport.returnWeekMili()) {
+                            continue;
+                        }
+                        
+                        for (DataSnapshot levelTwo : levelOne.getChildren()) {
+                            for (DataSnapshot levelThree : levelTwo.getChildren()) {
+                                
+                                String quantity = levelThree.child("Quantity").getValue(String.class);
+                                String Allergies = levelThree.child("Allergies").getValue(String.class);
+                                String Exclusions = levelThree.child("Exclusions").getValue(String.class);
+                                String RouteID = levelOne.child("RouteID").getValue(String.class);
+                                String MealType = levelThree.child("MealType").getValue(String.class);
+                                String FamilySize = levelOne.child("FamilySize").getValue(String.class);
+                                
+                                if (levelOne.child("Active").getValue(boolean.class).equals(true)) {
+                                    allOrders.add(new Chef(quantity,
+                                            Allergies,
+                                            Exclusions,
+                                            RouteID,
+                                            MealType,
+                                            FamilySize
+                                    ));
+                                }
                             }
                         }
                     }
+                    processChefReport();
+                } catch (IOException ex) {
+                    Logger.getLogger(ChefReport.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                processChefReport();
             }
 
             @Override
