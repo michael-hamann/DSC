@@ -92,7 +92,7 @@ public class AccountantReport {
                     start.setTimeInMillis(dataSnapshot.child("StartingDate").getValue(long.class));
 
                     if (start.getTimeInMillis() > DriverReport.returnWeekMili()) {
-                        continue;
+                       // continue;
                     }
                     clients.add(client);
                 }
