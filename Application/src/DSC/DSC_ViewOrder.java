@@ -26,6 +26,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     int tbcounter = 30;
     int count = 0;
     int count2 = 0;
+    int total;
 
     boolean search = true;
     boolean orderEdited = false;
@@ -88,6 +89,8 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
         //combobox listener, when item clicked table loads accordingly
         cmbListener();
+        
+        getNumChildren();
 
     }
 
@@ -100,7 +103,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         txfClientEmail.setEnabled(true);
         txfAltNum.setEnabled(true);
         cmbSuburbs.setEnabled(true);
-    } 
+    }
 
     public final void disableFieldsClient() {
         txfClientName.setEnabled(false);
@@ -113,7 +116,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         cmbSuburbs.setEnabled(false);
         cmbSuburbs.setEnabled(false);
     }
-  
+
     public final void clearFieldsClient() {
         txfClientID.setText(null);
         txfClientName.setText(null);
@@ -250,7 +253,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     private void setTextFields() {
 
         DefaultTableModel mealmodel = (DefaultTableModel) tblMeals.getModel();
-        
+
         tblOrderTable.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
 
@@ -300,7 +303,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         mealmodel.addRow(meals.returnObj());
                     }
                     mealmodel.fireTableDataChanged();
-                }else{
+                } else {
                     tblOrderTable.setEnabled(false);
                 }
             }
@@ -311,17 +314,16 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     private void saveOrder() {
         LoadIcon load = new LoadIcon();
         load.iconLoader(lblLoad);
-
         Firebase ord = DBClass.getInstance().child("Orders");// Go to specific Table
 
         ord.addChildEventListener(new ChildEventListener() {
             // Retrieve new posts as they are added to the database
             long ordercount = 0;
-
+            int activecount=0;
             @Override
             public void onChildAdded(DataSnapshot ds, String previousChildKey) {
+                getNumChildren();
                 ordercount++;
-
                 ArrayList<Meal> allmeals = new ArrayList<>();
                 Calendar endDate;
 
@@ -361,10 +363,12 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 if (o.isActive() && count2 < tbcounter) {
                     setOrderTB(o, model);
                     activeOrders.add(o);
+                    activecount++;
                     count2++;
 
                 } else if (o.isActive()) {
                     activeOrders.add(o);
+                    activecount++;
                 }
                 if (o.isActive() == false && count2 < tbcounter) {
                     inactiveOrders.add(o);
@@ -372,10 +376,9 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 } else if (o.isActive() == false) {
                     inactiveOrders.add(o);
                 }
-                if (ordercount == ds.getChildrenCount()) {
+                if (activecount == getTotal()) {
                     lblLoad.setIcon(null);
                 }
-
             }
 
             @Override
@@ -511,6 +514,32 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         });
     }
 
+    public void getNumChildren() {
+        Firebase ord = DBClass.getInstance().child("Orders");// Go to specific Table
+
+        ord.orderByChild("Active").equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot ds) {
+                setTotal((int) ds.getChildrenCount());
+            }
+
+            @Override
+
+            public void onCancelled(FirebaseError fe) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        }
+        );
+    }
+
+    public int getTotal () {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -1347,7 +1376,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     disableFieldsOrder();
                     btnEditOrder.setEnabled(true);
                     tblOrderTable.setEnabled(true);
-                    orderEdited= false;
+                    orderEdited = false;
                     break;
                 case JOptionPane.NO_OPTION:
                     btnSave.setEnabled(true);
@@ -1648,9 +1677,9 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRemoveMealActionPerformed
 
     private void btnAddMealActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddMealActionPerformed
-        Meal m = new Meal(0,"Standard","-","-");
-       
-        DSC_PlaceOrder_Mealpane mp = new DSC_PlaceOrder_Mealpane(tblMeals.getSelectedRow(),m);
+        Meal m = new Meal(0, "Standard", "-", "-");
+
+        DSC_PlaceOrder_Mealpane mp = new DSC_PlaceOrder_Mealpane(tblMeals.getSelectedRow(), m);
         mp.setBackViewOrder(this);
         mp.setVisible(true);
         mp.setFocusableWindowState(true);
@@ -1767,10 +1796,10 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPreviousActionPerformed
 
     private void btnEditMealActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditMealActionPerformed
-        Meal m = new Meal((int) tblMeals.getValueAt(tblMeals.getSelectedRow(),0),tblMeals.getValueAt(tblMeals.getSelectedRow(),1)+"",
-                tblMeals.getValueAt(tblMeals.getSelectedRow(),2)+"",tblMeals.getValueAt(tblMeals.getSelectedRow(),3)+"");
-       
-        DSC_PlaceOrder_Mealpane mp = new DSC_PlaceOrder_Mealpane(tblMeals.getSelectedRow(),m);
+        Meal m = new Meal((int) tblMeals.getValueAt(tblMeals.getSelectedRow(), 0), tblMeals.getValueAt(tblMeals.getSelectedRow(), 1) + "",
+                tblMeals.getValueAt(tblMeals.getSelectedRow(), 2) + "", tblMeals.getValueAt(tblMeals.getSelectedRow(), 3) + "");
+
+        DSC_PlaceOrder_Mealpane mp = new DSC_PlaceOrder_Mealpane(tblMeals.getSelectedRow(), m);
         mp.setBackViewOrder(this);
         mp.setVisible(true);
         mp.setFocusableWindowState(true);
@@ -1842,10 +1871,10 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         }
         ordertb.fireTableDataChanged();
     }
-    
+
     protected void addMealToList(Meal meal) {
-        DefaultTableModel mealmod = (DefaultTableModel)tblMeals.getModel();
-        Object[] row = {meal.getQuantity(),meal.getMealType(),meal.getAllergies(),meal.getExclusions()};
+        DefaultTableModel mealmod = (DefaultTableModel) tblMeals.getModel();
+        Object[] row = {meal.getQuantity(), meal.getMealType(), meal.getAllergies(), meal.getExclusions()};
         mealmod.addRow(row);
         mealmod.fireTableDataChanged();
     }
@@ -1853,11 +1882,10 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     protected void replaceMealOnList(Meal meal, int index) {
         DefaultTableModel mealmod = (DefaultTableModel) tblMeals.getModel();
         mealmod.removeRow(index);
-        Object[] row = {meal.getQuantity(),meal.getMealType(),meal.getAllergies(),meal.getExclusions()};
+        Object[] row = {meal.getQuantity(), meal.getMealType(), meal.getAllergies(), meal.getExclusions()};
         mealmod.addRow(row);
         mealmod.fireTableDataChanged();
     }
-
 
     public ArrayList<List<Order>> split(ArrayList<Order> list) {
 
