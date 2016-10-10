@@ -18,29 +18,58 @@ import javax.swing.SpinnerDateModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
  * @author Amina Latief
  */
-public class DSC_ViewOrder extends javax.swing.JFrame {
 
+public class DSC_ViewOrder extends javax.swing.JFrame {
+    
+//=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-
+//INITIALIZATION
+//=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-
+   
+    //max order table value
     int tbcounter = 30;
+    
+    //global count used for next and previous buttons, in finding which list the user is currently veiwing
     int count = 0;
     int count2 = 0;
+    
+    //total entries in database of orders (children count)
     int total;
 
+    //variable that will be used to check if input from user was searched for
     boolean search = true;
+    
+    //variable that will be used to check if the edit button was clicked
     boolean orderEdited = false;
+    
+    //variable that will be used to check whether a row(order) from the order table has been selected
     boolean orderSelected = false;
 
     //ArrayList initialization
+    
+    //stores all client objects
     ArrayList<Client> allclients = new ArrayList<>();
+    
+    //stores all order objects
     ArrayList<Order> allorders = new ArrayList<>();
+    
+    //stores all objects currently displayed in the order table
     ArrayList<Order> tborders = new ArrayList<>();
+    
+    //stores all active orders
     ArrayList<Order> activeOrders = new ArrayList<>();
+    
+    //stores all inactive orders
     ArrayList<Order> inactiveOrders = new ArrayList<>();
 
+    //stores all suburbs
     ArrayList<String> suburbs = new ArrayList<>();
+    
+    //stores all active suburbs
     ArrayList<String> activeSuburbs = new ArrayList<>();
+    
+//=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-
 
     /**
      * Creates new form DSC_Main
@@ -49,17 +78,18 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         initComponents();
 
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        
+        //disables fields that should not be edited by the user
         txfClientID.setEnabled(false);
         txfOrderID.setEnabled(false);
         txfOrderRouteID.setEnabled(false);
-        cmbSuburbs.setEnabled(false);
-
-        disableFieldsClient();
-        disableFieldsOrder();
+        
+        //disables all fields
+        disableFields();
 
         btnSave.setEnabled(false);
         btnDeactivate.setText("Deactivate");
-        cmbView.setSelectedItem("Active");
+        cmbVeiw.setSelectedItem("Active");
         cmbSuburbs.removeAllItems();
         cmbSuburbs.addItem("Collection");
         btnDeactivate.setVisible(true);
@@ -90,11 +120,18 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         //combobox listener, when item clicked table loads accordingly
         cmbListener();
         
+        //get number of orders in the database
         getNumChildren();
 
     }
-
-    public final void enableFieldsClient() {
+    
+    
+//=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-
+//FIELD METHODS
+//=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-
+    
+    public final void enableFields() {
+        //enables client fields
         txfClientName.setEnabled(true);
         txfClientSurname.setEnabled(true);
         txfClientContactNo.setEnabled(true);
@@ -103,9 +140,22 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         txfClientEmail.setEnabled(true);
         txfAltNum.setEnabled(true);
         cmbSuburbs.setEnabled(true);
+        
+        //enables order fields
+        spnOrderFamilySize.setEnabled(true);
+        cmbDuration.setEnabled(true);
+        spnEndDate.setEnabled(true);
+        spnStartDate.setEnabled(true);
+        txfOrderRouteID.setEnabled(true);
+        
+        //enables meal buttons
+        btnAddMeal.setEnabled(true);
+        btnRemoveMeal.setEnabled(true);
+        btnEditMeal.setEnabled(true);
     }
 
-    public final void disableFieldsClient() {
+    public final void disableFields() {
+        //disables client fields
         txfClientName.setEnabled(false);
         txfClientSurname.setEnabled(false);
         txfClientContactNo.setEnabled(false);
@@ -114,10 +164,23 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         txfClientEmail.setEnabled(false);
         txfAltNum.setEnabled(false);
         cmbSuburbs.setEnabled(false);
-        cmbSuburbs.setEnabled(false);
+        
+        //disables order fields
+        spnOrderFamilySize.setEnabled(false);
+        spnStartDate.setEnabled(false);
+        txfOrderRouteID.setEnabled(false);
+        cmbDuration.setEnabled(false);
+        spnEndDate.setEnabled(false);
+        
+        //disables meal buttons
+        btnAddMeal.setEnabled(false);
+        btnRemoveMeal.setEnabled(false);
+        btnEditMeal.setEnabled(false);
     }
 
-    public final void clearFieldsClient() {
+    public final void clearFields() {
+        
+        //clears all client fields
         txfClientID.setText(null);
         txfClientName.setText(null);
         txfClientSurname.setText(null);
@@ -128,45 +191,23 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         txfAltNum.setText(null);
         cmbSuburbs.setSelectedIndex(0);
         orderSelected = false;
-    }
-
-    public final void enableFieldsOrder() {
-        spnOrderFamilySize.setEnabled(true);
-        cmbDuration.setEnabled(true);
-        spnEndDate.setEnabled(true);
-        spnStartDate.setEnabled(true);
-        txfOrderRouteID.setEnabled(true);
-        btnAddMeal.setEnabled(true);
-        btnRemoveMeal.setEnabled(true);
-        btnDeactivate.setEnabled(true);
-        btnEditMeal.setEnabled(true);
-    }
-
-    public final void disableFieldsOrder() {
-        spnOrderFamilySize.setEnabled(false);
-        spnStartDate.setEnabled(false);
-        txfOrderRouteID.setEnabled(false);
-        cmbDuration.setEnabled(false);
-        spnEndDate.setEnabled(false);
-        btnAddMeal.setEnabled(false);
-        btnRemoveMeal.setEnabled(false);
-        btnDeactivate.setEnabled(false);
-        btnEditMeal.setEnabled(false);
-    }
-
-    public final void clearFieldsOrder() {
+        
+         //clears all order fields
         txfOrderID.setText(null);
         spnOrderFamilySize.setValue(0);
         txfOrderRouteID.setText(null);
         cmbDuration.setSelectedIndex(0);
+        
+        //clears the meal table
         DefaultTableModel model = (DefaultTableModel) tblOrderTable.getModel();
         model.setRowCount(0);
-        boolean orderSelected = false;
+        
     }
-
+    
     private boolean checkEmpty() {
         boolean empty = false;
 
+        //checks if required fiels are empty
         if (txfClientName.getText().isEmpty() || txfClientSurname.getText().isEmpty() || txfClientContactNo.getText().isEmpty()
                 || txfClientAddress.getText().isEmpty() || txfClientContactNo.getText().isEmpty() || txfClientEmail.getText().isEmpty()) {
             empty = true;
@@ -174,82 +215,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
         return empty;
     }
-
-    private void callActiveSuburbs() {
-        Firebase ref = DBClass.getInstance().child("Routes");
-
-        //gets all active suburbs
-        ref.orderByChild("Active").equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot ds) {
-                for (DataSnapshot dataSnapshot : ds.getChildren()) {
-                    //stores all suburbs within node into an array
-                    String subList[] = dataSnapshot.child("Suburbs").getValue(String[].class);
-                    //iterates through array
-                    for (int i = 0; i < subList.length; i++) {
-                        if (subList[i].equals("Collection")) {
-                        } else {
-                            //adds suburb to arraylist
-                            activeSuburbs.add(subList[i]);
-                        }
-
-                    }
-
-                }
-
-            }
-
-            @Override
-            public void onCancelled(FirebaseError fe) {
-                JOptionPane.showMessageDialog(null, "Could not fetch suburbs.\nCheck logs for error report.", "Suburb Error", JOptionPane.ERROR_MESSAGE);
-                System.err.print("Database connection error (Suburb): " + fe);
-            }
-        });
-        activeSuburbs.add("Collection");
-    }
-
-    private void callAllSuburbs() {
-        Firebase ref = DBClass.getInstance().child("Routes");
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot ds) {
-                for (DataSnapshot dataSnapshot : ds.getChildren()) {
-                    //stores all suburbs within node into an array
-                    String subArr[] = dataSnapshot.child("Suburbs").getValue(String[].class);
-                    //iterates through array
-                    for (int i = 0; i < subArr.length; i++) {
-                        if (subArr[0].equals("Collection")) {
-                        } else {
-                            //adds suburb to arraylist of all suburbs as well as to the combobox
-                            suburbs.add(subArr[i]);
-                            cmbSuburbs.addItem(subArr[i]);
-                        }
-                    }
-
-                }
-
-            }
-
-            @Override
-            public void onCancelled(FirebaseError fe) {
-                JOptionPane.showMessageDialog(null, "Unable to fetch suburbs.\nCheck logs for error report.", "Suburb Error", JOptionPane.ERROR_MESSAGE);
-                System.err.print("Database connection error (Suburb): " + fe);
-            }
-        });
-
-    }
-
-    private void setOrderTB(Order order, DefaultTableModel d) {
-        tborders.add(order);
-        //creates row object
-        Object[] row = {order.getClient().getName(), order.getClient().getSurname(), order.getClient().getContactNumber(),
-            order.getClient().getEmail(), order.getClient().getSuburb(), order.isActive(), order.getDuration(), order.getFamilySize()};
-        //adds this object to the order table
-        d.addRow(row);
-        //notifies all listeners cell values may have changed
-        d.fireTableDataChanged();
-    }
-
+    
     private void setTextFields() {
 
         DefaultTableModel mealmodel = (DefaultTableModel) tblMeals.getModel();
@@ -306,6 +272,71 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 } else {
                     tblOrderTable.setEnabled(false);
                 }
+            }
+        });
+
+    }
+    
+//=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-
+//ARRAYLIST POPULATION 
+//=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-
+    
+    private void callActiveSuburbs() {
+        Firebase ref = DBClass.getInstance().child("Routes");
+
+        //gets all active suburbs
+        ref.orderByChild("Active").equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot ds) {
+                for (DataSnapshot dataSnapshot : ds.getChildren()) {
+                    //stores all suburbs within node into an array
+                    String subList[] = dataSnapshot.child("Suburbs").getValue(String[].class);
+                    //iterates through array
+                    for (int i = 0; i < subList.length; i++) {
+                        
+                        if (subList[i].equals("Collection")) {
+                        } else {
+                            //adds suburb to arraylist
+                            activeSuburbs.add(subList[i]);
+                        }  
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError fe) {
+                JOptionPane.showMessageDialog(null, "Could not fetch suburbs.\nCheck logs for error report.", "Suburb Error", JOptionPane.ERROR_MESSAGE);
+                System.err.print("Database connection error (Suburb): " + fe);
+            }
+        });
+    }
+
+    private void callAllSuburbs() {
+        Firebase ref = DBClass.getInstance().child("Routes");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot ds) {
+                for (DataSnapshot dataSnapshot : ds.getChildren()) {
+                    //stores all suburbs within node into an array
+                    String subArr[] = dataSnapshot.child("Suburbs").getValue(String[].class);
+                    //iterates through array
+                    for (int i = 0; i < subArr.length; i++) {
+                        if (subArr[0].equals("Collection")) {
+                        } else {
+                            //adds suburb to arraylist of all suburbs as well as to the combobox
+                            suburbs.add(subArr[i]);
+                            cmbSuburbs.addItem(subArr[i]);
+                        }
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError fe) {
+                JOptionPane.showMessageDialog(null, "Unable to fetch suburbs.\nCheck logs for error report.", "Suburb Error", JOptionPane.ERROR_MESSAGE);
+                System.err.print("Database connection error (Suburb): " + fe);
             }
         });
 
@@ -376,7 +407,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 } else if (o.isActive() == false) {
                     inactiveOrders.add(o);
                 }
-                if (activecount == getTotal()) {
+                if (activecount == getNrOfOrders()) {
                     lblLoad.setIcon(null);
                 }
             }
@@ -513,14 +544,18 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             }
         });
     }
-
-    public void getNumChildren() {
+    
+//=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-
+//NUMBER OF ORDER ENTRIES METHODS -> LOADING
+//=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-
+    
+    private void getNumChildren() {
         Firebase ord = DBClass.getInstance().child("Orders");// Go to specific Table
 
         ord.orderByChild("Active").equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot ds) {
-                setTotal((int) ds.getChildrenCount());
+                setNrOfOrders((int) ds.getChildrenCount());
             }
 
             @Override
@@ -532,13 +567,15 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         );
     }
 
-    public int getTotal () {
+    public int getNrOfOrders () {
         return total;
     }
 
-    public void setTotal(int total) {
+    public void setNrOfOrders(int total) {
         this.total = total;
     }
+    
+//=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -555,7 +592,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
         tblOrderTable = new javax.swing.JTable();
         lblSearchBy = new javax.swing.JLabel();
         btnSearch = new javax.swing.JButton();
-        cmbView = new javax.swing.JComboBox<>();
+        cmbVeiw = new javax.swing.JComboBox<>();
         btnPrevious = new javax.swing.JButton();
         btnNext = new javax.swing.JButton();
         lblLoad = new javax.swing.JLabel();
@@ -684,7 +721,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
             }
         });
 
-        cmbView.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Active", "Inactive" }));
+        cmbVeiw.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Active", "Inactive" }));
 
         btnPrevious.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PICS/go_previous_1.png"))); // NOI18N
         btnPrevious.addActionListener(new java.awt.event.ActionListener() {
@@ -717,7 +754,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(cmbView, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cmbVeiw, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(lblLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -741,7 +778,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(lblLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(cmbView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cmbVeiw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1260,8 +1297,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(rootPane, "Saved successfully.");
 
                     //enabling and disabling of relevant components
-                    disableFieldsClient();
-                    disableFieldsOrder();
+                    disableFields();
                     btnSave.setEnabled(false);
                     btnEditOrder.setEnabled(true);
                     tblOrderTable.setEnabled(true);
@@ -1340,8 +1376,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(rootPane, "Saved successfully.");
 
                         //enabling and disabling of relevant components
-                        disableFieldsClient();
-                        disableFieldsOrder();
+                        disableFields();
                         btnSave.setEnabled(false);
                         btnEditOrder.setEnabled(true);
                         tblOrderTable.setEnabled(true);
@@ -1356,7 +1391,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
                     //no changes are saved if cancel is selected,relevant components are simply enabled and disabled
                     case JOptionPane.CANCEL_OPTION:
-                        disableFieldsClient();
+                        disableFields();
                         btnSave.setEnabled(false);
                         btnEditOrder.setEnabled(true);
                         break;
@@ -1368,12 +1403,14 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        //if user pressed the edit button
         if (orderEdited) {
+            //ask user if they want to discard changes made
             int ans = JOptionPane.showConfirmDialog(this, "Do you wish to discard unsaved changes?");
+            
             switch (ans) {
                 case JOptionPane.YES_OPTION:
-                    disableFieldsClient();
-                    disableFieldsOrder();
+                    disableFields();
                     btnEditOrder.setEnabled(true);
                     tblOrderTable.setEnabled(true);
                     orderEdited = false;
@@ -1386,32 +1423,42 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     break;
             }
         } else {
+            //discard this frame
             this.dispose();
+            //display new Main frame
             new DSC_Main().setVisible(true);
         }
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-
+        
+        //gets which type of value the user is searching for ex. name, contact nr, etc.
         String column = (String) cmbSearchColumn.getSelectedItem();
+        
+        //input typed by user
         String searchFor = txfSearch.getText();
-        String veiw = (String) cmbView.getSelectedItem();
+        
+        //whether user wants to see "All", "Active",or "Inactive"
+        String veiw = (String) cmbVeiw.getSelectedItem();
 
+        //clears order table
         DefaultTableModel model = (DefaultTableModel) tblOrderTable.getModel();
         model.setRowCount(0);
 
-        clearFieldsClient();
-        clearFieldsOrder();
-
+        //clears all fields
+        clearFields();
+        
+        //clears order tables arraylist 
         tborders.clear();
 
+        //checks that the user actually entered something
         if (txfSearch.getText().equals("")) {
             JOptionPane.showMessageDialog(rootPane, "Please enter search value!");
             search = false;
         } else {
+            search=true;
             switch (veiw) {
                 case "All":
-                    model.setRowCount(0);
                     switch (column) {
                         case "Name":
                             for (Order orders : allorders) {
@@ -1614,16 +1661,19 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                     }
             }
         }
+        //sets all textfields according to row selected in table
         setTextFields();
+        
+        //if unable to find what the user is looking for display message
         if (tblOrderTable.getRowCount() < 1 && search) {
             JOptionPane.showMessageDialog(rootPane, "No orders found for '" + searchFor + "'.");
         }
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnEditOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditOrderActionPerformed
+        // if a row is selected from the table
         if (orderSelected) {
-            enableFieldsOrder();
-            enableFieldsClient();
+            enableFields();
             btnEditOrder.setEnabled(false);
             btnSave.setEnabled(true);
             orderEdited = true;
@@ -1634,10 +1684,14 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
     private void btnDeactivateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeactivateActionPerformed
 
+        //set firebase reference
         Firebase updOrder = DBClass.getInstance().child("Orders/" + txfOrderID.getText());
         boolean orderactive = true;
         int index = -1;
-
+        
+        //for each order if the order is the one the user wants to deactivate/activate
+        //change order status in database : active -> false/true
+        //as well as in their arraylists
         for (Order o : allorders) {
             if (txfOrderID.getText().equals(o.getID())) {
                 if (o.isActive()) {
@@ -1651,6 +1705,9 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 }
             }
         }
+        
+        //change the objects status in other appropriate arraylists as well
+        //removing from current arraylist and adding to another
         if (orderactive) {
             for (int i = 0; i < activeOrders.size(); i++) {
                 if (activeOrders.get(i).getID().equals(txfOrderID.getText())) {
@@ -1677,19 +1734,25 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRemoveMealActionPerformed
 
     private void btnAddMealActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddMealActionPerformed
+        //creates Meal
         Meal m = new Meal(0, "Standard", "-", "-");
 
+        //displays meal pane
         DSC_PlaceOrder_Mealpane mp = new DSC_PlaceOrder_Mealpane(tblMeals.getSelectedRow(), m);
         mp.setBackViewOrder(this);
         mp.setVisible(true);
         mp.setFocusableWindowState(true);
+        
+        //disable current frame
         this.setEnabled(false);
     }//GEN-LAST:event_btnAddMealActionPerformed
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
         tborders.clear();
+        
         DefaultTableModel ordertb = (DefaultTableModel) tblOrderTable.getModel();
-        String view = (String) cmbView.getSelectedItem();
+        String view = (String) cmbVeiw.getSelectedItem();
+        
         ArrayList<List<Order>> arrays;
         int parts = -1;
 
@@ -1757,8 +1820,9 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
     private void btnPreviousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousActionPerformed
         tborders.clear();
+        
         DefaultTableModel ordertb = (DefaultTableModel) tblOrderTable.getModel();
-        String view = (String) cmbView.getSelectedItem();
+        String view = (String) cmbVeiw.getSelectedItem();
 
         ArrayList<List<Order>> arrays = new ArrayList();
         if (count < 1) {
@@ -1808,25 +1872,48 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
+//=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-
+//COMBO BOX LISTENER, ON CLICK VALUE, TABLE RELOADS ACCORDINGLY   
+//=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-
     private void cmbListener() {
 
-        cmbView.addActionListener(new ActionListener() {
+        cmbVeiw.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 reloadTB();
             }
         });
     }
+    
+//=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-
+//ORDER TABLE METHODS
+//=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-
 
     public void reloadTB() {
+        
         DefaultTableModel ordertb = (DefaultTableModel) tblOrderTable.getModel();
-        String view = (String) cmbView.getSelectedItem();
+        
+        //fetches which item is selected from combobox
+        String veiw = (String) cmbVeiw.getSelectedItem();
+        
+        //clears table
         ordertb.setRowCount(0);
+        
+        //clears arraylist of objects in table
         tborders.clear();
+        
+        //sets max elements allowed in table to 30
         tbcounter = 30;
+        
+        //initiates counter variable
         int counter = 0;
+        
+        //sets static count to zero
         count = 0;
-        switch (view) {
+        
+        //depending on whether "All","Active" or "Inactive" is selected, the order table will be populated with the first 30 
+        //elements from their ArrayList
+        switch (veiw) {
             case "All":
                 if (allorders.size() > counter || allorders.size() == counter) {
                     if (tbcounter > allorders.size()) {
@@ -1869,59 +1956,128 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                 }
                 break;
         }
+        //notifies table of changes
         ordertb.fireTableDataChanged();
     }
-
+    
+    
+    private void setOrderTB(Order order, DefaultTableModel d) {
+        tborders.add(order);
+        //creates row object
+        Object[] row = {order.getClient().getName(), order.getClient().getSurname(), order.getClient().getContactNumber(),
+            order.getClient().getEmail(), order.getClient().getSuburb(), order.isActive(), order.getDuration(), order.getFamilySize()};
+        //adds this object to the order table
+        d.addRow(row);
+        //notifies all listeners cell values may have changed
+        d.fireTableDataChanged();
+    }
+    
+//=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-
+//METHODS ADDING & EDITING MEALS IN THE MEALS TABLE
+//=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-
+   
     protected void addMealToList(Meal meal) {
         DefaultTableModel mealmod = (DefaultTableModel) tblMeals.getModel();
+        
+        //creates row object to be inserted in meal table
         Object[] row = {meal.getQuantity(), meal.getMealType(), meal.getAllergies(), meal.getExclusions()};
+       
+        //adds object to table
         mealmod.addRow(row);
+        
+        //notifies the table of the change
         mealmod.fireTableDataChanged();
     }
 
     protected void replaceMealOnList(Meal meal, int index) {
         DefaultTableModel mealmod = (DefaultTableModel) tblMeals.getModel();
+        
+        //removes the selected index
         mealmod.removeRow(index);
+        
+        //creates new row objects with edited data from the meal pane
         Object[] row = {meal.getQuantity(), meal.getMealType(), meal.getAllergies(), meal.getExclusions()};
+       
+        //adds the object to the meal table
         mealmod.addRow(row);
+        
+        //notifies the table of the change
         mealmod.fireTableDataChanged();
     }
+  
+//=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-
+//METHOD TO SPLIT ARRAYLIST DATA INTO ARRAYS OF 30
+//=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-
 
     public ArrayList<List<Order>> split(ArrayList<Order> list) {
 
+        //k-> counter variable
         int k = 0;
+        
+        //initializes list for order objects, this list will later be added to another list
         List<Order> ordersplit;
+        
+        //creates a list of lists
         ArrayList<List<Order>> arrays = new ArrayList();
+        
+        //stores the size of the list parsed to the method
         int size = list.size();
+        
         if (size % 30 == 0) {
+            
+            //parts defines the number of lists the parsed list will be split into
             int parts = size / 30;
+            
+            //loops for the number of parts
             for (int i = 0; i < parts; i++) {
+                //creates new arraylist
                 ordersplit = new ArrayList();
+                
+                //loops 30 times, in order to add 30 objects
                 for (int j = 0; j < 30; j++) {
+                    //checks whether he count is still within the size of the list
                     if (k < size) {
+                        //adds the object at k of list to new list
                         ordersplit.add(list.get(k));
+                        //increments k
                         k++;
                     }
                 }
+                //adds new list of 30 to another list
                 arrays.add(ordersplit);
             }
         } else {
+            
+            //parts defines the number of lists the parsed list will be split into
             int parts = (size / 30) + 1;
+            
+            //loops for the number of parts
             for (int i = 0; i < parts; i++) {
+                
+                //creates new arraylist
                 ordersplit = new ArrayList();
+                
+                 //loops 30 times, in order to add 30 objects
                 for (int j = 0; j < 30; j++) {
+                    
+                    //checks whether he count is still within the size of the list
                     if (k < size) {
+                        //adds the object at k of list to new list
                         ordersplit.add(list.get(k));
+                        //increments k
                         k++;
                     }
                 }
+                //adds new list of 30 to another list
                 arrays.add(ordersplit);
             }
         }
-
+        //returns the list of lists
         return arrays;
 
     }
+    
+//=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -1982,7 +2138,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmbDuration;
     private javax.swing.JComboBox<String> cmbSearchColumn;
     private javax.swing.JComboBox<String> cmbSuburbs;
-    private javax.swing.JComboBox<String> cmbView;
+    private javax.swing.JComboBox<String> cmbVeiw;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblAltNum;
