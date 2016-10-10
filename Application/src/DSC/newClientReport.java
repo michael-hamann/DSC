@@ -13,6 +13,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -35,7 +38,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  *
  * @author Aliens_Ross
  */
-public class newClientReport {
+public class NewClientReport {
 
     private static int clientCount;
     private static DSC_ReportLoading newClientLoadObj;
@@ -50,7 +53,10 @@ public class newClientReport {
         }
         boolean fileFound = false;
         try {
-            file = new File("NewClientsReport (" + DriverReport.returnWeekString() + ").xlsx");
+            Path path = Paths.get("Reports\\Week " + DriverReport.returnWeekInt() + " (" + DriverReport.returnWeekString() + ")");
+            Files.createDirectories(path);
+            
+            file = path.resolve("NewClientsReport (" + DriverReport.returnWeekString() + ").xlsx").toFile();
             if (!file.exists()) {
                 file.createNewFile();
             }
@@ -103,17 +109,7 @@ public class newClientReport {
                         getClient(clients.get(i), i);
                     }
                 } else {
-                    System.out.println("Done - New Client");
-                    if (!(DSC_Main.generateAllReports)) {
-                        newClientLoadObj.setVisible(false);
-                        newClientLoadObj.dispose();
-                        JOptionPane.showMessageDialog(null, "Not enough data in Database to generate ClientReport", "Success", JOptionPane.INFORMATION_MESSAGE);
-                    } else {
-                        DSC_Main.reportsDone++;
-                        if (DSC_Main.reportsDone == 5) {
-                            DSC_Main.reportsDone();
-                        }
-                    }
+                    createExcelReport();
                 }
 
             }
@@ -165,7 +161,6 @@ public class newClientReport {
             }
         });
 
-        System.out.println("gal");
         XSSFSheet sheet = workbook.createSheet("NewClient Report");
 
         Map<String, Object[]> data = new TreeMap<>();
