@@ -13,6 +13,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -52,7 +55,10 @@ public class PackerReport {
         }
         boolean fileFound = false;
         try {
-            file = new File("PackerReports (" + DriverReport.returnWeekString() + ").xlsx");
+            Path path = Paths.get("Reports\\Week " + DriverReport.returnWeekInt() + " (" + DriverReport.returnWeekString() + ")");
+            Files.createDirectories(path);
+            
+            file = path.resolve("PackerReports (" + DriverReport.returnWeekString() + ").xlsx").toFile();
             if (!file.exists()) {
                 file.createNewFile();
             }
@@ -92,6 +98,8 @@ public class PackerReport {
                         continue;
                     }
 
+                    hasValue = true;
+
                     ArrayList<Meal> meals = new ArrayList<>();
                     for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                         for (DataSnapshot dataSnapshot2 : dataSnapshot1.getChildren()) {
@@ -124,7 +132,7 @@ public class PackerReport {
                     System.out.println("Done - Packer");
                     if (DSC_Main.generateAllReports) {
                         DSC_Main.reportsDone++;
-                        if (DSC_Main.reportsDone == 5) {
+                        if (DSC_Main.reportsDone == DSC_Main.TOTAL_REPORTS) {
                             DSC_Main.reportsDone();
                         }
                     } else {
@@ -563,7 +571,7 @@ public class PackerReport {
             System.out.println("Done - Packer");
             if (DSC_Main.generateAllReports) {
                 DSC_Main.reportsDone++;
-                if (DSC_Main.reportsDone == 5) {
+                if (DSC_Main.reportsDone == DSC_Main.TOTAL_REPORTS) {
                     DSC_Main.reportsDone();
                 }
             } else {

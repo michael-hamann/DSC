@@ -13,6 +13,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -50,7 +53,10 @@ public class AccountantReport {
         }
         boolean fileFound = false;
         try {
-            file = new File("AccountReport (" + DriverReport.returnWeekString() + ").xlsx");
+            Path path = Paths.get("Reports\\Week " + DriverReport.returnWeekInt() + " (" + DriverReport.returnWeekString() + ")");
+            Files.createDirectories(path);
+            
+            file = path.resolve("AccountReport (" + DriverReport.returnWeekString() + ").xlsx").toFile();
             if (!file.exists()) {
                 file.createNewFile();
             }
@@ -94,6 +100,7 @@ public class AccountantReport {
                     if (start.getTimeInMillis() > DriverReport.returnWeekMili()) {
                        // continue;
                     }
+                    hasValue = true;
                     clients.add(client);
                 }
                 if (hasValue) {
@@ -300,7 +307,7 @@ public class AccountantReport {
                 JOptionPane.showMessageDialog(null, "AccountReports Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 DSC_Main.reportsDone++;
-                if (DSC_Main.reportsDone == 5) {
+                if (DSC_Main.reportsDone == DSC_Main.TOTAL_REPORTS) {
                     DSC_Main.reportsDone();
                 }
             }

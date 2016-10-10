@@ -101,6 +101,8 @@ public class DriverReport {
                         //continue;
                     }
 
+                    hasValue = true;
+                    
                     ArrayList<Meal> meals = new ArrayList<>();
                     for (DataSnapshot dataSnapshot1 : ds.child("Meals").getChildren()) {
                         meals.add(new Meal(dataSnapshot1.child("Quantity").getValue(int.class),
@@ -126,7 +128,9 @@ public class DriverReport {
                     for (Order order : orderList) {
                         getClient(order.getClientID(), orderList.indexOf(order));
                     }
-                } else if (!(DSC_Main.generateAllReports)) {
+                } else {
+                    System.out.println("Done - Driver");
+                    if (!DSC_Main.generateAllReports) {
                     driverLoadingObj.setVisible(false);
                     driverLoadingObj.dispose();
                     JOptionPane.showMessageDialog(null, "Not enough data in Database to generate DriverReport", "Success", JOptionPane.INFORMATION_MESSAGE);
@@ -135,6 +139,7 @@ public class DriverReport {
                     if (DSC_Main.reportsDone == 5) {
                         DSC_Main.reportsDone();
                     }
+                }
                 }
 
             }
@@ -402,11 +407,6 @@ public class DriverReport {
         }
 
         try {
-            file = new File("DriverReports Route (" + returnWeekString() + ").xlsx");
-            if (!file.exists()) {
-                file.createNewFile();
-            }
-
             excelOut = new FileOutputStream(file);
             workbook.write(excelOut);
             excelOut.close();
@@ -416,7 +416,7 @@ public class DriverReport {
                 JOptionPane.showMessageDialog(null, "DriverReports Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 DSC_Main.reportsDone++;
-                if (DSC_Main.reportsDone == 5) {
+                if (DSC_Main.reportsDone == DSC_Main.TOTAL_REPORTS) {
                     DSC_Main.reportsDone();
                 }
             }
@@ -461,7 +461,6 @@ public class DriverReport {
         while (weekDate.get(Calendar.DAY_OF_WEEK) != 2) {
             weekDate.add(Calendar.DAY_OF_WEEK, -1);
         }
-        weekDate.add(Calendar.WEEK_OF_MONTH, 1);
         return weekDate.getTimeInMillis();
     }
 

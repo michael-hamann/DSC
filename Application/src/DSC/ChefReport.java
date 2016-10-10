@@ -346,7 +346,7 @@ public class ChefReport {
         FileOutputStream excelOut = null;
         try {
 
-            Path path = Paths.get("Reports\\Week " + DriverReport.returnWeekInt() + " (" + DriverReport.returnWeekString() + ")\\ChefReport - " + currentWeek() + " Week -  " + returnWeekInt());
+            Path path = Paths.get("Reports\\Week " + DriverReport.returnWeekInt() + " (" + DriverReport.returnWeekString() + ")\\ChefReports\\");
             Files.createDirectories(path);
 
             File file = path.resolve("ChefReports Week - " + returnWeekInt() + " ( " + mealType + " )" + ".xlsx").toFile();
@@ -368,7 +368,7 @@ public class ChefReport {
                 System.out.println("Done - Chef");
                 if (DSC_Main.generateAllReports) {
                     DSC_Main.reportsDone++;
-                    if (DSC_Main.reportsDone == 5) {
+                    if (DSC_Main.reportsDone == DSC_Main.TOTAL_REPORTS) {
                         DSC_Main.reportsDone();
                     }
                 }

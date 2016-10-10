@@ -30,6 +30,7 @@ public class DSC_Main extends javax.swing.JFrame {
     public static int reportsDone;
     public static boolean generateAllReports = false;
     public static DSC_ReportLoading objLoadingScreen;
+    public static final int TOTAL_REPORTS = 6;
 
     /**
      * Creates new form DSC_Main
@@ -860,10 +861,13 @@ public class DSC_Main extends javax.swing.JFrame {
         reportsDone = 0;
         generateAllReports = true;
         objLoadingScreen = new DSC_ReportLoading();
+
         PackerReport.getPackerData();
         ChefReport.getChefReport();
         DriverReport.getDriverReports();
         AccountantReport.getAccountantReport();
+        NewClientReport.getNewClientsReport();
+        QuantityReport.getActiveClients();
 
     }//GEN-LAST:event_btnGenerateAllActionPerformed
 
@@ -872,7 +876,7 @@ public class DSC_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnQuantityReportActionPerformed
 
     private void btnNewQlientReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewQlientReportActionPerformed
-        newClientReport.getNewClientsReport();
+        NewClientReport.getNewClientsReport();
     }//GEN-LAST:event_btnNewQlientReportActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

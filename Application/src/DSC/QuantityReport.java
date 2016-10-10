@@ -17,8 +17,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Map;
 import java.util.Set;
@@ -29,7 +27,6 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFFont;
@@ -60,23 +57,30 @@ public class QuantityReport {
     private static int totalSix = 0;
     private static int totalExtra = 0;
     private static QuantityReportData quantityObj;
+    private static DSC_ReportLoading quantityLoadingObj;
 
     public static void getActiveClients() {
+        if (!DSC_Main.generateAllReports) {
+            quantityLoadingObj = new DSC_ReportLoading();
+        }
+        boolean fileFound = false;
         quantityObj = new QuantityReportData();
         Firebase newRef = DBClass.getInstance().child("Orders");
         newRef.orderByChild("Active").equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot ds) {
+                boolean hasValue = false;
                 for (DataSnapshot levelOne : ds.getChildren()) {
 
-//                    Calendar start = null;
-//
-//                    start = Calendar.getInstance();
-//                    start.setTimeInMillis(levelOne.child("StartingDate").getValue(long.class));
-//
-//                    if (start.getTimeInMillis() > DriverReport.returnWeekMili()) {
-//                        continue;
-//                    }
+                    Calendar start = null;
+
+                    start = Calendar.getInstance();
+                    start.setTimeInMillis(levelOne.child("StartingDate").getValue(long.class));
+
+                    if (start.getTimeInMillis() > DriverReport.returnWeekMili()) {
+                        continue;
+                    }
+                    hasValue = true;
                     boolean activeCheck = levelOne.child("Active").getValue(boolean.class).equals(true);
                     if (activeCheck) {
                         quantityObj.incrementActiveClientCount();
@@ -190,7 +194,22 @@ public class QuantityReport {
                     }
                 }
 
-                processQuantityReport();
+                if (hasValue) {
+                    processQuantityReport();
+                } else {
+                    System.out.println("Done - Quantity");
+                    if (DSC_Main.generateAllReports) {
+                        DSC_Main.reportsDone++;
+                        if (DSC_Main.reportsDone == DSC_Main.TOTAL_REPORTS) {
+                            DSC_Main.reportsDone();
+                        }
+                    } else {
+                        quantityLoadingObj.setVisible(false);
+                        quantityLoadingObj.dispose();
+                        JOptionPane.showMessageDialog(null, "Not enough data in Database to generate QuantityReport", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }
+
             }
 
             @Override
@@ -202,7 +221,7 @@ public class QuantityReport {
         );
     }
 
-    public static void processQuantityReport() {
+    private static void processQuantityReport() {
 
         int excelNumber = 0;
         int sheetNumber = 0;
@@ -341,12 +360,12 @@ public class QuantityReport {
 
     }
 
-    public static void creatSheet(String mealType, XSSFWorkbook workbook) throws IOException {
+    private static void creatSheet(String mealType, XSSFWorkbook workbook) throws IOException {
 
         FileOutputStream excelOut = null;
         try {
 
-            Path path = Paths.get("Reports\\Week " + returnWeekInt() + "\\Quantity Report - " + currentWeek() + " Week -  " + returnWeekInt());
+            Path path = Paths.get("Reports\\Week " + DriverReport.returnWeekInt() + " (" + DriverReport.returnWeekString() + ")");
             Files.createDirectories(path);
 
             File file = path.resolve("Quantity Report Week - " + returnWeekInt() + ".xlsx").toFile();
@@ -357,10 +376,16 @@ public class QuantityReport {
             workbook.write(excelOut);
             excelOut.close();
 
-            System.out.println("Done -Quantity");
-
-            if (DSC_Main.reportsDone == 4) {
-                DSC_Main.reportsDone();
+            System.out.println("Done - Quantity");
+            if (DSC_Main.generateAllReports) {
+                DSC_Main.reportsDone++;
+                if (DSC_Main.reportsDone == DSC_Main.TOTAL_REPORTS) {
+                    DSC_Main.reportsDone();
+                }
+            } else {
+                quantityLoadingObj.setVisible(false);
+                quantityLoadingObj.dispose();
+                JOptionPane.showMessageDialog(null, "QuantityReport Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
             }
 
         } catch (FileNotFoundException ex) {
@@ -369,7 +394,7 @@ public class QuantityReport {
         }
     }
 
-    public static String currentWeek() {
+    private static String currentWeek() {
         Calendar weekDate = Calendar.getInstance();
         while (weekDate.get(Calendar.DAY_OF_WEEK) != 2) {
             weekDate.add(Calendar.DAY_OF_WEEK, -1);
@@ -377,7 +402,7 @@ public class QuantityReport {
         return new SimpleDateFormat("dd MMM yyyy").format(weekDate.getTime());
     }
 
-    public static int returnWeekInt() {
+    private static int returnWeekInt() {
         Calendar weekDate = Calendar.getInstance();
         while (weekDate.get(Calendar.DAY_OF_WEEK) != 2) {
             weekDate.add(Calendar.DAY_OF_WEEK, -1);
