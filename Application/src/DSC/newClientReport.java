@@ -273,7 +273,7 @@ public class NewClientReport {
             if (!(DSC_Main.generateAllReports)) {
                 newClientLoadObj.setVisible(false);
                 newClientLoadObj.dispose();
-                JOptionPane.showMessageDialog(null, "AccountReports Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "NewClientReports Succesfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 DSC_Main.reportsDone++;
                 if (DSC_Main.reportsDone == 5) {
@@ -284,8 +284,8 @@ public class NewClientReport {
         } catch (IOException io) {
             newClientLoadObj.setVisible(false);
             newClientLoadObj.dispose();
-            JOptionPane.showMessageDialog(null, "An error occured\nCould not create AccountReport", "Error", JOptionPane.ERROR_MESSAGE);
-            System.err.println("Error - Could not create new AccountReport: ");
+            JOptionPane.showMessageDialog(null, "An error occured\nCould not create NewClientReports", "Error", JOptionPane.ERROR_MESSAGE);
+            System.err.println("Error - Could not create new NewClientReports: ");
             io.printStackTrace();
         }
 

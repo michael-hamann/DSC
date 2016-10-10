@@ -129,17 +129,7 @@ public class PackerReport {
                         getClient(order.getClientID(), orderList.indexOf(order));
                     }
                 } else {
-                    System.out.println("Done - Packer");
-                    if (DSC_Main.generateAllReports) {
-                        DSC_Main.reportsDone++;
-                        if (DSC_Main.reportsDone == DSC_Main.TOTAL_REPORTS) {
-                            DSC_Main.reportsDone();
-                        }
-                    } else {
-                        packerLoadingObj.setVisible(false);
-                        packerLoadingObj.dispose();
-                        JOptionPane.showMessageDialog(null, "Not enough data in Database to generate PackerReport", "Success", JOptionPane.INFORMATION_MESSAGE);
-                    }
+                    createSpreadsheets();
                 }
 
             }

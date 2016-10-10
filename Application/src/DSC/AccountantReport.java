@@ -98,7 +98,7 @@ public class AccountantReport {
                     start.setTimeInMillis(dataSnapshot.child("StartingDate").getValue(long.class));
 
                     if (start.getTimeInMillis() > DriverReport.returnWeekMili()) {
-                       // continue;
+                        continue;
                     }
                     hasValue = true;
                     clients.add(client);
@@ -108,17 +108,7 @@ public class AccountantReport {
                         getClient(clients.get(i), i);
                     }
                 } else {
-                    System.out.println("Done - Accountant");
-                    if (!(DSC_Main.generateAllReports)) {
-                        accountLoadObj.setVisible(false);
-                        accountLoadObj.dispose();
-                        JOptionPane.showMessageDialog(null, "Not enough data in Database to generate AccountReport", "Success", JOptionPane.INFORMATION_MESSAGE);
-                    } else {
-                        DSC_Main.reportsDone++;
-                        if (DSC_Main.reportsDone == 5) {
-                            DSC_Main.reportsDone();
-                        }
-                    }
+                    createExcelReport();
                 }
 
             }

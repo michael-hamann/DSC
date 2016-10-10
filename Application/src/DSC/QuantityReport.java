@@ -69,7 +69,6 @@ public class QuantityReport {
         newRef.orderByChild("Active").equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot ds) {
-                boolean hasValue = false;
                 for (DataSnapshot levelOne : ds.getChildren()) {
 
                     Calendar start = null;
@@ -80,7 +79,7 @@ public class QuantityReport {
                     if (start.getTimeInMillis() > DriverReport.returnWeekMili()) {
                         continue;
                     }
-                    hasValue = true;
+                    
                     boolean activeCheck = levelOne.child("Active").getValue(boolean.class).equals(true);
                     if (activeCheck) {
                         quantityObj.incrementActiveClientCount();
@@ -193,23 +192,7 @@ public class QuantityReport {
                         }
                     }
                 }
-
-                if (hasValue) {
-                    processQuantityReport();
-                } else {
-                    System.out.println("Done - Quantity");
-                    if (DSC_Main.generateAllReports) {
-                        DSC_Main.reportsDone++;
-                        if (DSC_Main.reportsDone == DSC_Main.TOTAL_REPORTS) {
-                            DSC_Main.reportsDone();
-                        }
-                    } else {
-                        quantityLoadingObj.setVisible(false);
-                        quantityLoadingObj.dispose();
-                        JOptionPane.showMessageDialog(null, "Not enough data in Database to generate QuantityReport", "Success", JOptionPane.INFORMATION_MESSAGE);
-                    }
-                }
-
+                processQuantityReport();
             }
 
             @Override

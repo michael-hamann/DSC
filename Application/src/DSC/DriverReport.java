@@ -59,7 +59,7 @@ public class DriverReport {
             Path path = Paths.get("Reports\\Week " + DriverReport.returnWeekInt() + " (" + DriverReport.returnWeekString() + ")");
             Files.createDirectories(path);
             
-            file = path.resolve("DriverReports Route (" + returnWeekString() + ").xlsx").toFile();
+            file = path.resolve("DriverReports (" + returnWeekString() + ").xlsx").toFile();
             if (!file.exists()) {
                 file.createNewFile();
             }
@@ -98,7 +98,7 @@ public class DriverReport {
                     start.setTimeInMillis(dataSnapshot.child("StartingDate").getValue(long.class));
 
                     if (start.getTimeInMillis() > DriverReport.returnWeekMili()) {
-                        //continue;
+                        continue;
                     }
 
                     hasValue = true;
@@ -129,17 +129,7 @@ public class DriverReport {
                         getClient(order.getClientID(), orderList.indexOf(order));
                     }
                 } else {
-                    System.out.println("Done - Driver");
-                    if (!DSC_Main.generateAllReports) {
-                    driverLoadingObj.setVisible(false);
-                    driverLoadingObj.dispose();
-                    JOptionPane.showMessageDialog(null, "Not enough data in Database to generate DriverReport", "Success", JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    DSC_Main.reportsDone++;
-                    if (DSC_Main.reportsDone == 5) {
-                        DSC_Main.reportsDone();
-                    }
-                }
+                    createSpreadsheets();
                 }
 
             }
