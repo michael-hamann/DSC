@@ -43,19 +43,8 @@ public class QuantityReport {
     private static final String STANDARD = "Standard";
     private static final String LOW_CARB = "Low Carb";
     private static final String KIDDIES = "Kiddies";
-
     private static QuantityReportData quantityReportData;
     private static XSSFWorkbook workbook;
-
-    private static int totalIndividuals = 0;
-    private static int totalClients = 0;
-    private static int totalSingle = 0;
-    private static int totalCouple = 0;
-    private static int totalThree = 0;
-    private static int totalFour = 0;
-    private static int totalFive = 0;
-    private static int totalSix = 0;
-    private static int totalExtra = 0;
     private static QuantityReportData quantityObj;
     private static DSC_ReportLoading quantityLoadingObj;
 
@@ -71,15 +60,14 @@ public class QuantityReport {
             public void onDataChange(DataSnapshot ds) {
                 for (DataSnapshot levelOne : ds.getChildren()) {
 
-                    Calendar start = null;
-
-                    start = Calendar.getInstance();
-                    start.setTimeInMillis(levelOne.child("StartingDate").getValue(long.class));
-
-                    if (start.getTimeInMillis() > DriverReport.returnWeekMili()) {
-                        continue;
-                    }
-                    
+//                    Calendar start = null;
+//
+//                    start = Calendar.getInstance();
+//                    start.setTimeInMillis(levelOne.child("StartingDate").getValue(long.class));
+//
+//                    if (start.getTimeInMillis() > DriverReport.returnWeekMili()) {
+//                        continue;
+//                    }
                     boolean activeCheck = levelOne.child("Active").getValue(boolean.class).equals(true);
                     if (activeCheck) {
                         quantityObj.incrementActiveClientCount();
@@ -103,7 +91,6 @@ public class QuantityReport {
                         } else if (familySizeCheck > 6) {
                             quantityObj.incrementCountFamilySizeMoreThanSix();
                         }
-                        /////////////////////////////////////////////////////////////// Perfect
 
                         for (DataSnapshot levelTwo : levelOne.getChildren()) {
 
@@ -128,7 +115,6 @@ public class QuantityReport {
                                     quantityObj.incrementCountFamilySizeMoreThanSix_Standard();
                                 }
 
-                                ///////////////////////////////////////////////////////////////////////////////////// Average
                                 // Low Carb Totals
                                 if (mealType.equals(LOW_CARB) && quantity == 1) {
                                     quantityObj.incrementCountFamSize1_LC();
@@ -241,22 +227,16 @@ public class QuantityReport {
             } else if (i == 10) {
                 data.put(i + "", new String[]{"", "", "", "", "", "", "", ""});
             } else if (i == 11) {
-                totalSingle = quantityObj.getCountFamSize1_Standard() + quantityObj.getCountFamSize1_LC() + quantityObj.getCountFamSize1_KD();
-                totalCouple = quantityObj.getCountFamSize2_Standard() + quantityObj.getCountFamSize2_LC() + quantityObj.getCountFamSize2_KD();
-                totalThree = quantityObj.getCountFamSize3_Standard() + quantityObj.getCountFamSize3_LC() + quantityObj.getCountFamSize3_KD();
-                totalFour = quantityObj.getCountFamSize4_Standard() + quantityObj.getCountFamSize4_LC() + quantityObj.getCountFamSize4_KD();
-                totalFive = quantityObj.getCountFamSize5_Standard() + quantityObj.getCountFamSize5_LC() + quantityObj.getCountFamSize5_KD();
-                totalSix = quantityObj.getCountFamSize6_Standard() + quantityObj.getCountFamSize6_LC() + quantityObj.getCountFamSize6_KD();
-                totalExtra = quantityObj.getCountFamilySizeMoreThanSix_Standard() + quantityObj.getCountFamilySizeMoreThanSix_LC() + quantityObj.getCountFamilySizeMoreThanSix_KD();
-                data.put(i + "", new String[]{"Totals", totalSingle + "", totalCouple + "", totalThree + "", totalFour + "", totalFive + "", totalSix + "", totalExtra + ""});
+                data.put(i + "", new String[]{"Totals", quantityObj.totalSingleMeals() + "", quantityObj.totalCoupleMeals() + "", quantityObj.totalThreeMeals() + "",
+                    quantityObj.totalFourMeals() + "", quantityObj.totalFiveMeals() + "", quantityObj.totalSixMeals() + "", quantityObj.totalExtraMeals() + ""});
             } else if (i == 12) {
                 data.put(i + "", new String[]{"", "", "", "", "", "", "", ""});
             } else if (i == 13) {
-                data.put(i + "", new String[]{"Standard", "", "", "", "", "", "", quantityObj.getCountStandardActive() + ""});
+                data.put(i + "", new String[]{"Standard", "", "", "", "", "", "", quantityObj.returnTotalStandardMeals() + ""});
             } else if (i == 14) {
-                data.put(i + "", new String[]{"Low Carb", "", "", "", "", "", "", quantityObj.getCountLowCarbActive() + ""});
+                data.put(i + "", new String[]{"Low Carb", "", "", "", "", "", "", quantityObj.returnTotalLowCarbMeals() + ""});
             } else if (i == 15) {
-                data.put(i + "", new String[]{"Kiddies", "", "", "", "", "", "", quantityObj.getCountKiddiesActive() + ""});
+                data.put(i + "", new String[]{"Kiddies", "", "", "", "", "", "", quantityObj.returnTotalKiddiesMeals() + ""});
             } else if (i == 16) {
                 data.put(i + "", new String[]{"", "", "", "", "", "", "", ""});
             } else if (i == 17) {

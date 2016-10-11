@@ -57,322 +57,322 @@ public class QuantityReportData {
     private int QuantityFamSize6;
     private int QuantityFamSizeMoreThanSix;
 
-    public int getQuantityFamSize1() {
+    protected int getQuantityFamSize1() {
         return QuantityFamSize1;
     }
 
-    public int getQuantityFamSize2() {
+    protected int getQuantityFamSize2() {
         return QuantityFamSize2;
     }
 
-    public int getQuantityFamSize3() {
+    protected int getQuantityFamSize3() {
         return QuantityFamSize3;
     }
 
-    public int getQuantityFamSize4() {
+    protected int getQuantityFamSize4() {
         return QuantityFamSize4;
     }
 
-    public int getQuantityFamSize5() {
+    protected int getQuantityFamSize5() {
         return QuantityFamSize5;
     }
 
-    public int getQuantityFamSize6() {
+    protected int getQuantityFamSize6() {
         return QuantityFamSize6;
     }
 
-    public int getQuantityFamSizeMoreThanSix() {
+    protected int getQuantityFamSizeMoreThanSix() {
         return QuantityFamSizeMoreThanSix;
     }
 
-    public int getCountStandardActive() {
+    protected int getCountStandardActive() {
         return countStandardActive;
     }
 
-    public int getCountKiddiesActive() {
+    protected int getCountKiddiesActive() {
         return countKiddiesActive;
     }
 
-    public int getCountLowCarbActive() {
+    protected int getCountLowCarbActive() {
         return countLowCarbActive;
     }
 
-    public int getActiveClientCount() {
+    protected int getActiveClientCount() {
         return activeClientCount;
     }
 
-    public int getCountFamilySize_1() {
+    protected int getCountFamilySize_1() {
         return countFamilySize_1;
     }
 
-    public int getCountFamilySize_2() {
+    protected int getCountFamilySize_2() {
         return countFamilySize_2;
     }
 
-    public int getCountFamilySize_3() {
+    protected int getCountFamilySize_3() {
         return countFamilySize_3;
     }
 
-    public int getCountFamilySize_4() {
+    protected int getCountFamilySize_4() {
         return countFamilySize_4;
     }
 
-    public int getCountFamilySize_5() {
+    protected int getCountFamilySize_5() {
         return countFamilySize_5;
     }
 
-    public int getCountFamilySize_6() {
+    protected int getCountFamilySize_6() {
         return countFamilySize_6;
     }
 
-    public int getCountFamilySizeMoreThanSix() {
+    protected int getCountFamilySizeMoreThanSix() {
         return countFamilySizeMoreThanSix;
     }
 
-    public int getCountFamSize1_Standard() {
+    protected int getCountFamSize1_Standard() {
         return countFamSize1_Standard;
     }
 
-    public int getCountFamSize2_Standard() {
+    protected int getCountFamSize2_Standard() {
         return countFamSize2_Standard;
     }
 
-    public int getCountFamSize3_Standard() {
+    protected int getCountFamSize3_Standard() {
         return countFamSize3_Standard;
     }
 
-    public int getCountFamSize4_Standard() {
+    protected int getCountFamSize4_Standard() {
         return countFamSize4_Standard;
     }
 
-    public int getCountFamSize5_Standard() {
+    protected int getCountFamSize5_Standard() {
         return countFamSize5_Standard;
     }
 
-    public int getCountFamSize6_Standard() {
+    protected int getCountFamSize6_Standard() {
         return countFamSize6_Standard;
     }
 
-    public int getCountFamilySizeMoreThanSix_Standard() {
+    protected int getCountFamilySizeMoreThanSix_Standard() {
         return countFamilySizeMoreThanSix_Standard;
     }
 
-    public int getCountFamSize1_LC() {
+    protected int getCountFamSize1_LC() {
         return countFamSize1_LC;
     }
 
-    public int getCountFamSize2_LC() {
+    protected int getCountFamSize2_LC() {
         return countFamSize2_LC;
     }
 
-    public int getCountFamSize3_LC() {
+    protected int getCountFamSize3_LC() {
         return countFamSize3_LC;
     }
 
-    public int getCountFamSize4_LC() {
+    protected int getCountFamSize4_LC() {
         return countFamSize4_LC;
     }
 
-    public int getCountFamSize5_LC() {
+    protected int getCountFamSize5_LC() {
         return countFamSize5_LC;
     }
 
-    public int getCountFamSize6_LC() {
+    protected int getCountFamSize6_LC() {
         return countFamSize6_LC;
     }
 
-    public int getCountFamilySizeMoreThanSix_LC() {
+    protected int getCountFamilySizeMoreThanSix_LC() {
         return countFamilySizeMoreThanSix_LC;
     }
 
-    public int getCountFamSize1_KD() {
+    protected int getCountFamSize1_KD() {
         return countFamSize1_KD;
     }
 
-    public int getCountFamSize2_KD() {
+    protected int getCountFamSize2_KD() {
         return countFamSize2_KD;
     }
 
-    public int getCountFamSize3_KD() {
+    protected int getCountFamSize3_KD() {
         return countFamSize3_KD;
     }
 
-    public int getCountFamSize4_KD() {
+    protected int getCountFamSize4_KD() {
         return countFamSize4_KD;
     }
 
-    public int getCountFamSize5_KD() {
+    protected int getCountFamSize5_KD() {
         return countFamSize5_KD;
     }
 
-    public int getCountFamSize6_KD() {
+    protected int getCountFamSize6_KD() {
         return countFamSize6_KD;
     }
 
-    public int getCountFamilySizeMoreThanSix_KD() {
+    protected int getCountFamilySizeMoreThanSix_KD() {
         return countFamilySizeMoreThanSix_KD;
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////// increment methods
-    public void incrementCountStandardActive(int quantity) {
+    protected void incrementCountStandardActive(int quantity) {
         this.countStandardActive += quantity;
     }
 
-    public void incrementCountKiddiesActive(int quantity) {
+    protected void incrementCountKiddiesActive(int quantity) {
         this.countKiddiesActive += quantity;
     }
 
-    public void incrementCountLowCarbActive(int quantity) {
+    protected void incrementCountLowCarbActive(int quantity) {
         this.countLowCarbActive += quantity;
     }
 
-    public void incrementActiveClientCount() {
+    protected void incrementActiveClientCount() {
         this.activeClientCount++;
     }
 
-    public void incrementCountFamilySize_1() {
+    protected void incrementCountFamilySize_1() {
         this.countFamilySize_1++;
     }
 
-    public void incrementCountFamilySize_2() {
+    protected void incrementCountFamilySize_2() {
         this.countFamilySize_2++;
     }
 
-    public void incrementCountFamilySize_3() {
+    protected void incrementCountFamilySize_3() {
         this.countFamilySize_3++;
     }
 
-    public void incrementCountFamilySize_4() {
+    protected void incrementCountFamilySize_4() {
         this.countFamilySize_4++;
     }
 
-    public void incrementCountFamilySize_5() {
+    protected void incrementCountFamilySize_5() {
         this.countFamilySize_5++;
     }
 
-    public void incrementCountFamilySize_6() {
+    protected void incrementCountFamilySize_6() {
         this.countFamilySize_6++;
     }
 
-    public void incrementCountFamilySizeMoreThanSix() {
+    protected void incrementCountFamilySizeMoreThanSix() {
         this.countFamilySizeMoreThanSix++;
     }
 
-    public void incrementCountFamSize1_Standard() {
+    protected void incrementCountFamSize1_Standard() {
         this.countFamSize1_Standard++;
     }
 
-    public void incrementCountFamSize2_Standard() {
+    protected void incrementCountFamSize2_Standard() {
         this.countFamSize2_Standard++;
     }
 
-    public void incrementCountFamSize3_Standard() {
+    protected void incrementCountFamSize3_Standard() {
         this.countFamSize3_Standard++;
     }
 
-    public void incrementCountFamSize4_Standard() {
+    protected void incrementCountFamSize4_Standard() {
         this.countFamSize4_Standard++;
     }
 
-    public void incrementCountFamSize5_Standard() {
+    protected void incrementCountFamSize5_Standard() {
         this.countFamSize5_Standard++;
     }
 
-    public void incrementCountFamSize6_Standard() {
+    protected void incrementCountFamSize6_Standard() {
         this.countFamSize6_Standard++;
     }
 
-    public void incrementCountFamilySizeMoreThanSix_Standard() {
+    protected void incrementCountFamilySizeMoreThanSix_Standard() {
         this.countFamilySizeMoreThanSix_Standard++;
     }
 
-    public void incrementCountFamSize1_LC() {
+    protected void incrementCountFamSize1_LC() {
         this.countFamSize1_LC++;
     }
 
-    public void incrementCountFamSize2_LC() {
+    protected void incrementCountFamSize2_LC() {
         this.countFamSize2_LC++;
     }
 
-    public void incrementCountFamSize3_LC() {
+    protected void incrementCountFamSize3_LC() {
         this.countFamSize3_LC++;
     }
 
-    public void incrementCountFamSize4_LC() {
+    protected void incrementCountFamSize4_LC() {
         this.countFamSize4_LC++;
     }
 
-    public void incrementCountFamSize5_LC() {
+    protected void incrementCountFamSize5_LC() {
         this.countFamSize5_LC++;
     }
 
-    public void incrementCountFamSize6_LC() {
+    protected void incrementCountFamSize6_LC() {
         this.countFamSize6_LC++;
     }
 
-    public void incrementCountFamilySizeMoreThanSix_LC() {
+    protected void incrementCountFamilySizeMoreThanSix_LC() {
         this.countFamilySizeMoreThanSix_LC++;
     }
 
-    public void incrementCountFamSize1_KD() {
+    protected void incrementCountFamSize1_KD() {
         this.countFamSize1_KD++;
     }
 
-    public void incrementCountFamSize2_KD() {
+    protected void incrementCountFamSize2_KD() {
         this.countFamSize2_KD++;
     }
 
-    public void incrementCountFamSize3_KD() {
+    protected void incrementCountFamSize3_KD() {
         this.countFamSize3_KD++;
     }
 
-    public void incrementCountFamSize4_KD() {
+    protected void incrementCountFamSize4_KD() {
         this.countFamSize4_KD++;
     }
 
-    public void incrementCountFamSize5_KD() {
+    protected void incrementCountFamSize5_KD() {
         this.countFamSize5_KD++;
     }
 
-    public void incrementCountFamSize6_KD() {
+    protected void incrementCountFamSize6_KD() {
         this.countFamSize6_KD++;
     }
 
-    public void incrementCountFamilySizeMoreThanSix_KD() {
+    protected void incrementCountFamilySizeMoreThanSix_KD() {
         this.countFamilySizeMoreThanSix_KD++;
     }
 
     /// Quantity Increment
-    public void incrementQuantityFamSize1() {
+    protected void incrementQuantityFamSize1() {
         this.QuantityFamSize1++;
     }
 
-    public void incrementQuantityFamSize2() {
+    protected void incrementQuantityFamSize2() {
         this.QuantityFamSize2++;
     }
 
-    public void incrementQuantityFamSize3() {
+    protected void incrementQuantityFamSize3() {
         this.QuantityFamSize3++;
     }
 
-    public void incrementQuantityFamSize4() {
+    protected void incrementQuantityFamSize4() {
         this.QuantityFamSize4++;
     }
 
-    public void incrementQuantityFamSize5() {
+    protected void incrementQuantityFamSize5() {
         this.QuantityFamSize5++;
     }
 
-    public void incrementQuantityFamSize6() {
+    protected void incrementQuantityFamSize6() {
         this.QuantityFamSize6++;
     }
 
-    public void incrementQuantityFamSizeMoreThanSix() {
+    protected void incrementQuantityFamSizeMoreThanSix() {
         this.QuantityFamSizeMoreThanSix++;
     }
 
     // add totals
-    public int returnTotalClients() {
+    protected int returnTotalClients() {
 
         int totalClients = getCountFamilySize_1() + getCountFamilySize_2() + getCountFamilySize_3() + getCountFamilySize_4()
                 + getCountFamilySize_5() + getCountFamilySize_6() + getCountFamilySizeMoreThanSix();
@@ -380,12 +380,71 @@ public class QuantityReportData {
         return totalClients;
     }
 
-    public int returnTotalIndividuals() {
+    protected int returnTotalIndividuals() {
 
         int totalIndividuals = getQuantityFamSize1() + getQuantityFamSize2() + getQuantityFamSize3()
                 + getQuantityFamSize4() + getQuantityFamSize5() + getQuantityFamSize6() + getQuantityFamSizeMoreThanSix();
-        
+
         return totalIndividuals;
+    }
+
+    protected int returnTotalStandardMeals() {
+
+        int totalStandardMeals = getCountFamSize1_Standard() + getCountFamSize2_Standard() + getCountFamSize3_Standard() + getCountFamSize4_Standard()
+                + getCountFamSize5_Standard() + getCountFamSize6_Standard() + getCountFamilySizeMoreThanSix_Standard();
+
+        return totalStandardMeals;
+    }
+
+    protected int returnTotalLowCarbMeals() {
+
+        int totalLowCarbMeals = getCountFamSize1_LC() + getCountFamSize2_LC() + getCountFamSize3_LC() + getCountFamSize4_LC()
+                + getCountFamSize5_LC() + getCountFamSize6_LC() + getCountFamilySizeMoreThanSix_LC();
+
+        return totalLowCarbMeals;
+    }
+
+    protected int returnTotalKiddiesMeals() {
+
+        int totalKiddiesMeals = getCountFamSize1_KD() + getCountFamSize2_KD() + getCountFamSize3_KD() + getCountFamSize4_KD()
+                + getCountFamSize5_KD() + getCountFamSize6_KD() + getCountFamilySizeMoreThanSix_KD();
+
+        return totalKiddiesMeals;
+    }
+
+    protected int totalSingleMeals() {
+        int totalSingle = getCountFamSize1_Standard() + getCountFamSize1_LC() + getCountFamSize1_KD();
+        return totalSingle;
+    }
+
+    protected int totalCoupleMeals() {
+        int totalCouple = getCountFamSize2_Standard() + getCountFamSize2_LC() + getCountFamSize2_KD();
+        return totalCouple;
+    }
+
+    protected int totalThreeMeals() {
+        int totalThree = getCountFamSize3_Standard() + getCountFamSize3_LC() + getCountFamSize3_KD();
+        return totalThree;
+    }
+
+    protected int totalFourMeals() {
+        int totalFour = getCountFamSize4_Standard() + getCountFamSize4_LC() + getCountFamSize4_KD();
+        return totalFour;
+    }
+
+    protected int totalFiveMeals() {
+        int totalFive = getCountFamSize5_Standard() + getCountFamSize5_LC() + getCountFamSize5_KD();
+        return totalFive;
+    }
+
+    protected int totalSixMeals() {
+        int totalSix = getCountFamSize6_Standard() + getCountFamSize6_LC() + getCountFamSize6_KD();
+        return totalSix;
+    }
+
+    protected int totalExtraMeals() {
+        int totalExtra = getCountFamilySizeMoreThanSix_Standard() + getCountFamilySizeMoreThanSix_LC() + getCountFamilySizeMoreThanSix_KD();
+        return totalExtra;
     }
 
 }
