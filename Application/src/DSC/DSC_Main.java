@@ -5,6 +5,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import java.awt.Frame;
+import java.awt.Toolkit;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -39,6 +41,7 @@ public class DSC_Main extends javax.swing.JFrame {
         DBClass.getInstance();
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        
     }
 
     /**
