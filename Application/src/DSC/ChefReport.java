@@ -63,9 +63,6 @@ public class ChefReport {
     }
 
     public static void getActiveRoutes() {
-
-        booksCounter = 0;
-
         Firebase newRef = DBClass.getInstance().child("Routes");
         newRef.orderByChild("Active").equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -90,15 +87,12 @@ public class ChefReport {
         boolean firstFamEntry = true;
         String list[] = {"Standard", "Low Carb", "Kiddies"};
         int excelNumber = 0;
-
         int sheetNumber = 0;
 
         for (mealCounter = 0; mealCounter < 3; mealCounter++) {
             workbook = new XSSFWorkbook();
             sheetNumber = 0;
             for (String currRoute : allRoutes) {
-                int c = 0;
-
                 Map<String, Object[]> data = new TreeMap<>();
                 data.put(0 + "", new String[]{"Doorstep Chef - Chef Report " + currentWeek(), "", "", "Meal Type : " + list[mealCounter] + " " + " " + "Route: " + sheetNumber});
                 data.put(1 + "", new String[]{"", "", "", "", "", "", ""});
@@ -111,11 +105,12 @@ public class ChefReport {
 
                 for (int ordersCount = 0; ordersCount < orders.size(); ordersCount++) {
                     int bulkCount = 0;
+                    String currFamilySize = "";
                     for (int i = 0; i < orders.get(ordersCount).getMeals().size(); i++) {
                         if (orders.get(ordersCount).getRoute().equals(currRoute) && orders.get(ordersCount).getMeals().get(i).getMealType().equals(list[mealCounter])) {
-//                            if (orders.get(ordersCount).getMeals().get(i).getAllergies().equals("-") && orders.get(ordersCount).getMeals().get(i).getExclusions().equals("-")) { // get bulk to add up
-//                                bulkCount++;
-//                            } else {
+                            if (orders.get(ordersCount).getMeals().get(i).getAllergies().equals("-") && orders.get(ordersCount).getMeals().get(i).getExclusions().equals("-")) { // get bulk to add up
+                                bulkCount++;
+                            } else {
 
                                 if (firstFamEntry) {
 
@@ -123,64 +118,74 @@ public class ChefReport {
 
                                         case 1:
                                             familysize = "Single Meal";
+                                            currFamilySize = "Single Meal";
                                             break;
                                         case 2:
                                             familysize = "Couple Meal";
+                                            currFamilySize = "Couple Meal";
                                             break;
                                         case 3:
                                             familysize = "Three Meal";
+                                            currFamilySize = "Three Meal";
                                             break;
                                         case 4:
                                             familysize = "Four Meal";
+                                            currFamilySize = "Four Meal";
                                             break;
                                         case 5:
                                             familysize = "Five Meal";
+                                            currFamilySize = "Five Meal";
                                             break;
                                         case 6:
                                             familysize = "Six Meal";
+                                            currFamilySize = "Six Meal";
                                             break;
                                         default:
                                             familysize = "Extra Meal";
+                                            currFamilySize = "Extra Meal";
                                     }
-                                    firstFamEntry = false;
+
                                 }
 
                                 data.put(counter + "", new String[]{familysize, orders.get(ordersCount).getMeals().get(i).getQuantity() + "", orders.get(ordersCount).getMeals().get(i).getAllergies(),
                                     orders.get(ordersCount).getMeals().get(i).getExclusions()});
                                 counter++;
 
-           //                 }
+                            }
+                            // firstFamEntry = true; 
 
                         }
-
+                        firstFamEntry = false;
                     }
-//                    String famSizeBulk = "";
-//                    switch (sheetNumber + 1) {
-//                        case 1:
-//                            famSizeBulk = "Single";
-//                            break;
-//                        case 2:
-//                            famSizeBulk = "Couple";
-//                            break;
-//                        case 3:
-//                            famSizeBulk = "Three";
-//                            break;
-//                        case 4:
-//                            famSizeBulk = "Four";
-//                            break;
-//                        case 5:
-//                            famSizeBulk = "Five";
-//                            break;
-//                        case 6:
-//                            famSizeBulk = "Six";
-//                            break;
-//                        default:
-//                            famSizeBulk = "Extra";
-//                    }
-//
-//                    data.put(counter + "", new String[]{famSizeBulk + " Normal *", bulkCount + "", "", ""});
-                    firstFamEntry = true;
-//                    counter++;
+                    if (!(familysize.equalsIgnoreCase(currFamilySize))) {
+                        String famSizeBulk = "";
+                        switch (sheetNumber + 1) {
+                            case 1:
+                                famSizeBulk = "Single";
+                                break;
+                            case 2:
+                                famSizeBulk = "Couple";
+                                break;
+                            case 3:
+                                famSizeBulk = "Three";
+                                break;
+                            case 4:
+                                famSizeBulk = "Four";
+                                break;
+                            case 5:
+                                famSizeBulk = "Five";
+                                break;
+                            case 6:
+                                famSizeBulk = "Six";
+                                break;
+                            default:
+                                famSizeBulk = "Extra";
+                        }
+
+                        data.put(counter + "", new String[]{famSizeBulk + " Normal *", bulkCount + "", "", ""});
+
+                        counter++;
+                    }
 
                 }
 
@@ -281,7 +286,7 @@ public class ChefReport {
                 sheet.addMergedRegion(new CellRangeAddress(keySet.size() + 1, keySet.size() + 1, 0, 3));
 
                 sheetNumber++;
-
+                
                 creatSheet(list[mealCounter], workbook);
 
                 excelNumber++;
@@ -289,7 +294,6 @@ public class ChefReport {
                     if (!(DSC_Main.generateAllReports)) {
                         chefLoadingObj.setVisible(false);
                         chefLoadingObj.dispose();
-
                         JOptionPane.showMessageDialog(null, "Chef Reports Successfully Generated.");
                     }
                 }
@@ -298,23 +302,21 @@ public class ChefReport {
     }
 
     public static void getActiveOrders() {
-
         Firebase ref = DBClass.getInstance().child("Orders");
         ref.orderByChild("Active").equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot ds) {
-
                 try {
+
                     for (DataSnapshot levelOne : ds.getChildren()) {
-                        Calendar start = null;
 
-                        start = Calendar.getInstance();
-                        start.setTimeInMillis(levelOne.child("StartingDate").getValue(long.class));
-
-                        if (start.getTimeInMillis() > DriverReport.returnWeekMili()) {
-                            continue;
-                        }
-
+//                        Calendar start = null;
+//                        start = Calendar.getInstance();
+//                        start.setTimeInMillis(levelOne.child("StartingDate").getValue(long.class));
+//
+//                        if (start.getTimeInMillis() > DriverReport.returnWeekMili()) {
+//                            continue;
+//                        }
                         ArrayList<Meal> meals = new ArrayList<>();
                         for (DataSnapshot levelTwo : levelOne.getChildren()) {
                             for (DataSnapshot levelThree : levelTwo.getChildren()) {
@@ -357,7 +359,6 @@ public class ChefReport {
     }
 
     public static void creatSheet(String mealType, XSSFWorkbook workbook) throws IOException {
-
         FileOutputStream excelOut = null;
         try {
 
