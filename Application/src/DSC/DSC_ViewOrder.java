@@ -301,6 +301,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
                         }  
                     }
                 }
+                activeSuburbs.add("Collection");
             }
 
             @Override
