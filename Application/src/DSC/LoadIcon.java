@@ -16,7 +16,7 @@ import javax.swing.JLabel;
  */
 public class LoadIcon {
     public void iconLoader(JLabel label2){
-        URL url = this.getClass().getResource("load_2.gif");
+        URL url = this.getClass().getResource("../PICS/load_2.gif");
         Icon icon2 = new ImageIcon(url);
         label2.setIcon(icon2);label2.setOpaque(false);
     }
