@@ -49,13 +49,13 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             getSuburbsFromText();
             lblName.setText(lblName.getText() + "          --Offline");
         }
-
         getSurveyQuestions(online);
         getDates();
         refreshTable();
         rbtAfternoon.setEnabled(false);
         rbtEvening.setEnabled(false);
         rbtLateAfternoon.setEnabled(false);
+
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
@@ -165,7 +165,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(0, 204, 51));
 
         lblClientContactNumber.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblClientContactNumber.setText("Contact Number: ");
+        lblClientContactNumber.setText("Contact Number:* ");
 
         lblClientEmail.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblClientEmail.setText("E-Mail Address: ");
@@ -174,10 +174,10 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         lblClientCollection.setText("Collection: ");
 
         lblClientAddress.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblClientAddress.setText("Delivery Address: ");
+        lblClientAddress.setText("Delivery Address:* ");
 
         lblClientSuburb.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblClientSuburb.setText("Suburb: ");
+        lblClientSuburb.setText("Suburb:* ");
 
         cmbClientSuburb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Suburb" }));
         cmbClientSuburb.addItemListener(new java.awt.event.ItemListener() {
@@ -187,7 +187,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         });
 
         lblClientSurname.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblClientSurname.setText("Surname: ");
+        lblClientSurname.setText("Surname:* ");
 
         ckbClientCollection.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -196,7 +196,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         });
 
         lblClientName.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblClientName.setText("Name: ");
+        lblClientName.setText("Name:* ");
 
         lblClientAlternativeNumber.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblClientAlternativeNumber.setText("Alternative Number: ");
@@ -403,7 +403,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(0, 204, 51));
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel4.setText("TimeFrame: ");
+        jLabel4.setText("TimeFrame:* ");
 
         rbgTimeSlots.add(rbtAfternoon);
         rbtAfternoon.setSelected(true);
@@ -413,9 +413,9 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         rbtMonToThur.setText("Monday - Thursday");
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel3.setText("TimeSlot: ");
+        jLabel3.setText("TimeSlot:* ");
 
-        cmbOrderDate.setMaximumRowCount(4);
+        cmbOrderDate.setMaximumRowCount(5);
         cmbOrderDate.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Date" }));
 
         rbgTimeSlots.add(rbtLateAfternoon);
@@ -426,7 +426,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         rbtMonToFri.setText("Monday - Friday");
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel2.setText("Starting Date: ");
+        jLabel2.setText("Starting Date:* ");
 
         rbgTimeSlots.add(rbtEvening);
         rbtEvening.setText("Evening");
@@ -729,36 +729,35 @@ public class DSC_Place_Order extends javax.swing.JFrame {
         boolean allGood = true;
         String invalid = "";
 
-        String clientname = txfClientName.getText();
+        String clientname = txfClientName.getText().trim();
         if (clientname.isEmpty()) {
             invalid += "\nName";
             allGood = false;
         }
 
-        String clientSurname = txfClientSurname.getText();
+        String clientSurname = txfClientSurname.getText().trim();
         if (clientSurname.isEmpty()) {
             invalid += "\nSurname";
             allGood = false;
         }
 
-        String clientContactNumber = txfClientContactNumber.getText();
+        String clientContactNumber = txfClientContactNumber.getText().trim();
         if ((clientContactNumber.isEmpty() || clientContactNumber.length() != 10 || !clientContactNumber.matches("[0-9]+"))) {
             invalid += "\nContact Number";
             allGood = false;
         }
 
-        String clientAlternativeNumber = txfClientAlternativeNumber.getText();
-        if ((!(clientAlternativeNumber.length() ==0 || clientAlternativeNumber.length() == 10) ||
-                (!clientAlternativeNumber.matches("[0-9]+") && !clientAlternativeNumber.isEmpty()))) {
+        String clientAlternativeNumber = txfClientAlternativeNumber.getText().trim();
+        if ((!(clientAlternativeNumber.length() == 0 || clientAlternativeNumber.length() == 10)
+                || (!clientAlternativeNumber.matches("[0-9]+") && !clientAlternativeNumber.isEmpty()))) {
             invalid += "\nAlternative Contact Number";
             allGood = false;
         } else if (clientAlternativeNumber.isEmpty()) {
             clientAlternativeNumber = "N/A";
         }
 
-        String clientEmail = txfClientEmail.getText();
-
-        if (clientEmail.isEmpty() || !clientEmail.matches("^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")) {
+        String clientEmail = txfClientEmail.getText().trim();
+        if (!clientEmail.matches("^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$") && !clientEmail.isEmpty()) {
             invalid += "\nEmail Address";
             allGood = false;
         }
@@ -776,9 +775,15 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             allGood = false;
         }
 
-        String clientAdditionalInfo = txfClientAdditionalInfo.getText();
+        String clientAdditionalInfo = txfClientAdditionalInfo.getText().trim();
 
-        Calendar orderDate = orderDates[cmbOrderDate.getSelectedIndex()];
+        Calendar orderDate = Calendar.getInstance();
+        if (cmbOrderDate.getSelectedIndex() == 4) {
+            orderDate.setTimeInMillis(DriverReport.returnWeekMili());
+        } else {
+            orderDate = orderDates[cmbOrderDate.getSelectedIndex()];
+        }
+
         String timeSlot = "";
         if (rbtAfternoon.isSelected()) {
             timeSlot = "Afternoon";
@@ -1192,7 +1197,8 @@ public class DSC_Place_Order extends javax.swing.JFrame {
     private void getDates() {
         Calendar currentDate = Calendar.getInstance();
         int counter = 0;
-        String[] weeks = new String[4];
+        String[] weeks = new String[5];
+        weeks[4] = "*Current Week";
         while (counter < 4) {
             for (int i = 0; i < 7; i++) {
                 if (currentDate.get(Calendar.DAY_OF_WEEK) != 2) {
@@ -1330,8 +1336,8 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             ref.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot ds) {
-                    String surveyReasons[] = new String[(int) ds.child("Reason").getChildrenCount()+1];
-                    String surveySources[] = new String[(int) ds.child("Source").getChildrenCount()+1];
+                    String surveyReasons[] = new String[(int) ds.child("Reason").getChildrenCount() + 1];
+                    String surveySources[] = new String[(int) ds.child("Source").getChildrenCount() + 1];
 
                     surveyReasons[0] = "Reasons For Choosing";
                     int counter = 1;

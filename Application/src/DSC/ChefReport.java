@@ -155,7 +155,7 @@ public class ChefReport {
                             // firstFamEntry = true; 
 
                         }
-                        firstFamEntry = false;
+                        //firstFamEntry = false;
                     }
                     if (!(familysize.equalsIgnoreCase(currFamilySize))) {
                         String famSizeBulk = "";
