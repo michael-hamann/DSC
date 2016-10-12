@@ -20,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -93,6 +94,7 @@ public class ChefReport {
             workbook = new XSSFWorkbook();
             sheetNumber = 0;
             for (String currRoute : allRoutes) {
+
                 Map<String, Object[]> data = new TreeMap<>();
                 data.put(0 + "", new String[]{"Doorstep Chef - Chef Report " + currentWeek(), "", "", "Meal Type : " + list[mealCounter] + " " + " " + "Route: " + sheetNumber});
                 data.put(1 + "", new String[]{"", "", "", "", "", "", ""});
@@ -103,92 +105,172 @@ public class ChefReport {
                 int cellNum = 0;
                 String familysize = "";
 
-                for (int ordersCount = 0; ordersCount < orders.size(); ordersCount++) {
-                    int bulkCount = 0;
-                    String currFamilySize = "";
-                    for (int i = 0; i < orders.get(ordersCount).getMeals().size(); i++) {
-                        if (orders.get(ordersCount).getRoute().equals(currRoute) && orders.get(ordersCount).getMeals().get(i).getMealType().equals(list[mealCounter])) {
-                            if (orders.get(ordersCount).getMeals().get(i).getAllergies().equals("-") && orders.get(ordersCount).getMeals().get(i).getExclusions().equals("-")) { // get bulk to add up
-                                bulkCount++;
-                            } else {
+                ArrayList<Meal> mealList = new ArrayList<>();
+                boolean hasValue = false;
 
-                                if (firstFamEntry) {
-
-                                    switch (orders.get(ordersCount).getMeals().get(i).getQuantity()) {
-
-                                        case 1:
-                                            familysize = "Single Meal";
-                                            currFamilySize = "Single Meal";
-                                            break;
-                                        case 2:
-                                            familysize = "Couple Meal";
-                                            currFamilySize = "Couple Meal";
-                                            break;
-                                        case 3:
-                                            familysize = "Three Meal";
-                                            currFamilySize = "Three Meal";
-                                            break;
-                                        case 4:
-                                            familysize = "Four Meal";
-                                            currFamilySize = "Four Meal";
-                                            break;
-                                        case 5:
-                                            familysize = "Five Meal";
-                                            currFamilySize = "Five Meal";
-                                            break;
-                                        case 6:
-                                            familysize = "Six Meal";
-                                            currFamilySize = "Six Meal";
-                                            break;
-                                        default:
-                                            familysize = "Extra Meal";
-                                            currFamilySize = "Extra Meal";
-                                    }
-
-                                }
-
-                                data.put(counter + "", new String[]{familysize, orders.get(ordersCount).getMeals().get(i).getQuantity() + "", orders.get(ordersCount).getMeals().get(i).getAllergies(),
-                                    orders.get(ordersCount).getMeals().get(i).getExclusions()});
-                                counter++;
-
-                            }
-                            // firstFamEntry = true; 
-
+                for (Order order : orders) {
+                    for (Meal meal : order.getMeals()) {
+                        if (meal.getMealType().equals(list[mealCounter]) && order.getRoute().equals(currRoute)) {
+                            mealList.add(meal);
+                            hasValue = true;
                         }
-                        //firstFamEntry = false;
                     }
-                    if (!(familysize.equalsIgnoreCase(currFamilySize))) {
-                        String famSizeBulk = "";
-                        switch (sheetNumber + 1) {
-                            case 1:
-                                famSizeBulk = "Single";
-                                break;
-                            case 2:
-                                famSizeBulk = "Couple";
-                                break;
-                            case 3:
-                                famSizeBulk = "Three";
-                                break;
-                            case 4:
-                                famSizeBulk = "Four";
-                                break;
-                            case 5:
-                                famSizeBulk = "Five";
-                                break;
-                            case 6:
-                                famSizeBulk = "Six";
-                                break;
-                            default:
-                                famSizeBulk = "Extra";
-                        }
-
-                        data.put(counter + "", new String[]{famSizeBulk + " Normal *", bulkCount + "", "", ""});
-
-                        counter++;
-                    }
-
                 }
 
+                mealList.sort(new Comparator<Meal>() {
+                    @Override
+                    public int compare(Meal o1, Meal o2) {
+                        if (o1.getQuantity() < o2.getQuantity()) {
+                            return -1;
+                        } else if (o1.getQuantity() > o2.getQuantity()) {
+                            return 1;
+                        } else {
+                            return 0;
+                        }
+                    }
+                });
+                
+                System.out.println("----------------");
+                for (Meal meal : mealList) {
+                    System.out.println(meal.getQuantity());
+                }
+                if (hasValue) {
+                    int currQuantity = 0;
+                    int bulk = 0;
+                    boolean firstIterate = true;
+
+                    for (Meal meal : mealList) {
+
+                        if (meal.getQuantity() != currQuantity) {
+                            
+                            if (!firstIterate && bulk != 0) {
+                                data.put(counter + "", new String[]{familysize + " Normal *", bulk + "", "", ""});
+                                bulk = 0;
+                                counter++;
+                            }
+                            firstIterate = false;
+                            
+
+                            switch (meal.getQuantity()) {
+                                case 1:
+                                    familysize = "Single";
+                                    break;
+                                case 2:
+                                    familysize = "Couple";
+                                    break;
+                                case 3:
+                                    familysize = "Three";
+                                    break;
+                                case 4:
+                                    familysize = "Four";
+                                    break;
+                                case 5:
+                                    familysize = "Five";
+                                    break;
+                                case 6:
+                                    familysize = "Six";
+                                    break;
+                                default:
+                                    familysize = "Extra";
+                            }
+                            currQuantity = meal.getQuantity();
+                        }
+
+                        if (meal.getAllergies().equals("-") && meal.getExclusions().equals("-")) {
+                            bulk++;
+                        } else {
+                            data.put(counter + "", new String[]{familysize + " Meal", meal.getQuantity() + "", meal.getAllergies(), meal.getExclusions()});
+                            counter++;
+                        }
+
+                    }
+                }
+
+//                for (int ordersCount = 0; ordersCount < orders.size(); ordersCount++) {
+//                    int bulkCount = 0;
+//                    String currFamilySize = "";
+//                    for (int i = 0; i < orders.get(ordersCount).getMeals().size(); i++) {
+//                        if (orders.get(ordersCount).getRoute().equals(currRoute) && orders.get(ordersCount).getMeals().get(i).getMealType().equals(list[mealCounter])) {
+////                            if (orders.get(ordersCount).getMeals().get(i).getAllergies().equals("-") && orders.get(ordersCount).getMeals().get(i).getExclusions().equals("-")) { // get bulk to add up
+////                                bulkCount++;
+////                            } else {
+//
+//                                if (firstFamEntry) {
+//
+//                                    switch (orders.get(ordersCount).getMeals().get(i).getQuantity()) {
+//
+//                                        case 1:
+//                                            familysize = "Single Meal";
+//                                            currFamilySize = "Single Meal";
+//                                            break;
+//                                        case 2:
+//                                            familysize = "Couple Meal";
+//                                            currFamilySize = "Couple Meal";
+//                                            break;
+//                                        case 3:
+//                                            familysize = "Three Meal";
+//                                            currFamilySize = "Three Meal";
+//                                            break;
+//                                        case 4:
+//                                            familysize = "Four Meal";
+//                                            currFamilySize = "Four Meal";
+//                                            break;
+//                                        case 5:
+//                                            familysize = "Five Meal";
+//                                            currFamilySize = "Five Meal";
+//                                            break;
+//                                        case 6:
+//                                            familysize = "Six Meal";
+//                                            currFamilySize = "Six Meal";
+//                                            break;
+//                                        default:
+//                                            familysize = "Extra Meal";
+//                                            currFamilySize = "Extra Meal";
+//                                    }
+//
+//                                }
+//
+//                                data.put(counter + "", new String[]{familysize, orders.get(ordersCount).getMeals().get(i).getQuantity() + "", orders.get(ordersCount).getMeals().get(i).getAllergies(),
+//                                    orders.get(ordersCount).getMeals().get(i).getExclusions()});
+//                                counter++;
+//
+//                            }
+//                            // firstFamEntry = true; 
+//
+//                        }
+//                        //firstFamEntry = false;
+//                    }
+////                    if (!(familysize.equalsIgnoreCase(currFamilySize))) {
+////                        String famSizeBulk = "";
+////                        switch (sheetNumber + 1) {
+////                            case 1:
+////                                famSizeBulk = "Single";
+////                                break;
+////                            case 2:
+////                                famSizeBulk = "Couple";
+////                                break;
+////                            case 3:
+////                                famSizeBulk = "Three";
+////                                break;
+////                            case 4:
+////                                famSizeBulk = "Four";
+////                                break;
+////                            case 5:
+////                                famSizeBulk = "Five";
+////                                break;
+////                            case 6:
+////                                famSizeBulk = "Six";
+////                                break;
+////                            default:
+////                                famSizeBulk = "Extra";
+////                        }
+////
+////                        data.put(counter + "", new String[]{famSizeBulk + " Normal *", bulkCount + "", "", ""});
+////
+////                        counter++;
+////                    }
+//
+////                }
                 Set<String> keySet = data.keySet();
                 Object[] keys = data.keySet().toArray();
                 Arrays.sort(keys);
@@ -286,7 +368,7 @@ public class ChefReport {
                 sheet.addMergedRegion(new CellRangeAddress(keySet.size() + 1, keySet.size() + 1, 0, 3));
 
                 sheetNumber++;
-                
+
                 creatSheet(list[mealCounter], workbook);
 
                 excelNumber++;
