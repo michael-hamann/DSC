@@ -155,37 +155,37 @@ public class ChefReport {
                             // firstFamEntry = true; 
 
                         }
-                        firstFamEntry = false;
+                        //firstFamEntry = false;
                     }
-                    if (!(familysize.equalsIgnoreCase(currFamilySize))) {
-                        String famSizeBulk = "";
-                        switch (sheetNumber + 1) {
-                            case 1:
-                                famSizeBulk = "Single";
-                                break;
-                            case 2:
-                                famSizeBulk = "Couple";
-                                break;
-                            case 3:
-                                famSizeBulk = "Three";
-                                break;
-                            case 4:
-                                famSizeBulk = "Four";
-                                break;
-                            case 5:
-                                famSizeBulk = "Five";
-                                break;
-                            case 6:
-                                famSizeBulk = "Six";
-                                break;
-                            default:
-                                famSizeBulk = "Extra";
-                        }
-
-                        data.put(counter + "", new String[]{famSizeBulk + " Normal *", bulkCount + "", "", ""});
-
-                        counter++;
-                    }
+//                    if (!(familysize.equalsIgnoreCase(currFamilySize))) {
+//                        String famSizeBulk = "";
+//                        switch (sheetNumber + 1) {
+//                            case 1:
+//                                famSizeBulk = "Single";
+//                                break;
+//                            case 2:
+//                                famSizeBulk = "Couple";
+//                                break;
+//                            case 3:
+//                                famSizeBulk = "Three";
+//                                break;
+//                            case 4:
+//                                famSizeBulk = "Four";
+//                                break;
+//                            case 5:
+//                                famSizeBulk = "Five";
+//                                break;
+//                            case 6:
+//                                famSizeBulk = "Six";
+//                                break;
+//                            default:
+//                                famSizeBulk = "Extra";
+//                        }
+//
+//                        data.put(counter + "", new String[]{famSizeBulk + " Normal *", bulkCount + "", "", ""});
+//
+//                        counter++;
+//                    }
 
                 }
 
