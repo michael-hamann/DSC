@@ -5,6 +5,7 @@
         <group>
             <file>file:/C:/Users/Aliens_Ross/Documents/GitHub/DSC/Application/src/DSC/NewClientReport.java</file>
             <file>file:/C:/Users/Aliens_Ross/Documents/GitHub/DSC/Application/src/DSC/DSC_ReportLoading.java</file>
+            <file>file:/C:/Users/Aliens_Ross/Documents/GitHub/DSC/Application/src/DSC/DSC_Place_Order.java</file>
             <file>file:/C:/Users/Aliens_Ross/Documents/GitHub/DSC/Application/src/DSC/DSC_ViewOrder.java</file>
             <file>file:/C:/Users/Aliens_Ross/Documents/GitHub/DSC/Application/src/DSC/DSC_RouteView.java</file>
             <file>file:/C:/Users/Aliens_Ross/Documents/GitHub/DSC/Application/src/DSC/DriverReport.java</file>
@@ -15,7 +16,6 @@
             <file>file:/C:/Users/Aliens_Ross/Documents/GitHub/DSC/Application/src/DSC/QuantityReport.java</file>
             <file>file:/C:/Users/Aliens_Ross/Documents/GitHub/DSC/Application/src/DSC/AccountantReport.java</file>
             <file>file:/C:/Users/Aliens_Ross/Documents/GitHub/DSC/Application/src/DSC/ChefReport.java</file>
-            <file>file:/C:/Users/Aliens_Ross/Documents/GitHub/DSC/Application/src/DSC/LoadIcon.java</file>
         </group>
     </open-files>
 </project-private>

@@ -294,7 +294,7 @@ public class ChefReport {
                     if (!(DSC_Main.generateAllReports)) {
                         chefLoadingObj.setVisible(false);
                         chefLoadingObj.dispose();
-                        JOptionPane.showMessageDialog(null, "Chef Reports Successfully Generated.");
+                        //JOptionPane.showMessageDialog(null, "Chef Reports Successfully Generated.");
                     }
                 }
             }
