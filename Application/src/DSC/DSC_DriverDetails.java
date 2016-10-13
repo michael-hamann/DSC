@@ -214,12 +214,17 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                     if (!data.getKey().equalsIgnoreCase("0")) {
                         Driver d = new Driver();
                         d.setID(data.getKey());
+                        d.setActive(data.child("Active").getValue(boolean.class));
                         d.setDriverName(data.child("DriverName").getValue(String.class));
                         d.setAddress(data.child("Address").getValue(String.class));
                         d.setContactNumber(data.child("ContactNumber").getValue(String.class));
                         d.setVehicleRegistration(data.child("VehicleReg").getValue(String.class));
                         allDrivers.add(d);
-                        comboModel.addElement(d.getDriverName());
+                        if (d.isActive()) {
+                            comboModel.addElement(d.getDriverName());
+                        } else {
+                            comboModel.addElement(d.getDriverName()+"(*)");
+                        }
                     }
                 }
                 cmbDriverName.setModel(comboModel);

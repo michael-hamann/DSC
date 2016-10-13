@@ -1,12 +1,13 @@
-
 package DSC;
 
 /**
  *
  * @author Aliens_Ross
  */
-public class Driver implements java.io.Serializable{
+public class Driver implements java.io.Serializable {
+
     private String driverID;
+    private boolean active;
     private String address;
     private String contactNumber;
     private String driverName;
@@ -18,13 +19,13 @@ public class Driver implements java.io.Serializable{
         this.driverName = driverName;
         this.vehicleRegistration = vehicleRegistration;
     }
-    
-    public Driver(String id){
+
+    public Driver(String id) {
         this.driverID = id;
     }
 
     public Driver() {
-        
+
     }
 
     public String getAddress() {
@@ -66,6 +67,13 @@ public class Driver implements java.io.Serializable{
     public void setID(String driverID) {
         this.driverID = driverID;
     }
-    
-    
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
 }
