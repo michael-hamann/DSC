@@ -243,7 +243,7 @@ public class DriverReport {
                         ds.child("Vehicle").getValue(String.class)
                 );
                 ArrayList<RouteDrivers> drivers = new ArrayList<>();
-                drivers.add(new RouteDrivers(driver, null, null));
+                drivers.add(new RouteDrivers(driver.getID(), null, null));
                 routeList.get(listIndex).setDrivers(drivers);
                 driverCounter++;
                 if (driverCounter == routeList.size()) {

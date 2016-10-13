@@ -8,7 +8,10 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.util.ArrayList;
 import java.util.Calendar;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.border.EtchedBorder;
@@ -20,6 +23,7 @@ import javax.swing.border.TitledBorder;
 public class DSC_RouteView extends javax.swing.JFrame {
 
     boolean editClicked = false;
+    ArrayList<Driver> allDrivers = new ArrayList<>();
     ArrayList<Route> allRoutes = new ArrayList<>();
     ArrayList<String> suburbs = new ArrayList<>();
     String driverName;
@@ -216,6 +220,46 @@ public class DSC_RouteView extends javax.swing.JFrame {
         return curr;
     }
 
+    protected void setDrivers() {
+        Firebase ref = DBClass.getInstance().child("Drivers");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot ds) {
+                for (DataSnapshot data : ds.getChildren()) {
+                    if (!data.getKey().equalsIgnoreCase("0")) {
+                        Driver d = new Driver();
+                        d.setID(data.getKey());
+                        d.setActive(data.child("Active").getValue(boolean.class));
+                        d.setDriverName(data.child("DriverName").getValue(String.class));
+                        d.setAddress(data.child("Address").getValue(String.class));
+                        d.setContactNumber(data.child("ContactNumber").getValue(String.class));
+                        d.setVehicleRegistration(data.child("VehicleReg").getValue(String.class));
+                        allDrivers.add(d);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError fe) {
+                JOptionPane.showMessageDialog(null, "Error: " + fe.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+    }
+
+    private DefaultComboBoxModel getDrivers() {
+        DefaultComboBoxModel comboModel = new DefaultComboBoxModel();
+
+        for (Driver d : allDrivers) {
+            if (d.isActive()) {
+                comboModel.addElement(d.getDriverName());
+            } else {
+                comboModel.addElement(d.getDriverName() + "(*)");
+            }
+        }
+
+        return comboModel;
+    }
+
     /**
      * Gets the Driver ID of the current driver for a route
      *
@@ -397,7 +441,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
      *
      * @param firstSub The name of the first suburb for the route
      */
-    private void addRoute(String firstSub) {
+    private void addRoute(String firstSub, String selectedDriver) {
         String newRouteID = getNewRoute();
         Calendar cal = Calendar.getInstance();
         String startingDate = cal.getTimeInMillis() + "";
@@ -410,9 +454,13 @@ public class DSC_RouteView extends javax.swing.JFrame {
                 "Suburbs",
                 "Afternoon");
         ref.child(newRouteID).setValue(route);
+        for (Driver d : allDrivers) {
+            if (d.getDriverName().equals(selectedDriver)) {
+                RouteDrivers routeDriver = new RouteDrivers(d.getID(), "-", startingDate);
+                ref.child(newRouteID).child("Drivers/0").setValue(routeDriver);
+            }
+        }
         ref.child(newRouteID).child("Suburbs/0").setValue(firstSub);
-        //RouteDrivers routeDriver = new RouteDrivers(new Driver(), "-", startingDate);
-        //ref.child(newRouteID).child("Drivers/0").setValue(routeDriver);
     }
 
     /**
@@ -1111,11 +1159,15 @@ public class DSC_RouteView extends javax.swing.JFrame {
 
     private void btnAddRouteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRouteActionPerformed
         //Add new route to firebase
+        setDrivers();
         String firstSub = JOptionPane.showInputDialog(null, "Please enter a first suburb:").trim();
         if (!firstSub.isEmpty()) {
-            
+            ComboBoxModel cbm = getDrivers();
+            JComboBox jcb = new JComboBox(cbm);
+            JOptionPane.showMessageDialog(null, jcb, "Select a driver to assign to the route", JOptionPane.QUESTION_MESSAGE);
+            String selectedDriver = jcb.getSelectedItem().toString();
             //add route
-            addRoute(firstSub);
+            addRoute(firstSub, selectedDriver);
             String currID = getNewRoute();
             addToMetaData("RouteID", Integer.parseInt(currID) + 1);
             //refresh list

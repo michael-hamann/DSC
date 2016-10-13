@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package DSC;
 
-import java.util.Calendar;
+package DSC;
 
 /**
  *
@@ -13,42 +7,38 @@ import java.util.Calendar;
  */
 public class RouteDrivers {
 
-    private Driver driver;
-    private String endDate;
-    private String startDate;
+    private String DriverID;
+    private String EndDate;
+    private String StartDate;
 
-    public RouteDrivers(Driver driver, String endDate, String startDate) {
-        this.driver = driver;
-        this.endDate = endDate;
-        this.startDate = startDate;
-    }
-    
-    public RouteDrivers(String name){
-        driver = new Driver(name);
+    public RouteDrivers(String driverID, String endDate, String startDate) {
+        this.DriverID = driverID;
+        this.EndDate = endDate;
+        this.StartDate = startDate;
     }
 
-    public Driver getDriver() {
-        return driver;
+    public String getDriverID() {
+        return DriverID;
     }
 
-    public void setDriver(Driver driver) {
-        this.driver = driver;
+    public void setDriverID(String driverID) {
+        this.DriverID = driverID;
     }
 
     public String getEndDate() {
-        return endDate;
+        return EndDate;
     }
 
     public void setEndDate(String endDate) {
-        this.endDate = endDate;
+        this.EndDate = endDate;
     }
 
     public String getStartDate() {
-        return startDate;
+        return StartDate;
     }
 
     public void setStartDate(String startDate) {
-        this.startDate = startDate;
+        this.StartDate = startDate;
     }
     
 }
