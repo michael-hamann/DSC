@@ -38,18 +38,27 @@ public class DSC_RouteView extends javax.swing.JFrame {
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
+    /**
+     * Disable time radio buttons
+     */
     private void disableTime() {
         rbtAfternoon.setEnabled(false);
         rbtLateAfternoon.setEnabled(false);
         rbtEvening.setEnabled(false);
     }
 
+    /**
+     * Enable time radio buttons
+     */
     private void enableTime() {
         rbtAfternoon.setEnabled(true);
         rbtLateAfternoon.setEnabled(true);
         rbtEvening.setEnabled(true);
     }
 
+    /**
+     * Disable editing of text fields
+     */
     private void disableFields() {
         txfRouteID.setEditable(false);
         txfSuburbID.setEditable(false);
@@ -57,6 +66,9 @@ public class DSC_RouteView extends javax.swing.JFrame {
         txfSuburbName.setEditable(false);
     }
 
+    /**
+     * Clearing all text from text fields
+     */
     private void clearFields() {
         txfRouteID.setText(null);
         txfSuburbID.setText(null);
@@ -64,6 +76,12 @@ public class DSC_RouteView extends javax.swing.JFrame {
         txfCurrDriver.setText(null);
     }
 
+    /**
+     * Gets current routes in the database, adds them to an ArrayList and resets
+     * the model for the jList.
+     *
+     * @param active Whether "Active" or "Inactive" routes are to be displayed
+     */
     private void setRoutesList(String active) {
         //Get children of routes
         Firebase tableRef = DBClass.getInstance().child("Routes");
@@ -119,6 +137,14 @@ public class DSC_RouteView extends javax.swing.JFrame {
 
     }
 
+    /**
+     * Gets current suburbs in the database for a certain route, adds them to an
+     * ArrayList and resets the model for the jList.
+     *
+     * @param routeNum The route of the suburbs needed
+     * @param active Whether the suburbs of an "Active" or "Inactive" route are
+     * to be displayed
+     */
     private void setSuburbsList(String routeNum, String active) {
         //Get children of routes > suburbs
         Firebase tableRef = DBClass.getInstance().child("Routes");
@@ -138,7 +164,6 @@ public class DSC_RouteView extends javax.swing.JFrame {
                                 JOptionPane.showMessageDialog(null, "There are no suburbs in this route", "Error", JOptionPane.ERROR_MESSAGE);
                                 break;
                             }
-
                         }
                     }
                 }
@@ -172,18 +197,31 @@ public class DSC_RouteView extends javax.swing.JFrame {
 
     }
 
+    /**
+     * Gets the current route that is selected in the Routes jList
+     *
+     * @return The route number
+     */
     private String getSelectedRoute() {
         String curr = "";
-        try {
-            curr = lstRoutes.getSelectedValue();
-            curr = curr.charAt(curr.length() - 1) + "";
-            curr = curr.trim();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        if (lstRoutes.getSelectedIndex() != -1) {
+            try {
+                curr = lstRoutes.getSelectedValue();
+                curr = curr.charAt(curr.length() - 1) + "";
+                curr = curr.trim();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
         }
         return curr;
     }
 
+    /**
+     * Gets the Driver ID of the current driver for a route
+     *
+     * @param routeNum The route number of which you want to know the current
+     * assigned driver
+     */
     private void getRouteDriver(String routeNum) {
         Firebase ref = DBClass.getInstance().child("Routes/" + routeNum);
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -208,6 +246,12 @@ public class DSC_RouteView extends javax.swing.JFrame {
         });
     }
 
+    /**
+     * Sets the current driver text field to the name of the driver based on the
+     * Driver ID
+     *
+     * @param id The Driver ID
+     */
     private void getDriverName(String id) {
         Firebase ref = DBClass.getInstance().child("Drivers/" + id);
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -224,16 +268,28 @@ public class DSC_RouteView extends javax.swing.JFrame {
         });
     }
 
+    /**
+     * Sets the text fields to the relevant data
+     */
     private void setTextFields() {
         String routeID = getSelectedRoute();
         txfRouteID.setText(routeID);
         String suburbID = lstSuburbs.getSelectedIndex() + "";
-        txfSuburbID.setText(suburbID);
-        String suburb = lstSuburbs.getSelectedValue();
-        txfSuburbName.setText(suburb);
+        if (!suburbID.equalsIgnoreCase("-1")) {
+            txfSuburbID.setText(suburbID);
+            String suburb = lstSuburbs.getSelectedValue();
+            txfSuburbName.setText(suburb);
+        }
+        txfCurrDriver.setText(null);
         getRouteDriver(routeID);
     }
 
+    /**
+     * Sets the time radio buttons to the specified time that the route caters
+     * for
+     *
+     * @param curr The current route number
+     */
     private void setTime(String curr) {
         for (Route r : allRoutes) {
             if (r.getID().equalsIgnoreCase(curr)) {
@@ -252,6 +308,14 @@ public class DSC_RouteView extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Checks whether a change has been made to the radio buttons
+     *
+     * @param curr The current route
+     * @param selected The time of the radio button that is currently selected
+     * @return Whether the time has been changed or not. False if nothing is
+     * changed, True if a change has been made.
+     */
     private boolean timeChanged(String curr, String selected) {
         boolean changed = false;
         for (Route r : allRoutes) {
@@ -265,16 +329,33 @@ public class DSC_RouteView extends javax.swing.JFrame {
         return changed;
     }
 
+    /**
+     * Updates the time frame of the route on the database
+     *
+     * @param route Current route
+     * @param newTime New time frame
+     */
     private void updateTimeFrame(String route, String newTime) {
         Firebase ref = DBClass.getInstance().child("Routes/" + route);
         ref.child("TimeFrame").setValue(newTime);
     }
 
+    /**
+     * Updates the data of a certain field in the META-Data of the database
+     *
+     * @param ids The field to updated (Child)
+     * @param value The new value
+     */
     protected void addToMetaData(String ids, int value) {
         Firebase ref = DBClass.getInstance().child("META-Data");
         ref.child(ids).setValue(value);
     }
 
+    /**
+     * Gets the ID to be assigned to the new route
+     *
+     * @return New route ID
+     */
     private String getNewRoute() {
         Firebase ref = DBClass.getInstance().child("META-Data");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -311,6 +392,11 @@ public class DSC_RouteView extends javax.swing.JFrame {
 
     }
 
+    /**
+     * Adds a new route to the database
+     *
+     * @param firstSub The name of the first suburb for the route
+     */
     private void addRoute(String firstSub) {
         String newRouteID = getNewRoute();
         Calendar cal = Calendar.getInstance();
@@ -329,29 +415,69 @@ public class DSC_RouteView extends javax.swing.JFrame {
         //ref.child(newRouteID).child("Drivers/0").setValue(routeDriver);
     }
 
+    /**
+     * Sets the Active field (child) of a Route to false
+     *
+     * @param route The route to deactivate
+     */
     private void deactivateRoute(String route) {
         Firebase ref = DBClass.getInstance().child("Routes/" + route);
         ref.child("Active").setValue(false);
     }
 
+    /**
+     * Adds a new suburb to a route
+     *
+     * @param name Name of the new suburb
+     * @param route The route the suburb has to be added to
+     */
     private void addSuburb(String name, String route) {
         int count = 0;
-        for (String s : suburbs) {
+        for (String s : suburbs) { //Counts how many suburbs are in the route
             count++;
         }
-        String index = count + "";
+        String index = count + ""; //The key to be used when adding suburb to a route
         Firebase ref = DBClass.getInstance().child("Routes/" + route + "/Suburbs");
         ref.child(index).setValue(name);
     }
 
+    /**
+     * Updates the name of an existing suburb
+     *
+     * @param route The route in which the suburb is
+     * @param index Key of the suburb in the database
+     * @param newName The name that the suburb has to be changed to
+     */
     private void updateSuburbName(String route, String index, String newName) {
         Firebase ref = DBClass.getInstance().child("Routes/" + route + "/Suburbs");
         ref.child(index).setValue(newName);
     }
 
+    /**
+     * Deletes a suburb from a route
+     *
+     * @param subIndex Key of the suburb in the database
+     * @param route Route in which the suburb is
+     */
     private void deleteSuburb(String subIndex, String route) {
         Firebase ref = DBClass.getInstance().child("Routes/" + route + "/Suburbs");
         ref.child(subIndex).removeValue();
+    }
+
+    /**
+     * Returns whether "Active" or "Inactive" routes / suburbs should be
+     * displayed
+     *
+     * @return "Active" or "Inactive"
+     */
+    private String getActive() {
+        String active = btnShowOther.getText();
+        if (active.equalsIgnoreCase("Show inactive")) {
+            active = "Active";
+        } else {
+            active = "Inactive";
+        }
+        return active;
     }
 
     /**
@@ -450,6 +576,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
 
         lstRoutes.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lstRoutes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lstRoutes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lstRoutes.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 lstRoutesValueChanged(evt);
@@ -785,6 +912,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
 
         lstSuburbs.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lstSuburbs.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lstSuburbs.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lstSuburbs.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 lstSuburbsValueChanged(evt);
@@ -883,7 +1011,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         if (editClicked) {
-            int ans = JOptionPane.showConfirmDialog(this, "Do you wish to discard unsaved changes?");
+            int ans = JOptionPane.showConfirmDialog(null, "Do you wish to discard unsaved changes?");
             switch (ans) {
                 case JOptionPane.YES_OPTION:
                     this.dispose();
@@ -957,12 +1085,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
                 //save change of suburb name
                 updateSuburbName(getSelectedRoute(), lstSuburbs.getSelectedIndex() + "", txfSuburbName.getText().trim());
                 changesMade = true;
-                String active = btnShowOther.getText();
-                if (active.equalsIgnoreCase("Show inactive")) {
-                    active = "Active";
-                } else {
-                    active = "Inactive";
-                }
+                String active = getActive();
                 setSuburbsList(getSelectedRoute(), active);
             }
         }
@@ -988,12 +1111,18 @@ public class DSC_RouteView extends javax.swing.JFrame {
 
     private void btnAddRouteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRouteActionPerformed
         //Add new route to firebase
-        String firstSub = JOptionPane.showInputDialog(null, "Please enter a first suburb:");
-        addRoute(firstSub);
-        String currID = getNewRoute();
-        addToMetaData("RouteID", Integer.parseInt(currID) + 1);
-        //refresh list
-        setRoutesList("Active");
+        String firstSub = JOptionPane.showInputDialog(null, "Please enter a first suburb:").trim();
+        if (!firstSub.isEmpty()) {
+            
+            //add route
+            addRoute(firstSub);
+            String currID = getNewRoute();
+            addToMetaData("RouteID", Integer.parseInt(currID) + 1);
+            //refresh list
+            setRoutesList("Active");
+        } else {
+            JOptionPane.showMessageDialog(null, "Please enter a suburb name", "Error", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnAddRouteActionPerformed
 
     private void btnAddSuburbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSuburbActionPerformed
@@ -1006,7 +1135,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
 
     private void btnChangeDriverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeDriverActionPerformed
         if (editClicked) {
-            int ans = JOptionPane.showConfirmDialog(this, "Do you wish to discard unsaved changes?");
+            int ans = JOptionPane.showConfirmDialog(null, "Do you wish to discard unsaved changes?");
             switch (ans) {
                 case JOptionPane.YES_OPTION:
                     this.dispose();
@@ -1022,12 +1151,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
     private void lstRoutesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstRoutesValueChanged
         String curr = getSelectedRoute();
         setTime(curr);
-        String active = btnShowOther.getText();
-        if (active.equalsIgnoreCase("Show inactive")) {
-            active = "Active";
-        } else {
-            active = "Inactive";
-        }
+        String active = getActive();
         setSuburbsList(curr, active);
     }//GEN-LAST:event_lstRoutesValueChanged
 
@@ -1041,19 +1165,14 @@ public class DSC_RouteView extends javax.swing.JFrame {
             //Add to firebase
             addSuburb(newSuburb, getSelectedRoute());
             String curr = getSelectedRoute();
-            String active = btnShowOther.getText();
-            if (active.equalsIgnoreCase("Show inactive")) {
-                active = "Active";
-            } else {
-                active = "Inactive";
-            }
+            String active = getActive();
             setSuburbsList(curr, active);
             txfNewSuburb.setText(null);
             pnlNew.setVisible(false);
             btnEdit.setVisible(true);
             JOptionPane.showMessageDialog(null, newSuburb + " has been added to Route " + getSelectedRoute(), "Success", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(this, "Please enter a suburb name", "Error", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Please enter a suburb name", "Error", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnAddActionPerformed
 
@@ -1062,16 +1181,11 @@ public class DSC_RouteView extends javax.swing.JFrame {
         String suburb = lstSuburbs.getSelectedValue();
         String subIndex = lstSuburbs.getSelectedIndex() + "";
 
-        int ans = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete "
+        int ans = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete "
                 + suburb + " from Route " + route + "?");
         if (ans == JOptionPane.YES_OPTION) {
             deleteSuburb(subIndex, route);
-            String active = btnShowOther.getText();
-            if (active.equalsIgnoreCase("Show inactive")) {
-                active = "Active";
-            } else {
-                active = "Inactive";
-            }
+            String active = getActive();
             setSuburbsList(route, active);
             JOptionPane.showMessageDialog(null, suburb + " has been deleted from Route " + route, "Success", JOptionPane.INFORMATION_MESSAGE);
         }

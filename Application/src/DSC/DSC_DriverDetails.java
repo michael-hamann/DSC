@@ -291,6 +291,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
 
         lstRoutes.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lstRoutes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lstRoutes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lstRoutes.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 lstRoutesValueChanged(evt);
@@ -522,6 +523,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
 
         lstSuburbs.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lstSuburbs.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lstSuburbs.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lstSuburbs.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 lstSuburbsValueChanged(evt);
