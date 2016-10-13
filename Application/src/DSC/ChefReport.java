@@ -44,9 +44,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  */
 public class ChefReport {
 
-    private static ArrayList<Chef> allOrders;
+    
     public static ArrayList<String> allRoutes;
-    private static String familySizes[] = {"1", "2", "3", "4", "5", "6"};
     private static XSSFWorkbook workbook;
     private static DSC_ReportLoading chefLoadingObj;
     private static int booksCounter = 0;
@@ -57,7 +56,6 @@ public class ChefReport {
         if (!DSC_Main.generateAllReports) {
             chefLoadingObj = new DSC_ReportLoading();
         }
-        allOrders = new ArrayList();
         allRoutes = new ArrayList();
         orders = new ArrayList();
         getActiveRoutes();
@@ -129,11 +127,7 @@ public class ChefReport {
                         }
                     }
                 });
-                
-                System.out.println("----------------");
-                for (Meal meal : mealList) {
-                    System.out.println(meal.getQuantity());
-                }
+
                 if (hasValue) {
                     int currQuantity = 0;
                     int bulk = 0;
@@ -142,14 +136,13 @@ public class ChefReport {
                     for (Meal meal : mealList) {
 
                         if (meal.getQuantity() != currQuantity) {
-                            
+
                             if (!firstIterate && bulk != 0) {
                                 data.put(counter + "", new String[]{familysize + " Normal *", bulk + "", "", ""});
                                 bulk = 0;
                                 counter++;
                             }
                             firstIterate = false;
-                            
 
                             switch (meal.getQuantity()) {
                                 case 1:
@@ -186,91 +179,6 @@ public class ChefReport {
                     }
                 }
 
-//                for (int ordersCount = 0; ordersCount < orders.size(); ordersCount++) {
-//                    int bulkCount = 0;
-//                    String currFamilySize = "";
-//                    for (int i = 0; i < orders.get(ordersCount).getMeals().size(); i++) {
-//                        if (orders.get(ordersCount).getRoute().equals(currRoute) && orders.get(ordersCount).getMeals().get(i).getMealType().equals(list[mealCounter])) {
-////                            if (orders.get(ordersCount).getMeals().get(i).getAllergies().equals("-") && orders.get(ordersCount).getMeals().get(i).getExclusions().equals("-")) { // get bulk to add up
-////                                bulkCount++;
-////                            } else {
-//
-//                                if (firstFamEntry) {
-//
-//                                    switch (orders.get(ordersCount).getMeals().get(i).getQuantity()) {
-//
-//                                        case 1:
-//                                            familysize = "Single Meal";
-//                                            currFamilySize = "Single Meal";
-//                                            break;
-//                                        case 2:
-//                                            familysize = "Couple Meal";
-//                                            currFamilySize = "Couple Meal";
-//                                            break;
-//                                        case 3:
-//                                            familysize = "Three Meal";
-//                                            currFamilySize = "Three Meal";
-//                                            break;
-//                                        case 4:
-//                                            familysize = "Four Meal";
-//                                            currFamilySize = "Four Meal";
-//                                            break;
-//                                        case 5:
-//                                            familysize = "Five Meal";
-//                                            currFamilySize = "Five Meal";
-//                                            break;
-//                                        case 6:
-//                                            familysize = "Six Meal";
-//                                            currFamilySize = "Six Meal";
-//                                            break;
-//                                        default:
-//                                            familysize = "Extra Meal";
-//                                            currFamilySize = "Extra Meal";
-//                                    }
-//
-//                                }
-//
-//                                data.put(counter + "", new String[]{familysize, orders.get(ordersCount).getMeals().get(i).getQuantity() + "", orders.get(ordersCount).getMeals().get(i).getAllergies(),
-//                                    orders.get(ordersCount).getMeals().get(i).getExclusions()});
-//                                counter++;
-//
-//                            }
-//                            // firstFamEntry = true; 
-//
-//                        }
-//                        //firstFamEntry = false;
-//                    }
-////                    if (!(familysize.equalsIgnoreCase(currFamilySize))) {
-////                        String famSizeBulk = "";
-////                        switch (sheetNumber + 1) {
-////                            case 1:
-////                                famSizeBulk = "Single";
-////                                break;
-////                            case 2:
-////                                famSizeBulk = "Couple";
-////                                break;
-////                            case 3:
-////                                famSizeBulk = "Three";
-////                                break;
-////                            case 4:
-////                                famSizeBulk = "Four";
-////                                break;
-////                            case 5:
-////                                famSizeBulk = "Five";
-////                                break;
-////                            case 6:
-////                                famSizeBulk = "Six";
-////                                break;
-////                            default:
-////                                famSizeBulk = "Extra";
-////                        }
-////
-////                        data.put(counter + "", new String[]{famSizeBulk + " Normal *", bulkCount + "", "", ""});
-////
-////                        counter++;
-////                    }
-//
-////                }
                 Set<String> keySet = data.keySet();
                 Object[] keys = data.keySet().toArray();
                 Arrays.sort(keys);
@@ -376,7 +284,7 @@ public class ChefReport {
                     if (!(DSC_Main.generateAllReports)) {
                         chefLoadingObj.setVisible(false);
                         chefLoadingObj.dispose();
-                        //JOptionPane.showMessageDialog(null, "Chef Reports Successfully Generated.");
+                        JOptionPane.showMessageDialog(null, "Chef Reports Successfully Generated.");
                     }
                 }
             }
@@ -392,13 +300,13 @@ public class ChefReport {
 
                     for (DataSnapshot levelOne : ds.getChildren()) {
 
-//                        Calendar start = null;
-//                        start = Calendar.getInstance();
-//                        start.setTimeInMillis(levelOne.child("StartingDate").getValue(long.class));
-//
-//                        if (start.getTimeInMillis() > DriverReport.returnWeekMili()) {
-//                            continue;
-//                        }
+                        Calendar start = null;
+                        start = Calendar.getInstance();
+                        start.setTimeInMillis(levelOne.child("StartingDate").getValue(long.class));
+
+                        if (start.getTimeInMillis() > DriverReport.returnWeekMili()) {
+                            continue;
+                        }
                         ArrayList<Meal> meals = new ArrayList<>();
                         for (DataSnapshot levelTwo : levelOne.getChildren()) {
                             for (DataSnapshot levelThree : levelTwo.getChildren()) {
