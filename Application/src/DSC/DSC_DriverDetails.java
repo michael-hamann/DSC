@@ -59,7 +59,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     private boolean checkEmpty() {
         boolean empty = false;
 
-        if (txfContactNo.getText().isEmpty() && txfAddress.getText().isEmpty() 
+        if (txfContactNo.getText().isEmpty() && txfAddress.getText().isEmpty()
                 && txfVehicleReg.getText().isEmpty()) {
             empty = true;
         }
@@ -162,7 +162,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
 //            }
 //        }
     }
-    
+
     private String getRouteDriver(String routeNum) {
         Firebase ref = DBClass.getInstance().child("Routes/" + routeNum);
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -234,9 +234,27 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     }
 
     private void deleteDriver(String driverName) {
+        Firebase ref = DBClass.getInstance().child("Drivers");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot ds) {
+                for (DataSnapshot data : ds.getChildren()) {
+                    for (DataSnapshot data2 : ds.getChildren()) {
+                        if (data2.child("DriverName").getValue(String.class).equals(driverName)) {
+                            ref.child(data2.getKey()).child("Active").setValue(false);
+                            break;
+                        }
+                    }
+                }
+            }
 
+            @Override
+            public void onCancelled(FirebaseError fe) {
+                JOptionPane.showMessageDialog(null, fe.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -665,7 +683,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDeleteDriverActionPerformed
 
     private void cmbDriverNameItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbDriverNameItemStateChanged
-        switch(evt.getStateChange()){
+        switch (evt.getStateChange()) {
             case ItemEvent.SELECTED:
                 break;
             case ItemEvent.DESELECTED:
@@ -713,9 +731,9 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 String previous = getRouteDriver(getSelectedRoute());
                 String selected = cmbDriverName.getSelectedItem().toString();
-                int ans = JOptionPane.showConfirmDialog(null, "Do you want to replace "+previous+" with "+selected+"?");
+                int ans = JOptionPane.showConfirmDialog(null, "Do you want to replace " + previous + " with " + selected + "?");
             }
         });
     }
-    
+
 }
