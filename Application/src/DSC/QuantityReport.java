@@ -113,6 +113,7 @@ public class QuantityReport {
                                     quantityObj.incrementCountFamSize6_Standard();
                                 } else if (mealType.equals(STANDARD) && quantity > 6) {
                                     quantityObj.incrementCountFamilySizeMoreThanSix_Standard();
+                                    quantityObj.incrementTotalQuantityFamSizeMoreThanSix_Standard(quantity);
                                 }
 
                                 // Low Carb Totals
@@ -130,6 +131,7 @@ public class QuantityReport {
                                     quantityObj.incrementCountFamSize6_LC();
                                 } else if (mealType.equals(LOW_CARB) && quantity > 6) {
                                     quantityObj.incrementCountFamilySizeMoreThanSix_LC();
+                                    quantityObj.incrementTotalQuantityFamSizeMoreThanSix_LC(quantity);
                                 }
 
                                 // Kiddies Totals
@@ -147,6 +149,7 @@ public class QuantityReport {
                                     quantityObj.incrementCountFamSize6_KD();
                                 } else if (mealType.equals(KIDDIES) && quantity > 6) {
                                     quantityObj.incrementCountFamilySizeMoreThanSix_KD();
+                                    quantityObj.incrementTotalQuantityFamSizeMoreThanSix_KD(quantity);
                                 }
 
                                 if (mealType.equals(STANDARD)) {
@@ -172,6 +175,7 @@ public class QuantityReport {
                                     quantityObj.incrementQuantityFamSize6();
                                 } else if (quantity > 6) {
                                     quantityObj.incrementQuantityFamSizeMoreThanSix();
+                                    
                                 }
 
                             }
@@ -232,18 +236,20 @@ public class QuantityReport {
             } else if (i == 12) {
                 data.put(i + "", new String[]{"", "", "", "", "", "", "", ""});
             } else if (i == 13) {
-                data.put(i + "", new String[]{"Standard", "", "", "", "", "", "", quantityObj.returnTotalStandardMeals() + ""});
+                data.put(i + "", new String[]{"Standard Individuals", "", "", "", "", "", "", quantityObj.returnTotalStandardMeals() + ""});
             } else if (i == 14) {
-                data.put(i + "", new String[]{"Low Carb", "", "", "", "", "", "", quantityObj.returnTotalLowCarbMeals() + ""});
+                data.put(i + "", new String[]{"Low Carb Individuals", "", "", "", "", "", "", quantityObj.returnTotalLowCarbMeals() + ""});
             } else if (i == 15) {
-                data.put(i + "", new String[]{"Kiddies", "", "", "", "", "", "", quantityObj.returnTotalKiddiesMeals() + ""});
+                data.put(i + "", new String[]{"Kiddies Individuals", "", "", "", "", "", "", quantityObj.returnTotalKiddiesMeals() + ""});
             } else if (i == 16) {
                 data.put(i + "", new String[]{"", "", "", "", "", "", "", ""});
             } else if (i == 17) {
                 data.put(i + "", new String[]{"Total Clients", "", "", "", "", "", "", quantityObj.returnTotalClients() + ""});
             } else if (i == 18) {
-
-                data.put(i + "", new String[]{"Total Individuals", "", "", "", "", "", "", quantityObj.returnTotalIndividuals() + ""});
+                
+                int totalIndividuals = quantityObj.returnTotalStandardMeals() + quantityObj.returnTotalLowCarbMeals() + quantityObj.returnTotalKiddiesMeals();
+                
+                data.put(i + "", new String[]{"Total Individuals", "", "", "", "", "", "", totalIndividuals + ""});
             }
         }
 
