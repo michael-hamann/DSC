@@ -45,9 +45,11 @@ public class NewClientReport {
     private static File file;
     private static FileOutputStream excelOut;
     private static ArrayList<Client> clients;
+    private static int driverCount;
 
     public static void getNewClientsReport() {
         clientCount = 0;
+        driverCount = 0;
         if (!DSC_Main.generateAllReports) {
             newClientLoadObj = new DSC_ReportLoading();
         }
@@ -56,7 +58,7 @@ public class NewClientReport {
             Path path = Paths.get("Reports\\Week " + DriverReport.returnWeekInt() + " (" + DriverReport.returnWeekString() + ")");
             Files.createDirectories(path);
             
-            file = path.resolve("NewClientsReport (" + DriverReport.returnWeekString() + ").xlsx").toFile();
+            file = path.resolve("NewClientsReport Week - " + DriverReport.returnWeekInt() + ".xlsx").toFile();
             if (!file.exists()) {
                 file.createNewFile();
             }
@@ -90,7 +92,8 @@ public class NewClientReport {
                 for (DataSnapshot dataSnapshot : ds.getChildren()) {
                     Client client = new Client(dataSnapshot.child("ClientID").getValue(String.class));
                     client.setAdditionalInfo(dataSnapshot.child("FamilySize").getValue(String.class));
-
+                    client.setAlternativeNumber(dataSnapshot.child("RouteID").getValue(String.class));
+                    
                     Calendar start = null;
 
                     start = Calendar.getInstance();
@@ -103,10 +106,11 @@ public class NewClientReport {
 
                     clients.add(client);
                 }
-
+                
                 if (hasValues) {
                     for (int i = 0; i < clients.size(); i++) {
                         getClient(clients.get(i), i);
+                        getDriverID(clients.get(i),i);
                     }
                 } else {
                     createExcelReport();
@@ -120,7 +124,48 @@ public class NewClientReport {
             }
         });
     }
+    
+    private static void getDriverID(Client client, int index){
+        Firebase ref = DBClass.getInstance().child("Routes/" + client.getAlternativeNumber() + "/Drivers/");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot ds) {
+                for (DataSnapshot dsLevelOne : ds.child(ds.getChildrenCount()-1+"").getChildren()) {
+                    client.setAdditionalInfo(dsLevelOne.child("RouteID").getValue(String.class));
+                    client.setAlternativeNumber(dsLevelOne.child("driverID").getValue(String.class));
+                }
+                clients.set(index, client);
+                
+                getDriverName(client, index);
+            }
 
+            @Override
+            public void onCancelled(FirebaseError fe) {
+                System.err.println("Error: " + fe.getMessage());
+            }
+        });
+    }
+
+    private static void getDriverName(Client client, int index){
+        Firebase ref = DBClass.getInstance().child("Drivers/" + client.getAlternativeNumber());
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot ds) {
+                client.setAlternativeNumber(ds.child("DriverName").getValue(String.class));
+                
+                driverCount++;
+                if (clientCount == clients.size() && driverCount == clients.size()) {
+                    createExcelReport();
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError fe) {
+                System.err.println("Error: " + fe.getMessage());
+            }
+        });
+    }
+    
     private static void getClient(Client client, int index) {
         Firebase ref = DBClass.getInstance().child("Clients/" + client.getID());
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -137,7 +182,7 @@ public class NewClientReport {
                         clients.get(index).getAdditionalInfo()
                 );
                 clientCount++;
-                if (clientCount == clients.size()) {
+                if (clientCount == clients.size() && driverCount == clients.size()) {
                     createExcelReport();
                 }
 
@@ -166,16 +211,16 @@ public class NewClientReport {
         Map<String, Object[]> data = new TreeMap<>();
         data.put("1", new Object[]{"Doorstep Chef NewClient Sheet", "", "", "Week: " + DriverReport.returnWeekInt(), ""});
         data.put("2", new Object[]{"", "", "", "", ""});
-        data.put("3", new Object[]{"Customer", "Contact", "Alternative", "Email", "Address"});
+        data.put("3", new Object[]{"Customer", "Contact", "DriverName","R.ID", "Email", "Address"});
 
         int counter = 4;
         for (Client client : clients) {
-            data.put(counter + "", new Object[]{client.getName() + " " + client.getSurname(), client.getContactNumber().substring(0, 3) + " " + client.getContactNumber().substring(3, 6) + " " + client.getContactNumber().substring(6, 10), client.getAlternativeNumber(), client.getEmail(), client.getAddress()});
+            data.put(counter + "", new Object[]{client.getName() + " " + client.getSurname(), client.getContactNumber().substring(0, 3) + " " + client.getContactNumber().substring(3, 6) + " " + client.getContactNumber().substring(6, 10), client.getAlternativeNumber(), client.getAdditionalInfo(), client.getEmail(), client.getAddress()});
             counter++;
         }
 
         Set<String> keySet = data.keySet();
-        int totalSize = 22000;
+        int totalSize = 34900;
         int longestCustomer = 0;
 
         for (int key = 1; key < keySet.size() + 1; key++) {
@@ -244,17 +289,18 @@ public class NewClientReport {
         }
 
         sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 2));
-        sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 4));
+        sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 5));
 
         sheet.setColumnWidth(0, (longestCustomer + 2) * 240);
-        sheet.setColumnWidth(1, 11 * 240);
+        sheet.setColumnWidth(1, 13 * 240);
         sheet.setColumnWidth(2, 11 * 240);
-
-        for (int i = 0; i < 3; i++) {
+        sheet.setColumnWidth(3, 5 * 240);
+        
+        for (int i = 0; i < 4; i++) {
             totalSize -= sheet.getColumnWidth(i);
         }
-        sheet.setColumnWidth(3, totalSize / 2);
         sheet.setColumnWidth(4, totalSize / 2);
+        sheet.setColumnWidth(5, totalSize / 2);
 
         Row rowDate = sheet.createRow(keySet.size() + 1);
         Cell cell = rowDate.createCell(0);
@@ -264,7 +310,7 @@ public class NewClientReport {
         XSSFCellStyle cellStyle = workbook.createCellStyle();
         cellStyle.setAlignment(XSSFCellStyle.ALIGN_RIGHT);
         cell.setCellStyle(cellStyle);
-        sheet.addMergedRegion(new CellRangeAddress(keySet.size() + 1, keySet.size() + 1, 0, 4));
+        sheet.addMergedRegion(new CellRangeAddress(keySet.size() + 1, keySet.size() + 1, 0, 5));
 
         try {
             workbook.write(excelOut);

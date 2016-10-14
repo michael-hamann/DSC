@@ -56,7 +56,7 @@ public class AccountantReport {
             Path path = Paths.get("Reports\\Week " + DriverReport.returnWeekInt() + " (" + DriverReport.returnWeekString() + ")");
             Files.createDirectories(path);
             
-            file = path.resolve("AccountReport (" + DriverReport.returnWeekString() + ").xlsx").toFile();
+            file = path.resolve("AccountReport Week - " + DriverReport.returnWeekInt() + ".xlsx").toFile();
             if (!file.exists()) {
                 file.createNewFile();
             }

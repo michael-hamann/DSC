@@ -137,7 +137,7 @@ function addOrder() {
                     componentCount = mealsId[iterate];
                     var newdiv = document.createElement('div');
 
-                    newdiv.innerHTML = '<labelA style = "margin-right: 3.6em" > </labelA> <input style="height:1em;width:1.5em" type="number" name="Orderamount" onChange= "validateIfMoreMealsCanBeOrdered(' + componentCount + ')" id="orderAmount_' + componentCount + '" min="1" max="6" step="1" value="1" > <select name="size" style="height:2em" id="mealTypeSelector_' + componentCount + '"><option value="Standard" id = 1>Standard</option><option value="Low Carb" id = 1 >Low Carb</option><option value="Kiddies" id = 1>Kiddies</option></select> <input type = "text" style="height:1em" id = "orderAll_' + componentCount + '"> <input type = "text" style="height:1em" id = "orderExc_' + componentCount + '" style="height:0.5em"> <input style="height:1em;background-image: url(https://cdn2.iconfinder.com/data/icons/3_Minicons-Free-_Pack/45/RecycleBin.png)" type="Deletebutton" onclick="removeOrder(this,' + componentCount + ')">';
+                    newdiv.innerHTML = '<labelA style = "margin-right: 3.6em" > </labelA> <input style="height:0.5em;width:1.5em" type="number" name="Orderamount" onChange= "validateIfMoreMealsCanBeOrdered(' + componentCount + ')" id="orderAmount_' + componentCount + '" min="1" max="6" step="1" value="1" > <select name="size" style="height:2em" id="mealTypeSelector_' + componentCount + '"><option value="Standard" id = 1>Standard</option><option value="Low Carb" id = 1 >Low Carb</option><option value="Kiddies" id = 1>Kiddies</option></select> <input type = "text" placeholder="Allergies" style="height:1em" id = "orderAll_' + componentCount + '"> <input type = "text" placeholder="Exclusions" style="height:1em" id = "orderExc_' + componentCount + '" style="height:0.5em"> <input style="height:1em;background-image: url("trash-icon.png") type="Deletebutton" value="  -" readonly onclick="removeOrder(this,' + componentCount + ')">';
 
                     document.getElementById('order').appendChild(newdiv);
                     componentCount++;
@@ -220,7 +220,7 @@ function doCheck() {
             document.getElementById("removalDiv").innerHTML = '<label id = "suburbLbl">Suburb</label><select name="Suburb" id="Suburb" onChange="timeSlotAdj()">' +
                     '<option hidden="" disabled="disabled" selected="selected">Please choose a suburb.</option><br>' +
                     ' </select><f id="suburbErr"></f>' +
-                    ' <br> <br><label style = "width:200px" id = "addressLbl" >Delivery Address </label><textarea id="address" disabled="disabled" name="address" rows="5" cols="10" style = "width:396px"></textarea><f id="addressErr"></f><br><br>' +
+                    ' <br> <br><label style = "width:200px" id = "addressLbl" >Delivery Address </label><textarea id="address" disabled="disabled" name="address" rows="5" cols="10" style = "width:396px"></textarea><f id="addressErr"></f><br><br><br>' +
                     '<label id= "addInfoLbl">Additional Information</label><input id="addInfo" disabled="disabled" name="addInfo" size="50" type="text" maxlength="35" minlength="0" /><br>';
             document.getElementById("TimeSlots").innerHTML = "Please select a suburb!<br><br>"
             listSuburbs('Suburb');
@@ -321,7 +321,7 @@ function checkMeals() {
     order.innerHTML = '<div id="order"> <labelB> <input type="button" onClick = "addOrder()" value = "+" id="addOrderID" > </labelB> <input type="number" style="height:1em;width:1.5em" onchange="validateIfMoreMealsCanBeOrdered(\'0\')" name="Orderamount" id="orderAmount_0" + min="1" max="6" step="1" value="1" style="width:2.5em;height:1em" > <select name="size" style="height:2em" id="mealTypeSelector_0">' +
             ' <option value="Standard">Standard</option>' +
             ' <option value="Low Carb">Low Carb</option>' +
-            '<option value="Kiddies">Kiddies</option></select> <input type = "text" style="height:1em" id = "orderAll_0" style="height:1.5em"> <input type = "text" style="height:1em" id = "orderExc_0"> </div>' +
+            '<option value="Kiddies">Kiddies</option></select> <input type = "text" style="height:1em" placeholder="Allergies" id = "orderAll_0" style="height:1.5em"> <input type = "text" style="height:1em" placeholder="Exclusions" id = "orderExc_0"> </div>' +
             '<div id = "OrderAmount">';
 
 

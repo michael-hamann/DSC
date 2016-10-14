@@ -60,14 +60,14 @@ public class QuantityReport {
             public void onDataChange(DataSnapshot ds) {
                 for (DataSnapshot levelOne : ds.getChildren()) {
 
-//                    Calendar start = null;
-//
-//                    start = Calendar.getInstance();
-//                    start.setTimeInMillis(levelOne.child("StartingDate").getValue(long.class));
-//
-//                    if (start.getTimeInMillis() > DriverReport.returnWeekMili()) {
-//                        continue;
-//                    }
+                    Calendar start = null;
+
+                    start = Calendar.getInstance();
+                    start.setTimeInMillis(levelOne.child("StartingDate").getValue(long.class));
+
+                    if (start.getTimeInMillis() > DriverReport.returnWeekMili()) {
+                        //continue;
+                    }
                     boolean activeCheck = levelOne.child("Active").getValue(boolean.class).equals(true);
                     if (activeCheck) {
                         quantityObj.incrementActiveClientCount();
@@ -337,7 +337,7 @@ public class QuantityReport {
             Path path = Paths.get("Reports\\Week " + DriverReport.returnWeekInt() + " (" + DriverReport.returnWeekString() + ")");
             Files.createDirectories(path);
 
-            File file = path.resolve("Quantity Report Week - " + returnWeekInt() + ".xlsx").toFile();
+            File file = path.resolve("QuantityReport Week - " + returnWeekInt() + ".xlsx").toFile();
             if (!file.exists()) {
                 file.createNewFile();
             }

@@ -57,8 +57,8 @@ public class PackerReport {
         try {
             Path path = Paths.get("Reports\\Week " + DriverReport.returnWeekInt() + " (" + DriverReport.returnWeekString() + ")");
             Files.createDirectories(path);
-            
-            file = path.resolve("PackerReports (" + DriverReport.returnWeekString() + ").xlsx").toFile();
+
+            file = path.resolve("PackerReports Week - " + DriverReport.returnWeekInt() + ".xlsx").toFile();
             if (!file.exists()) {
                 file.createNewFile();
             }

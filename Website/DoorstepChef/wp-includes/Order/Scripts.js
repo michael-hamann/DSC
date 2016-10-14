@@ -37,12 +37,10 @@ function getDates(dates) {
             '<option value="option4">' + mon4 + '</option>';
 }
 
-//-------------------------------------------------------------------------*Data Reduction (PHP Side)
 function listSuburbs() {
 
-
-
     if (routeInfo == null) {
+
         var url = "/DoorstepChef/wp-includes/Order/Suburb.php";
 
         var html = document.getElementById("pageContent").innerHTML;
@@ -65,55 +63,66 @@ function listSuburbs() {
 
                     var routeData = JSON.parse(data);
                     for (var i in routeData) {
-                        if (routeData[i].Active) {
-                            var arr = routeData[i].Suburbs;
-                            var arrTimes = routeData[i].TimeFrame;
-                            for (var j = 0; j < arr.length; j++) {
-                                var found = false;
-                                for (var k = 0; k < allSuburbs.length; k++) {
-                                    if (allSuburbs[k].suburb === arr[j]) {
-                                        if (!allSuburbs[k].timeframes.includes(arrTimes)) {
+                        if (routeData[i] !== null) {
+                            if (routeData[i].Active) {
+                                var arr = routeData[i].Suburbs;
+                                var arrTimes = routeData[i].TimeFrame;
+
+                                for (var j = 0; j < arr.length; j++) {
+                                    var found = false;
+                                    for (var k = 0; k < allSuburbs.length; k++) {
+                                        if (allSuburbs[k].suburb === arr[j]) {
                                             allSuburbs[k].timeframes += arrTimes + ", ";
+                                            found = true;
                                         }
-                                        found = true;
                                     }
-                                }
-                                if (!found) {
-                                    allSuburbs.push({suburb: arr[j], timeframes: arrTimes + ", "});
+                                    if (!found) {
+                                        allSuburbs.push({suburb: arr[j], timeframes: arrTimes + ", "});
+                                    }
                                 }
                             }
                         }
                     }
 
                     for (var i in routeData) {
-                        if (routeData[i].Active) {
-                            var arr = routeData[i].Suburbs;
-                            var arrTimes = routeData[i].TimeFrame;
-                            var routeID = i;
-                            for (var j = 0; j < arr.length; j++) {
-                                routeInfo.push({suburb: arr[j], timeframe: arrTimes, routeID: i});
-                            }
+                        if (routeData[i] !== null) {
+                            if (routeData[i].Active) {
+                                var arr = routeData[i].Suburbs;
+                                var arrTimes = routeData[i].TimeFrame;
+                                var routeID = i;
+                                for (var j = 0; j < arr.length; j++) {
+                                    routeInfo.push({suburb: arr[j], timeframe: arrTimes, routeID: i});
+                                }
 
+                            }
                         }
                     }
+
+                    allSuburbs.sort(function routeSort(a, b) {
+                        if (a.suburb < b.suburb)
+                            return -1;
+                        if (a.suburb > b.suburb)
+                            return 1;
+                        return 0;
+                    });
 
                     var val = '<option hidden="" disabled="disabled" selected="selected">Please Select a Suburb</option>';
                     for (var i = 1; i < allSuburbs.length; i++) {
                         if (allSuburbs[i].suburb !== "Collection") {
                             val += "<option>" + allSuburbs[i].suburb + "</option>";
                         }
-                        console.log(allSuburbs[i].suburb);
                     }
 
                     document.getElementById("Suburb").innerHTML = val;
                 } else {
                     document.getElementById("pageContent").innerHTML = "<a>ERROR 400: DATABASE CONNECTION COULD NOT BE ESTABLISHED</a>";
                 }
-
+                populateSurveyFields();
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 alert("Failed to get Suburbs: " + errorThrown);
             }
+
         });
     } else {
         var val = '<option hidden="" disabled="disabled" selected="selected">Please Select a Suburb</option>';
@@ -121,13 +130,44 @@ function listSuburbs() {
             if (allSuburbs[i].suburb !== "Collection") {
                 val += "<option>" + allSuburbs[i].suburb + "</option>";
             }
-            console.log(allSuburbs[i].suburb);
         }
 
         document.getElementById("Suburb").innerHTML = val;
     }
 }
 
+
+
+function populateSurveyFields() {
+    var url = "/DoorstepChef/wp-includes/Order/SurveyQuestions.php";
+    jQuery.ajax({
+        url: url,
+        type: "text",
+        success: function (data, textStatus, jqXHR) {
+
+            var questionData = JSON.parse(data);
+            var options = '<option hidden="" disabled="disabled" selected="selected">Reason For Choosing DSC</option>';
+            for (var i in questionData["Reason"]) {
+                if (questionData["Reason"][i] !== null) {
+                    options += '\n<option> ' + questionData["Reason"][i] + '</option>'
+                }
+            }
+            document.getElementById("surveyReason").innerHTML = options;
+
+            var options = '<option hidden="" disabled="disabled" selected="selected">How I Heard of DSC</option>';
+            for (var i in questionData["Source"]) {
+                if (questionData["Source"][i] !== null) {
+                    options += '\n<option> ' + questionData["Source"][i] + '</option>'
+                }
+            }
+            document.getElementById("surveyHeard").innerHTML = options;
+
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            Console.log("Could not retrieve Surveu Questions.");
+        }
+    })
+}
 
 function timeSlotAdj() {
     var selectedSuburb = document.getElementById("Suburb").options[document.getElementById("Suburb").selectedIndex].text;
@@ -294,7 +334,6 @@ function findPos(obj) {
 
 function submitData() {
 
-
     var allGood = true;
     var compFocus;
 
@@ -396,7 +435,7 @@ function submitData() {
         }
     }
     if (submitDateCheck("startDate", "startingDateErr")) {
-        var startingDate = new Date(document.getElementById("startDate").options[document.getElementById("startDate").selectedIndex].text);
+        var startingDate = new Date(document.getElementById("startDate").options[document.getElementById("startDate").selectedIndex].text).getTime();
     } else {
         if (allGood) {
             window.scroll(0, (findPos(document.getElementById("startDate")) - 110));
@@ -418,12 +457,14 @@ function submitData() {
             arr[1] = document.getElementById("mealTypeSelector_" + i).options[document.getElementById("mealTypeSelector_" + i).selectedIndex].text;
             arr[2] = document.getElementById("orderAll_" + i).value;
             arr[3] = document.getElementById("orderExc_" + i).value;
+
             if (arr[2] === "") {
                 arr[2] = "-";
             }
             if (arr[3] === "") {
                 arr[3] = "-";
             }
+
         } catch (err) {
             arr[0] = "";
             arr[1] = "";
@@ -451,12 +492,9 @@ function submitData() {
         console.log(meals[i][2]);
         console.log(meals[i][3]);
     }
-
-
-
-
+    
+    allgood = false;
     if (allGood) {
-        document.getElementById("submit").disabled = true;
         var jsonOrder = JSON.stringify({
             "clientName": clienName,
             "clientSurname": clientSurname,
@@ -474,33 +512,45 @@ function submitData() {
         });
 
 
-        var routeID = "";
+        var routeID = "0";
         for (var i = 0; i < routeInfo.length; i++) {
             if (routeInfo[i]["suburb"] === suburb && routeInfo[i]["timeframe"] === timeSlot) {
                 routeID = routeInfo[i]["routeID"];
             }
         }
-        console.log(routeID);
+
+
+        var surveyInfo = JSON.stringify({
+            "Reason": document.getElementById("surveyReason").options[document.getElementById("surveyReason").selectedIndex].innerHTML,
+            "Source": document.getElementById("surveyHeard").options[document.getElementById("surveyHeard").selectedIndex].innerHTML,
+            "Comments": document.getElementById("comment").value
+        });
 
         var url = "/DoorstepChef/wp-includes/Order/SubmitOrder.php";
+        var html = document.getElementById("pageContent").innerHTML;
         jQuery.ajax({
             type: 'POST',
             url: url,
             data: {mydata: jsonOrder,
-                routeID: routeID},
+                routeID: routeID,
+                surveyInfo: surveyInfo},
             dataType: 'text',
             success: function (data, textStatus, jqXHR) {
-                if (data === true) {
-                    alert("Order has been placed");
+                if (data.substring(0, 4).includes("true")) {
+                    document.getElementById("pageContent").innerHTML = '<p id="succsessTextBig">Your order has been placed Successfully!</p>' +
+                            '<p id="succsessTextSmall">Thank you for choosing DoorStep Chef </p>';
+                }else{
+                    document.getElementById("pageContent").innerHTML = html;
+                    document.getElementById("connectionErr").innerHTML = "There was a problem placing your order. Please try again Later.";
+                    
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 alert("Failed to add Order: " + errorThrown);
             }
         });
-    } else {
-        // --------------------------------------------------------------------- Logic for incorrect values.
+        document.getElementById("pageContent").innerHTML = "<p id='loading'></p><br> <br> <br> <br> <br> <br> ";
+        window.scroll(0, 200);
     }
 
-    document.getElementById("submit").blur();
 }

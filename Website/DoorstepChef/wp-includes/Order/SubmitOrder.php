@@ -22,11 +22,13 @@ $firebase = new FirebaseLib($uri, $token);
 
 $json = json_decode($_POST["mydata"], true);
 $routeID = $_REQUEST["routeID"];
+$surveyData = json_decode($_POST["surveyInfo"], true);
 
 $IDs = json_decode($firebase->get("/META-Data"));
 
 $clientID = $IDs->ClientID;
 $orderID = $IDs->OrderID;
+$surveyID = $IDs->SurveyID;
 
 $clientArr = array(
     "Name" => $json["clientName"],
@@ -42,7 +44,7 @@ $clientArr = array(
 //$client = json_encode($clientArr);
 
 
-//echo $firebase->set("/Clients/" . $clientID, $clientArr) . "\n";
+$firebase->set("/Clients/" . $clientID, $clientArr) . "\n";
 $firebase->set("/META-Data/ClientID", $clientID + 1);
 
 $mealsArr = array(6);
@@ -69,8 +71,21 @@ $orderArr = array(
     "Meals" => $mealsArr
 );
 
-//echo $firebase->set("/Orders/" . $orderID, $orderArr) . "\n";
+$firebase->set("/Orders/" . $orderID, $orderArr) . "\n";
 $firebase->set("/META-Data/OrderID", $orderID + 1);
-echo true;
+
+if ($surveyData["Reason"] !== "Reason For Choosing DSC" &&
+        $surveyData["Source"] !== "How I heard of DSC") {
+    $surveyArr = array(
+        "ClientID" => $clientID,
+        "Reason" => $surveyData["Reason"],
+        "Source" => $surveyData["Source"],
+        "Comments" => $surveyData["Comments"]
+    );
+    $firebase->set("/Survey/Entries/".$surveyID, $surveyArr);
+    $firebase->set("/META-Data/SurveyID", $surveyID + 1);
+}
+
+echo 'true';
 ?>
 
