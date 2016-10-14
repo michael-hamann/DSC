@@ -56,6 +56,25 @@ public class QuantityReportData {
     private int QuantityFamSize5;
     private int QuantityFamSize6;
     private int QuantityFamSizeMoreThanSix;
+    private int quantityExtraMeals_Standard;
+    private int quantityExtraMeals_LC;
+    private int quantityExtraMeals_KD;
+    
+     protected int getQuantityFamSizeMoreThanSix() {
+        return QuantityFamSizeMoreThanSix;
+    }
+
+    protected int getQuantityExtraMeals_Standard() {
+        return quantityExtraMeals_Standard;
+    }
+
+    protected int getQuantityExtraMeals_LC() {
+        return quantityExtraMeals_LC;
+    }
+
+    protected int getQuantityExtraMeals_KD() {
+        return quantityExtraMeals_KD;
+    }
 
     protected int getQuantityFamSize1() {
         return QuantityFamSize1;
@@ -79,10 +98,6 @@ public class QuantityReportData {
 
     protected int getQuantityFamSize6() {
         return QuantityFamSize6;
-    }
-
-    protected int getQuantityFamSizeMoreThanSix() {
-        return QuantityFamSizeMoreThanSix;
     }
 
     protected int getCountStandardActive() {
@@ -285,6 +300,20 @@ public class QuantityReportData {
     protected void incrementCountFamilySizeMoreThanSix_Standard() {
         this.countFamilySizeMoreThanSix_Standard++;
     }
+// total Meals for extra Standard
+
+    protected void incrementTotalQuantityFamSizeMoreThanSix_Standard(int quantity) {
+        this.quantityExtraMeals_Standard += quantity;
+    }
+
+    protected void incrementTotalQuantityFamSizeMoreThanSix_LC(int quantity) {
+        this.quantityExtraMeals_LC += quantity;
+    }
+
+    protected void incrementTotalQuantityFamSizeMoreThanSix_KD(int quantity) {
+        this.quantityExtraMeals_KD += quantity;
+    }
+// total Meals for extra Standard
 
     protected void incrementCountFamSize1_LC() {
         this.countFamSize1_LC++;
@@ -390,26 +419,47 @@ public class QuantityReportData {
 
     protected int returnTotalStandardMeals() {
 
-        int totalStandardMeals = getCountFamSize1_Standard() + getCountFamSize2_Standard() + getCountFamSize3_Standard() + getCountFamSize4_Standard()
-                + getCountFamSize5_Standard() + getCountFamSize6_Standard() + getCountFamilySizeMoreThanSix_Standard();
+        int totalSingleCalculation = (getCountFamSize1_Standard() * 1);
+        int totalCoupleCalculation = (getCountFamSize2_Standard() * 2);
+        int totalThreeCalculation = (getCountFamSize3_Standard() * 3);
+        int totalFourCalculation = (getCountFamSize4_Standard() * 4);
+        int totalFiveCalculation = (getCountFamSize5_Standard() * 5);
+        int totalSixCalculation = (getCountFamSize6_Standard() * 6);
+        int totalExtraCalculation = getQuantityExtraMeals_Standard();
+
+        int totalStandardMeals = totalSingleCalculation + totalCoupleCalculation + totalThreeCalculation + totalFourCalculation + totalFiveCalculation + totalSixCalculation + totalExtraCalculation;
 
         return totalStandardMeals;
     }
 
     protected int returnTotalLowCarbMeals() {
 
-        int totalLowCarbMeals = getCountFamSize1_LC() + getCountFamSize2_LC() + getCountFamSize3_LC() + getCountFamSize4_LC()
-                + getCountFamSize5_LC() + getCountFamSize6_LC() + getCountFamilySizeMoreThanSix_LC();
+        int totalSingleCalculation = (getCountFamSize1_LC() * 1);
+        int totalCoupleCalculation = (getCountFamSize2_LC() * 2);
+        int totalThreeCalculation = (getCountFamSize3_LC() * 3);
+        int totalFourCalculation = (getCountFamSize4_LC() * 4);
+        int totalFiveCalculation = (getCountFamSize5_LC() * 5);
+        int totalSixCalculation = (getCountFamSize6_LC() * 6);
+        int totalExtraCalculation = getQuantityExtraMeals_LC();
 
-        return totalLowCarbMeals;
+        int totalStandardMeals = totalSingleCalculation + totalCoupleCalculation + totalThreeCalculation + totalFourCalculation + totalFiveCalculation + totalSixCalculation + totalExtraCalculation;
+
+        return totalStandardMeals;
     }
 
     protected int returnTotalKiddiesMeals() {
 
-        int totalKiddiesMeals = getCountFamSize1_KD() + getCountFamSize2_KD() + getCountFamSize3_KD() + getCountFamSize4_KD()
-                + getCountFamSize5_KD() + getCountFamSize6_KD() + getCountFamilySizeMoreThanSix_KD();
+        int totalSingleCalculation = (getCountFamSize1_KD() * 1);
+        int totalCoupleCalculation = (getCountFamSize2_KD() * 2);
+        int totalThreeCalculation = (getCountFamSize3_KD() * 3);
+        int totalFourCalculation = (getCountFamSize4_KD() * 4);
+        int totalFiveCalculation = (getCountFamSize5_KD() * 5);
+        int totalSixCalculation = (getCountFamSize6_KD() * 6);
+        int totalExtraCalculation = getQuantityExtraMeals_KD();
 
-        return totalKiddiesMeals;
+        int totalStandardMeals = totalSingleCalculation + totalCoupleCalculation + totalThreeCalculation + totalFourCalculation + totalFiveCalculation + totalSixCalculation + totalExtraCalculation;
+
+        return totalStandardMeals;
     }
 
     protected int totalSingleMeals() {
