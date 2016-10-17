@@ -5,8 +5,6 @@
  */
 package DSC;
 
-import static DSC.ChefReport.currentWeek;
-import static DSC.ChefReport.returnWeekInt;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -58,7 +56,7 @@ public class DriverReport {
         try {
             Path path = Paths.get("Reports\\Week " + DriverReport.returnWeekInt() + " (" + DriverReport.returnWeekString() + ")");
             Files.createDirectories(path);
-            
+
             file = path.resolve("DriverReports Week - " + returnWeekInt() + ".xlsx").toFile();
             if (!file.exists()) {
                 file.createNewFile();
@@ -102,7 +100,7 @@ public class DriverReport {
                     }
 
                     hasValue = true;
-                    
+
                     ArrayList<Meal> meals = new ArrayList<>();
                     for (DataSnapshot dataSnapshot1 : ds.child("Meals").getChildren()) {
                         meals.add(new Meal(dataSnapshot1.child("Quantity").getValue(int.class),
@@ -243,7 +241,7 @@ public class DriverReport {
                         ds.child("Vehicle").getValue(String.class)
                 );
                 ArrayList<RouteDrivers> drivers = new ArrayList<>();
-                drivers.add(new RouteDrivers(driver.getID(), null, null));
+                drivers.add(new RouteDrivers(driver, null, null));
                 routeList.get(listIndex).setDrivers(drivers);
                 driverCounter++;
                 if (driverCounter == routeList.size()) {
@@ -266,7 +264,10 @@ public class DriverReport {
             XSSFSheet sheet = workbook.createSheet("DriverReports Route - " + route.getID());
 
             Map<String, Object[]> data = new TreeMap<>();
-            data.put("1", new Object[]{"Doorstep Chef Driver Sheet  Week: " + returnWeekInt() + " - " + returnWeekString(), "", "", "", "", "", "", "", "", "Driver: " + route.getDrivers().get(0).getDriver().getDriverName().split(" ")[0] + " - " + route.getDrivers().get(0).getDriver().getContactNumber(), "Route: " + route.getID()});
+            data.put("1", new Object[]{"Doorstep Chef Driver Sheet  Week: " + returnWeekInt() + " - " + returnWeekString(), "", "", "", "", "", "", "", "",
+                "Driver: " + route.getDrivers().get(0).getDriver().getDriverName().split(" ")[0]
+                + " - " + route.getDrivers().get(0).getDriver().getContactNumber(),
+                "Route: " + route.getID()});
             data.put("2", new Object[]{"", "", "", "", "", "", "", "", ""});
             data.put("3", new Object[]{"Customer", "Contact", "Cash", "DatePaid", "Mon", "Tue", "Wed", "Thu", "Fri", "Address", "AdditionalInfo"});
 
@@ -278,6 +279,7 @@ public class DriverReport {
                     if (order.getDuration().equals("Monday - Thursday")) {
                         durationMarker = "X";
                     }
+
                     data.put("" + counter, new Object[]{client.getName() + " " + client.getSurname(), client.getContactNumber().substring(0, 3) + " " + client.getContactNumber().substring(3, 6) + " " + client.getContactNumber().substring(6, 10), "", "", "", "", "", "", durationMarker, client.getAddress().replaceAll("\n", ", "), client.getAdditionalInfo()});
                     counter++;
                 }

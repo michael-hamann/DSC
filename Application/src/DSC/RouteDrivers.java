@@ -10,11 +10,26 @@ public class RouteDrivers {
     private String DriverID;
     private String EndDate;
     private String StartDate;
+    private Driver Driver;
 
     public RouteDrivers(String driverID, String endDate, String startDate) {
         this.DriverID = driverID;
         this.EndDate = endDate;
         this.StartDate = startDate;
+    }
+    
+    public RouteDrivers(Driver driver, String endDate, String startDate) {
+        this.Driver = driver;
+        this.EndDate = endDate;
+        this.StartDate = startDate;
+    }
+
+    public Driver getDriver() {
+        return Driver;
+    }
+
+    public void setDriver(Driver Driver) {
+        this.Driver = Driver;
     }
 
     public String getDriverID() {

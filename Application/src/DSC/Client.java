@@ -52,6 +52,15 @@ public class Client implements java.io.Serializable {
         this.additionalInfo = additionalInfo;
     }
 
+    public void setData(String name, String surname, String contactNumber, String email, String suburb, String address) {
+        this.name = name;
+        this.surname = surname;
+        this.contactNumber = contactNumber;
+        this.email = email;
+        this.suburb = suburb;
+        this.address = address;
+    }
+    
     public String getID() {
         return clientID;
     }

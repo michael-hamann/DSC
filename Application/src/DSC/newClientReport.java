@@ -57,7 +57,7 @@ public class NewClientReport {
         try {
             Path path = Paths.get("Reports\\Week " + DriverReport.returnWeekInt() + " (" + DriverReport.returnWeekString() + ")");
             Files.createDirectories(path);
-            
+
             file = path.resolve("NewClientsReport Week - " + DriverReport.returnWeekInt() + ".xlsx").toFile();
             if (!file.exists()) {
                 file.createNewFile();
@@ -94,9 +94,7 @@ public class NewClientReport {
                     client.setAdditionalInfo(dataSnapshot.child("FamilySize").getValue(String.class));
                     client.setAlternativeNumber(dataSnapshot.child("RouteID").getValue(String.class));
                     
-                    Calendar start = null;
-
-                    start = Calendar.getInstance();
+                    Calendar start = Calendar.getInstance();
                     start.setTimeInMillis(dataSnapshot.child("StartingDate").getValue(long.class));
 
                     if (start.getTimeInMillis() != DriverReport.returnWeekMili()) {
@@ -106,11 +104,11 @@ public class NewClientReport {
 
                     clients.add(client);
                 }
-                
+
                 if (hasValues) {
                     for (int i = 0; i < clients.size(); i++) {
                         getClient(clients.get(i), i);
-                        getDriverID(clients.get(i),i);
+                        getDriverID(clients.get(i), i);
                     }
                 } else {
                     createExcelReport();
@@ -124,18 +122,17 @@ public class NewClientReport {
             }
         });
     }
-    
-    private static void getDriverID(Client client, int index){
-        Firebase ref = DBClass.getInstance().child("Routes/" + client.getAlternativeNumber() + "/Drivers/");
+
+    private static void getDriverID(Client client, int index) {
+        Firebase ref = DBClass.getInstance().child("Routes/" + client.getAlternativeNumber());
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot ds) {
-                for (DataSnapshot dsLevelOne : ds.child(ds.getChildrenCount()-1+"").getChildren()) {
-                    client.setAdditionalInfo(dsLevelOne.child("RouteID").getValue(String.class));
-                    client.setAlternativeNumber(dsLevelOne.child("driverID").getValue(String.class));
-                }
-                clients.set(index, client);
                 
+                System.out.println(client.getAlternativeNumber());
+                client.setAdditionalInfo(ds.child("Drivers/" + (ds.child("Drivers").getChildrenCount() - 1) + "/DriverID").getValue(String.class));
+                clients.set(index, client);
+
                 getDriverName(client, index);
             }
 
@@ -146,13 +143,12 @@ public class NewClientReport {
         });
     }
 
-    private static void getDriverName(Client client, int index){
-        Firebase ref = DBClass.getInstance().child("Drivers/" + client.getAlternativeNumber());
+    private static void getDriverName(Client client, int index) {
+        Firebase ref = DBClass.getInstance().child("Drivers/" + client.getAdditionalInfo());
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot ds) {
-                client.setAlternativeNumber(ds.child("DriverName").getValue(String.class));
-                
+                client.setAdditionalInfo(ds.child("DriverName").getValue(String.class));
                 driverCount++;
                 if (clientCount == clients.size() && driverCount == clients.size()) {
                     createExcelReport();
@@ -165,7 +161,7 @@ public class NewClientReport {
             }
         });
     }
-    
+
     private static void getClient(Client client, int index) {
         Firebase ref = DBClass.getInstance().child("Clients/" + client.getID());
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -175,11 +171,9 @@ public class NewClientReport {
                         ds.child("Name").getValue(String.class),
                         ds.child("Surname").getValue(String.class),
                         ds.child("ContactNum").getValue(String.class),
-                        ds.child("AlternativeNumber").getValue(String.class),
                         ds.child("Email").getValue(String.class),
                         ds.child("Suburb").getValue(String.class),
-                        ds.child("Address").getValue(String.class),
-                        clients.get(index).getAdditionalInfo()
+                        ds.child("Address").getValue(String.class)
                 );
                 clientCount++;
                 if (clientCount == clients.size() && driverCount == clients.size()) {
@@ -211,11 +205,11 @@ public class NewClientReport {
         Map<String, Object[]> data = new TreeMap<>();
         data.put("1", new Object[]{"Doorstep Chef NewClient Sheet", "", "", "Week: " + DriverReport.returnWeekInt(), ""});
         data.put("2", new Object[]{"", "", "", "", ""});
-        data.put("3", new Object[]{"Customer", "Contact", "DriverName","R.ID", "Email", "Address"});
+        data.put("3", new Object[]{"Customer", "Contact", "DriverName", "R.ID", "Email", "Address"});
 
         int counter = 4;
         for (Client client : clients) {
-            data.put(counter + "", new Object[]{client.getName() + " " + client.getSurname(), client.getContactNumber().substring(0, 3) + " " + client.getContactNumber().substring(3, 6) + " " + client.getContactNumber().substring(6, 10), client.getAlternativeNumber(), client.getAdditionalInfo(), client.getEmail(), client.getAddress()});
+            data.put(counter + "", new Object[]{client.getName() + " " + client.getSurname(), client.getContactNumber().substring(0, 3) + " " + client.getContactNumber().substring(3, 6) + " " + client.getContactNumber().substring(6, 10), client.getAdditionalInfo().split(" ")[0], client.getAlternativeNumber(), client.getEmail(), client.getAddress()});
             counter++;
         }
 
@@ -295,7 +289,7 @@ public class NewClientReport {
         sheet.setColumnWidth(1, 13 * 240);
         sheet.setColumnWidth(2, 11 * 240);
         sheet.setColumnWidth(3, 5 * 240);
-        
+
         for (int i = 0; i < 4; i++) {
             totalSize -= sheet.getColumnWidth(i);
         }

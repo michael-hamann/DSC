@@ -94,7 +94,7 @@ public class ChefReport {
             for (String currRoute : allRoutes) {
 
                 Map<String, Object[]> data = new TreeMap<>();
-                data.put(0 + "", new String[]{"Doorstep Chef - Chef Report " + currentWeek(), "", "", "Meal Type : " + list[mealCounter] + " " + " " + "Route: " + sheetNumber});
+                data.put(0 + "", new String[]{"Doorstep Chef - Chef Report " + DriverReport.returnWeekInt(), "", "", "Meal Type : " + list[mealCounter] + " " + " " + "Route: " + sheetNumber});
                 data.put(1 + "", new String[]{"", "", "", "", "", "", ""});
                 data.put(2 + "", new String[]{"Family Size", "Quantity", "Allergies", "Exclusions"});
                 int counter = 3;
@@ -355,7 +355,7 @@ public class ChefReport {
             Path path = Paths.get("Reports\\Week " + DriverReport.returnWeekInt() + " (" + DriverReport.returnWeekString() + ")\\ChefReports\\");
             Files.createDirectories(path);
 
-            File file = path.resolve("ChefReports Week - " + returnWeekInt() + " ( " + mealType + " )" + ".xlsx").toFile();
+            File file = path.resolve("ChefReports Week - " + DriverReport.returnWeekInt() + " ( " + mealType + " )" + ".xlsx").toFile();
             if (!file.exists()) {
                 file.createNewFile();
             }
@@ -379,24 +379,4 @@ public class ChefReport {
             JOptionPane.showMessageDialog(null, "Directory Cannot be Found!");
         }
     }
-
-    public static String currentWeek() {
-        Calendar weekDate = Calendar.getInstance();
-        while (weekDate.get(Calendar.DAY_OF_WEEK) != 2) {
-            weekDate.add(Calendar.DAY_OF_WEEK, -1);
-        }
-        return new SimpleDateFormat("dd MMM yyyy").format(weekDate.getTime());
-    }
-
-    public static int returnWeekInt() {
-        Calendar weekDate = Calendar.getInstance();
-        while (weekDate.get(Calendar.DAY_OF_WEEK) != 2) {
-            weekDate.add(Calendar.DAY_OF_WEEK, -1);
-        }
-        Calendar firstWeek = Calendar.getInstance();
-        firstWeek.setTimeInMillis(1470002400000l);
-        int weeks = ((weekDate.get(Calendar.YEAR) - firstWeek.get(Calendar.YEAR)) * 52 + weekDate.get(Calendar.WEEK_OF_YEAR)) - firstWeek.get(Calendar.WEEK_OF_YEAR);
-        return weeks;
-    }
-
 }
