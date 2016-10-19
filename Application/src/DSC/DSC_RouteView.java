@@ -220,6 +220,9 @@ public class DSC_RouteView extends javax.swing.JFrame {
         return curr;
     }
 
+    /**
+     * Adds all drivers to the allDrivers array
+     */
     protected void setDrivers() {
         Firebase ref = DBClass.getInstance().child("Drivers");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -1178,9 +1181,9 @@ public class DSC_RouteView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddRouteActionPerformed
 
     private void btnAddSuburbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSuburbActionPerformed
+        pnlNew.setVisible(true);
         pnlNew.setBorder(new TitledBorder(new EtchedBorder(), "New Suburb"));
         txfNewSuburb.requestFocusInWindow();
-        pnlNew.setVisible(true);
         btnEdit.setVisible(false);
         btnSave.setVisible(false);
     }//GEN-LAST:event_btnAddSuburbActionPerformed
