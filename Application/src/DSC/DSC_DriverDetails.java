@@ -72,19 +72,24 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     private boolean checkChanged() {
         isChanged = false;
 
-        Firebase ref = DBClass.getInstance().child("Drivers/"+txfDriverID.getText().trim());
+        String driverID = txfDriverID.getText().trim();
+        Firebase ref = DBClass.getInstance().child("Drivers");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot ds) {
                 for (DataSnapshot data : ds.getChildren()) {
-                    if (!data.child("Address").getValue(String.class).equals(txfAddress.getText().trim())) {
-                        isChanged = true;
-                    }
-                    if (!data.child("ContactNumber").getValue(String.class).equals(txfContactNo.getText().trim())) {
-                        isChanged = true;
-                    }
-                    if (!data.child("VehicleReg").getValue(String.class).equals(txfVehicleReg.getText().trim())) {
-                        isChanged = true;
+                    for (DataSnapshot data2 : data.getChildren()) {
+                        if (data.getKey().equals(driverID)) {
+                            String address = data.child("Address").getValue(String.class);
+                            String contactNum = data.child("ContactNumber").getValue(String.class);
+                            String vehicleReg = data.child("VehicleReg").getValue(String.class);
+                            
+                            if (!txfAddress.getText().trim().equals(address)
+                                    || !txfContactNo.getText().trim().equals(contactNum)
+                                    || !txfVehicleReg.getText().trim().equals(vehicleReg)) {
+                                isChanged = true;
+                            }
+                        }
                     }
                 }
             }
@@ -248,7 +253,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                         if (d.isActive()) {
                             comboModel.addElement(d.getDriverName());
                         } else {
-                            comboModel.addElement(d.getDriverName()+"(*)");
+                            comboModel.addElement(d.getDriverName() + "(*)");
                         }
                     }
                 }
@@ -284,7 +289,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
             }
         });
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
