@@ -68,10 +68,11 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         return empty;
     }
 
+    //Check why nullpointer exception thrown
     private boolean checkChanged() {
         isChanged = false;
 
-        Firebase ref = DBClass.getInstance().child("Drivers/"+txfDriverID.getText());
+        Firebase ref = DBClass.getInstance().child("Drivers/"+txfDriverID.getText().trim());
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot ds) {
@@ -667,6 +668,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         boolean changed = checkChanged();
         if (changed) {
             //update driver information
+            JOptionPane.showMessageDialog(null, "Something has been changed");
         } else {
 
         }
