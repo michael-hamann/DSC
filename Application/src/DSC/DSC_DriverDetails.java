@@ -68,10 +68,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         return empty;
     }
 
-    //Check why nullpointer exception thrown
     private boolean checkChanged() {
-        isChanged = false;
-
         String driverID = txfDriverID.getText().trim();
         Firebase ref = DBClass.getInstance().child("Drivers");
         ref.addValueEventListener(new ValueEventListener() {
@@ -83,10 +80,14 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                             String address = data.child("Address").getValue(String.class);
                             String contactNum = data.child("ContactNumber").getValue(String.class);
                             String vehicleReg = data.child("VehicleReg").getValue(String.class);
-                            
-                            if (!txfAddress.getText().trim().equals(address)
-                                    || !txfContactNo.getText().trim().equals(contactNum)
-                                    || !txfVehicleReg.getText().trim().equals(vehicleReg)) {
+
+                            if (!txfAddress.getText().trim().equals(address)) {
+                                isChanged = true;
+                            }
+                            if (!txfContactNo.getText().trim().equals(contactNum)) {
+                                isChanged = true;
+                            }
+                            if (!txfVehicleReg.getText().trim().equals(vehicleReg)) {
                                 isChanged = true;
                             }
                         }
@@ -184,7 +185,14 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         getRouteDriver(routeID);
         cmbDriverName.setSelectedItem(driverName);
         for (Driver d : allDrivers) {
-            if (d.getDriverName().equalsIgnoreCase(cmbDriverName.getSelectedItem().toString())) {
+            if (cmbDriverName.getSelectedItem().toString().contains("(*)")) {
+                if (d.getDriverName().equalsIgnoreCase(cmbDriverName.getSelectedItem().toString().substring(0, cmbDriverName.getSelectedItem().toString().indexOf("(")))) {
+                    txfDriverID.setText(d.getID());
+                    txfContactNo.setText(d.getContactNumber());
+                    txfAddress.setText(d.getAddress());
+                    txfVehicleReg.setText(d.getVehicleRegistration());
+                }
+            } else if (d.getDriverName().equalsIgnoreCase(cmbDriverName.getSelectedItem().toString())) {
                 txfDriverID.setText(d.getID());
                 txfContactNo.setText(d.getContactNumber());
                 txfAddress.setText(d.getAddress());
@@ -670,7 +678,10 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        boolean changed = checkChanged();
+        boolean changed = false;
+        for (int i = 0; i < 10; i++) {
+            changed = checkChanged();
+        }
         if (changed) {
             //update driver information
             JOptionPane.showMessageDialog(null, "Something has been changed");
@@ -711,6 +722,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
             switch (ans) {
                 case JOptionPane.YES_OPTION:
                     deleteDriver(selected);
+                    setDrivers();
                     break;
                 case JOptionPane.NO_OPTION:
                     break;
@@ -721,6 +733,8 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     private void cmbDriverNameItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbDriverNameItemStateChanged
         switch (evt.getStateChange()) {
             case ItemEvent.SELECTED:
+                driverName = cmbDriverName.getSelectedItem().toString();
+                setTextFields();
                 break;
             case ItemEvent.DESELECTED:
                 break;

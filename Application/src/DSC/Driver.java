@@ -6,22 +6,22 @@ package DSC;
  */
 public class Driver implements java.io.Serializable {
 
-    private String driverID;
-    private boolean active;
-    private String address;
-    private String contactNumber;
-    private String driverName;
-    private String vehicleRegistration;
+    private String DriverID;
+    private boolean Active;
+    private String Address;
+    private String ContactNumber;
+    private String DriverName;
+    private String VehicleRegistration;
 
-    public Driver(String address, String contactNumber, String driverName, String vehicleRegistration) {
-        this.address = address;
-        this.contactNumber = contactNumber;
-        this.driverName = driverName;
-        this.vehicleRegistration = vehicleRegistration;
+    public Driver(String Address, String ContactNumber, String DriverName, String VehicleRegistration) {
+        this.Address = Address;
+        this.ContactNumber = ContactNumber;
+        this.DriverName = DriverName;
+        this.VehicleRegistration = VehicleRegistration;
     }
 
     public Driver(String id) {
-        this.driverID = id;
+        this.DriverID = id;
     }
 
     public Driver() {
@@ -29,51 +29,51 @@ public class Driver implements java.io.Serializable {
     }
 
     public String getAddress() {
-        return address;
+        return Address;
     }
 
     public void setAddress(String address) {
-        this.address = address;
+        this.Address = address;
     }
 
     public String getContactNumber() {
-        return contactNumber;
+        return ContactNumber;
     }
 
     public void setContactNumber(String contactNumber) {
-        this.contactNumber = contactNumber;
+        this.ContactNumber = contactNumber;
     }
 
     public String getDriverName() {
-        return driverName;
+        return DriverName;
     }
 
     public void setDriverName(String driverName) {
-        this.driverName = driverName;
+        this.DriverName = driverName;
     }
 
     public String getVehicleRegistration() {
-        return vehicleRegistration;
+        return VehicleRegistration;
     }
 
     public void setVehicleRegistration(String vehicleRegistration) {
-        this.vehicleRegistration = vehicleRegistration;
+        this.VehicleRegistration = vehicleRegistration;
     }
 
     public String getID() {
-        return driverID;
+        return DriverID;
     }
 
     public void setID(String driverID) {
-        this.driverID = driverID;
+        this.DriverID = driverID;
     }
 
     public boolean isActive() {
-        return active;
+        return Active;
     }
 
     public void setActive(boolean active) {
-        this.active = active;
+        this.Active = active;
     }
 
 }
