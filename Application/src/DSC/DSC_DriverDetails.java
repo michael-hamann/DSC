@@ -21,7 +21,8 @@ import javax.swing.JOptionPane;
 public class DSC_DriverDetails extends javax.swing.JFrame {
 
     boolean editClicked = false;
-    boolean isChanged = false;
+    boolean infoChanged = false;
+    boolean driverChanged = false;
     String driverName;
     ArrayList<Driver> allDrivers = new ArrayList<>();
     ArrayList<Route> allRoutes = new ArrayList<>();
@@ -68,7 +69,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         return empty;
     }
 
-    private boolean checkChanged() {
+    private boolean checkInfoChanged() {
         String driverID = txfDriverID.getText().trim();
         Firebase ref = DBClass.getInstance().child("Drivers");
         ref.addValueEventListener(new ValueEventListener() {
@@ -82,13 +83,13 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                             String vehicleReg = data.child("VehicleReg").getValue(String.class);
 
                             if (!txfAddress.getText().trim().equals(address)) {
-                                isChanged = true;
+                                infoChanged = true;
                             }
                             if (!txfContactNo.getText().trim().equals(contactNum)) {
-                                isChanged = true;
+                                infoChanged = true;
                             }
                             if (!txfVehicleReg.getText().trim().equals(vehicleReg)) {
-                                isChanged = true;
+                                infoChanged = true;
                             }
                         }
                     }
@@ -100,7 +101,25 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, fe.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
             }
         });
-        return isChanged;
+        return infoChanged;
+    }
+
+    private boolean checkDriverChanged() {
+        Firebase ref = DBClass.getInstance().child("Routes/" + getSelectedRoute());
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot ds) {
+                for (DataSnapshot data : ds.getChildren()) {
+                    
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError fe) {
+                JOptionPane.showMessageDialog(null, fe.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+        return driverChanged;
     }
 
     private void setRoutes() {
@@ -377,7 +396,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(lblRoutes, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -609,7 +628,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(lblSuburbs, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -678,11 +697,9 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        boolean changed = false;
-        for (int i = 0; i < 10; i++) {
-            changed = checkChanged();
-        }
-        if (changed) {
+        boolean changedInfo = checkInfoChanged();
+        boolean changedDriver = checkDriverChanged();
+        if (changedInfo) {
             //update driver information
             JOptionPane.showMessageDialog(null, "Something has been changed");
         } else {

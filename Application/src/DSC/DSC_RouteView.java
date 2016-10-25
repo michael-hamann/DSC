@@ -442,11 +442,11 @@ public class DSC_RouteView extends javax.swing.JFrame {
 
     private class RouteDriverContainer {
 
-        public String DriverID;
+        public int DriverID;
         public String EndDate;
         public String StartDate;
 
-        public RouteDriverContainer(String DriverID, String EndDate, String StartDate) {
+        public RouteDriverContainer(int DriverID, String EndDate, String StartDate) {
             this.DriverID = DriverID;
             this.EndDate = EndDate;
             this.StartDate = StartDate;
@@ -474,7 +474,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
         ref.child(newRouteID).setValue(route);
         for (Driver d : allDrivers) {
             if (d.getDriverName().equals(selectedDriver)) {
-                RouteDriverContainer routeDriver = new RouteDriverContainer(d.getID(), "-", startingDate);
+                RouteDriverContainer routeDriver = new RouteDriverContainer(Integer.parseInt(d.getID()), "-", startingDate);
                 ref.child(newRouteID).child("Drivers/0").setValue(routeDriver);
             }
         }
