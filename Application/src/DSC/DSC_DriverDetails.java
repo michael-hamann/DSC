@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
 public class DSC_DriverDetails extends javax.swing.JFrame {
 
     boolean editClicked = false;
-    boolean infoChanged = false;
+    boolean infoChanged;
     boolean driverChanged = false;
     String driverName;
     ArrayList<Driver> allDrivers = new ArrayList<>();
@@ -72,36 +72,49 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     private boolean checkInfoChanged() {
         String driverID = txfDriverID.getText().trim();
         Firebase ref = DBClass.getInstance().child("Drivers");
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot ds) {
-                for (DataSnapshot data : ds.getChildren()) {
-                    for (DataSnapshot data2 : data.getChildren()) {
-                        if (data.getKey().equals(driverID)) {
-                            String address = data.child("Address").getValue(String.class);
-                            String contactNum = data.child("ContactNumber").getValue(String.class);
-                            String vehicleReg = data.child("VehicleReg").getValue(String.class);
+        try {
+            ref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot ds) {
+                    for (DataSnapshot data : ds.getChildren()) {
+                        for (DataSnapshot data2 : data.getChildren()) {
+                            if (data.getKey().equals(driverID)) {
+                                String address = data.child("Address").getValue(String.class);
+                                String contactNum = data.child("ContactNumber").getValue(String.class);
+                                String vehicleReg = data.child("VehicleReg").getValue(String.class);
 
-                            if (!txfAddress.getText().trim().equals(address)) {
-                                infoChanged = true;
-                            }
-                            if (!txfContactNo.getText().trim().equals(contactNum)) {
-                                infoChanged = true;
-                            }
-                            if (!txfVehicleReg.getText().trim().equals(vehicleReg)) {
-                                infoChanged = true;
+                                if (!txfAddress.getText().trim().equals(address)) {
+                                    infoChanged = true;
+                                }
+                                if (!txfContactNo.getText().trim().equals(contactNum)) {
+                                    infoChanged = true;
+                                }
+                                if (!txfVehicleReg.getText().trim().equals(vehicleReg)) {
+                                    infoChanged = true;
+                                }
+
+                                System.out.println("db:" + address);
+                                System.out.println("txf:" + txfAddress.getText());
+                                System.out.println("db:" + contactNum);
+                                System.out.println("txf:" + txfContactNo.getText());
+                                System.out.println("db:" + vehicleReg);
+                                System.out.println("txf:" + txfVehicleReg.getText());
+                                System.out.println("infoChanged in if:" + infoChanged);
+                                break;
                             }
                         }
                     }
                 }
-            }
 
-            @Override
-            public void onCancelled(FirebaseError fe) {
-                JOptionPane.showMessageDialog(null, fe.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
-            }
-        });
-        return infoChanged;
+                @Override
+                public void onCancelled(FirebaseError fe) {
+                    JOptionPane.showMessageDialog(null, fe.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+                }
+            });
+        } finally {
+            System.out.println("infoChanged out of loop:" + infoChanged);
+            return infoChanged;
+        }
     }
 
     private boolean checkDriverChanged() {
@@ -110,7 +123,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
             @Override
             public void onDataChange(DataSnapshot ds) {
                 for (DataSnapshot data : ds.getChildren()) {
-                    
+
                 }
             }
 
@@ -703,7 +716,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
             //update driver information
             JOptionPane.showMessageDialog(null, "Something has been changed");
         } else {
-
+            JOptionPane.showMessageDialog(null, "Nothing has been changed");
         }
         disableFields();
         txfAddress.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
