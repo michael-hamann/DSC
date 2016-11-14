@@ -38,7 +38,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  *
  * @author Aliens_Ross
  */
-public class NewClientReport {
+class NewClientReport {
 
     private static int clientCount;
     private static DSC_ReportLoading newClientLoadObj;
