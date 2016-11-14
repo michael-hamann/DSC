@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.util.ArrayList;
+import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
@@ -48,7 +49,6 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
 
     public final void disableFields() {
         txfRouteID.setEditable(false);
-        txfSuburbID.setEditable(false);
         txfDriverID.setEditable(false);
         cmbDriverName.setEnabled(false);
         txfContactNo.setEditable(false);
@@ -125,7 +125,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                 }
                 lstSuburbs.setModel(model);
                 lstSuburbs.setSelectedIndex(0);
-                setDrivers();
+                //setDrivers();
             }
 
             @Override
@@ -151,7 +151,6 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         String routeID = getSelectedRoute();
         txfRouteID.setText(routeID);
         String suburbID = lstSuburbs.getSelectedIndex() + "";
-        txfSuburbID.setText(suburbID);
         getRouteDriver(routeID);
 //        for (Driver d : allDrivers) {
 //            if (d.getDriverName().equalsIgnoreCase(cmbDriverName.getSelectedItem().toString())) {
@@ -171,8 +170,8 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                 for (DataSnapshot data : ds.getChildren()) {
                     for (DataSnapshot data2 : data.getChildren()) {
                         if (data.getKey().equalsIgnoreCase("Drivers")) {
-                            if (data2.child("EndDate").getValue(String.class).equalsIgnoreCase("-")) {
-                                String currDriverID = data2.child("DriverID").getValue(String.class);
+                            if (data2.child("endDate").getValue(String.class).equalsIgnoreCase("-")) {
+                                String currDriverID = data2.child("driverID").getValue(String.class);
                                 driverName = getDriverName(currDriverID);
                             }
                         }
@@ -223,7 +222,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                         if (d.isActive()) {
                             comboModel.addElement(d.getDriverName());
                         } else {
-                            comboModel.addElement(d.getDriverName()+"(*)");
+                            comboModel.addElement(d.getDriverName());
                         }
                     }
                 }
@@ -259,7 +258,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
             }
         });
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -290,8 +289,6 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         btnSave = new javax.swing.JButton();
         lblRouteID = new javax.swing.JLabel();
         txfRouteID = new javax.swing.JTextField();
-        lblSuburbID = new javax.swing.JLabel();
-        txfSuburbID = new javax.swing.JTextField();
         cmbDriverName = new javax.swing.JComboBox<>();
         btnAddDriver = new javax.swing.JButton();
         btnDeleteDriver = new javax.swing.JButton();
@@ -420,13 +417,6 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         txfRouteID.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         txfRouteID.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        lblSuburbID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblSuburbID.setText("Suburb ID:");
-
-        txfSuburbID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txfSuburbID.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        txfSuburbID.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-
         cmbDriverName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cmbDriverName.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Driver Name" }));
         cmbDriverName.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -476,7 +466,6 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                         .addComponent(btnBack))
                     .addGroup(pnlDetailsLayout.createSequentialGroup()
                         .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(lblSuburbID, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblRouteID, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblVehicleReg, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblAddress, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -490,7 +479,6 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                             .addComponent(txfAddress, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txfVehicleReg, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txfRouteID)
-                            .addComponent(txfSuburbID)
                             .addComponent(cmbDriverName, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
@@ -503,11 +491,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblRouteID)
                     .addComponent(txfRouteID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblSuburbID)
-                    .addComponent(txfSuburbID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(37, 37, 37)
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDriverID)
                     .addComponent(txfDriverID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -527,7 +511,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblVehicleReg)
                     .addComponent(txfVehicleReg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 231, Short.MAX_VALUE)
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSave)
                     .addComponent(btnBack)
@@ -642,7 +626,23 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         boolean changed = checkChanged();
         if (changed) {
-            //update driver information
+            String DriverID = "0";
+            Firebase ref = DBClass.getInstance().child("Routes/" + getSelectedRoute() + "/Drivers/");
+            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot ds) {
+                    boolean same = true;
+                    for (DataSnapshot data : ds.getChildren()) {
+                        if (data.child("endDate").getValue(String.class).equals("-") && data.child("driverID")) {
+                            ref.child("Routes/" + getSelectedRoute() + "/Drivers/" + data.getKey()).setValue(DriverReport.returnWeekMili());
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(FirebaseError fe) {
+                }
+            });
         } else {
 
         }
@@ -657,6 +657,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
 
     private void lstRoutesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstRoutesValueChanged
         setSuburbs(getSelectedRoute());
+        updateDetails(getSelectedRoute());
     }//GEN-LAST:event_lstRoutesValueChanged
 
     private void btnAddDriverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDriverActionPerformed
@@ -712,7 +713,6 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     private javax.swing.JLabel lblDriverName;
     private javax.swing.JLabel lblRouteID;
     private javax.swing.JLabel lblRoutes;
-    private javax.swing.JLabel lblSuburbID;
     private javax.swing.JLabel lblSuburbs;
     private javax.swing.JLabel lblVehicleReg;
     private javax.swing.JList<String> lstRoutes;
@@ -725,20 +725,75 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     private javax.swing.JTextField txfContactNo;
     private javax.swing.JTextField txfDriverID;
     private javax.swing.JTextField txfRouteID;
-    private javax.swing.JTextField txfSuburbID;
     private javax.swing.JTextField txfVehicleReg;
     // End of variables declaration//GEN-END:variables
 
     private void cmbListener() {
 
-        cmbDriverName.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String previous = getRouteDriver(getSelectedRoute());
-                String selected = cmbDriverName.getSelectedItem().toString();
-                int ans = JOptionPane.showConfirmDialog(null, "Do you want to replace " + previous + " with " + selected + "?");
-            }
-        });
+//        cmbDriverName.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                String previous = getRouteDriver(getSelectedRoute());
+//                String selected = cmbDriverName.getSelectedItem().toString();
+//                int ans = JOptionPane.showConfirmDialog(null, "Do you want to replace " + previous + " with " + selected + "?");
+//            }
+//        });
     }
 
+    private void updateDetails(String routeNum) {
+        Firebase tableRef = DBClass.getInstance().child("Routes/" + routeNum);
+        Driver driver = new Driver();
+        tableRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot ds) {
+                for (DataSnapshot dataSnapshot : ds.child("Drivers").getChildren()) {
+                    if (dataSnapshot.child("endDate").getValue(String.class).equals("-")) {
+                        driver.setID(dataSnapshot.child("driverID").getValue(String.class));
+                    }
+                }
+
+                Firebase newRef = DBClass.getInstance().child("Drivers/");
+                newRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot ds) {
+                        String driversList[] = new String[(int)ds.getChildrenCount()];
+                        int nameIndex = 0;
+                        int counter = 0;
+                        for (DataSnapshot dataSnapshot : ds.getChildren()) {
+                            if (dataSnapshot.getKey().equals("0")) {
+                                
+                            }
+                            if (dataSnapshot.getKey().equals(driver.getID())) {
+                                txfAddress.setText(ds.child(" Address").getValue(String.class));
+                                txfContactNo.setText(ds.child("ContactNumber").getValue(String.class));
+                                txfVehicleReg.setText(ds.child("VehicleReg").getValue(String.class));
+                                txfDriverID.setText(driver.getID());
+                                nameIndex = counter;
+                            }
+                            
+                            driversList[counter] = dataSnapshot.child("DriverName").getValue(String.class);
+                            System.out.println(driversList[counter]);
+                            counter++;
+                        }
+                        DefaultComboBoxModel model = new DefaultComboBoxModel(driversList);
+                        cmbDriverName.setModel(model);
+                        cmbDriverName.setSelectedIndex(nameIndex);
+                        
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError fe) {
+                    }
+                });
+
+            }
+
+            @Override
+
+            public void onCancelled(FirebaseError fe) {
+                JOptionPane.showMessageDialog(null, "Error: " + fe.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        );
+    }
 }
