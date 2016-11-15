@@ -18,6 +18,7 @@ public class Driver implements java.io.Serializable {
         this.contactNumber = contactNumber;
         this.driverName = driverName;
         this.vehicleRegistration = vehicleRegistration;
+        this.active = true;
     }
 
     public Driver(String id) {

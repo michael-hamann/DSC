@@ -156,13 +156,10 @@ public class DSC_RouteView extends javax.swing.JFrame {
             @Override
             public void onDataChange(DataSnapshot ds) {
                 suburbs.clear();
-                String DriverID = "";
                 for (DataSnapshot data : ds.getChildren()) {
                     if (!data.getKey().equals("0")) {
                         if (data.getKey().equals(routeNum)) {
                             try {
-                                DriverID = data.child("Drivers/" + (data.child("Drivers").getChildrenCount() - 1) + "/driverID").getValue(String.class);
-                                System.out.println(data.child("Drivers"));
                                 String subArr[] = data.child("Suburbs").getValue(String[].class);
                                 for (int i = 0; i < subArr.length; i++) {
                                     suburbs.add(subArr[i]);
@@ -193,8 +190,6 @@ public class DSC_RouteView extends javax.swing.JFrame {
                     lstSuburbs.setModel(model);
                     lstSuburbs.setSelectedIndex(0);
                 }
-                
-                
                 setTextFields();
             }
 
@@ -230,6 +225,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot ds) {
+                allDrivers.clear();
                 for (DataSnapshot data : ds.getChildren()) {
                     if (!data.getKey().equalsIgnoreCase("0")) {
                         Driver d = new Driver();
@@ -447,83 +443,25 @@ public class DSC_RouteView extends javax.swing.JFrame {
      * @param firstSub The name of the first suburb for the route
      */
     private void addRoute(String firstSub, String selectedDriver) {
-        Firebase refNew = DBClass.getInstance().child("Drivers");
-        refNew.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot ds) {
-                String DriverID = "";
-                for (DataSnapshot dataSnapshot : ds.getChildren()) {
-                    if (dataSnapshot.child("DriverName").getValue(String.class).equals(selectedDriver)) {
-                        DriverID = dataSnapshot.getKey();
-                    }
-                }
-
-                if (!DriverID.equals("")) {
-                    String newRouteID = getNewRoute();
-                    Calendar cal = Calendar.getInstance();
-                    String startingDate = cal.getTimeInMillis() + "";
-                    Firebase ref = DBClass.getInstance().child("Routes");
-                    RouteContainer route = new RouteContainer(
-                            true,
-                            "Drivers",
-                            "-",
-                            startingDate,
-                            "Suburbs",
-                            "Afternoon");
-                    ref.child(newRouteID).setValue(route);
-                    for (Driver d : allDrivers) {
-                        if (d.getDriverName().equals(selectedDriver)) {
-                            RouteDrivers routeDriver = new RouteDrivers(d.getID(), "-", startingDate);
-                            ref.child(newRouteID).child("Drivers/0").setValue(routeDriver);
-                        }
-                    }
-                    ref.child(newRouteID).child("Suburbs/0").setValue(firstSub);
-                }
-
+        String newRouteID = getNewRoute();
+        Calendar cal = Calendar.getInstance();
+        String startingDate = cal.getTimeInMillis() + "";
+        Firebase ref = DBClass.getInstance().child("Routes");
+        RouteContainer route = new RouteContainer(
+                true,
+                "Drivers",
+                "-",
+                startingDate,
+                "Suburbs",
+                "Afternoon");
+        ref.child(newRouteID).setValue(route);
+        for (Driver d : allDrivers) {
+            if (d.getDriverName().equals(selectedDriver)) {
+                RouteDrivers routeDriver = new RouteDrivers(d.getID(), "-", startingDate);
+                ref.child(newRouteID).child("Drivers/0").setValue(routeDriver);
             }
-
-            @Override
-            public void onCancelled(FirebaseError fe) {
-            }
-        });
-
-    }
-
-    class DriverDataContainer {
-
-        String StartDate;
-        String EndDate;
-        String DriverID;
-
-        public DriverDataContainer(String StartDate, String EndDate, String DriverID) {
-            this.StartDate = StartDate;
-            this.EndDate = EndDate;
-            this.DriverID = DriverID;
         }
-
-        public String getStartDate() {
-            return StartDate;
-        }
-
-        public void setStartDate(String StartDate) {
-            this.StartDate = StartDate;
-        }
-
-        public String getEndDate() {
-            return EndDate;
-        }
-
-        public void setEndDate(String EndDate) {
-            this.EndDate = EndDate;
-        }
-
-        public String getDriverID() {
-            return DriverID;
-        }
-
-        public void setDriverID(String DriverID) {
-            this.DriverID = DriverID;
-        }
+        ref.child(newRouteID).child("Suburbs/0").setValue(firstSub);
     }
 
     /**
@@ -571,8 +509,34 @@ public class DSC_RouteView extends javax.swing.JFrame {
      * @param route Route in which the suburb is
      */
     private void deleteSuburb(String subIndex, String route) {
-        Firebase ref = DBClass.getInstance().child("Routes/" + route + "/Suburbs");
-        ref.child(subIndex).removeValue();
+//        Firebase ref = DBClass.getInstance().child("Routes/" + route + "/Suburbs");
+//        ref.child(subIndex).removeValue();
+        
+        Firebase refRem = DBClass.getInstance().child("Routes/" + route);
+        refRem.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot ds) {
+                ArrayList<String> subList = new ArrayList<>();
+                for (DataSnapshot data : ds.child("Suburbs").getChildren()) {
+                    if (!data.getKey().equals(subIndex)) {
+                        subList.add(data.getValue(String.class));
+                    }
+                    
+                }
+                
+                String subArr[] = new String[subList.size()];
+                subList.toArray(subArr);
+                
+                DBClass.getInstance().child("Routes/" + route + "/Suburbs/").setValue(subArr);
+            }
+
+            @Override
+            public void onCancelled(FirebaseError fe) {
+            }
+        }
+        );
+    
     }
 
     /**
@@ -608,7 +572,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
         pnlRoutes = new javax.swing.JPanel();
         lblRoutes = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        lstRoutes = new javax.swing.JList<>();
+        lstRoutes = new javax.swing.JList<String>();
         btnAddRoute = new javax.swing.JButton();
         btnDeleteRoute = new javax.swing.JButton();
         pnlFields = new javax.swing.JPanel();
@@ -639,7 +603,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
         pnlSuburbs = new javax.swing.JPanel();
         lblSuburbs = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        lstSuburbs = new javax.swing.JList<>();
+        lstSuburbs = new javax.swing.JList<String>();
         btnDeleteSuburb = new javax.swing.JButton();
         btnAddSuburb = new javax.swing.JButton();
 
@@ -798,11 +762,6 @@ public class DSC_RouteView extends javax.swing.JFrame {
         txfCurrDriver.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txfCurrDriver.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         txfCurrDriver.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        txfCurrDriver.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txfCurrDriverActionPerformed(evt);
-            }
-        });
 
         txfSuburbName.setEditable(false);
         txfSuburbName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -1326,10 +1285,6 @@ public class DSC_RouteView extends javax.swing.JFrame {
             setRoutesList("Active");
         }
     }//GEN-LAST:event_btnDeleteRouteActionPerformed
-
-    private void txfCurrDriverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfCurrDriverActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txfCurrDriverActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;

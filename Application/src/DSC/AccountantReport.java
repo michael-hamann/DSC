@@ -170,7 +170,6 @@ public class AccountantReport {
             int reduction = 0;
             for (int i = 0; i < clients.size(); i++) {
                 Client client = clients.get(i);
-                System.out.println(client.toString());
                 if (client.getSurname().toUpperCase().charAt(0) == (char) (65 + letter)) {
                     data.put((i + 4 - reduction) + "", new Object[]{
                         client.getName() + " " + client.getSurname(),

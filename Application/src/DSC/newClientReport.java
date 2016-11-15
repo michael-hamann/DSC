@@ -38,7 +38,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  *
  * @author Aliens_Ross
  */
-class NewClientReport {
+public class NewClientReport {
 
     private static int clientCount;
     private static DSC_ReportLoading newClientLoadObj;
@@ -209,7 +209,14 @@ class NewClientReport {
 
         int counter = 4;
         for (Client client : clients) {
-            data.put(counter + "", new Object[]{client.getName() + " " + client.getSurname(), client.getContactNumber().substring(0, 3) + " " + client.getContactNumber().substring(3, 6) + " " + client.getContactNumber().substring(6, 10), client.getAdditionalInfo().split(" ")[0], client.getAlternativeNumber(), client.getEmail(), client.getAddress()});
+            data.put(counter + "", new Object[]{client.getName() 
+                    + " " + client.getSurname(), client.getContactNumber().substring(0, 3) 
+                            + " " + client.getContactNumber().substring(3, 6) 
+                            + " " + client.getContactNumber().substring(6, 10),
+                    client.getAdditionalInfo(),
+                    client.getAlternativeNumber(), 
+                    client.getEmail(),
+                    client.getAddress()});
             counter++;
         }
 

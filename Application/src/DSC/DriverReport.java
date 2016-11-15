@@ -200,8 +200,8 @@ public class DriverReport {
                     }
 
                     for (DataSnapshot dataSnapshot1 : dataSnapshot.child("Drivers").getChildren()) {
-                        if (dataSnapshot1.child("EndDate").getValue(String.class).equals("-")) {
-                            driverID = dataSnapshot1.child("DriverID").getValue(String.class);
+                        if (dataSnapshot1.child("endDate").getValue(String.class).equals("-")) {
+                            driverID = dataSnapshot1.child("driverID").getValue(String.class);
                         }
                     }
 

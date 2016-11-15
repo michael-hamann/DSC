@@ -1025,7 +1025,7 @@ public class DSC_Place_Order extends javax.swing.JFrame {
             public void onDataChange(DataSnapshot ds) {
                 for (DataSnapshot dataSnapshot : ds.getChildren()) {
                     String subArr[] = dataSnapshot.child("Suburbs").getValue(String[].class);
-
+                    
                     Route route = new Route();
                     route.setID(dataSnapshot.getKey());
                     route.setTimeFrame(dataSnapshot.child("TimeFrame").getValue(String.class));
@@ -1039,6 +1039,9 @@ public class DSC_Place_Order extends javax.swing.JFrame {
                     }
 
                     for (String string : subArr) {
+                        if (string == null) {
+                            continue;
+                        }
                         boolean found = false;
                         for (SuburbData suburbData : subList) {
                             if (suburbData.suburb.equals(string)) {

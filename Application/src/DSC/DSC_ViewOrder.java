@@ -209,7 +209,7 @@ public class DSC_ViewOrder extends javax.swing.JFrame {
 
         //checks if required fiels are empty
         if (txfClientName.getText().isEmpty() || txfClientSurname.getText().isEmpty() || txfClientContactNo.getText().isEmpty()
-                || txfClientAddress.getText().isEmpty() || txfClientContactNo.getText().isEmpty() || txfClientEmail.getText().isEmpty()) {
+                || txfClientAddress.getText().isEmpty() || txfClientContactNo.getText().isEmpty()) {
             empty = true;
         }
 

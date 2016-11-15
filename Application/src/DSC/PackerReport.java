@@ -202,8 +202,8 @@ public class PackerReport {
                     }
 
                     for (DataSnapshot dataSnapshot1 : dataSnapshot.child("Drivers").getChildren()) {
-                        if (dataSnapshot1.child("EndDate").getValue(String.class).equals("-")) {
-                            driverID = dataSnapshot1.child("DriverID").getValue(String.class);
+                        if (dataSnapshot1.child("endDate").getValue(String.class).equals("-")) {
+                            driverID = dataSnapshot1.child("driverID").getValue(String.class);
                         }
                     }
 
@@ -234,6 +234,7 @@ public class PackerReport {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot ds) {
+                System.out.println(routeID);
                 String number = ds.child("ContactNumber").getValue(String.class);
                 if (number.length() == 10) {
                     number = number.substring(0, 3) + " " + number.substring(3, 6) + " " + number.substring(6, 10);
@@ -241,7 +242,7 @@ public class PackerReport {
                 Driver driver = new Driver("",
                         number,
                         ds.child("DriverName").getValue(String.class),
-                        ds.child("Vehicle").getValue(String.class)
+                        ds.child("VehicleReg").getValue(String.class)
                 );
                 ArrayList<RouteDrivers> drivers = new ArrayList<>();
                 drivers.add(new RouteDrivers(driver, null, null));
