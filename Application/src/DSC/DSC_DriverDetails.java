@@ -67,14 +67,12 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
 
         return empty;
     }
-<<<<<<< HEAD
 //
 //    private boolean checkChanged() {
 //        boolean isChanged = false;
 //
 //        return isChanged;
 //    }
-=======
 
     private boolean checkInfoChanged() {
         String driverID = txfDriverID.getText().trim();
@@ -141,7 +139,6 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         });
         return driverChanged;
     }
->>>>>>> origin/master
 
     private void setRoutes() {
         Firebase tableRef = DBClass.getInstance().child("Routes");
@@ -229,7 +226,6 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         txfRouteID.setText(routeID);
         String suburbID = lstSuburbs.getSelectedIndex() + "";
         getRouteDriver(routeID);
-<<<<<<< HEAD
 
         updateFields();
 
@@ -241,7 +237,6 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
 //                txfVehicleReg.setText(d.getVehicleRegistration());
 //            }
 //        }
-=======
         cmbDriverName.setSelectedItem(driverName);
         for (Driver d : allDrivers) {
             if (cmbDriverName.getSelectedItem().toString().contains("(*)")) {
@@ -258,7 +253,6 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                 txfVehicleReg.setText(d.getVehicleRegistration());
             }
         }
->>>>>>> origin/master
     }
 
     private String getRouteDriver(String routeNum) {
@@ -322,11 +316,7 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
                         if (d.isActive()) {
                             comboModel.addElement(d.getDriverName());
                         } else {
-<<<<<<< HEAD
                             comboModel.addElement(d.getDriverName());
-=======
-                            comboModel.addElement(d.getDriverName() + "(*)");
->>>>>>> origin/master
                         }
                     }
                 }
@@ -729,7 +719,6 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-<<<<<<< HEAD
 
         Firebase ref = DBClass.getInstance().child("Drivers/" + txfDriverID.getText());
         ref.child("Address").setValue(txfAddress.getText());
@@ -761,7 +750,6 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
             }
         });
 
-=======
         boolean changedInfo = checkInfoChanged();
         boolean changedDriver = checkDriverChanged();
         if (changedInfo) {
@@ -770,7 +758,6 @@ public class DSC_DriverDetails extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "Nothing has been changed");
         }
->>>>>>> origin/master
         disableFields();
         txfAddress.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         txfContactNo.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
