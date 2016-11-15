@@ -101,7 +101,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="lblRoutes" min="-2" pref="30" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="461" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="336" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -168,7 +168,7 @@
                               <Component id="btnAddDriver" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="btnDeleteDriver" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace pref="14" max="32767" attributes="0"/>
                               <Component id="btnEdit" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="btnSave" min="-2" max="-2" attributes="0"/>
@@ -503,7 +503,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="lblSuburbs" min="-2" pref="30" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane5" pref="461" max="32767" attributes="0"/>
+                      <Component id="jScrollPane5" pref="336" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>

@@ -12,16 +12,16 @@ public class RouteDrivers {
     private String StartDate;
     private Driver Driver;
 
-    public RouteDrivers(String driverID, String endDate, String startDate) {
-        this.DriverID = driverID;
-        this.EndDate = endDate;
-        this.StartDate = startDate;
+    public RouteDrivers(String DriverID, String EndDate, String StartDate) {
+        this.DriverID = DriverID;
+        this.EndDate = EndDate;
+        this.StartDate = StartDate;
     }
     
-    public RouteDrivers(Driver driver, String endDate, String startDate) {
-        this.Driver = driver;
-        this.EndDate = endDate;
-        this.StartDate = startDate;
+    public RouteDrivers(Driver Driver, String EndDate, String StartDate) {
+        this.Driver = Driver;
+        this.EndDate = EndDate;
+        this.StartDate = StartDate;
     }
 
     public Driver getDriver() {

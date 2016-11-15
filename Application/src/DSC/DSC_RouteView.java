@@ -220,6 +220,9 @@ public class DSC_RouteView extends javax.swing.JFrame {
         return curr;
     }
 
+    /**
+     * Adds all drivers to the allDrivers array
+     */
     protected void setDrivers() {
         Firebase ref = DBClass.getInstance().child("Drivers");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -298,6 +301,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
      * @param id The Driver ID
      */
     private void getDriverName(String id) {
+        driverName = "";
         Firebase ref = DBClass.getInstance().child("Drivers/" + id);
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -437,6 +441,20 @@ public class DSC_RouteView extends javax.swing.JFrame {
 
     }
 
+    private class RouteDriverContainer {
+
+        public int DriverID;
+        public String EndDate;
+        public String StartDate;
+
+        public RouteDriverContainer(int DriverID, String EndDate, String StartDate) {
+            this.DriverID = DriverID;
+            this.EndDate = EndDate;
+            this.StartDate = StartDate;
+        }
+
+    }
+
     /**
      * Adds a new route to the database
      *
@@ -449,7 +467,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
         Firebase ref = DBClass.getInstance().child("Routes");
         RouteContainer route = new RouteContainer(
                 true,
-                "Drivers",
+                "-",
                 "-",
                 startingDate,
                 "Suburbs",
@@ -457,7 +475,7 @@ public class DSC_RouteView extends javax.swing.JFrame {
         ref.child(newRouteID).setValue(route);
         for (Driver d : allDrivers) {
             if (d.getDriverName().equals(selectedDriver)) {
-                RouteDrivers routeDriver = new RouteDrivers(d.getID(), "-", startingDate);
+                RouteDriverContainer routeDriver = new RouteDriverContainer(Integer.parseInt(d.getID()), "-", startingDate);
                 ref.child(newRouteID).child("Drivers/0").setValue(routeDriver);
             }
         }
@@ -1187,27 +1205,35 @@ public class DSC_RouteView extends javax.swing.JFrame {
     private void btnAddRouteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRouteActionPerformed
         //Add new route to firebase
         setDrivers();
-        String firstSub = JOptionPane.showInputDialog(null, "Please enter a first suburb:").trim();
-        if (!firstSub.isEmpty()) {
-            ComboBoxModel cbm = getDrivers();
-            JComboBox jcb = new JComboBox(cbm);
-            JOptionPane.showMessageDialog(null, jcb, "Select a driver to assign to the route", JOptionPane.QUESTION_MESSAGE);
-            String selectedDriver = jcb.getSelectedItem().toString();
-            //add route
-            addRoute(firstSub, selectedDriver);
-            String currID = getNewRoute();
-            addToMetaData("RouteID", Integer.parseInt(currID) + 1);
-            //refresh list
-            setRoutesList("Active");
-        } else {
-            JOptionPane.showMessageDialog(null, "Please enter a suburb name", "Error", JOptionPane.WARNING_MESSAGE);
+        String firstSub = null;
+        try {
+            firstSub = JOptionPane.showInputDialog(null, "Please enter a first suburb:").trim();
+            if (!firstSub.isEmpty()) {
+                ComboBoxModel cbm = getDrivers();
+                JComboBox jcb = new JComboBox(cbm);
+                JOptionPane.showMessageDialog(null, jcb, "Select a driver to assign to the route", JOptionPane.QUESTION_MESSAGE);
+                String selectedDriver = jcb.getSelectedItem().toString();
+                if (selectedDriver.contains("(*)")) {
+                    selectedDriver = selectedDriver.substring(0, selectedDriver.indexOf("("));
+                }
+                //add route
+                addRoute(firstSub, selectedDriver);
+                String currID = getNewRoute();
+                addToMetaData("RouteID", Integer.parseInt(currID) + 1);
+                //refresh list
+                setRoutesList("Active");
+            } else {
+                JOptionPane.showMessageDialog(null, "Please enter a suburb name", "Error", JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Please try again and enter a suburb name", "Warning", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnAddRouteActionPerformed
 
     private void btnAddSuburbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSuburbActionPerformed
+        pnlNew.setVisible(true);
         pnlNew.setBorder(new TitledBorder(new EtchedBorder(), "New Suburb"));
         txfNewSuburb.requestFocusInWindow();
-        pnlNew.setVisible(true);
         btnEdit.setVisible(false);
         btnSave.setVisible(false);
     }//GEN-LAST:event_btnAddSuburbActionPerformed
